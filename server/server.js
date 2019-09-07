@@ -20,6 +20,7 @@ fastify.register(require("fastify-static"), {
 //Routes
 fastify.register(require("./routes/v1/info"), { prefix: "v1" });
 fastify.register(require("./routes/v1/titleSearch"), { prefix: "v1" });
+fastify.register(require("./routes/v1/issueSearch"), { prefix: "v1" });
 
 // Server
 const start = async () => {

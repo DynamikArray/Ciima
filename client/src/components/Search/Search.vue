@@ -17,7 +17,10 @@
 </template>
 
 <script>
-import { SEARCH_TITLES, SEARCH_RESULTS_CLEAR } from "@/store/action-types.js";
+import {
+  SEARCH_TITLES,
+  SEARCH_ISSUES_RESULTS_CLEAR
+} from "@/store/action-types.js";
 
 export default {
   data: () => ({
@@ -35,7 +38,7 @@ export default {
       }
       //clear our results set
       if (search.length == 0) {
-        this.$store.commit("titleSearch/SEARCH_RESULTS_CLEAR");
+        this.$store.commit(`titleSearch/${SEARCH_RESULTS_CLEAR}`);
       }
     }
   }

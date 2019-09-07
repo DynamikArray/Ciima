@@ -7,11 +7,11 @@ const schema = require("../../../schemas/v1/titleSearch");
 module.exports = function(fastify, opts, next) {
   const handler = require("../../../handlers/v1/titleSearch")(fastify);
 
-  const search = {
+  const titleSearch = {
     schema: schema,
     handler: handler.titleSearch
   };
 
-  fastify.get("/titleSearch", search);
+  fastify.get("/titleSearch", titleSearch);
   next();
 };

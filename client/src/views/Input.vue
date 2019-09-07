@@ -26,7 +26,7 @@
 
 <script>
 import Search from "@/components/Search/Search";
-import TitleResults from "@/components/Search/TitleResults";
+import TitleResults from "@/components/Search/Results/TitleResults";
 
 export default {
   components: {

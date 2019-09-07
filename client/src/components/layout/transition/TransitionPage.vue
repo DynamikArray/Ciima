@@ -96,7 +96,7 @@ export default {
 .slide-left-leave-active,
 .slide-right-enter-active,
 .slide-right-leave-active {
-  transition-duration: 0.5s;
+  transition-duration: 0.3s;
   transition-property: height, opacity, transform;
   transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);
   overflow: hidden;
@@ -116,7 +116,7 @@ export default {
 
 .zoom-enter-active,
 .zoom-leave-active {
-  animation-duration: 0.5s;
+  animation-duration: 0.3s;
   animation-fill-mode: both;
   animation-name: zoom;
 }

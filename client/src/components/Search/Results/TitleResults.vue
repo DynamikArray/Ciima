@@ -11,11 +11,9 @@
       :sort-desc.sync="descending"
     >
       <template v-slot:item.action="{ item }">
-        <router-link
-          :to="{ name: 'issues', params: { titleId: item.titleId } }"
-          class="noUnderline"
-          ><v-icon color="primary">fa-search-plus</v-icon></router-link
-        >
+        <v-btn color="primary" @click="selectTitle(item)"
+          ><v-icon color="white">fa-search-plus</v-icon>
+        </v-btn>
       </template>
     </v-data-table>
     <div v-else>
@@ -26,6 +24,7 @@
 
 <script>
 import { mapState } from "vuex";
+import { SEARCH_TITLES_SELECTED_SET } from "@/store/mutation-types.js";
 
 export default {
   data() {
@@ -73,7 +72,12 @@ export default {
       loading: state => state.titleSearch.loading
     })
   },
-  methods: {}
+  methods: {
+    selectTitle(item) {
+      this.$store.commit(`titleSearch/${SEARCH_TITLES_SELECTED_SET}`, { item });
+      this.$router.push({ name: "issues", params: { titleId: item.titleId } });
+    }
+  }
 };
 </script>
 
