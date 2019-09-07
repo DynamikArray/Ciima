@@ -13,7 +13,7 @@
     ></v-app-bar-nav-icon>
 
     <v-toolbar-title class="mr-12 align-center">
-      <span class="title">Video App</span>
+      <span class="title"><b>CiiMa</b></span>
     </v-toolbar-title>
 
     <v-spacer></v-spacer>
