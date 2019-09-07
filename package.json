@@ -1,0 +1,16 @@
+{
+  "name": "ciima",
+  "version": "1.0.0",
+  "description": "Comic Issue Inventory Management Application",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Brian Ridsdale",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.1.0",
+    "fastify": "^2.8.0"
+  }
+}
