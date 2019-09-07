@@ -1,3 +1,5 @@
+const path = require("path");
+
 //include our server config file
 const config = require("./config/config");
 // Require the framework and instantiate it
@@ -7,6 +9,12 @@ const fastify = require("fastify")(config);
 fastify.register(require("fastify-mysql"), {
   promise: true,
   connectionString: process.env.MYSQL_CONN
+});
+
+//static build dir
+fastify.register(require("fastify-static"), {
+  root: path.join(__dirname, "../client/dist"),
+  decorateReply: false
 });
 
 //Routes
