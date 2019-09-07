@@ -32,7 +32,7 @@ export default {
     Footer
   },
   data: () => ({
-    navigationDrawer: false,
+    navigationDrawer: true,
     settingsDrawer: false
   }),
   created() {
