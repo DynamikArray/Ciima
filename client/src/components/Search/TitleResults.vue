@@ -1,22 +1,26 @@
 <template>
-  <div v-if="titleResults">
+  <div>
     <v-data-table
+      v-if="titleResults"
       :headers="headers"
       :items="titleResults"
       :loading="loading"
       loading-text="Searching Database"
-      :items-per-page="100"
+      :items-per-page="50"
       :sort-by.sync="sortBy"
       :sort-desc.sync="descending"
     >
       <template v-slot:item.action="{ item }">
-        <v-btn small color="primary" @click="loadIssues(item.TitleID)">
-          <v-icon small>
-            fa-search-plus
-          </v-icon>
-        </v-btn>
+        <router-link
+          :to="{ name: 'issues', params: { titleId: item.titleId } }"
+          class="noUnderline"
+          ><v-icon color="primary">fa-search-plus</v-icon></router-link
+        >
       </template>
     </v-data-table>
+    <div v-else>
+      <h3 class="text-center">No Titles</h3>
+    </div>
   </div>
 </template>
 
@@ -26,37 +30,37 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      sortBy: "IssuesCount",
+      sortBy: "issuesCount",
       descending: true,
       headers: [
-        { text: "View", value: "action", sortable: false },
+        { text: "View", value: "action", sortable: false, align: "center" },
         {
           text: "Id",
-          value: "TitleID",
+          value: "titleId",
           sortable: false,
           align: "center"
         },
         {
           text: "Title",
-          value: "Title",
+          value: "title",
           sortable: true,
           align: "left"
         },
         {
-          text: "# of Issues ",
-          value: "IssuesCount",
+          text: "Issues",
+          value: "issuesCount",
           sortable: true,
           align: "center"
         },
         {
           text: "Publisher",
-          value: "Publisher",
+          value: "publisher",
           sortable: true,
           align: "center"
         },
         {
           text: "Years",
-          value: "YearsPublished",
+          value: "yearsPublished",
           sortable: true,
           align: "center"
         }
@@ -65,16 +69,16 @@ export default {
   },
   computed: {
     ...mapState({
-      titleResults: state => state.search.items,
-      loading: state => state.search.loading
+      titleResults: state => state.titleSearch.items,
+      loading: state => state.titleSearch.loading
     })
   },
-  methods: {
-    loadIssues(itemId) {
-      console.log("Load me ", itemId);
-    }
-  }
+  methods: {}
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.noUnderline {
+  text-decoration: none;
+}
+</style>

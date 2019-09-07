@@ -4,12 +4,12 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 import api from "@/store/api/api";
-import search from "@/store/search/search";
+import titleSearch from "@/store/search/titleSearch";
 
 export default new Vuex.Store({
   modules: {
     api,
-    search
+    titleSearch
   },
   state: {},
   mutations: {},

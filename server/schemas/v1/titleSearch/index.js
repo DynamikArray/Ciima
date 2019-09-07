@@ -1,6 +1,6 @@
 module.exports = {
   description: "Search the database",
-  tags: ["Search"],
+  tags: ["titleSearch"],
   summary: "Search the database for comics",
 
   querystring: {
@@ -17,11 +17,11 @@ module.exports = {
           items: {
             type: "object",
             properties: {
-              TitleID: { type: "number" },
-              Title: { type: "string" },
-              IssuesCount: { type: "number" },
-              Publisher: { type: "string" },
-              YearsPublished: { type: "string" }
+              titleId: { type: "number" },
+              title: { type: "string" },
+              issuesCount: { type: "number" },
+              publisher: { type: "string" },
+              yearsPublished: { type: "string" }
             }
           }
         }

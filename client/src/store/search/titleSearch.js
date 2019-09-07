@@ -2,13 +2,13 @@ import Vue from "vue";
 import Vuex from "vuex";
 Vue.use(Vuex);
 
-import { SEARCH_TITLES } from "@/store/action-types";
+import { SEARCH_TITLES, SEARCH_RESULTS_CLEAR } from "@/store/action-types";
 import {
   SEARCH_RESULTS_SET,
   SEARCH_RESULTS_LOADING
 } from "@/store/mutation-types";
 
-const search = {
+const titleSearch = {
   namespaced: true,
 
   state: {
@@ -17,6 +17,9 @@ const search = {
   },
 
   mutations: {
+    [SEARCH_RESULTS_CLEAR](state) {
+      state.items = false;
+    },
     [SEARCH_RESULTS_SET](state, data) {
       state.items = data;
     },
@@ -31,10 +34,10 @@ const search = {
         "api/requestHandler",
         {
           method: "get",
-          url: "/v1/search",
+          url: "/v1/titleSearch",
           params: params,
-          success: `search/${SEARCH_RESULTS_SET}`,
-          loading: `search/${SEARCH_RESULTS_LOADING}`
+          success: `titleSearch/${SEARCH_RESULTS_SET}`,
+          loading: `titleSearch/${SEARCH_RESULTS_LOADING}`
         },
         { root: true }
       );
@@ -42,4 +45,4 @@ const search = {
   }
 };
 
-export default search;
+export default titleSearch;

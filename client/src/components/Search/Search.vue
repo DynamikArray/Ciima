@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { SEARCH_TITLES } from "@/store/action-types.js";
+import { SEARCH_TITLES, SEARCH_RESULTS_CLEAR } from "@/store/action-types.js";
 
 export default {
   data: () => ({
@@ -27,10 +27,15 @@ export default {
   methods: {
     handleSubmit() {
       const search = this.searchString;
+      //greater than 3 so search
       if (search.length > 3) {
-        this.$store.dispatch(`search/${SEARCH_TITLES}`, {
+        this.$store.dispatch(`titleSearch/${SEARCH_TITLES}`, {
           q: this.searchString
         });
+      }
+      //clear our results set
+      if (search.length == 0) {
+        this.$store.commit("titleSearch/SEARCH_RESULTS_CLEAR");
       }
     }
   }
