@@ -1,13 +1,17 @@
 //include our server config file
 const config = require("./config/config");
-
-//include our routes files
-const { v1 } = require("./routes");
-
 // Require the framework and instantiate it
 const fastify = require("fastify")(config);
 
-fastify.register(v1, { prefix: "/v1" });
+//include mysql
+fastify.register(require("fastify-mysql"), {
+  promise: true,
+  connectionString: process.env.MYSQL_CONN
+});
+
+//Routes
+fastify.register(require("./routes/v1/info"), { prefix: "v1" });
+fastify.register(require("./routes/v1/search"), { prefix: "v1" });
 
 // Server
 const start = async () => {
