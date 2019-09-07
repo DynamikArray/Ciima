@@ -8,18 +8,17 @@
             label="Search Titles"
             prepend-icon="fa-search"
             debounce="250"
+            v-on:keyup="handleSubmit"
           ></v-text-field>
         </v-form>
       </v-card-text>
     </v-card>
-
-    <div>
-      <h4>{{ searchString }}</h4>
-    </div>
   </section>
 </template>
 
 <script>
+import { SEARCH_TITLES } from "@/store/action-types.js";
+
 export default {
   data: () => ({
     valid: false,
@@ -27,7 +26,12 @@ export default {
   }),
   methods: {
     handleSubmit() {
-      console.log("Handle Submit");
+      const search = this.searchString;
+      if (search.length > 3) {
+        this.$store.dispatch(`search/${SEARCH_TITLES}`, {
+          q: this.searchString
+        });
+      }
     }
   }
 };

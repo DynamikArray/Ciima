@@ -10,13 +10,20 @@ module.exports = {
   response: {
     200: {
       description: "Succesful response",
-      type: "array",
-      items: {
-        type: "object",
-        properties: {
-          TitleID: { type: "number" },
-          Title: { type: "string" },
-          Publisher: { type: "string" }
+      type: "object",
+      properties: {
+        result: {
+          type: "array",
+          items: {
+            type: "object",
+            properties: {
+              TitleID: { type: "number" },
+              Title: { type: "string" },
+              IssuesCount: { type: "number" },
+              Publisher: { type: "string" },
+              YearsPublished: { type: "string" }
+            }
+          }
         }
       }
     }

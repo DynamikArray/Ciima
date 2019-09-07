@@ -6,11 +6,19 @@
       </v-col>
     </v-row>
     <v-row no-gutters>
-      <v-divider></v-divider>
+      <v-divider class="my-3"></v-divider>
     </v-row>
     <v-row no-gutters>
       <v-col class="text-center">
-        <Search class="mt-2"></Search>
+        <Search></Search>
+      </v-col>
+    </v-row>
+    <v-row no-gutters>
+      <v-divider class="my-3"></v-divider>
+    </v-row>
+    <v-row no-gutters>
+      <v-col class="text-center">
+        <TitleResults></TitleResults>
       </v-col>
     </v-row>
   </v-container>
@@ -18,9 +26,12 @@
 
 <script>
 import Search from "@/components/Search/Search";
+import TitleResults from "@/components/Search/TitleResults";
+
 export default {
   components: {
-    Search
+    Search,
+    TitleResults
   }
 };
 </script>

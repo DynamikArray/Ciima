@@ -1,13 +1,5 @@
 <template>
-  <v-app-bar
-    collapse
-    collapse-on-scroll
-    app
-    clipped-left
-    clipped-right
-    color="blue darken-3"
-    dense
-  >
+  <v-app-bar app clipped-left clipped-right color="blue darken-3" dense>
     <v-app-bar-nav-icon
       @click.stop="toggleNavigationDrawer"
     ></v-app-bar-nav-icon>
