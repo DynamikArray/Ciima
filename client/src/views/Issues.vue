@@ -2,7 +2,7 @@
   <v-container fluid>
     <div class="d-flex flex-row justify-space-between align-self-center">
       <div class="d-flex flex-column align-self-center mr-4">
-        <v-btn color="primary" :to="'/input'">
+        <v-btn color="primary" :to="'/titles'">
           <v-icon>fa-arrow-alt-circle-left</v-icon>
         </v-btn>
         <h5 class="text-center mt-2">
@@ -51,7 +51,7 @@ export default {
   created() {
     //no selected title so start back at input
     if (!this.selectedTitle) {
-      this.$router.push({ name: "input" });
+      this.$router.push({ name: "titles" });
     }
 
     //search for issues

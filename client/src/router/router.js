@@ -13,9 +13,10 @@ export default new Router({
       component: () => import(/* webpackChunkName: "home" */ "@/views/Home.vue")
     },
     {
-      path: "/input",
-      name: "input",
-      component: () => import(/*webpackChunkName: "input"*/ "@/views/Input.vue")
+      path: "/titles",
+      name: "titles",
+      component: () =>
+        import(/*webpackChunkName: "titles"*/ "@/views/Input.vue")
     },
     {
       path: "/issues/:titleId",
