@@ -1,5 +1,22 @@
 <template>
   <div>
+    <v-dialog v-model="imagePopup" max-width="420px">
+      <v-card>
+        <v-card-title class="text-center justify-space-between">
+          <h5>{{ selected.title }}</h5>
+          <h5>{{ selected.fullIssue }}</h5>
+        </v-card-title>
+        <v-card-text class="text-center pa-2">
+          <v-img :src="imageSrc" max-width="400" />
+        </v-card-text>
+        <v-divider class="my-3"></v-divider>
+        <v-card-actions class="text-center justify-space-between">
+          <v-btn color="primary">Select</v-btn>
+          <v-btn color="danger" @click="hideImageModal()">Cancel</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
     <v-data-table
       v-if="issues"
       :headers="headers"
@@ -9,11 +26,18 @@
       :items-per-page="50"
     >
       <template v-slot:item.imageUrl="{ item }">
-        <img :src="makeImageUrl(item)" width="70" class="ma-1" />
+        <img
+          :src="makeImageUrl(item)"
+          width="70"
+          class="ma-1"
+          @click="showImageModal(item)"
+        />
       </template>
 
       <template v-slot:item.title="{ item }">
-        {{ item.title }} - {{ item.variation }}
+        <div>{{ item.title }} | {{ item.fullIssue }}</div>
+        <div>{{ item.coverDate }} |{{ item.coverArtist }}</div>
+        <div>{{ item.storylines }}</div>
       </template>
     </v-data-table>
     <div v-else>
@@ -34,6 +58,9 @@ export default {
   },
   data() {
     return {
+      selected: false,
+      imageSrc: false,
+      imagePopup: false,
       headers: [
         {
           text: "Cover",
@@ -72,6 +99,14 @@ export default {
   methods: {
     makeImageUrl(item) {
       return `http://searchlightcomics.com/${item.imageUrl}`;
+    },
+    showImageModal(item) {
+      this.selected = item;
+      this.imageSrc = this.makeImageUrl(item);
+      this.imagePopup = true;
+    },
+    hideImageModal() {
+      this.imagePopup = false;
     }
   }
 };

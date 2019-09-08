@@ -10,8 +10,9 @@
 
     <v-spacer></v-spacer>
 
+    Drafts:
     <v-btn icon ripple small @click.stop="toggleSettingsDrawer">
-      <v-icon>fa-cog</v-icon>
+      <v-icon>fa-clipboard-list</v-icon>
     </v-btn>
   </v-app-bar>
 </template>

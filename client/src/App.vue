@@ -1,7 +1,7 @@
 <template>
   <v-app id="inspire">
     <NavigationDrawer :drawer="navigationDrawer" />
-    <SettingsDrawer :drawer="settingsDrawer" />
+    <DraftsDrawer :drawer="settingsDrawer" />
     <AppBar
       :toggleNavigationDrawer="toggleNavigationDrawer"
       :toggleSettingsDrawer="toggleSettingsDrawer"
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import SettingsDrawer from "@/components/layout/navigation/SettingsDrawer";
+import DraftsDrawer from "@/components/layout/navigation/DraftsDrawer";
 import NavigationDrawer from "@/components/layout/navigation/NavigationDrawer";
 import AppBar from "@/components/layout/navigation/AppBar";
 import TransitionPage from "@/components/layout/transition/TransitionPage";
@@ -25,7 +25,7 @@ import Footer from "@/components/layout/navigation/Footer";
 export default {
   name: "App",
   components: {
-    SettingsDrawer,
+    DraftsDrawer,
     NavigationDrawer,
     AppBar,
     TransitionPage,
