@@ -4,7 +4,9 @@ import router from "./router/router.js";
 import store from "./store/store.js";
 import vuetify from "./plugins/vuetify";
 
-Vue.config.productionTip = false;
+//Filters for date's from db
+import { createDateFilter } from "vue-date-fns";
+Vue.filter("date", createDateFilter("MMM DD, YYYY"));
 
 new Vue({
   router,

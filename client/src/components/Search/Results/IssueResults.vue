@@ -11,8 +11,8 @@
         </v-card-text>
         <v-divider class="my-3"></v-divider>
         <v-card-actions class="text-center justify-space-between">
-          <v-btn color="primary" @click="addIssueToDraft(selected)"
-            >Select</v-btn
+          <v-btn color="success" @click="addIssueToDraft(selected)"
+            ><v-icon small class="mr-1">fa-plus</v-icon>Add</v-btn
           >
           <v-btn color="danger" @click="hideImageModal()">Cancel</v-btn>
         </v-card-actions>
@@ -38,7 +38,7 @@
 
       <template v-slot:item.title="{ item }">
         <div>{{ item.title }} | {{ item.fullIssue }}</div>
-        <div>{{ item.coverDate }} |{{ item.coverArtist }}</div>
+        <div>{{ item.coverDate | date }} |{{ item.coverArtist }}</div>
         <div>{{ item.storylines }}</div>
       </template>
 
@@ -73,13 +73,6 @@ import {
 } from "@/store/mutation-types.js";
 
 export default {
-  computed: {
-    ...mapState({
-      issues: state => state.issueSearch.items,
-      loading: state => state.issueSearch.loading,
-      draftIssues: state => state.currentDraft.issues
-    })
-  },
   data() {
     return {
       selected: false,
@@ -126,6 +119,13 @@ export default {
       ]
     };
   },
+  computed: {
+    ...mapState({
+      issues: state => state.issueSearch.items,
+      loading: state => state.issueSearch.loading,
+      draftIssues: state => state.currentDraft.issues
+    })
+  },
   methods: {
     makeImageUrl(item) {
       //// TODO: place this url in a config file
@@ -151,6 +151,7 @@ export default {
     },
     addIssueToDraft(item) {
       this.$store.commit(`currentDraft/${CURRENT_DRAFT_ISSUE_ADD}`, item);
+      this.hideImageModal();
     },
     removeIssueFromDraft(item) {
       this.$store.commit(`currentDraft/${CURRENT_DRAFT_ISSUE_REMOVE}`, item);

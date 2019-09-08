@@ -1,10 +1,20 @@
 <template>
   <v-container fluid>
-    <v-row no-gutters>
-      <v-col>
+    <div class="d-flex flex-row justify-space-between align-self-center">
+      <div class="d-flex flex-column align-self-center mr-4">
+        <v-btn color="primary" :to="'/input'">
+          <v-icon>fa-arrow-alt-circle-left</v-icon>
+        </v-btn>
+        <h5 class="text-center mt-2">
+          Return to <br />
+          Title Search
+        </h5>
+      </div>
+      <div class="d-flex grow align-center">
         <SelectedTitle></SelectedTitle>
-      </v-col>
-    </v-row>
+      </div>
+    </div>
+
     <v-row no-gutters>
       <v-divider class="my-3"></v-divider>
     </v-row>

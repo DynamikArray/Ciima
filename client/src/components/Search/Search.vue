@@ -19,7 +19,7 @@
 <script>
 import {
   SEARCH_TITLES,
-  SEARCH_ISSUES_RESULTS_CLEAR
+  SEARCH_TITLES_RESULTS_CLEAR
 } from "@/store/action-types.js";
 
 export default {
@@ -38,7 +38,7 @@ export default {
       }
       //clear our results set
       if (search.length == 0) {
-        this.$store.commit(`titleSearch/${SEARCH_RESULTS_CLEAR}`);
+        this.$store.commit(`titleSearch/${SEARCH_TITLES_RESULTS_CLEAR}`);
       }
     }
   }

@@ -11,7 +11,7 @@
       <v-tabs fixed-tabs>
         <v-tab key="current">
           <v-icon small name="cog" class="mr-1 mb-1">fas fa-list-alt</v-icon
-          >Current Item:
+          >Current Draft:
         </v-tab>
         <v-tab key="open">
           <v-icon small name="cog" class="mr-1 mb-1"
@@ -39,6 +39,11 @@ import CurrentDraft from "@/components/Drafts/CurrentDraft";
 import OpenDrafts from "@/components/Drafts/OpenDrafts";
 
 export default {
+  data() {
+    return {
+      drawerState: true
+    };
+  },
   components: {
     CurrentDraft,
     OpenDrafts
@@ -46,9 +51,7 @@ export default {
   props: {
     drawer: true
   },
-  data: () => ({
-    drawerState: true
-  }),
+
   watch: {
     drawer: function(val) {
       this.drawerState = val;
@@ -57,4 +60,4 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style></style>

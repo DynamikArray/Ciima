@@ -1,5 +1,5 @@
 <template>
-  <v-card v-if="title">
+  <v-card v-if="title" class="w-100">
     <v-card-title>
       <h3><span class="title mr-2">Title:</span>{{ title.title }}</h3>
     </v-card-title>
@@ -33,4 +33,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.w-100 {
+  width: 100%;
+}
+</style>
