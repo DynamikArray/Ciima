@@ -11,7 +11,9 @@
         </v-card-text>
         <v-divider class="my-3"></v-divider>
         <v-card-actions class="text-center justify-space-between">
-          <v-btn color="primary">Select</v-btn>
+          <v-btn color="primary" @click="addIssueToDraft(selected)"
+            >Select</v-btn
+          >
           <v-btn color="danger" @click="hideImageModal()">Cancel</v-btn>
         </v-card-actions>
       </v-card>
@@ -39,6 +41,23 @@
         <div>{{ item.coverDate }} |{{ item.coverArtist }}</div>
         <div>{{ item.storylines }}</div>
       </template>
+
+      <template v-slot:item.action="{ item }">
+        <div v-if="!inCurrentDraft(item)">
+          <v-btn color="success" class="mx-2" @click="addIssueToDraft(item)">
+            <v-icon>fa-plus-circle</v-icon>
+          </v-btn>
+        </div>
+        <div v-else>
+          <v-btn
+            color="danger"
+            class="mx-2"
+            @click="removeIssueFromDraft(item)"
+          >
+            <v-icon>fa-minus-circle</v-icon>
+          </v-btn>
+        </div>
+      </template>
     </v-data-table>
     <div v-else>
       <h3 class="text-center">No Issues</h3>
@@ -48,12 +67,17 @@
 
 <script>
 import { mapState } from "vuex";
+import {
+  CURRENT_DRAFT_ISSUE_ADD,
+  CURRENT_DRAFT_ISSUE_REMOVE
+} from "@/store/mutation-types.js";
 
 export default {
   computed: {
     ...mapState({
       issues: state => state.issueSearch.items,
-      loading: state => state.issueSearch.loading
+      loading: state => state.issueSearch.loading,
+      draftIssues: state => state.currentDraft.issues
     })
   },
   data() {
@@ -92,12 +116,19 @@ export default {
           value: "fullIssue",
           sortable: true,
           align: "center"
+        },
+        {
+          text: "Actions",
+          value: "action",
+          sortable: false,
+          align: "center"
         }
       ]
     };
   },
   methods: {
     makeImageUrl(item) {
+      //// TODO: place this url in a config file
       return `http://searchlightcomics.com/${item.imageUrl}`;
     },
     showImageModal(item) {
@@ -107,6 +138,22 @@ export default {
     },
     hideImageModal() {
       this.imagePopup = false;
+    },
+    inCurrentDraft(item) {
+      const drafts = this.draftIssues;
+      if (drafts.length > 0) {
+        const doesExist = drafts.some(el => {
+          return el.id === item.id;
+        });
+        return doesExist;
+      }
+      return false;
+    },
+    addIssueToDraft(item) {
+      this.$store.commit(`currentDraft/${CURRENT_DRAFT_ISSUE_ADD}`, item);
+    },
+    removeIssueFromDraft(item) {
+      this.$store.commit(`currentDraft/${CURRENT_DRAFT_ISSUE_REMOVE}`, item);
     }
   }
 };
