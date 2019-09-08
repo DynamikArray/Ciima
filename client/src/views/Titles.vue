@@ -1,14 +1,6 @@
 <template>
   <v-container fluid>
     <v-row no-gutters>
-      <v-col>
-        <h3>Input New Inventory Items</h3>
-      </v-col>
-    </v-row>
-    <v-row no-gutters>
-      <v-divider class="my-3"></v-divider>
-    </v-row>
-    <v-row no-gutters>
       <v-col class="text-center">
         <Search></Search>
       </v-col>

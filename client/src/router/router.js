@@ -16,7 +16,7 @@ export default new Router({
       path: "/titles",
       name: "titles",
       component: () =>
-        import(/*webpackChunkName: "titles"*/ "@/views/Input.vue")
+        import(/*webpackChunkName: "titles"*/ "@/views/Titles.vue")
     },
     {
       path: "/issues/:titleId",
@@ -24,6 +24,13 @@ export default new Router({
       name: "issues",
       component: () =>
         import(/*webpackChunkName: "issues"*/ "@/views/Issues.vue")
+    },
+    {
+      path: "/images",
+      props: true,
+      name: "images",
+      component: () =>
+        import(/*webpackChunkName: "images"*/ "@/views/Images.vue")
     },
     {
       path: "/about",

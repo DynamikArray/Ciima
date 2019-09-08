@@ -33,7 +33,7 @@
       </v-list>
       <v-divider></v-divider>
       <div class="pa-2 text-center">
-        <v-btn color="success" class="ml-4">
+        <v-btn color="success" class="ml-4" :to="'/images'">
           <v-icon class="mr-2">fa-image</v-icon> Create Image
         </v-btn>
         <p class="caption mt-1">
