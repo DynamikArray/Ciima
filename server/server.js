@@ -11,6 +11,10 @@ fastify.register(require("fastify-mysql"), {
   connectionString: process.env.MYSQL_CONN
 });
 
+fastify.register(require("fastify-cors"), {
+  // put your options here
+});
+
 //static build dir
 fastify.register(require("fastify-static"), {
   root: path.join(__dirname, "../client/dist"),
@@ -21,6 +25,7 @@ fastify.register(require("fastify-static"), {
 fastify.register(require("./routes/v1/info"), { prefix: "v1" });
 fastify.register(require("./routes/v1/titleSearch"), { prefix: "v1" });
 fastify.register(require("./routes/v1/issueSearch"), { prefix: "v1" });
+fastify.register(require("./routes/v1/imageFetch"), { prefix: "v1" });
 
 // Server
 const start = async () => {

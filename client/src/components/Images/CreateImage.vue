@@ -95,17 +95,21 @@ export default {
       this.gridRows = value;
     },
     handleOnClickLoadImages() {
-      const ctx = this.configureCanvas();
+      const canvas = this.configureCanvas();
+      let ctx = canvas.getContext("2d");
+
+      this.addDisclaimer(canvas);
       this.loadImagesGrid(ctx);
-      this.addDisclaimer();
+      //
+      //this.drawCanvasBackground(canvas);
     },
+    //
+    //
     handleOnClickSaveCanvas() {
-      console.log("SAVE THIS IMAGE?");
-      const canvas = this.$refs.imageCanvas;
-      const img = canvas.toDataURL("image/png");
-      console.log(img);
       this.handleImageUploading();
     },
+    //
+    //
     //
     //
     configureCanvas() {
@@ -127,8 +131,20 @@ export default {
       );
 
       //return the context object for this canvas
-      return canvas.getContext("2d");
+      return canvas;
     },
+    //
+    //
+    //
+    //
+    drawCanvasBackground(canvas) {
+      console.log("draw background");
+      let ctx = canvas.getContext("2d");
+      ctx.fillStyle = "green";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    },
+    //
+    //
     //
     //
     loadImagesGrid(ctx) {
@@ -141,19 +157,18 @@ export default {
       let x, y; //row, col location
       let z = 0; //issue counter
 
-      //forearch row
+      //forearch row/cols
       for (x = 0; x < rows; x++) {
-        //foreach col
         for (y = 0; y < cols; y++) {
-          //selected Issue Number
-          const issue = this.issues[z];
+          const issue = this.issues[z]; //selected Issue Number
           if (!issue) return false;
           this.handleImageLoading(issue, x, y, ctx);
-          //increase issue count
-          z++;
+          z++; //increase issue count
         } //for cols
       } //for rows
     },
+    //
+    //
     //
     //figures our how big each grid size is
     calculateGridItemSize() {
@@ -167,6 +182,8 @@ export default {
       //console.log(canvas.width, canvas.height, width, height);
       return { height, width };
     },
+    //
+    //
     /**
      * Conserve aspect ratio of the original region. Useful when shrinking/enlarging
      * images to fit into a certain area.
@@ -184,6 +201,8 @@ export default {
         height: Math.ceil(srcHeight * ratio)
       };
     },
+    //
+    //
     //
     //
     handleImageLoading(issue, x, y, ctx, z) {
@@ -220,36 +239,40 @@ export default {
       };
 
       //set img.src so the image loads
-      img.src = `http://searchlightcomics.com${imageUrl}`;
-      //img.setAttribute("crossorigin", "anonymous");
+      img.crossOrigin = "Anonymous";
+
+      //PROXY THIS URL THROUGH OUR API
+      img.src = `http://127.0.0.1:4200/v1/imageFetch?url=http://searchlightcomics.com${imageUrl}`;
     },
+    //
+    //
     //
     //
     drawImageGridLines(ctx, { height, width }, xPos, yPos) {
       ctx.beginPath();
       ctx.strokeStyle = "#000";
       ctx.lineWidth = 20;
-      //ctx.globalCompositeOperation = "source-over";
       ctx.rect(xPos, yPos, width, height);
       ctx.stroke();
     },
     //
     //
-    addDisclaimer() {
-      const disclaimerHeight = 100;
-      const canvas = this.$refs.imageCanvas;
-
-      let ctx = canvas.getContext("2d");
-      ctx.fillRect(0, canvas.height, canvas.width, disclaimerHeight);
+    //
+    //
+    addDisclaimer(canvas) {
+      const disclaimerHeight = 240;
       canvas.height = canvas.height + disclaimerHeight;
-      ctx.globalCompositeOperation = "source-over";
+      const ctx = canvas.getContext("2d");
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      //ctx.globalCompositeOperation = "source-over";
 
       ctx.font = "normal bold 60px Verdana";
       ctx.textAlign = "center";
+      ctx.fillStyle = "#EEE";
       ctx.fillText(
         "!!! Stock Cover Images Shown In Product Photos !!!",
         canvas.width / 2,
-        canvas.height - 25
+        canvas.height - 10
       );
     },
     //
@@ -259,13 +282,45 @@ export default {
       let ctx = canvas.getContext("2d");
       ctx.clearRect(0, 0, canvas.width, canvas.height);
     },
-    handleImageUploading() {}
+    //
+    //
+    handleImageUploading() {
+      const canvas = this.$refs.imageCanvas;
+      const img = canvas.toDataURL("image/png");
+
+      var unsignedUploadPreset = "ciima_unsigned";
+      var cloudName = "ciima"; //FPVLink rebrand
+      var url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload/`;
+
+      //
+      var xhr = new XMLHttpRequest();
+      var fd = new FormData();
+      xhr.open("POST", url, true);
+      //setProgress("uploadProgress", 0, "Uploading to the cloud...");
+      xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+
+      xhr.onreadystatechange = function(e) {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          // File uploaded successfully
+          var response = JSON.parse(xhr.responseText);
+          var url = response.secure_url;
+          console.log("Image SAVED to the cloud", url);
+          //setUploadImage(url);
+        }
+      };
+
+      fd.append("upload_preset", unsignedUploadPreset);
+      fd.append("tags", "browser_upload"); // Optional - add tag for image admin in Cloudinary
+      fd.append("file", img);
+
+      xhr.send(fd);
+    }
   }
 };
 </script>
 
 <style scoped>
 canvas.productImage {
-  background-color: #efefef;
+  background-color: grey;
 }
 </style>
