@@ -7,6 +7,8 @@ import {
   CURRENT_DRAFT_CLEAR,
   CURRENT_DRAFT_ISSUE_ADD,
   CURRENT_DRAFT_ISSUE_REMOVE,
+  CURRENT_DRAFT_TITLE_ADD,
+  CURRENT_DRAFT_TITLE_REMOVE,
   CURRENT_DRAFT_ISSUES_REORDER,
   CURRENT_DRAFT_COVER_PHOTO_SAVING,
   CURRENT_DRAFT_COVER_PHOTO_UPDATE,
@@ -17,12 +19,19 @@ const currentDraft = {
   namespaced: true,
 
   state: {
-    title: false,
     coverPhoto: false,
     savingCover: false,
+    titles: [],
     issues: []
   },
   mutations: {
+    //Clear all properties of draft
+    [CURRENT_DRAFT_CLEAR](state) {
+      state.coverPhoto = false;
+      state.issues = [];
+      state.titles = [];
+    },
+    //add issue to draft issues list
     [CURRENT_DRAFT_ISSUE_ADD](state, issue) {
       //const stateCopy = state.issues;
       const doesExist = state.issues.some(item => {
@@ -30,6 +39,7 @@ const currentDraft = {
       });
       if (!doesExist) state.issues = [...state.issues, issue];
     },
+    //remove issue to draft issues list
     [CURRENT_DRAFT_ISSUE_REMOVE](state, issue) {
       const stateCopy = state.issues;
       const filteredState = stateCopy.filter(item => {
@@ -40,11 +50,21 @@ const currentDraft = {
     [CURRENT_DRAFT_ISSUES_REORDER](state, issues) {
       state.issues = issues;
     },
-    [CURRENT_DRAFT_CLEAR](state) {
-      state.title = false;
-      state.coverPhoto = false;
-      state.issues = [];
+    [CURRENT_DRAFT_TITLE_ADD](state, title) {
+      //const stateCopy = state.issues;
+      const doesExist = state.titles.some(item => {
+        return item.titleId === title.titleId;
+      });
+      if (!doesExist) state.titles = [...state.titles, title];
     },
+    [CURRENT_DRAFT_TITLE_REMOVE](state, title) {
+      const stateCopy = state.titles;
+      const filteredState = stateCopy.filter(item => {
+        return item.titleId !== title.titleId;
+      });
+      state.titles = filteredState;
+    },
+
     [CURRENT_DRAFT_COVER_PHOTO_UPDATE](state, image) {
       state.coverPhoto = image;
     },

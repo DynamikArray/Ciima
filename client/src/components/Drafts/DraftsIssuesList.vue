@@ -4,7 +4,10 @@
       <v-list-item-title class="text-left">
         <div class="d-flex justify-space-around">
           <div class="d-flex grow justify-start">
-            <h2>{{ draftIssues.length }} Issues</h2>
+            <h2>
+              {{ draftIssues.length
+              }}<span class="subtitle-1 mx-1">Issues</span>
+            </h2>
           </div>
 
           <div class="d-flex grow justify-end align-self-center mr-4">

@@ -2,6 +2,11 @@
   <div class="">
     <v-expand-transition>
       <div v-if="draftIssues.length">
+        <div class="d-flex align-center flex-row justify-center grow">
+          <DraftTitlesList></DraftTitlesList>
+        </div>
+        <v-divider class="my-2"></v-divider>
+
         <div class="d-flex w-100 flex-row flex-wrap">
           <div class="d-flex align-center justify-center grow">
             <CurrentImage></CurrentImage>
@@ -11,7 +16,7 @@
           </div>
         </div>
 
-        <v-divider class="my-3"></v-divider>
+        <v-divider class="my-2"></v-divider>
 
         <div class="d-flex w-100 justify-end mb-3">
           <div class="d-flex mx-3">
@@ -45,9 +50,11 @@ import { mapState } from "vuex";
 
 import CurrentImage from "@/components/Drafts/CurrentImage";
 import DraftsIssuesList from "@/components/Drafts/DraftsIssuesList";
+import DraftTitlesList from "@/components/Drafts/DraftTitlesList";
 
 export default {
   components: {
+    DraftTitlesList,
     CurrentImage,
     DraftsIssuesList
   },
@@ -64,31 +71,6 @@ export default {
     }
   }
 };
-
-/*
-
-<v-card color="info">
-  <v-card-text>
-    <p>
-      Title: <b v-if="selectedTitle">{{ selectedTitle.title }}</b>
-    </p>
-    <p>
-      Publisher: <b v-if="selectedTitle">{{ selectedTitle.publisher }}</b>
-    </p>
-
-    <div v-if="draft.items">
-      <div v-for="item in draft.items">
-        <p>
-          {{ item.title }}
-        </p>
-      </div>
-    </div>
-  </v-card-text>
-</v-card>
-
-<v-divider class="my-3"></v-divider>
-
- */
 </script>
 
 <style scoped>

@@ -99,7 +99,8 @@
 import { mapState } from "vuex";
 import {
   CURRENT_DRAFT_ISSUE_ADD,
-  CURRENT_DRAFT_ISSUE_REMOVE
+  CURRENT_DRAFT_ISSUE_REMOVE,
+  CURRENT_DRAFT_TITLE_ADD
 } from "@/store/mutation-types.js";
 
 export default {
@@ -160,7 +161,8 @@ export default {
     ...mapState({
       issues: state => state.issueSearch.items,
       loading: state => state.issueSearch.loading,
-      draftIssues: state => state.currentDraft.issues
+      draftIssues: state => state.currentDraft.issues,
+      selectedTitle: state => state.titleSearch.selected
     })
   },
   methods: {
@@ -187,6 +189,10 @@ export default {
       return false;
     },
     addIssueToDraft(item) {
+      this.$store.commit(
+        `currentDraft/${CURRENT_DRAFT_TITLE_ADD}`,
+        this.selectedTitle.item
+      );
       this.$store.commit(`currentDraft/${CURRENT_DRAFT_ISSUE_ADD}`, item);
       this.hideImageModal();
     },
