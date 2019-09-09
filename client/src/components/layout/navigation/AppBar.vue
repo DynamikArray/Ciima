@@ -10,9 +10,8 @@
 
     <v-spacer></v-spacer>
 
-    Drafts:
-    <v-btn icon ripple small @click.stop="toggleSettingsDrawer">
-      <v-icon>fa-clipboard-list</v-icon>
+    <v-btn text ripple small @click.stop="toggleSettingsDrawer" class="mr-1">
+      <v-icon class="mr-2">fa-clipboard-list</v-icon>View Drafts
     </v-btn>
   </v-app-bar>
 </template>

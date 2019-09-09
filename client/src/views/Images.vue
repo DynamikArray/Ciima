@@ -1,11 +1,18 @@
 <template>
   <v-container fluid>
-    Build an image grid here on the canvas
+    <h1><v-icon class="mr-2"> fa-image </v-icon>Create Main Product Photo</h1>
+    <v-divider class="mb-3"></v-divider>
+    <CreateImage></CreateImage>
   </v-container>
 </template>
 
 <script>
-export default {};
+import CreateImage from "@/components/Images/CreateImage.vue";
+export default {
+  components: {
+    CreateImage
+  }
+};
 </script>
 
 <style scoped></style>

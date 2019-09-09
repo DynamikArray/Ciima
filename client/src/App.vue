@@ -78,3 +78,9 @@ export default {
   opacity: 0;
 }
 </style>
+
+<style>
+.w-100 {
+  width: 100%;
+}
+</style>

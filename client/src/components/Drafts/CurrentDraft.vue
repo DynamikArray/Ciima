@@ -10,7 +10,7 @@
         >
           <div class="d-flex flex-row w-100 justify-space-between">
             <div class="d-flex mr-3">
-              <v-img :src="makeImageUrl(issue)" width="20"></v-img>
+              <v-img :src="makeImageUrl(issue)" width="70"></v-img>
             </div>
             <div class="d-flex grow justify-start  align-self-center ">
               <div
