@@ -15,7 +15,7 @@
         <v-select
           solo
           :items="colOpts"
-          :value="gridRows"
+          :value="gridCols"
           label="Number of Columns"
           @change="handleOnChangeCols($event)"
         ></v-select>
@@ -24,19 +24,30 @@
         <v-select
           solo
           :items="rowOpts"
-          :value="gridCols"
+          :value="gridRows"
           label="Number of Rows"
           @change="handleOnChangeRows($event)"
         ></v-select>
       </div>
     </div>
 
-    <v-btn color="success" class="mx-3" @click="loadImagesGrid()"
-      >Load Images</v-btn
-    >
-    <v-btn color="warning" class="mx-3" @click="clearImageGridCanvas()"
-      >Reset Grid</v-btn
-    >
+    <div class="d-flex align-center w-100 justify-space-between ">
+      <div class="d-flex grow">
+        <v-btn color="success" class="mx-3" @click="handleOnClickSaveCanvas()"
+          >Save Image
+        </v-btn>
+      </div>
+      <div class="d-flex">
+        <v-btn color="primary" class="mx-3" @click="handleOnClickLoadImages()"
+          >Load Images</v-btn
+        >
+      </div>
+      <div class="d-flex">
+        <v-btn color="danger" class="mx-3" @click="clearImageGridCanvas()"
+          >Reset Grid</v-btn
+        >
+      </div>
+    </div>
   </div>
 </template>
 
@@ -46,23 +57,28 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      canvasHeight: 1575,
-      canvasWidth: 1035,
-      gridRows: 3,
-      gridCols: 3,
-      gridPadding: 5,
+      defaulImageSize: {
+        height: 1050,
+        width: 690
+      },
       rowOpts: [
         { text: "1 Row", value: 1 },
         { text: "2 Rows", value: 2 },
         { text: "3 Rows", value: 3 },
-        { text: "4 Rows", value: 4 }
+        { text: "4 Rows", value: 4 },
+        { text: "5 Rows", value: 5 }
       ],
       colOpts: [
         { text: "1 Column", value: 1 },
         { text: "2 Columns", value: 2 },
         { text: "3 Columns", value: 3 },
-        { text: "4 Columns", value: 4 }
-      ]
+        { text: "4 Columns", value: 4 },
+        { text: "5 Columns", value: 5 }
+      ],
+      gridRows: 2,
+      gridCols: 3,
+      canvasHeight: 0,
+      canvasWidth: 0
     };
   },
   computed: {
@@ -75,12 +91,24 @@ export default {
     handleOnChangeCols(value) {
       this.gridCols = value;
     },
-
     handleOnChangeRows(value) {
       this.gridRows = value;
     },
-
-    loadImagesGrid() {
+    handleOnClickLoadImages() {
+      const ctx = this.configureCanvas();
+      this.loadImagesGrid(ctx);
+      this.addDisclaimer();
+    },
+    handleOnClickSaveCanvas() {
+      console.log("SAVE THIS IMAGE?");
+      const canvas = this.$refs.imageCanvas;
+      const img = canvas.toDataURL("image/png");
+      console.log(img);
+      this.handleImageUploading();
+    },
+    //
+    //
+    configureCanvas() {
       //we first need to know our gird layout and there locations
       const rows = this.gridRows;
       const cols = this.gridCols;
@@ -88,106 +116,141 @@ export default {
 
       //get canvase and context objects
       const canvas = this.$refs.imageCanvas;
-      let ctx = canvas.getContext("2d");
+      const cHeight = this.gridRows * this.defaulImageSize.height;
+      const cWidth = this.gridCols * this.defaulImageSize.width;
+      //set our canvas properties
+      canvas.height = cHeight;
+      canvas.width = cWidth;
+      canvas.setAttribute(
+        "style",
+        `height: ${Math.ceil(cHeight / 4)}px; width: ${Math.ceil(cWidth / 4)}px`
+      );
+
+      //return the context object for this canvas
+      return canvas.getContext("2d");
+    },
+    //
+    //
+    loadImagesGrid(ctx) {
+      //we first need to know our gird layout and there locations
+      const rows = this.gridRows;
+      const cols = this.gridCols;
+      if (!rows && !cols) return false;
 
       //loop through our grid loctions then call image based off index we are on?
       let x, y; //row, col location
       let z = 0; //issue counter
+
       //forearch row
       for (x = 0; x < rows; x++) {
-        //foreach column
+        //foreach col
         for (y = 0; y < cols; y++) {
           //selected Issue Number
           const issue = this.issues[z];
           if (!issue) return false;
-          1;
           this.handleImageLoading(issue, x, y, ctx);
           //increase issue count
           z++;
         } //for cols
       } //for rows
     },
+    //
     //figures our how big each grid size is
     calculateGridItemSize() {
       if (!this.gridCols && !this.gridRows) return false;
       const canvas = this.$refs.imageCanvas;
 
-      const width = parseInt(canvas.width) / parseInt(this.gridCols);
-      const height = parseInt(canvas.height) / parseInt(this.gridRows);
+      const width = Math.ceil(parseInt(canvas.width) / parseInt(this.gridCols));
+      const height = Math.ceil(
+        parseInt(canvas.height) / parseInt(this.gridRows)
+      );
       //console.log(canvas.width, canvas.height, width, height);
       return { height, width };
     },
-    calcScaledImageSize(imgSize, gridSize) {
-      //console.log(imgSize, gridSize);
-      //get existing ratio
-      const ratio = imgSize.width / imgSize.height;
-      const target = { width: false, height: false };
-
-      target.width = gridSize.height * ratio;
-      target.height = gridSize.width * ratio;
-
-      //console.log(ratio, target.width, target.height);
-      /*
-      if (wRatio > 1) {
-        target.width = gridSize.height * wRatio;
-        //target.height = gridSize.width * ratio;
-      } else {
-        //target.height = gridSize.width / ratio;
-        target.width = gridSize.height / wRatio;
-      }
-
-      if (hRatio > 1) {
-        target.height = gridSize.width * hRatio;
-      } else {
-        target.height = gridSize.width / hRatio;
-      } */
-
-      //console.log(hRatio, wRatio, target);
-      return { target };
+    /**
+     * Conserve aspect ratio of the original region. Useful when shrinking/enlarging
+     * images to fit into a certain area.
+     *
+     * @param {Number} srcWidth width of source image
+     * @param {Number} srcHeight height of source image
+     * @param {Number} maxWidth maximum available width
+     * @param {Number} maxHeight maximum available height
+     * @return {Object} { width, height }
+     */
+    calculateAspectRatioFit(srcWidth, srcHeight, maxWidth, maxHeight) {
+      var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
+      return {
+        width: Math.ceil(srcWidth * ratio),
+        height: Math.ceil(srcHeight * ratio)
+      };
     },
-
+    //
+    //
     handleImageLoading(issue, x, y, ctx, z) {
-      //console.log("Row:", x, "at Col:", y);
-      const calcScaledImageSize = this.calcScaledImageSize; //local instance of method
+      const calculateAspectRatioFit = this.calculateAspectRatioFit;
+      const drawImageGridLines = this.drawImageGridLines;
+
+      //get our grid size
       const gridItemSize = this.calculateGridItemSize(); //figure out our grid size
 
-      //console.log(gridItemSize);
-
-      //image object
+      //creat image object
       const imageUrl = issue.imageUrl;
       const img = new Image();
 
       //creatOnLoad Handler
       img.onload = function() {
-        const imgSize = calcScaledImageSize(
-          {
-            height: img.height,
-            width: img.width
-          },
-          gridItemSize
+        const resized = calculateAspectRatioFit(
+          img.width,
+          img.height,
+          gridItemSize.width,
+          gridItemSize.height
         );
 
-        console.log(gridItemSize.height, gridItemSize.width);
+        const xPos = gridItemSize.width * y;
+        const yPos = gridItemSize.height * x;
 
-        const xPos = gridItemSize.height * x;
-        const yPos = gridItemSize.width * y;
+        //drawgrid lines
+        drawImageGridLines(ctx, resized, xPos, yPos);
 
-        //const tWidth = imgSize.target.width;
-        //const tHeight = imgSize.target.height;
-        //
-        //scale the image
-        //this.width = imgSize.target.width;
-        //this.height = imgSize.target.height;
-        //console.log("DRAW IMAGE", x, y, xPos, yPos, this);
-        //console.log("Row:", x, "Location:", xPos, "Col:", y, "Location:", yPos);
-        //        console.log(xPos, yPos);
-
-        ctx.drawImage(this, yPos, xPos);
-        //ctx.drawImage(this, xPos, yPos, imgSize.width, imgSize.height);
+        //draw images
+        const padding = 40;
+        const rWidth = resized.width - padding;
+        const rHeight = resized.height - padding;
+        ctx.drawImage(this, xPos + 20, yPos + 20, rWidth, rHeight);
       };
 
       //set img.src so the image loads
       img.src = `http://searchlightcomics.com${imageUrl}`;
+      //img.setAttribute("crossorigin", "anonymous");
+    },
+    //
+    //
+    drawImageGridLines(ctx, { height, width }, xPos, yPos) {
+      ctx.beginPath();
+      ctx.strokeStyle = "#000";
+      ctx.lineWidth = 20;
+      //ctx.globalCompositeOperation = "source-over";
+      ctx.rect(xPos, yPos, width, height);
+      ctx.stroke();
+    },
+    //
+    //
+    addDisclaimer() {
+      const disclaimerHeight = 100;
+      const canvas = this.$refs.imageCanvas;
+
+      let ctx = canvas.getContext("2d");
+      ctx.fillRect(0, canvas.height, canvas.width, disclaimerHeight);
+      canvas.height = canvas.height + disclaimerHeight;
+      ctx.globalCompositeOperation = "source-over";
+
+      ctx.font = "normal bold 60px Verdana";
+      ctx.textAlign = "center";
+      ctx.fillText(
+        "!!! Stock Cover Images Shown In Product Photos !!!",
+        canvas.width / 2,
+        canvas.height - 25
+      );
     },
     //
     //
@@ -195,15 +258,14 @@ export default {
       const canvas = this.$refs.imageCanvas;
       let ctx = canvas.getContext("2d");
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-    }
+    },
+    handleImageUploading() {}
   }
 };
 </script>
 
 <style scoped>
 canvas.productImage {
-  height: calc(1575px / 3.5);
-  width: calc(1035px / 3.5);
-  background-color: #eee;
+  background-color: #efefef;
 }
 </style>
