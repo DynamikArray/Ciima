@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-2">
+  <div class="">
     <v-expand-transition>
       <div v-if="draftIssues.length">
         <div class="d-flex w-100 flex-row flex-wrap">
@@ -28,13 +28,15 @@
       </div>
     </v-expand-transition>
 
-    <div v-if="!draftIssues.length" class="text-center">
-      <v-card>
-        <v-card-text class="text-center">
-          <h1 class="display-1">No Issues Selected</h1>
-        </v-card-text>
-      </v-card>
-    </div>
+    <v-expand-transition>
+      <div v-if="!draftIssues.length" class="text-center">
+        <v-card>
+          <v-card-text class="text-center">
+            <h1 class="display-1">No Issues Selected</h1>
+          </v-card-text>
+        </v-card>
+      </div>
+    </v-expand-transition>
   </div>
 </template>
 

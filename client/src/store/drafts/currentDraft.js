@@ -4,9 +4,11 @@ Vue.use(Vuex);
 
 import {} from "@/store/action-types";
 import {
+  CURRENT_DRAFT_CLEAR,
   CURRENT_DRAFT_ISSUE_ADD,
   CURRENT_DRAFT_ISSUE_REMOVE,
-  CURRENT_DRAFT_CLEAR,
+  CURRENT_DRAFT_ISSUES_REORDER,
+  CURRENT_DRAFT_COVER_PHOTO_SAVING,
   CURRENT_DRAFT_COVER_PHOTO_UPDATE,
   CURRENT_DRAFT_COVER_PHOTO_CLEAR
 } from "@/store/mutation-types";
@@ -17,6 +19,7 @@ const currentDraft = {
   state: {
     title: false,
     coverPhoto: false,
+    savingCover: false,
     issues: []
   },
   mutations: {
@@ -34,6 +37,9 @@ const currentDraft = {
       });
       state.issues = filteredState;
     },
+    [CURRENT_DRAFT_ISSUES_REORDER](state, issues) {
+      state.issues = issues;
+    },
     [CURRENT_DRAFT_CLEAR](state) {
       state.title = false;
       state.coverPhoto = false;
@@ -44,6 +50,9 @@ const currentDraft = {
     },
     [CURRENT_DRAFT_COVER_PHOTO_CLEAR](state) {
       state.coverPhoto = false;
+    },
+    [CURRENT_DRAFT_COVER_PHOTO_SAVING](state, data) {
+      state.savingCover = data;
     }
   },
   actions: {}

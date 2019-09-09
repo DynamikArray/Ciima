@@ -16,16 +16,22 @@
     <div v-if="draft.coverPhoto" class="d-flex justify-center mt-6">
       <div v-if="draft.coverPhoto" class="d-flex flex-column">
         <div class="d-flex justify-center my-3">
-          <v-img
-            :src="draft.coverPhoto"
-            width="240"
-            class="d-flex shrink"
-          ></v-img>
+          <div v-if="draft.savingCover">
+            <v-icon color="warning" x-large>fas fa-circle-notch fa-spin</v-icon>
+          </div>
+          <div v-if="!draft.savingCover">
+            <v-img
+              :src="draft.coverPhoto"
+              width="240"
+              class="d-flex shrink"
+            ></v-img>
+          </div>
         </div>
 
         <div class="d-flex justify-center my-3">
           <div class="mx-4">
             <v-btn
+              :disabled="draft.savingCover"
               v-if="draft.coverPhoto"
               success
               color="warning"
@@ -36,6 +42,7 @@
           </div>
           <div class="mx-4">
             <v-btn
+              :disabled="draft.savingCover"
               v-if="draft.coverPhoto"
               success
               color="red"

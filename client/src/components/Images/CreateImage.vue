@@ -73,7 +73,12 @@
         </v-btn>
       </div>
       <div class="d-flex">
-        <v-btn color="success" class="mx-3" @click="handleOnClickSaveCanvas()">
+        <v-btn
+          :loading="savingCover"
+          color="success"
+          class="mx-3"
+          @click="handleOnClickSaveCanvas()"
+        >
           <v-icon class="mr-1">fa-cloud-upload-alt</v-icon>Save Image
         </v-btn>
       </div>
@@ -85,7 +90,8 @@
 import { mapState } from "vuex";
 import {
   CURRENT_DRAFT_COVER_PHOTO_UPDATE,
-  CURRENT_DRAFT_COVER_PHOTO_CLEAR
+  CURRENT_DRAFT_COVER_PHOTO_CLEAR,
+  CURRENT_DRAFT_COVER_PHOTO_SAVING
 } from "@/store/mutation-types.js";
 
 export default {
@@ -118,6 +124,7 @@ export default {
   },
   computed: {
     ...mapState({
+      savingCover: state => state.currentDraft.savingCover,
       issues: state => state.currentDraft.issues
     })
   },
@@ -278,7 +285,7 @@ export default {
       img.crossOrigin = "Anonymous";
 
       //PROXY THIS URL THROUGH OUR API
-      img.src = `http://127.0.0.1:4200/v1/imageFetch?url=http://searchlightcomics.com${imageUrl}`;
+      img.src = `/v1/imageFetch?url=http://searchlightcomics.com${imageUrl}`;
     },
     //
     //
@@ -336,7 +343,12 @@ export default {
       var xhr = new XMLHttpRequest();
       var fd = new FormData();
       xhr.open("POST", url, true);
-      //setProgress("uploadProgress", 0, "Uploading to the cloud...");
+
+      _this.$store.commit(
+        `currentDraft/${CURRENT_DRAFT_COVER_PHOTO_SAVING}`,
+        true
+      );
+
       xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
 
       xhr.onreadystatechange = function(e) {
@@ -348,6 +360,10 @@ export default {
           _this.$store.commit(
             `currentDraft/${CURRENT_DRAFT_COVER_PHOTO_UPDATE}`,
             url
+          );
+          _this.$store.commit(
+            `currentDraft/${CURRENT_DRAFT_COVER_PHOTO_SAVING}`,
+            false
           );
         }
       };
