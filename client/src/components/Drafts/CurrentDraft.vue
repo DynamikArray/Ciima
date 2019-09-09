@@ -21,7 +21,7 @@
         <div class="d-flex w-100 justify-end mb-3">
           <div class="d-flex mx-3">
             <v-btn color="red" @click="clearAllDraftIssues()"
-              ><v-icon class="mr-1">fa-redo</v-icon>Reset</v-btn
+              ><v-icon class="mr-2">fa-redo</v-icon>Reset</v-btn
             >
           </div>
         </div>
