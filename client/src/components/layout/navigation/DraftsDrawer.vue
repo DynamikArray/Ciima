@@ -9,7 +9,7 @@
   >
     <div>
       <v-tabs fixed-tabs>
-        <v-tab key="current">
+        <v-tab key="current" class="text-white">
           <v-icon small name="cog" class="mr-1 mb-1">fas fa-list-alt</v-icon
           >Current Draft:
         </v-tab>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="">
     <v-data-table
       v-if="titleResults"
       :headers="headers"
@@ -16,8 +16,15 @@
         </v-btn>
       </template>
     </v-data-table>
-    <div v-else>
-      <h3 class="text-center">No Titles</h3>
+    <div v-else class="d-flex h-100 w-100 justify-center">
+      <div class="">
+        <h3 class="title text-center">
+          Search for Issues using the textbox located above.
+        </h3>
+        <p>
+          Hotkeys & shortcuts coming next.
+        </p>
+      </div>
     </div>
   </div>
 </template>

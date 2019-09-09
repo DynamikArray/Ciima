@@ -26,6 +26,7 @@
       :loading="loading"
       loading-text="Searching Database"
       :items-per-page="50"
+      :custom-filter="customFilter"
     >
       <template v-slot:item.imageUrl="{ item }">
         <img
@@ -37,9 +38,42 @@
       </template>
 
       <template v-slot:item.title="{ item }">
-        <div>{{ item.title }} | {{ item.fullIssue }}</div>
-        <div>{{ item.coverDate | date }} |{{ item.coverArtist }}</div>
-        <div>{{ item.storylines }}</div>
+        <div class="d-flex flex-row justify-start align-center">
+          <div class="d-flex flex-column grow flex-wrap ">
+            <div class="d-flex">
+              <h3 class="title">{{ item.title }}</h3>
+            </div>
+            <div class="d-flex">
+              <v-chip
+                small
+                label
+                color="blue darken-1"
+                text-color="white"
+                class="mr-3"
+              >
+                <v-icon small class="mr-2">fa-calendar-alt</v-icon>
+                <div>
+                  {{ item.coverDate | date }}
+                </div>
+              </v-chip>
+              <v-chip
+                small
+                label
+                color="grey darken-1"
+                text-color="white"
+                class="mr-3"
+              >
+                <v-icon small class="mr-2">fa-user-edit</v-icon>
+                <div>
+                  {{ item.coverArtist }}
+                </div>
+              </v-chip>
+            </div>
+          </div>
+          <div class="d-flex mr-2">
+            <h3 class="display-2">{{ item.fullIssue }}</h3>
+          </div>
+        </div>
       </template>
 
       <template v-slot:item.action="{ item }">
@@ -71,6 +105,7 @@ import {
 export default {
   data() {
     return {
+      search: "",
       selected: false,
       imageSrc: false,
       imagePopup: false,
@@ -88,11 +123,15 @@ export default {
           sortable: true,
           align: "left"
         },
+        /*
         {
           text: "Variant",
           value: "variation",
           sortable: true,
-          align: "center"
+          align: "center",
+          filter: value => {
+            return true;
+          }
         },
         {
           text: "Printing",
@@ -106,6 +145,7 @@ export default {
           sortable: true,
           align: "center"
         },
+        */
         {
           text: "Actions",
           value: "action",
@@ -115,6 +155,7 @@ export default {
       ]
     };
   },
+  created() {},
   computed: {
     ...mapState({
       issues: state => state.issueSearch.items,
@@ -151,7 +192,8 @@ export default {
     },
     removeIssueFromDraft(item) {
       this.$store.commit(`currentDraft/${CURRENT_DRAFT_ISSUE_REMOVE}`, item);
-    }
+    },
+    customFilter() {}
   }
 };
 </script>

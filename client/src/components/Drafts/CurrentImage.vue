@@ -1,9 +1,16 @@
 <template>
-  <div class="" v-if="draftIssues.length">
-    <div v-if="!draft.coverPhoto" class="d-flex justify-center">
-      <v-btn success color="success" :to="'/images'">
-        <v-icon class="mr-2">fa-image</v-icon>Create
-      </v-btn>
+  <div class="d-flex justify-center" v-if="draftIssues.length">
+    <div v-if="!draft.coverPhoto" class="d-flex-column justify-center">
+      <div class="d-flex justify-center">
+        <v-btn success color="success" :to="'/images'">
+          <v-icon class="mr-2">fa-image</v-icon>Create
+        </v-btn>
+      </div>
+      <div class="d-flex justify-center small" style="width:240px">
+        <h4 class="my-3 text-center">
+          Create a product photo from the selected images
+        </h4>
+      </div>
     </div>
 
     <div v-if="draft.coverPhoto" class="d-flex justify-center mt-6">

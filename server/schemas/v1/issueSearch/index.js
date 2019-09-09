@@ -19,7 +19,7 @@ module.exports = {
             properties: {
               id: { type: "number" },
               title: { type: "string" },
-              issueNum: { type: "number" },
+              issueNumber: { type: "number" },
               issueOrder: { type: "string" },
               variation: { type: "string" },
               printing: { type: "number" },

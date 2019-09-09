@@ -4,7 +4,6 @@
       <div class="mr-3 grow">
         <v-select
           solo
-          dense
           hide-details
           :items="colOpts"
           :value="gridCols"
@@ -15,7 +14,6 @@
       <div class="ml-3 grow">
         <v-select
           solo
-          dense
           hide-details
           :items="rowOpts"
           :value="gridRows"
@@ -26,25 +24,49 @@
     </div>
 
     <div class="d-flex align-center w-100 justify-space-around ">
-      <div class="d-flex justify-center">
+      <div v-if="issues.length" class="d-flex justify-center">
         <v-btn color="primary" @click="handleOnClickLoadImages()">
           <v-icon class="mr-1">fa-th</v-icon>Build Photo</v-btn
         >
       </div>
+      <div v-if="!issues.length" class="d-flex justify-center">
+        <v-card class="mt-5">
+          <v-card-title>
+            <h2>No Issues Selected</h2>
+          </v-card-title>
+          <v-card-text>
+            <h3 class="p-4 m-4 text-left">
+              <v-icon large class="mb-1 mr-1">fa-info-circle</v-icon>
+              You must first select issues and add them to your current draft.
+              All issues in the current draft will be added to the Prodcut Photo
+              in the order they are listed.
+            </h3>
+          </v-card-text>
+          <v-card-actions class="justify-end">
+            <v-btn color="success" :to="'titles'">
+              <v-icon class="mr-1">fa-search</v-icon>Search Titles</v-btn
+            >
+          </v-card-actions>
+        </v-card>
+      </div>
     </div>
 
-    <v-divider class="my-3"></v-divider>
-    <canvas
-      class="productImage"
-      ref="imageCanvas"
-      id="productImage"
-      :width="canvasWidth"
-      :height="canvasHeight"
-    ></canvas>
+    <div>
+      <v-divider class="my-3"></v-divider>
+      <canvas
+        class="productImage"
+        ref="imageCanvas"
+        id="productImage"
+        :width="canvasWidth"
+        :height="canvasHeight"
+      ></canvas>
+      <v-divider class="my-3"></v-divider>
+    </div>
 
-    <v-divider class="my-3"></v-divider>
-
-    <div class="d-flex align-center w-100 justify-space-between ">
+    <div
+      v-if="!canvasClean"
+      class="d-flex align-center w-100 justify-space-between "
+    >
       <div class="d-flex">
         <v-btn color="red" @click="clearImageGridCanvas()">
           <v-icon class="mr-1">fa-times-circle</v-icon>Reset Image
@@ -69,6 +91,7 @@ import {
 export default {
   data() {
     return {
+      canvasClean: true,
       defaulImageSize: {
         height: 1050,
         width: 690
@@ -107,6 +130,7 @@ export default {
       this.gridRows = value;
     },
     handleOnClickLoadImages() {
+      this.canvasClean = false;
       const canvas = this.configureCanvas();
       let ctx = canvas.getContext("2d");
 
@@ -294,6 +318,7 @@ export default {
       let ctx = canvas.getContext("2d");
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       this.$store.commit(`currentDraft/${CURRENT_DRAFT_COVER_PHOTO_CLEAR}`);
+      this.canvasClean = true;
     },
     //
     //

@@ -1,10 +1,39 @@
 <template>
-  <div class="d-flex w-100">
-    <div class="d-flex align-center justify-center grow">
-      <CurrentImage></CurrentImage>
-    </div>
-    <div class="d-flex align-center justify-center grow">
-      <DraftsIssuesList></DraftsIssuesList>
+  <div class="mt-2">
+    <v-expand-transition>
+      <div v-if="draftIssues.length">
+        <div class="d-flex w-100 flex-row flex-wrap">
+          <div class="d-flex align-center justify-center grow">
+            <CurrentImage></CurrentImage>
+          </div>
+          <div class="d-flex align-center justify-center grow">
+            <DraftsIssuesList></DraftsIssuesList>
+          </div>
+        </div>
+
+        <v-divider class="my-3"></v-divider>
+
+        <div class="d-flex w-100 justify-end mb-3">
+          <div class="d-flex mx-3">
+            <v-btn color="primary" @click=""
+              ><v-icon class="mr-1">fa-save </v-icon>Save</v-btn
+            >
+          </div>
+          <div class="d-flex mx-3">
+            <v-btn color="red" @click="clearAllDraftIssues()"
+              ><v-icon class="mr-1">fa-trash</v-icon>Delete</v-btn
+            >
+          </div>
+        </div>
+      </div>
+    </v-expand-transition>
+
+    <div v-if="!draftIssues.length" class="text-center">
+      <v-card>
+        <v-card-text class="text-center">
+          <h1 class="display-1">No Issues Selected</h1>
+        </v-card-text>
+      </v-card>
     </div>
   </div>
 </template>

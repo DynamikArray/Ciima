@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container class="h-100-force">
     <v-row no-gutters>
       <v-col class="text-center">
         <Search></Search>
