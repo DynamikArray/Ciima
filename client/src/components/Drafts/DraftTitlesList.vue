@@ -1,7 +1,7 @@
 <template>
   <div class="w-100">
     <div v-if="titles.length" class="w-100">
-      <div class="d-flex justify-space-between">
+      <div class="d-flex justify-space-between blue titlesHeader">
         <div class="d-flex flex grow align-center ml-2">
           <h2>{{ titles.length }}<span class="subtitle-1">Titles</span></h2>
         </div>
@@ -13,7 +13,7 @@
         </div>
       </div>
 
-      <v-divider class="my-1"></v-divider>
+      <v-divider class="mb-1"></v-divider>
 
       <v-scroll-y-transition group>
         <div
@@ -56,4 +56,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.titlesHeader {
+  border-radius: 4px 4px 0 0;
+}
+</style>

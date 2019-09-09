@@ -71,7 +71,9 @@
             </div>
           </div>
           <div class="d-flex mr-2">
-            <h3 class="display-2">{{ item.fullIssue }}</h3>
+            <h3 class="display-2" style="font-size: 2.25em !important">
+              {{ item.fullIssue }}
+            </h3>
           </div>
         </div>
       </template>
@@ -84,7 +86,7 @@
         </div>
         <div v-else>
           <v-btn color="red" class="mx-2" @click="removeIssueFromDraft(item)">
-            <v-icon>fa-minus-circle</v-icon>
+            <v-icon>fa-times-circle</v-icon>
           </v-btn>
         </div>
       </template>
