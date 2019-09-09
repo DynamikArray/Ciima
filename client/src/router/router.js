@@ -19,7 +19,7 @@ export default new Router({
         import(/*webpackChunkName: "titles"*/ "@/views/Titles.vue")
     },
     {
-      path: "/issues/:titleId",
+      path: "/issues/:titleId?",
       props: true,
       name: "issues",
       component: () =>
@@ -31,12 +31,6 @@ export default new Router({
       name: "images",
       component: () =>
         import(/*webpackChunkName: "images"*/ "@/views/Images.vue")
-    },
-    {
-      path: "/about",
-      name: "about",
-      component: () =>
-        import(/* webpackChunkName: "about" */ "@/views/About.vue")
     }
   ]
 });

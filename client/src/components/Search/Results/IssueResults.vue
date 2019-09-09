@@ -14,7 +14,7 @@
           <v-btn color="success" @click="addIssueToDraft(selected)"
             ><v-icon small class="mr-1">fa-plus</v-icon>Add</v-btn
           >
-          <v-btn color="danger" @click="hideImageModal()">Cancel</v-btn>
+          <v-btn color="warning" @click="hideImageModal()">Cancel</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -49,11 +49,7 @@
           </v-btn>
         </div>
         <div v-else>
-          <v-btn
-            color="danger"
-            class="mx-2"
-            @click="removeIssueFromDraft(item)"
-          >
+          <v-btn color="red" class="mx-2" @click="removeIssueFromDraft(item)">
             <v-icon>fa-minus-circle</v-icon>
           </v-btn>
         </div>

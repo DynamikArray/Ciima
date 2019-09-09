@@ -1,31 +1,18 @@
 <template>
   <v-container fluid>
-    <v-row no-gutters>
-      <v-col>
-        <h1>
-          C<span class="subtitle-1">omic</span> I<span class="subtitle-1"
-            >ssues</span
-          >
-          I<span class="subtitle-1">nventory</span> M<span class="subtitle-1"
-            >anagement</span
-          >
-          A<span class="subtitle-1">pplication</span>
-        </h1>
-      </v-col>
-    </v-row>
-    <v-row no-gutters>
-      <v-divider></v-divider>
-    </v-row>
-    <v-row no-gutters>
-      <v-col cols="12" align-self="stretch">
-        <h3>Get Started!</h3>
-      </v-col>
-    </v-row>
+    <div class="about text-center">
+      <h1 class="display-4">CiiMA</h1>
+      <v-divider class="my-4"></v-divider>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <v-divider class="my-4"></v-divider>
+      <h3>
+        Brian Ridsdale
+      </h3>
+      <h4>2019 Monumentix Web Design, LLC</h4>
+    </div>
   </v-container>
 </template>
-
-<script>
-export default {
-  components: {}
-};
-</script>

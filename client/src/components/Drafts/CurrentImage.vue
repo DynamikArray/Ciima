@@ -31,7 +31,7 @@
             <v-btn
               v-if="draft.coverPhoto"
               success
-              color="danger"
+              color="red"
               @click="deleteImagePhoto()"
             >
               <v-icon class="mr-2">fa-times-circle</v-icon>Delete

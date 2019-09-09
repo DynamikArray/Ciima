@@ -20,7 +20,7 @@
         </v-tab>
         <v-tab-item key="current">
           <div class="ma-3">
-            <v-card elevation="10" outlined>
+            <v-card elevation="10" outlined class="grey darken-4">
               <CurrentDraft></CurrentDraft>
             </v-card>
           </div>

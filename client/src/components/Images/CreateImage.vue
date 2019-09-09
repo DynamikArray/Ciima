@@ -1,5 +1,39 @@
 <template>
   <div class="text-center">
+    <div class="d-flex align-center w-100 justify-space-around mb-2">
+      <div class="mr-3 grow">
+        <v-select
+          solo
+          dense
+          hide-details
+          :items="colOpts"
+          :value="gridCols"
+          label="Number of Columns"
+          @change="handleOnChangeCols($event)"
+        ></v-select>
+      </div>
+      <div class="ml-3 grow">
+        <v-select
+          solo
+          dense
+          hide-details
+          :items="rowOpts"
+          :value="gridRows"
+          label="Number of Rows"
+          @change="handleOnChangeRows($event)"
+        ></v-select>
+      </div>
+    </div>
+
+    <div class="d-flex align-center w-100 justify-space-around ">
+      <div class="d-flex justify-center">
+        <v-btn color="primary" @click="handleOnClickLoadImages()">
+          <v-icon class="mr-1">fa-th</v-icon>Build Photo</v-btn
+        >
+      </div>
+    </div>
+
+    <v-divider class="my-3"></v-divider>
     <canvas
       class="productImage"
       ref="imageCanvas"
@@ -10,42 +44,16 @@
 
     <v-divider class="my-3"></v-divider>
 
-    <div class="d-flex align-center w-100 justify-space-around ">
-      <div class="mx-3 grow">
-        <v-select
-          solo
-          :items="colOpts"
-          :value="gridCols"
-          label="Number of Columns"
-          @change="handleOnChangeCols($event)"
-        ></v-select>
-      </div>
-      <div class="mx-3 grow">
-        <v-select
-          solo
-          :items="rowOpts"
-          :value="gridRows"
-          label="Number of Rows"
-          @change="handleOnChangeRows($event)"
-        ></v-select>
-      </div>
-    </div>
-
     <div class="d-flex align-center w-100 justify-space-between ">
-      <div class="d-flex grow">
-        <v-btn color="success" class="mx-3" @click="handleOnClickSaveCanvas()"
-          >Save Image
+      <div class="d-flex">
+        <v-btn color="red" @click="clearImageGridCanvas()">
+          <v-icon class="mr-1">fa-times-circle</v-icon>Reset Image
         </v-btn>
       </div>
       <div class="d-flex">
-        <v-btn color="primary" class="mx-3" @click="handleOnClickLoadImages()"
-          >Load Images</v-btn
-        >
-      </div>
-      <div class="d-flex">
-        <v-btn color="danger" class="mx-3" @click="clearImageGridCanvas()"
-          >Reset Grid</v-btn
-        >
+        <v-btn color="success" class="mx-3" @click="handleOnClickSaveCanvas()">
+          <v-icon class="mr-1">fa-cloud-upload-alt</v-icon>Save Image
+        </v-btn>
       </div>
     </div>
   </div>

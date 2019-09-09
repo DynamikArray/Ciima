@@ -37,6 +37,9 @@ export default {
   props: {
     titleId: [Number, String]
   },
+  created() {
+    console.log(this.titleId);
+  },
   components: {
     SelectedTitle,
     IssueResults

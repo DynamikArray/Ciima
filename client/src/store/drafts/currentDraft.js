@@ -6,6 +6,7 @@ import {} from "@/store/action-types";
 import {
   CURRENT_DRAFT_ISSUE_ADD,
   CURRENT_DRAFT_ISSUE_REMOVE,
+  CURRENT_DRAFT_CLEAR,
   CURRENT_DRAFT_COVER_PHOTO_UPDATE,
   CURRENT_DRAFT_COVER_PHOTO_CLEAR
 } from "@/store/mutation-types";
@@ -32,6 +33,11 @@ const currentDraft = {
         return item.id !== issue.id;
       });
       state.issues = filteredState;
+    },
+    [CURRENT_DRAFT_CLEAR](state) {
+      state.title = false;
+      state.coverPhoto = false;
+      state.issues = [];
     },
     [CURRENT_DRAFT_COVER_PHOTO_UPDATE](state, image) {
       state.coverPhoto = image;

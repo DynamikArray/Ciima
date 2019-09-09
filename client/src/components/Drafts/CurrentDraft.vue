@@ -11,7 +11,7 @@
 
 <script>
 import { mapState } from "vuex";
-import { CURRENT_DRAFT_ISSUE_REMOVE } from "@/store/mutation-types.js";
+
 import CurrentImage from "@/components/Drafts/CurrentImage";
 import DraftsIssuesList from "@/components/Drafts/DraftsIssuesList";
 
@@ -30,9 +30,6 @@ export default {
     makeImageUrl(item) {
       //// TODO: place this url in a config file
       return `http://searchlightcomics.com/${item.imageUrl}`;
-    },
-    removeDraft(item) {
-      this.$store.commit(`currentDraft/${CURRENT_DRAFT_ISSUE_REMOVE}`, item);
     }
   }
 };
