@@ -4,7 +4,7 @@
     app
     clipped
     right
-    width="40%"
+    width="50%"
     mobile-break-point="960"
   >
     <div>
@@ -13,18 +13,22 @@
           <v-icon small name="cog" class="mr-1 mb-1">fas fa-list-alt</v-icon
           >Current Draft:
         </v-tab>
-        <v-tab key="open">
+        <v-tab key="open" icon="fas fa-clipboard-list">
           <v-icon small name="cog" class="mr-1 mb-1"
             >fas fa-clipboard-list</v-icon
-          >Open Drafts:
+          >Open Drafts
         </v-tab>
         <v-tab-item key="current">
-          <CurrentDraft></CurrentDraft>
+          <div class="ma-3">
+            <v-card elevation="10" outlined>
+              <CurrentDraft></CurrentDraft>
+            </v-card>
+          </div>
         </v-tab-item>
         <v-tab-item key="open">
-          <v-card>
+          <v-card class="ma-3">
             <v-card-text>
-              OPEN ITEMS
+              OPEN TP ITEMS
             </v-card-text>
           </v-card>
         </v-tab-item>

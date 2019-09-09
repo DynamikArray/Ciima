@@ -8,7 +8,8 @@ export default new Vuetify({
   theme: {
     options: {
       customProperties: true
-    },
+    }
+    /*
     themes: {
       light: {
         primary: "#ee44aa",
@@ -19,7 +20,7 @@ export default new Vuetify({
         success: "#4CAF50",
         warning: "#FFC107"
       }
-    }
+    }*/
   },
   icons: {
     iconfont: "fa"

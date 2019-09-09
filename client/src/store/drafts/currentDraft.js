@@ -5,7 +5,9 @@ Vue.use(Vuex);
 import {} from "@/store/action-types";
 import {
   CURRENT_DRAFT_ISSUE_ADD,
-  CURRENT_DRAFT_ISSUE_REMOVE
+  CURRENT_DRAFT_ISSUE_REMOVE,
+  CURRENT_DRAFT_COVER_PHOTO_UPDATE,
+  CURRENT_DRAFT_COVER_PHOTO_CLEAR
 } from "@/store/mutation-types";
 
 const currentDraft = {
@@ -13,9 +15,9 @@ const currentDraft = {
 
   state: {
     title: false,
+    coverPhoto: false,
     issues: []
   },
-
   mutations: {
     [CURRENT_DRAFT_ISSUE_ADD](state, issue) {
       //const stateCopy = state.issues;
@@ -30,30 +32,15 @@ const currentDraft = {
         return item.id !== issue.id;
       });
       state.issues = filteredState;
+    },
+    [CURRENT_DRAFT_COVER_PHOTO_UPDATE](state, image) {
+      state.coverPhoto = image;
+    },
+    [CURRENT_DRAFT_COVER_PHOTO_CLEAR](state) {
+      state.coverPhoto = false;
     }
-    /*
-    [SEARCH_TITLES_RESULTS_LOADING](state, data) {
-      state.loading = data.loading;
-    }
-    */
   },
-
-  actions: {
-    /*
-    [SEARCH_TITLES]({ dispatch, commit }, params) {
-      dispatch(
-        "api/requestHandler",
-        {
-          method: "get",
-          url: "/v1/titleSearch",
-          params: params,
-          success: `currentDraft/${SEARCH_TITLES_RESULTS_SET}`,
-          loading: `currentDraft/${SEARCH_TITLES_RESULTS_LOADING}`
-        },
-        { root: true }
-      );
-    }*/
-  }
+  actions: {}
 };
 
 export default currentDraft;

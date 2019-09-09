@@ -53,6 +53,10 @@
 
 <script>
 import { mapState } from "vuex";
+import {
+  CURRENT_DRAFT_COVER_PHOTO_UPDATE,
+  CURRENT_DRAFT_COVER_PHOTO_CLEAR
+} from "@/store/mutation-types.js";
 
 export default {
   data() {
@@ -281,10 +285,13 @@ export default {
       const canvas = this.$refs.imageCanvas;
       let ctx = canvas.getContext("2d");
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      this.$store.commit(`currentDraft/${CURRENT_DRAFT_COVER_PHOTO_CLEAR}`);
     },
     //
     //
     handleImageUploading() {
+      const _this = this;
+
       const canvas = this.$refs.imageCanvas;
       const img = canvas.toDataURL("image/png");
 
@@ -304,15 +311,17 @@ export default {
           // File uploaded successfully
           var response = JSON.parse(xhr.responseText);
           var url = response.secure_url;
-          console.log("Image SAVED to the cloud", url);
-          //setUploadImage(url);
+          //commit to state\
+          _this.$store.commit(
+            `currentDraft/${CURRENT_DRAFT_COVER_PHOTO_UPDATE}`,
+            url
+          );
         }
       };
 
       fd.append("upload_preset", unsignedUploadPreset);
       fd.append("tags", "browser_upload"); // Optional - add tag for image admin in Cloudinary
       fd.append("file", img);
-
       xhr.send(fd);
     }
   }
