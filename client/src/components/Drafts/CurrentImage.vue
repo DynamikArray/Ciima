@@ -17,7 +17,9 @@
       <div v-if="draft.coverPhoto" class="d-flex flex-column">
         <div class="d-flex justify-center my-3">
           <div v-if="draft.savingCover">
-            <v-icon color="warning" x-large>fas fa-circle-notch fa-spin</v-icon>
+            <v-icon color="blue darken-1" x-large
+              >fas fa-circle-notch fa-spin</v-icon
+            >
           </div>
           <div v-if="!draft.savingCover">
             <v-img

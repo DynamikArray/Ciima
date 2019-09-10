@@ -8,6 +8,10 @@ import vuetify from "./plugins/vuetify";
 import { createDateFilter } from "vue-date-fns";
 Vue.filter("date", createDateFilter("MMM DD, YYYY"));
 
+// register the plugin on vue
+import VueSwal from "vue-swal";
+Vue.use(VueSwal);
+
 new Vue({
   router,
   store,

@@ -352,31 +352,46 @@ export default {
       xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
 
       xhr.onreadystatechange = function(e) {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-          // File uploaded successfully
-          var response = JSON.parse(xhr.responseText);
-          var url = response.secure_url;
-          //commit to state\
-          _this.$store.commit(
-            `currentDraft/${CURRENT_DRAFT_COVER_PHOTO_UPDATE}`,
-            url
-          );
-          _this.$store.commit(
-            `currentDraft/${CURRENT_DRAFT_COVER_PHOTO_SAVING}`,
-            false
-          );
+        if (xhr.readyState == 4) {
+          if (xhr.status == 200) {
+            // File uploaded successfully
+            var response = JSON.parse(xhr.responseText);
+            var url = response.secure_url;
+            //commit to state\
+            _this.$store.commit(
+              `currentDraft/${CURRENT_DRAFT_COVER_PHOTO_UPDATE}`,
+              url
+            );
+            _this.$store.commit(
+              `currentDraft/${CURRENT_DRAFT_COVER_PHOTO_SAVING}`,
+              false
+            );
+          } else {
+            _this.$store.commit(
+              `currentDraft/${CURRENT_DRAFT_COVER_PHOTO_SAVING}`,
+              false
+            );
+            var response = JSON.parse(xhr.responseText);
+            const errorMessage = response.error.message;
+            _this.$swal("Error Saving File", errorMessage, "error");
+          }
         }
       };
 
       fd.append("upload_preset", unsignedUploadPreset);
       fd.append("tags", "browser_upload"); // Optional - add tag for image admin in Cloudinary
       fd.append("file", img);
+      fd.append("folder", "productPhotos");
       xhr.send(fd);
     }
   }
 };
 </script>
-
+<style>
+.swal-modal {
+  font-family: Roboto, sans-serif;
+}
+</style>
 <style scoped>
 canvas.productImage {
   background-color: grey;

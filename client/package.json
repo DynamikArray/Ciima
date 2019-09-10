@@ -13,6 +13,7 @@
     "vue": "^2.6.10",
     "vue-date-fns": "^1.1.0",
     "vue-router": "^3.0.3",
+    "vue-swal": "^1.0.0",
     "vuedraggable": "^2.23.0",
     "vuescroll": "^4.14.3",
     "vuetify": "^2.0.0",
