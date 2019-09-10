@@ -2,13 +2,12 @@
   <section>
     <v-card raised outlined>
       <v-card-text>
-        <v-form v-model="valid" @submit.prevent="handleSubmit">
+        <v-form v-model="valid" @submit.prevent="searchTitles">
           <v-text-field
             v-model="searchString"
             label="Search Titles"
             prepend-icon="fa-search"
-            debounce="250"
-            v-on:keyup="handleSubmit"
+            @input="searchTitles"
           ></v-text-field>
         </v-form>
       </v-card-text>
@@ -17,6 +16,7 @@
 </template>
 
 <script>
+import debounce from "lodash.debounce";
 import {
   SEARCH_TITLES,
   SEARCH_TITLES_RESULTS_CLEAR
@@ -28,19 +28,23 @@ export default {
     searchString: ""
   }),
   methods: {
-    handleSubmit() {
+    searchTitles: debounce(function(event) {
       const search = this.searchString;
-      //greater than 3 so search
-      if (search.length > 3) {
-        this.$store.dispatch(`titleSearch/${SEARCH_TITLES}`, {
-          q: this.searchString
-        });
+
+      if (event.type === "submit" || search.length > 3) {
+        //greater than 3 so search
+        if (search.length > 3) {
+          this.$store.dispatch(`titleSearch/${SEARCH_TITLES}`, {
+            q: this.searchString
+          });
+        }
       }
-      //clear our results set
-      if (search.length == 0) {
+
+      //clear results
+      if (event.type === "submit" && search.length == 0) {
         this.$store.commit(`titleSearch/${SEARCH_TITLES_RESULTS_CLEAR}`);
       }
-    }
+    }, 500)
   }
 };
 </script>

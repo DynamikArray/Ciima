@@ -1,6 +1,9 @@
 <template>
   <div class="text-center">
-    <div class="d-flex align-center w-100 justify-space-around mb-2">
+    <div
+      v-if="issues.length"
+      class="d-flex align-center w-100 justify-space-around mb-2"
+    >
       <div class="mr-3 grow">
         <v-select
           solo
@@ -99,8 +102,8 @@ export default {
     return {
       canvasClean: true,
       defaulImageSize: {
-        height: 1050,
-        width: 690
+        height: 1050 / 2,
+        width: 690 / 2
       },
       rowOpts: [
         { text: "1 Row", value: 1 },
@@ -167,10 +170,11 @@ export default {
       const cWidth = this.gridCols * this.defaulImageSize.width;
       //set our canvas properties
       canvas.height = cHeight;
+
       canvas.width = cWidth;
       canvas.setAttribute(
         "style",
-        `height: ${Math.ceil(cHeight / 4)}px; width: ${Math.ceil(cWidth / 4)}px`
+        `height: ${Math.ceil(cHeight / 3)}px; width: ${Math.ceil(cWidth / 3)}px`
       );
 
       //return the context object for this canvas

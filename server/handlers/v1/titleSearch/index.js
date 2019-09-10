@@ -3,26 +3,17 @@ module.exports = fastify => ({
     const dbHelper = require("../../../util/dbHelper.js")(fastify);
 
     const query = `SELECT
-          Count(i.Title) as issuesCount,
+          COUNT(i.Title)as issueCount,
           t.Title as title,
           t.TitleId as titleId,
           t.Publisher as publisher,
           t.YearsPublished as yearsPublished
         FROM
-          slc_titles t,
-          slc_issues i
-        WHERE(
-          (t.Title LIKE '%${req.query.q}%')
-          AND
-          (t.TitleId = i.TitleId)
-        )
-        GROUP BY
-          i.Title,
-          t.Title,
-          t.TitleId,
-          t.Publisher,
-          t.YearsPublished
-        LIMIT 200`;
+          slc_issues i,
+          slc_titles t
+        WHERE (t.Title LIKE '%${req.query.q}%') AND (t.Title = i.Title)
+        GROUP BY t.title, t.titleId, t.publisher, t.yearsPublished
+        ORDER BY t.title ASC`;
 
     const result = await dbHelper.query(query);
 

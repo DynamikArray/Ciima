@@ -19,9 +19,9 @@ module.exports = {
             properties: {
               titleId: { type: "number" },
               title: { type: "string" },
-              issuesCount: { type: "number" },
               publisher: { type: "string" },
-              yearsPublished: { type: "string" }
+              yearsPublished: { type: "string" },
+              issueCount: { type: "number" }
             }
           }
         }

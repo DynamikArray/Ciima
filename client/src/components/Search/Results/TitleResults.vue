@@ -53,12 +53,6 @@ export default {
           align: "left"
         },
         {
-          text: "Issues",
-          value: "issuesCount",
-          sortable: true,
-          align: "center"
-        },
-        {
           text: "Publisher",
           value: "publisher",
           sortable: true,
@@ -67,6 +61,12 @@ export default {
         {
           text: "Years",
           value: "yearsPublished",
+          sortable: true,
+          align: "center"
+        },
+        {
+          text: "Issues",
+          value: "issueCount",
           sortable: true,
           align: "center"
         }

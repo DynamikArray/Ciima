@@ -19,7 +19,7 @@ export default new Router({
         import(/*webpackChunkName: "titles"*/ "@/views/Titles.vue")
     },
     {
-      path: "/issues/:titleId?",
+      path: "/issues",
       props: true,
       name: "issues",
       component: () =>

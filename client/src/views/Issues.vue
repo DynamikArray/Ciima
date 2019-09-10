@@ -34,9 +34,6 @@ import SelectedTitle from "@/components/Search/Results/SelectedTitle";
 import IssueResults from "@/components/Search/Results/IssueResults";
 
 export default {
-  props: {
-    titleId: [Number, String]
-  },
   created() {
     console.log(this.titleId);
   },
@@ -44,7 +41,6 @@ export default {
     SelectedTitle,
     IssueResults
   },
-
   computed: {
     ...mapState({
       selectedTitle: state => state.titleSearch.selected.item
@@ -58,10 +54,10 @@ export default {
     }
 
     //search for issues
-    const titleId = this.titleId;
-    if (titleId) {
+    const title = this.selectedTitle.title;
+    if (title) {
       this.$store.dispatch(`issueSearch/${SEARCH_ISSUES}`, {
-        titleId: titleId
+        title
       });
     }
   }

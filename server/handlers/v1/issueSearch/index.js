@@ -23,7 +23,7 @@ module.exports = fastify => ({
           eBayCat1 as eBayCat1,
           eBayCat2 as eBayCat2
         FROM slc_issues i
-        WHERE  i.TitleId = ${req.query.titleId}
+        WHERE i.Title = '${req.query.title}'
         ORDER BY issueOrder`;
 
     const result = await dbHelper.query(query);

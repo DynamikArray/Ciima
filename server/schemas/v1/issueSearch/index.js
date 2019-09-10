@@ -4,7 +4,7 @@ module.exports = {
   summary: "Search the database for comics",
 
   querystring: {
-    titleId: { type: "number" }
+    title: { type: "string" }
   },
 
   response: {
