@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-const host = "localhost";
+let host = "localhost";
 if (process.env.NODE_ENV === "production") {
   host = "0.0.0.0";
 }
