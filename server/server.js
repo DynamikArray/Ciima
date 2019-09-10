@@ -5,10 +5,15 @@ const config = require("./config/config");
 // Require the framework and instantiate it
 const fastify = require("fastify")(config);
 
-//include mysql
+//proper mysql connection string if prod
+let connectionString = process.env.MYSQL_CONN;
+if (process.env.NODE_ENV === "production")
+  connectionString = process.env.JAWSDB_URL;
+
+//register mystl
 fastify.register(require("fastify-mysql"), {
   promise: true,
-  connectionString: process.env.MYSQL_CONN
+  connectionString: connectionString
 });
 
 fastify.register(require("fastify-cors"), {

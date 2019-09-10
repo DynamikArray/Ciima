@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "concurrently \" nodemon server/server.js \" \"cd client && npm run serve \" ",
     "heroku-postbuild": "(cd client && npm install --only=dev) && npm run serve",
-    "start:server": "node server/server.js",
-    "start": "(node server/server.js && cd client) &&  npm run serve",
+    "start:server": "set NODE_ENV=development &&  node server/server.js",
+    "start": "(node server/server.js && cd client)",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Brian Ridsdale",
