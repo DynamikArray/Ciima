@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "dev": "concurrently \" nodemon server/server.js \" \"cd client && npm run serve \" ",
-    "start:server": "nodemon server/server.js",
+    "postinstall": "cd client && npm run build",
+    "start:server": "node server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Brian Ridsdale",
