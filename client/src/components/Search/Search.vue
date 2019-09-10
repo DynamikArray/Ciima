@@ -33,11 +33,9 @@ export default {
 
       if (event.type === "submit" || search.length > 3) {
         //greater than 3 so search
-        if (search.length > 3) {
-          this.$store.dispatch(`titleSearch/${SEARCH_TITLES}`, {
-            q: this.searchString
-          });
-        }
+        this.$store.dispatch(`titleSearch/${SEARCH_TITLES}`, {
+          q: this.searchString
+        });
       }
 
       //clear results
