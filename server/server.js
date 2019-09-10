@@ -22,7 +22,7 @@ fastify.register(require("fastify-cors"), {
 
 //static build dir
 fastify.register(require("fastify-static"), {
-  root: path.join(__dirname, "../client/dist"),
+  root: path.join(__dirname, "../client/dist/"),
   decorateReply: false
 });
 
