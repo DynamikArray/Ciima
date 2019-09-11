@@ -16,8 +16,7 @@ Vue.use(VueSwal);
 import VueToastr from "vue-toastr";
 // use plugin
 Vue.use(VueToastr, {
-  defaultPosition: "toast-top-right"
-  /* OverWrite Plugin Options if you need */
+  defaultPosition: "toast-bottom-center"
 });
 
 new Vue({

@@ -47,6 +47,7 @@ export default {
   created() {
     //no selected title so start back at input
     if (!this.selectedTitle) {
+      this.$toastr.i("Select a title first.");
       this.$router.push({ name: "titles" });
     }
     //search for issues

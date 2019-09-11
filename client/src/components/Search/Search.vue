@@ -35,15 +35,12 @@ export default {
       const search = this.searchString;
 
       if (event.type === "submit" || search.length > 3) {
-        //greater than 3 so search
-        this.$store.dispatch(`titleSearch/${SEARCH_TITLES}`, {
-          q: this.searchString
-        });
-      }
-
-      //clear results
-      if (event.type === "submit" && search.length == 0) {
-        this.$store.commit(`titleSearch/${SEARCH_TITLES_RESULTS_CLEAR}`);
+        if (!search.length == 0) {
+          //greater than 3 so search
+          this.$store.dispatch(`titleSearch/${SEARCH_TITLES}`, {
+            q: this.searchString
+          });
+        }
       }
     }, 500)
   }
