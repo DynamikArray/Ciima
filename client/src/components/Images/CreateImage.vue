@@ -8,20 +8,20 @@
         <v-select
           solo
           hide-details
-          :items="colOpts"
-          :value="gridCols"
-          label="Number of Columns"
-          @change="handleOnChangeCols($event)"
+          :items="rowOpts"
+          :value="gridRows"
+          label="Number of Rows"
+          @change="handleOnChangeRows($event)"
         ></v-select>
       </div>
       <div class="ml-3 grow">
         <v-select
           solo
           hide-details
-          :items="rowOpts"
-          :value="gridRows"
-          label="Number of Rows"
-          @change="handleOnChangeRows($event)"
+          :items="colOpts"
+          :value="gridCols"
+          label="Number of Columns"
+          @change="handleOnChangeCols($event)"
         ></v-select>
       </div>
     </div>
