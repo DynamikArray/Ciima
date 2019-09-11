@@ -67,41 +67,6 @@ export default {
     },
     resetDraft() {
       this.$store.commit(`currentDraft/${CURRENT_DRAFT_CLEAR}`);
-    },
-    downloadImages() {
-      const { issues } = this.draft;
-      //Issue Photos
-      issues.forEach(issue => {
-        const filename =
-          issue.title.replace(/\W/g, "") +
-          "-" +
-          issue.fullIssue.replace(/\W/g, "") +
-          ".jpg";
-
-        const url = `/v1/imageFetch?url=http://searchlightcomics.com${
-          issue.imageUrl
-        }`;
-
-        this.downloadImageLink(url, filename);
-      });
-
-      if (this.draft.coverPhoto) {
-        //CoverPhoto
-        const coverUrl = `/v1/imageFetch?url=${this.draft.coverPhoto}`;
-        const coverPhoto =
-          issues[0].title.replace(/\W/g, "") + "cover_photo.jpg";
-        this.downloadImageLink(coverUrl, coverPhoto);
-      }
-    },
-    //
-    //
-    downloadImageLink(url, filename) {
-      var link = document.createElement("a");
-      // TODO: place in a config or common file
-      link.href = url;
-      link.target = "_blank";
-      link.download = filename;
-      link.click();
     }
   }
 };
