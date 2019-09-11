@@ -52,9 +52,9 @@ export default {
     if (!this.selectedTitle) {
       this.$router.push({ name: "titles" });
     }
-
     //search for issues
-    const title = this.selectedTitle.title;
+    const title = (this.selectedTitle || {}).title;
+
     if (title) {
       this.$store.dispatch(`issueSearch/${SEARCH_ISSUES}`, {
         title

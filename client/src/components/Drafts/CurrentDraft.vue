@@ -20,7 +20,7 @@
 
         <div class="d-flex w-100 justify-end mb-3">
           <div class="d-flex mx-3">
-            <v-btn color="red" @click="clearAllDraftIssues()"
+            <v-btn color="red" @click="resetDraft"
               ><v-icon class="mr-2">fa-redo</v-icon>Reset</v-btn
             >
           </div>
@@ -42,6 +42,7 @@
 
 <script>
 import { mapState } from "vuex";
+import { CURRENT_DRAFT_CLEAR } from "@/store/mutation-types.js";
 
 import CurrentImage from "@/components/Drafts/CurrentImage";
 import DraftsIssuesList from "@/components/Drafts/DraftsIssuesList";
@@ -63,6 +64,9 @@ export default {
     makeImageUrl(item) {
       //// TODO: place this url in a config file
       return `http://searchlightcomics.com/${item.imageUrl}`;
+    },
+    resetDraft() {
+      this.$store.commit(`currentDraft/${CURRENT_DRAFT_CLEAR}`);
     }
   }
 };

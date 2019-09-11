@@ -29,12 +29,21 @@
       :custom-filter="customFilter"
     >
       <template v-slot:item.imageUrl="{ item }">
-        <img
+        <v-img
           :src="makeImageUrl(item)"
           width="70"
           class="ma-1"
           @click="showImageModal(item)"
-        />
+        >
+          <template v-slot:placeholder>
+            <v-row class="fill-height ma-0" align="center" justify="center">
+              <v-progress-circular
+                indeterminate
+                color="blue darken-1"
+              ></v-progress-circular>
+            </v-row>
+          </template>
+        </v-img>
       </template>
 
       <template v-slot:item.title="{ item }">
@@ -190,6 +199,7 @@ export default {
       }
       return false;
     },
+    //
     addIssueToDraft(item) {
       this.$store.commit(
         `currentDraft/${CURRENT_DRAFT_TITLE_ADD}`,
@@ -198,10 +208,15 @@ export default {
       this.$store.commit(`currentDraft/${CURRENT_DRAFT_ISSUE_ADD}`, item);
       this.hideImageModal();
     },
+    //
     removeIssueFromDraft(item) {
       this.$store.commit(`currentDraft/${CURRENT_DRAFT_ISSUE_REMOVE}`, item);
     },
+    //
+    //
     customFilter() {}
+    //
+    //
   }
 };
 </script>
