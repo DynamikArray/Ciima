@@ -33,17 +33,23 @@
         >
       </div>
       <div v-if="!issues.length" class="d-flex justify-center">
-        <v-card class="mt-5">
+        <v-card class="">
           <v-card-title>
-            <h2>No Issues Selected</h2>
+            <h2 class="text-center mb-4">No Issues Selected</h2>
           </v-card-title>
           <v-card-text>
-            <h3 class="p-4 m-4 text-left">
-              <v-icon large class="mb-1 mr-1">fa-info-circle</v-icon>
-              You must first select issues and add them to your current draft.
-              All issues in the current draft will be added to the Prodcut Photo
-              in the order they are listed.
-            </h3>
+            <div class="d-flex justify-center">
+              <div class="d-flex align-center mx-6">
+                <v-icon large class="mb-1 mr-1">fa-info-circle</v-icon>
+              </div>
+              <div class="d-flex align-center">
+                <h3 class="text-left">
+                  You must first select issues and add them to your current
+                  draft. All issues in the current draft will be added to the
+                  Product Photo in the order they are listed.
+                </h3>
+              </div>
+            </div>
           </v-card-text>
           <v-card-actions class="justify-end">
             <v-btn color="success" :to="'titles'">
@@ -55,7 +61,7 @@
     </div>
 
     <div>
-      <v-divider class="my-3"></v-divider>
+      <v-divider v-if="!canvasClean" class="my-3"></v-divider>
       <canvas
         class="productImage"
         ref="imageCanvas"
@@ -63,7 +69,7 @@
         :width="canvasWidth"
         :height="canvasHeight"
       ></canvas>
-      <v-divider class="my-3"></v-divider>
+      <v-divider v-if="!canvasClean" class="my-3"></v-divider>
     </div>
 
     <div
