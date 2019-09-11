@@ -93,6 +93,8 @@ import {
   CURRENT_DRAFT_COVER_PHOTO_SAVING
 } from "@/store/mutation-types.js";
 
+import settings from "@/util/settings.js";
+
 export default {
   data() {
     return {
@@ -282,8 +284,8 @@ export default {
       //set img.src so the image loads
       img.crossOrigin = "Anonymous";
       //PROXY THIS URL THROUGH OUR API
-      //TODO move this url to a constant config somewhere
-      img.src = `/v1/imageFetch?url=http://searchlightcomics.com${imageUrl}`;
+      //TODO move this through vuex???
+      img.src = `/v1/imageFetch?url=${settings.MEDIA_URL}${imageUrl}`;
     },
     //
     //

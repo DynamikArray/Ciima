@@ -65,6 +65,8 @@ import {
   CURRENT_DRAFT_CLEAR
 } from "@/store/mutation-types.js";
 
+import settings from "@/util/settings.js";
+
 export default {
   components: {
     draggable
@@ -89,7 +91,7 @@ export default {
   methods: {
     makeImageUrl(item) {
       //// TODO: place this url in a config file
-      return `http://searchlightcomics.com/${item.imageUrl}`;
+      return `${settings.MEDIA_URL}${item.imageUrl}`;
     },
     removeDraftIssue(item) {
       this.$store.commit(`currentDraft/${CURRENT_DRAFT_ISSUE_REMOVE}`, item);

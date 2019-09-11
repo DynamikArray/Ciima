@@ -114,6 +114,8 @@ import {
   CURRENT_DRAFT_TITLE_ADD
 } from "@/store/mutation-types.js";
 
+import settings from "@/util/settings.js";
+
 export default {
   data() {
     return {
@@ -178,8 +180,7 @@ export default {
   },
   methods: {
     makeImageUrl(item) {
-      //// TODO: place this url in a config file
-      return `http://searchlightcomics.com/${item.imageUrl}`;
+      return `${settings.MEDIA_URL}${item.imageUrl}`;
     },
     showImageModal(item) {
       this.selected = item;
