@@ -23,6 +23,7 @@
           </div>
           <div v-if="!draft.savingCover">
             <v-img
+              id="coverPhoto"
               :src="draft.coverPhoto"
               width="240"
               class="d-flex shrink"

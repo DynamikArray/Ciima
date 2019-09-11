@@ -24,6 +24,11 @@
               ><v-icon class="mr-2">fa-redo</v-icon>Reset</v-btn
             >
           </div>
+          <div class="d-flex mx-3">
+            <v-btn color="primary" @click="downloadImages"
+              ><v-icon class="mr-2">fa-redo</v-icon>Download Images</v-btn
+            >
+          </div>
         </div>
       </div>
     </v-expand-transition>
@@ -67,6 +72,43 @@ export default {
     },
     resetDraft() {
       this.$store.commit(`currentDraft/${CURRENT_DRAFT_CLEAR}`);
+    },
+    downloadImages() {
+      const { issues } = this.draft;
+      //Issue Photos
+      issues.forEach(issue => {
+        const filename =
+          issue.title.replace(/\W/g, "") +
+          "-" +
+          issue.fullIssue.replace(/\W/g, "") +
+          ".jpg";
+
+        const url = `/v1/imageFetch?url=http://searchlightcomics.com${
+          issue.imageUrl
+        }`;
+
+        this.downloadImageLink(url, filename);
+      });
+
+      if (this.draft.coverPhoto) {
+        //CoverPhoto
+        const coverUrl = `/v1/imageFetch?url=${this.draft.coverPhoto}`;
+        console.log(coverUrl);
+
+        const coverPhoto =
+          issues[0].title.replace(/\W/g, "") + "cover_photo.jpg";
+        this.downloadImageLink(coverUrl, coverPhoto);
+      }
+    },
+    //
+    //
+    downloadImageLink(url, filename) {
+      var link = document.createElement("a");
+      // TODO: place in a config or common file
+      link.href = url;
+      link.target = "_blank";
+      link.download = filename;
+      link.click();
     }
   }
 };
