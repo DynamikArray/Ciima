@@ -28,35 +28,9 @@
 
     <div class="d-flex align-center w-100 justify-space-around ">
       <div v-if="issues.length" class="d-flex justify-center">
-        <v-btn color="primary" @click="handleOnClickLoadImages()">
+        <v-btn class="my-3" color="primary" @click="handleOnClickLoadImages()">
           <v-icon class="mr-1">fa-th</v-icon>Build Photo</v-btn
         >
-      </div>
-      <div v-if="!issues.length" class="d-flex justify-center">
-        <v-card class="">
-          <v-card-title>
-            <h2 class="text-center mb-4">No Issues Selected</h2>
-          </v-card-title>
-          <v-card-text>
-            <div class="d-flex justify-center">
-              <div class="d-flex align-center mx-6">
-                <v-icon large class="mb-1 mr-1">fa-info-circle</v-icon>
-              </div>
-              <div class="d-flex align-center">
-                <h3 class="text-left">
-                  You must first select issues and add them to your current
-                  draft. All issues in the current draft will be added to the
-                  Product Photo in the order they are listed.
-                </h3>
-              </div>
-            </div>
-          </v-card-text>
-          <v-card-actions class="justify-end">
-            <v-btn color="success" :to="'titles'">
-              <v-icon class="mr-1">fa-search</v-icon>Search Titles</v-btn
-            >
-          </v-card-actions>
-        </v-card>
       </div>
     </div>
 

@@ -1,8 +1,8 @@
 <template>
-  <div v-if="draftIssues.length > 0" class="w-100 mr-2">
-    <v-list dense>
-      <v-list-item-title class="text-left">
-        <div class="d-flex justify-space-around">
+  <div v-if="draftIssues.length > 0" class="w-100 mr-2 grey darken-3">
+    <v-list dense class="py-0">
+      <v-list-item-title class="text-left mx-4">
+        <div class="d-flex justify-space-between">
           <div class="d-flex grow justify-start">
             <h2>
               {{ draftIssues.length
@@ -10,7 +10,7 @@
             </h2>
           </div>
 
-          <div class="d-flex grow justify-end align-self-center mr-4">
+          <div class="d-flex grow justify-end align-self-center mr-0">
             <b class="overline">Remove</b>
           </div>
         </div>
@@ -23,7 +23,6 @@
             v-for="issue in draftIssues"
             :key="issue.id"
             @click=""
-            transition="scale-transition"
           >
             <div class="d-flex flex-row w-100 justify-space-between">
               <div class="d-flex mr-3">

@@ -20,19 +20,11 @@
         </v-tab>
         <v-tab-item key="current">
           <div class="ma-3">
-            <v-card elevation="10" outlined class="grey darken-4">
-              <CurrentDraft></CurrentDraft>
-            </v-card>
-
-            <CurrentDraftTip :btnAction="switchToTab"></CurrentDraftTip>
+            <CurrentDraft></CurrentDraft>
           </div>
         </v-tab-item>
         <v-tab-item key="open">
-          <v-card class="ma-3">
-            <v-card-text>
-              OPEN TP ITEMS
-            </v-card-text>
-          </v-card>
+          <DraftForm></DraftForm>
         </v-tab-item>
       </v-tabs>
     </div>
@@ -41,9 +33,9 @@
 
 <script>
 import { mapState } from "vuex";
-import CurrentDraft from "@/components/Drafts/CurrentDraft";
+import CurrentDraft from "@/components/Drafts/CurrentDraft/CurrentDraft";
 import OpenDrafts from "@/components/Drafts/OpenDrafts";
-import CurrentDraftTip from "./draftDrawer/CurrentDraftTip";
+import DraftForm from "@/components/Drafts/DraftDetails/DraftForm";
 
 export default {
   data() {
@@ -55,7 +47,7 @@ export default {
   components: {
     CurrentDraft,
     OpenDrafts,
-    CurrentDraftTip
+    DraftForm
   },
   props: {
     drawer: true
