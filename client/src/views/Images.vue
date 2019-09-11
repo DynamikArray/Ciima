@@ -7,10 +7,22 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import CreateImage from "@/components/Images/CreateImage.vue";
+
 export default {
   components: {
     CreateImage
+  },
+  computed: {
+    ...mapState({
+      issues: state => state.currentDraft.issues
+    })
+  },
+  created() {
+    if (!this.issues.length) {
+      this.$router.push({ name: "titles" });
+    }
   }
 };
 </script>
