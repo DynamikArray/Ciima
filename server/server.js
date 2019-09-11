@@ -32,6 +32,10 @@ fastify.register(require("./routes/v1/titleSearch"), { prefix: "v1" });
 fastify.register(require("./routes/v1/issueSearch"), { prefix: "v1" });
 fastify.register(require("./routes/v1/imageFetch"), { prefix: "v1" });
 
+fastify.setNotFoundHandler({}, function(request, reply) {
+  reply.redirect("/");
+});
+
 // Server
 const start = async () => {
   await fastify.listen(config).catch(e => {
