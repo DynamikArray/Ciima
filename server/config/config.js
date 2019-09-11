@@ -12,4 +12,18 @@ const config = {
   logger: true
 };
 
-module.exports = config;
+const documentation = {
+  routePrefix: "/docs",
+  swagger: {
+    info: {
+      version: "1.0.0", //get from package
+      title: "API Documentation",
+      description: "API Endpoints Documentation"
+    },
+    //schemes: [process.env.options.https ? "https" : "http"],
+    consumes: ["application/json"],
+    produces: ["application/json"]
+  },
+  exposeRoute: true
+};
+module.exports = { config, documentation };

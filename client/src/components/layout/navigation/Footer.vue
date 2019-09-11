@@ -7,6 +7,12 @@
         <span class="mx-1">Brian Ridsdale</span>
         <span class="mx-1">&copy; {{ currentYear }}</span>
       </div>
+
+      <div class="d-flex justify-center ml-4">
+        <v-btn small text icon href="/docs">
+          <v-icon small>fa-server</v-icon>
+        </v-btn>
+      </div>
     </div>
   </v-footer>
 </template>

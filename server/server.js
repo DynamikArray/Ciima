@@ -1,9 +1,10 @@
 const path = require("path");
-
 //include our server config file
-const config = require("./config/config");
+const { config, documentation } = require("./config/config");
+
 // Require the framework and instantiate it
 const fastify = require("fastify")(config);
+const swagger = require("fastify-swagger");
 
 //proper mysql connection string if prod
 let connectionString = process.env.MYSQL_CONN;
@@ -23,8 +24,11 @@ fastify.register(require("fastify-cors"), {
 //static build dir
 fastify.register(require("fastify-static"), {
   root: path.join(__dirname, "../client/dist"),
-  decorateReply: false
+  wildcard: false
 });
+
+//Swagger Docs
+fastify.register(swagger, documentation);
 
 //Routes
 fastify.register(require("./routes/v1/info"), { prefix: "v1" });
@@ -32,8 +36,8 @@ fastify.register(require("./routes/v1/titleSearch"), { prefix: "v1" });
 fastify.register(require("./routes/v1/issueSearch"), { prefix: "v1" });
 fastify.register(require("./routes/v1/imageFetch"), { prefix: "v1" });
 
-fastify.setNotFoundHandler({}, function(request, reply) {
-  reply.redirect("/");
+fastify.get("*", function(request, reply) {
+  reply.sendFile("index.html");
 });
 
 // Server
