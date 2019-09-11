@@ -7,27 +7,25 @@
     width="50%"
     mobile-break-point="960"
   >
-    <div>
-      <v-tabs v-model="active_tab" color="white" grow>
-        <v-tab key="current" class="text-white align-center justify-start">
-          <v-icon name="list-alt" class="mr-1">fas fa-list-alt</v-icon>Draft
-          Issues
-        </v-tab>
-        <v-tab key="open" class="align-center justify-start">
-          <v-icon name="cliboard-list" class="mr-1 mb-1"
-            >fas fa-clipboard-list</v-icon
-          >Draft Details
-        </v-tab>
-        <v-tab-item key="current">
-          <div class="ma-3">
-            <CurrentDraft></CurrentDraft>
-          </div>
-        </v-tab-item>
-        <v-tab-item key="open">
-          <DraftForm></DraftForm>
-        </v-tab-item>
-      </v-tabs>
-    </div>
+    <v-tabs v-model="active_tab" color="white" class="h-100">
+      <v-tab key="current" class="text-white align-center justify-start">
+        <v-icon name="list-alt" class="mr-1">fas fa-list-alt</v-icon>Draft
+        Issues
+      </v-tab>
+      <v-tab key="open" class="align-center justify-start">
+        <v-icon name="cliboard-list" class="mr-1 mb-1"
+          >fas fa-clipboard-list</v-icon
+        >Draft Details
+      </v-tab>
+      <v-tab-item key="current" class="h-100">
+        <div class="ma-3">
+          <CurrentDraft></CurrentDraft>
+        </div>
+      </v-tab-item>
+      <v-tab-item key="open" class="h-100">
+        <DraftForm></DraftForm>
+      </v-tab-item>
+    </v-tabs>
   </v-navigation-drawer>
 </template>
 
