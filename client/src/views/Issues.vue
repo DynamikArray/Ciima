@@ -34,9 +34,6 @@ import SelectedTitle from "@/components/Search/Results/SelectedTitle";
 import IssueResults from "@/components/Search/Results/IssueResults";
 
 export default {
-  created() {
-    console.log(this.titleId);
-  },
   components: {
     SelectedTitle,
     IssueResults

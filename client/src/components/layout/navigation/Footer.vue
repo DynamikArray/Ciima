@@ -1,8 +1,13 @@
 <template>
   <v-footer app>
-    <v-spacer></v-spacer>
-    <span class="mx-1">Brian Ridsdale</span>
-    <span class="mx-1">&copy; {{ currentYear }}</span>
+    <div class="d-flex grow justify-space-between w-100">
+      <div class="d-flex grow align-center"></div>
+
+      <div class="d-flex align-center">
+        <span class="mx-1">Brian Ridsdale</span>
+        <span class="mx-1">&copy; {{ currentYear }}</span>
+      </div>
+    </div>
   </v-footer>
 </template>
 
@@ -17,4 +22,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.navProgressBar {
+  width: 200px;
+}
+</style>

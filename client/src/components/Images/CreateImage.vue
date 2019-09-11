@@ -82,6 +82,22 @@
           class="mx-3"
           @click="handleOnClickSaveCanvas()"
         >
+          <v-dialog v-model="savingCover" hide-overlay persistent width="300">
+            <v-card color="primary" dark class="pt-2">
+              <v-card-text>
+                <h4 class="text-center mb-2">
+                  <v-icon class="mr-2">fas fa-cloud-upload-alt</v-icon>Saving
+                  images...
+                </h4>
+                <v-progress-linear
+                  indeterminate
+                  color="white"
+                  class="mt-1"
+                ></v-progress-linear>
+              </v-card-text>
+            </v-card>
+          </v-dialog>
+
           <v-icon class="mr-1">fa-cloud-upload-alt</v-icon>Save Image
         </v-btn>
       </div>
@@ -101,10 +117,12 @@ export default {
   data() {
     return {
       canvasClean: true,
+      padding: 20,
       defaulImageSize: {
         height: 1050 / 2,
         width: 690 / 2
       },
+
       rowOpts: [
         { text: "1 Row", value: 1 },
         { text: "2 Rows", value: 2 },
@@ -141,13 +159,12 @@ export default {
     },
     handleOnClickLoadImages() {
       this.canvasClean = false;
-      const canvas = this.configureCanvas();
-      let ctx = canvas.getContext("2d");
+      const canvas = this.$refs.imageCanvas;
+      this.configureCanvas();
 
-      this.addDisclaimer(canvas);
+      let ctx = canvas.getContext("2d");
       this.loadImagesGrid(ctx);
-      //
-      //this.drawCanvasBackground(canvas);
+      this.addDisclaimer(canvas);
     },
     //
     //
@@ -166,30 +183,21 @@ export default {
 
       //get canvase and context objects
       const canvas = this.$refs.imageCanvas;
-      const cHeight = this.gridRows * this.defaulImageSize.height;
-      const cWidth = this.gridCols * this.defaulImageSize.width;
+
+      const pHeight = this.defaulImageSize.height + this.padding;
+      const pWidth = this.defaulImageSize.width + this.padding;
+
+      const cHeight = this.gridRows * pHeight;
+      const cWidth = this.gridCols * pWidth;
       //set our canvas properties
       canvas.height = cHeight;
-
       canvas.width = cWidth;
       canvas.setAttribute(
         "style",
         `height: ${Math.ceil(cHeight / 3)}px; width: ${Math.ceil(cWidth / 3)}px`
       );
+    },
 
-      //return the context object for this canvas
-      return canvas;
-    },
-    //
-    //
-    //
-    //
-    drawCanvasBackground(canvas) {
-      console.log("draw background");
-      let ctx = canvas.getContext("2d");
-      ctx.fillStyle = "green";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-    },
     //
     //
     //
@@ -279,16 +287,22 @@ export default {
         drawImageGridLines(ctx, resized, xPos, yPos);
 
         //draw images
-        const padding = 40;
+        const padding = 20;
         const rWidth = resized.width - padding;
         const rHeight = resized.height - padding;
-        ctx.drawImage(this, xPos + 20, yPos + 20, rWidth, rHeight);
+        ctx.drawImage(
+          this,
+          xPos + padding / 2,
+          yPos + padding / 2,
+          rWidth,
+          rHeight
+        );
       };
 
       //set img.src so the image loads
       img.crossOrigin = "Anonymous";
-
       //PROXY THIS URL THROUGH OUR API
+      //TODO move this url to a constant config somewhere
       img.src = `/v1/imageFetch?url=http://searchlightcomics.com${imageUrl}`;
     },
     //
@@ -307,21 +321,25 @@ export default {
     //
     //
     addDisclaimer(canvas) {
-      const disclaimerHeight = 240;
-      canvas.height = canvas.height + disclaimerHeight;
+      const fontHeight = this.gridCols * 11;
+      const disclaimerHeight = this.gridCols * 20;
+
+      canvas.height = canvas.height + +disclaimerHeight;
+
       const ctx = canvas.getContext("2d");
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      //ctx.globalCompositeOperation = "source-over";
+      ctx.globalCompositeOperation = "source-over";
 
-      ctx.font = "normal bold 60px Verdana";
+      ctx.font = `normal bold ${fontHeight}px Verdana`;
       ctx.textAlign = "center";
       ctx.fillStyle = "#EEE";
       ctx.fillText(
-        "!!! Stock Cover Images Shown In Product Photos !!!",
+        "Stock Cover Images Shown In Product Photos",
         canvas.width / 2,
         canvas.height - 10
       );
     },
+
     //
     //
     clearImageGridCanvas() {

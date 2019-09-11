@@ -18,15 +18,15 @@
 
         <v-divider class="my-2"></v-divider>
 
-        <div class="d-flex w-100 justify-end mb-3">
-          <div class="d-flex mx-3">
-            <v-btn color="red" @click="resetDraft"
-              ><v-icon class="mr-2">fa-redo</v-icon>Reset</v-btn
+        <div class="d-flex w-100 justify-space-between mb-3">
+          <div class="d-flex mx-3 grow ">
+            <v-btn color="primary" @click="downloadImages"
+              ><v-icon class="mr-2">fa-download</v-icon>Download Images</v-btn
             >
           </div>
           <div class="d-flex mx-3">
-            <v-btn color="primary" @click="downloadImages"
-              ><v-icon class="mr-2">fa-redo</v-icon>Download Images</v-btn
+            <v-btn color="red" @click="resetDraft"
+              ><v-icon class="mr-2">fa-redo</v-icon>Reset</v-btn
             >
           </div>
         </div>
@@ -93,8 +93,6 @@ export default {
       if (this.draft.coverPhoto) {
         //CoverPhoto
         const coverUrl = `/v1/imageFetch?url=${this.draft.coverPhoto}`;
-        console.log(coverUrl);
-
         const coverPhoto =
           issues[0].title.replace(/\W/g, "") + "cover_photo.jpg";
         this.downloadImageLink(coverUrl, coverPhoto);

@@ -1,28 +1,52 @@
 <template>
-  <v-app-bar app clipped-left clipped-right color="blue darken-3" dense>
-    <v-app-bar-nav-icon
-      @click.stop="toggleNavigationDrawer"
-    ></v-app-bar-nav-icon>
+  <section>
+    <v-app-bar app clipped-left clipped-right color="blue darken-3" dense>
+      <div class="loadingIndicator">
+        <v-progress-linear
+          :indeterminate="Boolean(loading)"
+          color="white"
+          class=""
+        ></v-progress-linear>
+      </div>
 
-    <v-toolbar-title class="mr-12 align-center">
-      <span class="title"><b>CiiMa</b></span>
-    </v-toolbar-title>
+      <v-app-bar-nav-icon
+        @click.stop="toggleNavigationDrawer"
+      ></v-app-bar-nav-icon>
 
-    <v-spacer></v-spacer>
+      <v-toolbar-title class="mr-12 align-center">
+        <span class="title"><b>CiiMa</b></span>
+      </v-toolbar-title>
 
-    <v-btn text ripple small @click.stop="toggleSettingsDrawer" class="mr-1">
-      <v-icon class="mr-2">fa-clipboard-list</v-icon>View Drafts
-    </v-btn>
-  </v-app-bar>
+      <v-spacer></v-spacer>
+
+      <v-btn text ripple small @click.stop="toggleSettingsDrawer" class="mr-1">
+        <v-icon class="mr-2">fa-clipboard-list</v-icon>View Drafts
+      </v-btn>
+    </v-app-bar>
+  </section>
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   props: {
     toggleNavigationDrawer: [Function],
     toggleSettingsDrawer: [Function]
+  },
+  computed: {
+    ...mapState({
+      loading: state => state.api.loading
+    })
   }
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.loadingIndicator {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+}
+</style>

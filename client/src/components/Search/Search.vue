@@ -1,9 +1,12 @@
 <template>
   <section>
     <v-card raised outlined>
-      <v-card-text>
+      <v-card-text class="">
         <v-form v-model="valid" @submit.prevent="searchTitles">
           <v-text-field
+            autofocus
+            hide-details
+            persistent-hint
             v-model="searchString"
             label="Search Titles"
             prepend-icon="fa-search"
