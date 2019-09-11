@@ -395,7 +395,9 @@ export default {
             );
             var response = JSON.parse(xhr.responseText);
             const errorMessage = response.error.message;
-            _this.$swal("Error Saving File", errorMessage, "error");
+
+            //// TODO: log these errors better to loggin service
+            _this.$toastr.e("Error Uploading File");
           }
         }
       };
@@ -409,11 +411,6 @@ export default {
   }
 };
 </script>
-<style>
-.swal-modal {
-  font-family: Roboto, sans-serif;
-}
-</style>
 <style scoped>
 canvas.productImage {
   background-color: grey;

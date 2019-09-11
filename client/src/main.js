@@ -12,6 +12,14 @@ Vue.filter("date", createDateFilter("MMM DD, YYYY"));
 import VueSwal from "vue-swal";
 Vue.use(VueSwal);
 
+// import plugin
+import VueToastr from "vue-toastr";
+// use plugin
+Vue.use(VueToastr, {
+  defaultPosition: "toast-top-right"
+  /* OverWrite Plugin Options if you need */
+});
+
 new Vue({
   router,
   store,

@@ -80,6 +80,10 @@ export default {
 </style>
 
 <style>
+body {
+  /* HACK: FOR NOTIFICATIONS */
+  font-family: "Roboto";
+}
 .h-100 {
   height: 100%;
 }

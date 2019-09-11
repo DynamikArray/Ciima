@@ -83,14 +83,15 @@ const api = {
 
         //handle error from our server that we created
         if (data.error && !data.result) {
-          // TODO: handle error to a global toast, as this is something
           // we caught and reported back to the user
-          console.log(data.error);
+          _this.$toastr.e("An API Error occured");
+          console.error(data.error);
         }
       } catch (error) {
         //axios-retry will have retried any requests if they get this failed we need
         //to tell the user an error occured
-        console.error("API ERROR:", error);
+        _this.$toastr.e("An API Error occured");
+        console.error(error);
         //throw new Error(error);
         //apiErrorHandler(dispatch, error);
       } finally {
