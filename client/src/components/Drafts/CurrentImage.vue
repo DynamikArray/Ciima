@@ -55,6 +55,12 @@
             </v-btn>
           </div>
         </div>
+
+        <div class="d-flex grow justify-center">
+          <v-btn color="primary" @click="downloadImages"
+            ><v-icon class="mr-2">fa-download</v-icon>Download Images</v-btn
+          >
+        </div>
       </div>
     </div>
   </div>

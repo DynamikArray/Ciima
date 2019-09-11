@@ -18,15 +18,10 @@
 
         <v-divider class="my-2"></v-divider>
 
-        <div class="d-flex w-100 justify-space-between mb-3">
-          <div class="d-flex mx-3 grow ">
-            <v-btn color="primary" @click="downloadImages"
-              ><v-icon class="mr-2">fa-download</v-icon>Download Images</v-btn
-            >
-          </div>
+        <div class="d-flex w-100 justify-end mb-3">
           <div class="d-flex mx-3">
             <v-btn color="red" @click="resetDraft"
-              ><v-icon class="mr-2">fa-redo</v-icon>Reset</v-btn
+              ><v-icon class="mr-2">fa-undo-alt</v-icon>Clear Draft</v-btn
             >
           </div>
         </div>
