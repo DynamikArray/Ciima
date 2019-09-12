@@ -6,6 +6,7 @@
     right
     width="50%"
     mobile-break-point="960"
+    class="draftsDrawer"
   >
     <v-tabs v-model="active_tab" color="white" class="h-100">
       <v-tab key="current" class="text-white align-center justify-start">
@@ -19,13 +20,17 @@
         >Draft Details
       </v-tab>
 
-      <v-tab-item key="current" class="h-100">
-        <div class="ma-3">
+      <v-tab-item key="current" class="h-100 ">
+        <vuescroll :ops="ops">
           <CurrentDraftImages></CurrentDraftImages>
-        </div>
+        </vuescroll>
       </v-tab-item>
+
       <v-tab-item key="open" class="h-100">
-        <DraftForm></DraftForm>
+        <vuescroll :ops="ops">
+          <DraftForm></DraftForm>
+          <br />
+        </vuescroll>
       </v-tab-item>
     </v-tabs>
   </v-navigation-drawer>
@@ -36,6 +41,8 @@ import { mapState } from "vuex";
 import CurrentDraftImages from "@/components/Drafts/CurrentDraft/CurrentDraftImages";
 import DraftForm from "@/components/Drafts/CurrentDraft/DraftDetails/DraftForm";
 
+import vuescroll from "vuescroll";
+
 export default {
   props: {
     drawer: true
@@ -43,12 +50,19 @@ export default {
   data() {
     return {
       active_tab: 0,
-      drawerState: true
+      drawerState: true,
+      ops: {
+        vuescroll: {},
+        scrollPanel: {},
+        rail: {},
+        bar: {}
+      }
     };
   },
   components: {
     CurrentDraftImages,
-    DraftForm
+    DraftForm,
+    vuescroll
   },
   computed: {
     ...mapState({
@@ -78,4 +92,11 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.draftsDrawer .v-window.v-item-group {
+  height: calc(100% - 10px);
+}
+.draftsDrawer .v-navigation-drawer__content {
+  overflow-y: hidden;
+}
+</style>

@@ -1,5 +1,5 @@
 <template>
-  <v-card class="grey darken-4 ma-3 mp-3 elevation-10">
+  <v-card class="grey darken-4 ma-3 mp-3 elevation-10 mb-10">
     <v-card-text>
       <v-form class="pa-3">
         <!--TITLE ROW-->
