@@ -29,6 +29,11 @@ export default {
 </script>
 
 <style scoped>
+footer {
+  z-index: 4;
+  border-top: 1px solid #ddd;
+}
+
 .navProgressBar {
   width: 200px;
 }

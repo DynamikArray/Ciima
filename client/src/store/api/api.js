@@ -42,6 +42,7 @@ const api = {
       //handle loading indicator
 
       //see if we passed a callback function with the payload,
+
       //create local copy, remove it from params
       let callback = false;
       if (params && params.callback) {
@@ -84,13 +85,13 @@ const api = {
         //handle error from our server that we created
         if (data.error && !data.result) {
           // we caught and reported back to the user
-          _this.$toastr.e("An API Error occured");
+          //TODO ALERT THIS BETTER DOES  TOAST WORK
           console.error(data.error);
         }
       } catch (error) {
         //axios-retry will have retried any requests if they get this failed we need
         //to tell the user an error occured
-        _this.$toastr.e("An API Error occured");
+        //TODO ALERT THIS BETTER DOES  TOAST WORK
         console.error(error);
         //throw new Error(error);
         //apiErrorHandler(dispatch, error);

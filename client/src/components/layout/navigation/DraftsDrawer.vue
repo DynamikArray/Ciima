@@ -28,8 +28,7 @@
 
       <v-tab-item key="open" class="h-100">
         <vuescroll :ops="ops">
-          <DraftForm></DraftForm>
-          <br />
+          <DraftForm class="mb-10"></DraftForm>
         </vuescroll>
       </v-tab-item>
     </v-tabs>

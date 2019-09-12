@@ -2,14 +2,16 @@ import Vue from "vue";
 import Vuex from "vuex";
 Vue.use(Vuex);
 
-import {} from "@/store/action-types";
+import { CURRENT_DRAFT_SAVE } from "@/store/action-types";
 import {
+  CURRENT_DRAFT_UPDATE,
+  CURRENT_DRAFT_SAVING,
   CURRENT_DRAFT_CLEAR,
   CURRENT_DRAFT_ISSUE_ADD,
   CURRENT_DRAFT_ISSUE_REMOVE,
+  CURRENT_DRAFT_ISSUES_REORDER,
   CURRENT_DRAFT_TITLE_ADD,
   CURRENT_DRAFT_TITLE_REMOVE,
-  CURRENT_DRAFT_ISSUES_REORDER,
   CURRENT_DRAFT_COVER_PHOTO_SAVING,
   CURRENT_DRAFT_COVER_PHOTO_UPDATE,
   CURRENT_DRAFT_COVER_PHOTO_CLEAR
@@ -19,12 +21,36 @@ const currentDraft = {
   namespaced: true,
 
   state: {
+    titles: [],
+    issues: [],
     coverPhoto: false,
     savingCover: false,
-    titles: [],
-    issues: []
+    //form data
+    inventoryTitle: "",
+    locationCode: "",
+    grade: "",
+    quantity: "",
+    price: "",
+    ebaySiteCateogryId: false,
+    ebayStoreCateogryIdOne: "",
+    ebayStoreCateogryIdTwo: "",
+    series: "",
+    charachter: "",
+    issueNumbers: "",
+    publisher: "",
+    publishedYear: "",
+    publishedDate: "",
+    main_image: false,
+    other_images: [],
+    savingDraft: false
   },
   mutations: {
+    [CURRENT_DRAFT_UPDATE](state, draft) {
+      state = { ...state, ...draft };
+    },
+    [CURRENT_DRAFT_SAVING](state, data) {
+      state.savingCover = data;
+    },
     //Clear all properties of draft
     [CURRENT_DRAFT_CLEAR](state) {
       state.coverPhoto = false;
@@ -75,7 +101,21 @@ const currentDraft = {
       state.savingCover = data;
     }
   },
-  actions: {}
+  actions: {
+    [CURRENT_DRAFT_SAVE]({ dispatch, commit }, params) {
+      dispatch(
+        "api/requestHandler",
+        {
+          method: "post",
+          url: "/v1/drafts",
+          params: params,
+          success: `currentDraft/${CURRENT_DRAFT_UPDATE}`,
+          loading: `currentDraft/${CURRENT_DRAFT_SAVING}`
+        },
+        { root: true }
+      );
+    }
+  }
 };
 
 export default currentDraft;
