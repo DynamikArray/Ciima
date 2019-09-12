@@ -32,8 +32,7 @@
 <script>
 import { mapState } from "vuex";
 import CurrentDraft from "@/components/Drafts/CurrentDraft/CurrentDraft";
-import OpenDrafts from "@/components/Drafts/OpenDrafts";
-import DraftForm from "@/components/Drafts/DraftDetails/DraftForm";
+import DraftForm from "@/components/Drafts/CurrentDraft/DraftDetails/DraftForm";
 
 export default {
   data() {
@@ -44,7 +43,6 @@ export default {
   },
   components: {
     CurrentDraft,
-    OpenDrafts,
     DraftForm
   },
   props: {
