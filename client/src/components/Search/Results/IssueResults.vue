@@ -208,6 +208,8 @@ export default {
       );
       this.$store.commit(`currentDraft/${CURRENT_DRAFT_ISSUE_ADD}`, item);
       this.hideImageModal();
+
+      //show the draftImages tab
     },
     //
     removeIssueFromDraft(item) {

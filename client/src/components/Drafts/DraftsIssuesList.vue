@@ -88,6 +88,7 @@ export default {
       }
     }
   },
+
   methods: {
     makeImageUrl(item) {
       //// TODO: place this url in a config file
