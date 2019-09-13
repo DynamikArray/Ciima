@@ -37,10 +37,10 @@
               :disabled="draft.savingCover"
               v-if="draft.coverPhoto"
               success
-              color="warning"
-              :to="'/images'"
+              color="red"
+              @click="deleteImagePhoto()"
             >
-              <v-icon class="mr-2">fa-image</v-icon>Edit
+              <v-icon class="mr-2">fa-times-circle</v-icon>Delete
             </v-btn>
           </div>
           <div class="mx-4">
@@ -48,18 +48,18 @@
               :disabled="draft.savingCover"
               v-if="draft.coverPhoto"
               success
-              color="red"
-              @click="deleteImagePhoto()"
+              color="warning"
+              :to="'/images'"
             >
-              <v-icon class="mr-2">fa-times-circle</v-icon>Delete
+              <v-icon class="mr-2">fa-image</v-icon>Edit
             </v-btn>
           </div>
-        </div>
 
-        <div class="d-flex grow justify-center">
-          <v-btn color="primary" @click="downloadImages"
-            ><v-icon class="mr-2">fa-download</v-icon>Download Images</v-btn
-          >
+          <div class="mx-4">
+            <v-btn color="primary" @click="downloadImages"
+              ><v-icon class="mr-2">fa-download</v-icon>Download</v-btn
+            >
+          </div>
         </div>
       </div>
     </div>
