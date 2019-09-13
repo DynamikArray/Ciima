@@ -15,7 +15,7 @@
                 hint="Title as it will appear on Ebay"
                 clearable
                 counter
-                v-model="draft.inventoryTitle"
+                v-model="inventoryTitle"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -24,7 +24,7 @@
           <v-row>
             <v-col cols="5">
               <v-text-field
-                v-model="draft.locationCode"
+                v-model="locationCode"
                 outlined
                 label="Location"
                 hint="Location code for the item"
@@ -32,7 +32,7 @@
             </v-col>
             <v-col cols="3">
               <v-text-field
-                v-model="draft.grade"
+                v-model="grade"
                 outlined
                 label="Grade"
                 hint="Grade of the product"
@@ -41,7 +41,7 @@
 
             <v-col cols="2">
               <v-text-field
-                v-model="draft.quantity"
+                v-model="quantity"
                 outlined
                 label="Qty"
                 hint="Quantity"
@@ -50,7 +50,7 @@
 
             <v-col cols="2">
               <v-text-field
-                v-model="draft.price"
+                v-model="price"
                 outlined
                 label="Price"
                 hint="Price it will list for on eBay"
@@ -66,7 +66,7 @@
             <v-col cols="12">
               <v-autocomplete
                 outlined
-                v-model="draft.ebayCategoryId"
+                v-model="ebaySiteCategoryId"
                 :loading="loading"
                 :items="eBayCategories"
                 item-text="ebayCategoryName"
@@ -84,7 +84,7 @@
             <v-col cols="6">
               <v-text-field
                 outlined
-                v-model="draft.ebayStoreCateogryIdOne"
+                v-model="ebayStoreCategoryIdOne"
                 label="Ebay Store Category 1"
                 hint="Your Ebay store category for this product"
               ></v-text-field>
@@ -92,7 +92,7 @@
             <v-col cols="6">
               <v-text-field
                 outlined
-                v-model="draft.ebayStoreCateogryIdTwo"
+                v-model="ebayStoreCategoryIdTwo"
                 label="Ebay Store Category 2"
                 hint="Secondary Ebay store category for this product"
               ></v-text-field>
@@ -105,7 +105,7 @@
           <v-row>
             <v-col cols="6">
               <v-text-field
-                v-model="draft.series"
+                v-model="series"
                 outlined
                 label="Series"
                 hint="Storyline/Series of this product"
@@ -114,7 +114,7 @@
 
             <v-col cols="6">
               <v-text-field
-                v-model="draft.character"
+                v-model="mainCharacter"
                 outlined
                 label="Character"
                 hint="Main character featured throughout"
@@ -126,7 +126,7 @@
           <v-row>
             <v-col cols="4">
               <v-text-field
-                v-model="draft.issueNumbers"
+                v-model="issueNumbers"
                 outlined
                 label="Issue Numbers"
                 hint="Issue Number(s) when applicable"
@@ -134,7 +134,7 @@
             </v-col>
             <v-col cols="3">
               <v-text-field
-                v-model="draft.publisher"
+                v-model="publisher"
                 outlined
                 label="Publisher"
                 hint="Main publisher of these issues"
@@ -142,7 +142,7 @@
             </v-col>
             <v-col cols="2">
               <v-text-field
-                v-model="draft.publishedYear"
+                v-model="publishedYear"
                 outlined
                 label="Year"
                 hint="The year published for these issues "
@@ -150,7 +150,7 @@
             </v-col>
             <v-col cols="3">
               <v-text-field
-                v-model="draft.publishedDate"
+                v-model="publishedDate"
                 outlined
                 label="Date Published"
                 hint="The Date published eg(Mar 86) "
@@ -171,8 +171,14 @@
 import { mapState } from "vuex";
 import { SEARCH_EBAY_CATEGORIES } from "@/store/action-types.js";
 import debounce from "lodash.debounce";
-
 import ActionButtons from "./fields/ActionButtons.vue";
+
+import { createHelpers } from "vuex-map-fields";
+
+const { mapFields } = createHelpers({
+  getterType: "currentDraft/getField",
+  mutationType: "currentDraft/updateField"
+});
 
 export default {
   props: {},
@@ -182,21 +188,30 @@ export default {
   data: () => ({
     selectedEbayCategory: null, //select
     searchEbayCategory: null //search
-    //eBayCategories - items  - on computed state
-    //laoding - loading - on computed state
-
-    /*
-    rules: {
-      title: [v => v.length <= 25 || "Max 25 characters"]
-    }
-    */
   }),
   computed: {
     ...mapState({
       loading: state => state.ebaySearch.loading,
-      eBayCategories: state => state.ebaySearch.items,
-      draft: state => state.currentDraft
-    })
+      eBayCategories: state => state.ebaySearch.items
+      //  draft: state => state.currentDraft
+    }),
+    ...mapFields([
+      "inventoryTitle",
+      "locationCode",
+      "grade",
+      "quantity",
+      "price",
+      "ebaySiteCategoryId",
+      "ebayStoreCategoryIdOne",
+      "ebayStoreCategoryIdTwo",
+      "series",
+      "mainCharacter",
+      "issueNumbers",
+      "publisher",
+      "publishedYear",
+      "publishedDate",
+      "main_image"
+    ])
   },
   watch: {
     searchEbayCategory: debounce(function(value) {
@@ -206,6 +221,13 @@ export default {
         });
       }
     }, 500)
+  },
+  methods: {
+    /*
+    handleEbayStoreCategoryChange: val => {
+      this.ebaySiteCategoryId = val;
+    }
+    */
   }
 };
 </script>

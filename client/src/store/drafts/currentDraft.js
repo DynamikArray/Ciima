@@ -17,6 +17,8 @@ import {
   CURRENT_DRAFT_COVER_PHOTO_CLEAR
 } from "@/store/mutation-types";
 
+import { getField, updateField } from "vuex-map-fields";
+
 const currentDraft = {
   namespaced: true,
 
@@ -31,11 +33,11 @@ const currentDraft = {
     grade: "",
     quantity: "",
     price: "",
-    ebaySiteCateogryId: false,
-    ebayStoreCateogryIdOne: "",
-    ebayStoreCateogryIdTwo: "",
+    ebaySiteCategoryId: 0,
+    ebayStoreCategoryIdOne: "",
+    ebayStoreCategoryIdTwo: "",
     series: "",
-    charachter: "",
+    mainCharacter: "",
     issueNumbers: "",
     publisher: "",
     publishedYear: "",
@@ -44,7 +46,12 @@ const currentDraft = {
     other_images: [],
     savingDraft: false
   },
+  getters: {
+    getField
+  },
   mutations: {
+    updateField,
+
     [CURRENT_DRAFT_UPDATE](state, draft) {
       state = { ...state, ...draft };
     },
@@ -107,7 +114,7 @@ const currentDraft = {
         "api/requestHandler",
         {
           method: "post",
-          url: "/v1/drafts",
+          url: "/v1/draft",
           params: params,
           success: `currentDraft/${CURRENT_DRAFT_UPDATE}`,
           loading: `currentDraft/${CURRENT_DRAFT_SAVING}`

@@ -36,6 +36,7 @@ fastify.register(require("./routes/v1/titleSearch"), { prefix: "v1" });
 fastify.register(require("./routes/v1/issueSearch"), { prefix: "v1" });
 fastify.register(require("./routes/v1/ebayCategories"), { prefix: "v1" });
 fastify.register(require("./routes/v1/imageFetch"), { prefix: "v1" });
+fastify.register(require("./routes/v1/draft"), { prefix: "v1" });
 
 fastify.get("*", function(request, reply) {
   reply.sendFile("index.html");
