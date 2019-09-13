@@ -8,6 +8,7 @@ import titleSearch from "@/store/search/titleSearch";
 import issueSearch from "@/store/search/issueSearch";
 import ebaySearch from "@/store/search/ebaySearch";
 import currentDraft from "@/store/drafts/currentDraft";
+import openDrafts from "@/store/drafts/openDrafts";
 
 export default new Vuex.Store({
   modules: {
@@ -15,9 +16,9 @@ export default new Vuex.Store({
     titleSearch,
     issueSearch,
     ebaySearch,
-    currentDraft
+    currentDraft,
+    openDrafts
   },
   state: {},
-
   mutations: {}
 });
