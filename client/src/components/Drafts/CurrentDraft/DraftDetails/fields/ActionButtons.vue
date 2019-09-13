@@ -8,7 +8,7 @@
 
 <script>
 import { mapState } from "vuex";
-import { CURRENT_DRAFT_SAVE } from "@/store/action-types.js";
+import { CURRENT_DRAFT_SAVE, OPEN_DRAFTS_FETCH } from "@/store/action-types.js";
 
 export default {
   computed: {
@@ -38,6 +38,8 @@ export default {
       draft.main_image = this.draft.coverPhoto;
 
       this.$store.dispatch(`currentDraft/${CURRENT_DRAFT_SAVE}`, draft);
+
+      this.$store.dispatch(`openDrafts/${OPEN_DRAFTS_FETCH}`);
     }
   }
 };

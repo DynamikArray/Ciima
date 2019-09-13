@@ -116,7 +116,7 @@ const currentDraft = {
           method: "post",
           url: "/v1/draft",
           params: params,
-          success: `currentDraft/${CURRENT_DRAFT_UPDATE}`,
+          success: [`currentDraft/${CURRENT_DRAFT_UPDATE}`],
           loading: `currentDraft/${CURRENT_DRAFT_SAVING}`
         },
         { root: true }
