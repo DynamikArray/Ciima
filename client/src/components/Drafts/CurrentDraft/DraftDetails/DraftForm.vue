@@ -15,6 +15,7 @@
                 hint="Title as it will appear on Ebay"
                 clearable
                 counter
+                id="inventoryTitle"
                 v-model="inventoryTitle"
               ></v-text-field>
             </v-col>
@@ -25,6 +26,7 @@
             <v-col cols="5">
               <v-text-field
                 v-model="locationCode"
+                name="locationCode"
                 outlined
                 label="Location"
                 hint="Location code for the item"
@@ -33,6 +35,7 @@
             <v-col cols="3">
               <v-text-field
                 v-model="grade"
+                id="grade"
                 outlined
                 label="Grade"
                 hint="Grade of the product"
@@ -42,6 +45,7 @@
             <v-col cols="2">
               <v-text-field
                 v-model="quantity"
+                id="quantity"
                 outlined
                 label="Qty"
                 hint="Quantity"
@@ -51,6 +55,7 @@
             <v-col cols="2">
               <v-text-field
                 v-model="price"
+                id="price"
                 outlined
                 label="Price"
                 hint="Price it will list for on eBay"

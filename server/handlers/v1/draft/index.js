@@ -24,7 +24,8 @@ module.exports = fastify => ({
       publisher,
       publishedYear,
       publishedDate,
-      main_image
+      main_image,
+      other_images
     } = req.body;
 
     // TODO: ADD other images to this insert
@@ -33,15 +34,14 @@ module.exports = fastify => ({
         price, ebaySiteCategoryId, ebayStoreCategoryIdOne,
         ebayStoreCategoryIdTwo, series, mainCharacter, issueNumbers,
         publisher, publishedYear, publishedDate,
-        main_image
+        main_image, other_images
     ) VALUES ('${inventoryTitle}', '${locationCode}', '${grade}', '${quantity}',
       '${price}', '${ebaySiteCategoryId}', '${ebayStoreCategoryIdOne}',
       '${ebayStoreCategoryIdTwo}', '${series}', '${mainCharacter}', '${issueNumbers}',
       '${publisher}', '${publishedYear}', '${publishedDate}',
-      '${main_image}');`;
+      '${main_image}', ('${JSON.stringify(other_images)}'));`;
 
     const result = await dbHelper.query(query);
-
     return result;
   }
 });

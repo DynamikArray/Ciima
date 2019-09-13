@@ -56,7 +56,7 @@ const currentDraft = {
       state = { ...state, ...draft };
     },
     [CURRENT_DRAFT_SAVING](state, data) {
-      state.savingCover = data;
+      state.savingDraft = data.loading;
     },
     //Clear all properties of draft
     [CURRENT_DRAFT_CLEAR](state) {
