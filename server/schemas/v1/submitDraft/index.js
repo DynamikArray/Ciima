@@ -4,7 +4,7 @@ module.exports = {
   summary: "Submits the draft to linnworks to be pushed to ebay",
 
   body: {
-    id: { type: "number" }
+    draftId: { type: "Number" }
   }
 
   //// TODO: defind the repsonse

@@ -3,8 +3,7 @@ const linnworks = require("../../../util/linnworks");
 module.exports = fastify => ({
   submitDraft: async (req, reply) => {
     const dbHelper = require("../../../util/dbHelper.js")(fastify);
-
-    const { id } = req.body;
+    const id = req.body.draftId;
 
     const query = `SELECT * FROM slc_drafts WHERE id = ?`;
     const result = await dbHelper.query(query, [id]);
@@ -13,10 +12,17 @@ module.exports = fastify => ({
     //if we have single row list it
     if (result.rows && result.rows.length == 1) {
       //push to worker at some point
-      //
-      const listingResults = linnworks.listItem(result.rows[0]);
+      fastify.log.info(
+        "Make call to linnworks ",
+        fastify.linnworks.sessionToken
+      );
 
-      return listingResults;
+      const response = await fastify.linnworks.makeApiCall({
+        method: "POST",
+        url: "inventory/GetCategories"
+      });
+
+      return response;
       //connect to linnworks
       //add item
     }

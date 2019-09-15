@@ -46,6 +46,11 @@ fastify.get("*", function(request, reply) {
 
 // Server
 const start = async () => {
+  //move out later
+  const linnworks = require("./util/linnworks");
+  const linnConnection = await linnworks.initiliaze();
+  fastify.decorate("linnworks", linnworks);
+
   await fastify.listen(config).catch(e => {
     fastify.log.error(e);
     process.exit(1);

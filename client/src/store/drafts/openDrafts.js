@@ -2,7 +2,10 @@ import Vue from "vue";
 import Vuex from "vuex";
 Vue.use(Vuex);
 
-import { OPEN_DRAFTS_FETCH, OPEN_DRAFTS_SUBMIT } from "@/store/action-types";
+import {
+  OPEN_DRAFTS_FETCH,
+  OPEN_DRAFTS_SUBMIT_DRAFT
+} from "@/store/action-types";
 import {
   OPEN_DRAFTS_LISTED,
   OPEN_DRAFTS_RESULTS,
@@ -20,9 +23,12 @@ const openDrafts = {
     [OPEN_DRAFTS_RESULTS](state, data) {
       state.items = data;
     },
+
+    //TBD how this hsould work
     [OPEN_DRAFTS_LISTED](state, data) {
       state.lastItemListed = data;
     },
+
     [OPEN_DRAFTS_LOADING](state, data) {
       state.loading = data.loading;
     }
@@ -41,7 +47,7 @@ const openDrafts = {
         { root: true }
       );
     },
-    [OPEN_DRAFTS_SUBMIT]({ dispatch, commit }, params) {
+    [OPEN_DRAFTS_SUBMIT_DRAFT]({ dispatch, commit }, params) {
       dispatch(
         "api/requestHandler",
         {

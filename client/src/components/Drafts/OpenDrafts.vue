@@ -69,7 +69,10 @@
 
 <script>
 import { mapState } from "vuex";
-import { OPEN_DRAFTS_FETCH, OPEN_DRAFTS_SUBMIT } from "@/store/action-types";
+import {
+  OPEN_DRAFTS_FETCH,
+  OPEN_DRAFTS_SUBMIT_DRAFT
+} from "@/store/action-types";
 
 export default {
   created() {
@@ -89,8 +92,10 @@ export default {
       const opts = {};
       this.$store.dispatch(`openDrafts/${OPEN_DRAFTS_FETCH}`, opts);
     },
-    submitDraft(id) {
-      this.$store.dispatch(`openDrafts/${OPEN_DRAFTS_SUBMIT}`, { id });
+    submitDraft(draftId) {
+      this.$store.dispatch(`openDrafts/${OPEN_DRAFTS_SUBMIT_DRAFT}`, {
+        draftId
+      });
     }
   }
 };
