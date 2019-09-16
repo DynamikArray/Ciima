@@ -1,10 +1,17 @@
+require("dotenv").config();
 const path = require("path");
+//include logger
+const logger = require("../util/winston/winston.js")({ hostname: "Server" });
+
 //include our server config file
 const { config, documentation } = require("./config/config");
 
 // Require the framework and instantiate it
 const fastify = require("fastify")(config);
 const swagger = require("fastify-swagger");
+
+//add our winston/logdna logger to fastify
+fastify.decorate("winston", logger);
 
 //proper mysql connection string if prod
 let connectionString = process.env.MYSQL_CONN;
@@ -51,10 +58,12 @@ fastify.get("*", function(request, reply) {
 // Server
 const start = async () => {
   await fastify.listen(config).catch(e => {
-    fastify.log.error("error", e);
+    fastify.winston.error("error", e);
     process.exit(1);
   });
-  fastify.serverAddress = fastify.server.address();
+  fastify.winston.info(
+    `Server is running at ${JSON.stringify(fastify.server.address())}`
+  );
 };
 
 //start the server

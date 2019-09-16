@@ -1,5 +1,3 @@
-require("dotenv").config();
-
 let host = "localhost";
 if (process.env.NODE_ENV === "production") {
   host = "0.0.0.0";
@@ -8,9 +6,7 @@ if (process.env.NODE_ENV === "production") {
 const config = {
   host: host,
   port: process.env.PORT,
-  name: process.env.APP_NAME || "Api",
-  logger: true,
-  level: "error"
+  name: process.env.APP_NAME || "Api"
 };
 
 const documentation = {

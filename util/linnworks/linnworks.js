@@ -1,5 +1,6 @@
 ////TODO: These maybe be passed in as part of a config?
-const { logger } = require("../winston/winston.js");
+//const { logger } = require("../winston/winston.js");
+
 //Use axios
 const axios = require("axios");
 
@@ -18,12 +19,15 @@ const linnworks = {
   serverUrl: false,
   sessionToken: false,
   sessionTokenError: false,
+  logger: false,
   /**
    * [initiliaze description]
    * @return {Promise} [description]
    */
-  async initiliaze() {
-    logger.info("initiliazing Linnworks API...");
+  async initiliaze(logger) {
+    this.logger = logger;
+
+    //logger.info("initiliazing Linnworks API...");
     const ready = await this.authorizeByApplication();
     if (ready) return true;
     return false;
@@ -34,7 +38,7 @@ const linnworks = {
    */
   async authorizeByApplication() {
     try {
-      logger.info("Authorizing Ciima with Linnworks");
+      this.logger.info("Authorizing Ciima with Linnworks");
       const url = `${API_URL}/Auth/AuthorizeByApplication`;
 
       const response = await axios.post(url, {
@@ -49,16 +53,16 @@ const linnworks = {
       if (data.Token) {
         this.serverUrl = data.Server;
         this.sessionToken = data.Token;
-        logger.info(`Linnworks Authorized Us`);
+        this.logger.info(`Linnworks Authorized Us`);
         return true;
       }
       //// TODO: problally wouldnt want to leak the full response to logs here
       //// seems like this is wehre those data exposures happen
-      logger.warn("No Token Found");
+      this.logger.warn("No Token Found");
       return false;
     } catch (error) {
-      console.log(error);
-      logger.warn("Linnworks DENIED Us");
+      this.logger.error(error);
+      this.logger.warn("Linnworks DENIED Us");
       this.sessionTokenError = error;
       return false;
     }
@@ -68,7 +72,7 @@ const linnworks = {
    * @return {boolean} true/fals if reauthorization was successfull
    */
   reAuth() {
-    logger.info("Re-Authorizing Ciima with Linnworks");
+    this.logger.info("Re-Authorizing Ciima with Linnworks");
     if (!this.authorizeByApplication) return false;
     return true;
   },
@@ -78,12 +82,12 @@ const linnworks = {
    * @return {Promise}        [description]
    */
   async makeApiCall(config) {
-    logger.info("Attempting to makeApiCall() ");
+    this.logger.info("Attempting to makeApiCall() ");
     //check if we can make call
     if (!this.sessionToken) {
-      logger.warn("No sessionToken found ");
+      this.logger.warn("No sessionToken found ");
       if (!this.reAuth()) {
-        logger.error("Unable to reauthorize to linnworks");
+        this.logger.error("Unable to reauthorize to linnworks");
         return false;
       }
     }
@@ -100,25 +104,25 @@ const linnworks = {
     //make our api call
     const response = await axios(config).catch(error => {
       const { data } = error.response;
-      logger.error(`Error Response: ${JSON.stringify(data)}`);
+      this.logger.error(`Error Response: ${JSON.stringify(data)}`);
       return { error: data };
     });
 
     if (response.status == 200) {
-      logger.info("linnworks 200 response");
+      this.logger.info("linnworks 200 response");
       const { data } = response;
       return data;
     }
 
     //when adding items there is no response status ?
     if (response.status === 204) {
-      logger.info("Linnworks 204 response");
+      this.logger.info("Linnworks 204 response");
       return { result: "success" };
     }
 
     //check response status
     if (response.status == 400) {
-      logger.info("Linnwork 400 response");
+      this.logger.info("Linnwork 400 response");
       const { statusText } = response;
       return { error: statusText };
     }

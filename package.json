@@ -23,6 +23,7 @@
     "fastify-rabbit": "^1.2.1",
     "fastify-static": "^2.5.0",
     "fastify-swagger": "^2.4.0",
+    "logdna-winston": "^2.2.4",
     "mysql2": "^1.7.0",
     "request": "^2.88.0",
     "simple-amqplib": "^7.0.3",
