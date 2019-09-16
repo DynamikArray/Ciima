@@ -7,7 +7,10 @@
 module.exports = fastify => ({
   draft: async (req, res) => {
     const draft = req.body;
-    const dbHelper = require("../../../util/dbHelper.js")(fastify);
+
+    const dbHelper = require("../../../../util/mysql/fastifyMysqlConn.js")(
+      fastify
+    );
 
     const {
       inventoryTitle,

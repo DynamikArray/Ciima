@@ -1,6 +1,8 @@
 module.exports = fastify => ({
   titleSearch: async (req, reply) => {
-    const dbHelper = require("../../../util/dbHelper.js")(fastify);
+    const dbHelper = require("../../../../util/mysql/fastifyMysqlConn.js")(
+      fastify
+    );
 
     const query = `SELECT
           COUNT(i.Title)as issueCount,

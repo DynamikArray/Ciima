@@ -1,9 +1,12 @@
 //list of queue actions we can use
-const { SUBMIT_DRAFT } = require("../../../../shared/queueActionsList.js");
+const { SUBMIT_DRAFT } = require("../../../../util/amqp/queueActionsList.js");
+const { QUEUE_NAME } = require("../../../../util/amqp/config.js");
 
 module.exports = fastify => ({
   submitDraft: async (req, reply) => {
-    const dbHelper = require("../../../util/dbHelper.js")(fastify);
+    const dbHelper = require("../../../../util/mysql/fastifyMysqlConn.js")(
+      fastify
+    );
     const id = req.body.draftId;
 
     //// TODO: FILTER OUT DRAFTS BY STATUS
@@ -17,11 +20,14 @@ module.exports = fastify => ({
       const channel = fastify.rabbit.channel;
 
       // Create queue if it does not exist
-      const ok = await channel.assertQueue("drafts");
+      const ok = await channel.assertQueue(QUEUE_NAME);
       // handle failed to assert queue
       if (!ok) {
-        logger.error("unable to assert queue drafts");
+        const error = `Unable to assert ${QUEUE_NAME}`;
+        logger.error("error", error);
+        return { error };
       }
+
       //create amqp action/data paylodd and convert objectt
       //to string so we can buffer
       const item = JSON.stringify({
@@ -31,16 +37,16 @@ module.exports = fastify => ({
 
       // Push message to queue
       try {
-        await channel.sendToQueue("drafts", Buffer.from(item));
+        await channel.sendToQueue(QUEUE_NAME, Buffer.from(item));
         return { result: "Your draft has been submitted for listing." };
         //reply.send("Message sent!");
       } catch (err) {
-        logger.error(err);
-        fastify.log.error(err);
+        logger.error("error", err);
+        fastify.log.error("error", err);
         return { error: "There was a problem submitting your listing" };
       }
     }
-    //Unexpected repsonse return
+
     return result;
   }
 });

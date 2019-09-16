@@ -5,7 +5,7 @@
   "main": "server/server.js",
   "scripts": {
     "dev": "concurrently \" nodemon server/server.js \" \"cd client && npm run serve \" ",
-    "start:server": "set NODE_ENV=development && nodemon server/server.js",
+    "start:server": "nodemon server/server.js",
     "start:worker": "nodemon worker/worker.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "heroku-postbuild": "cd client;  npm install --dev ; npm run build",
@@ -23,6 +23,7 @@
     "fastify-rabbit": "^1.2.1",
     "fastify-static": "^2.5.0",
     "fastify-swagger": "^2.4.0",
+    "mysql2": "^1.7.0",
     "request": "^2.88.0",
     "simple-amqplib": "^7.0.3",
     "winston": "^3.2.1"

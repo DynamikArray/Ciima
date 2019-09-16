@@ -51,7 +51,7 @@ fastify.get("*", function(request, reply) {
 // Server
 const start = async () => {
   await fastify.listen(config).catch(e => {
-    fastify.log.error(e);
+    fastify.log.error("error", e);
     process.exit(1);
   });
   fastify.serverAddress = fastify.server.address();

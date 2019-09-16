@@ -1,5 +1,5 @@
 ////TODO: These maybe be passed in as part of a config?
-const { logger } = require("../../shared/winston.js");
+const { logger } = require("../winston/winston.js");
 //Use axios
 const axios = require("axios");
 
@@ -100,7 +100,7 @@ const linnworks = {
     //make our api call
     const response = await axios(config).catch(error => {
       const { data } = error.response;
-      logger.error("error", data);
+      logger.error(`Error Response: ${JSON.stringify(data)}`);
       return { error: data };
     });
 

@@ -9,7 +9,8 @@ const config = {
   host: host,
   port: process.env.PORT,
   name: process.env.APP_NAME || "Api",
-  logger: true
+  logger: true,
+  level: "error"
 };
 
 const documentation = {
@@ -17,8 +18,8 @@ const documentation = {
   swagger: {
     info: {
       version: "1.0.0", //get from package
-      title: "API Documentation",
-      description: "API Endpoints Documentation"
+      title: "Ciima API Documentation",
+      description: "Ciima API Endpoints Documentation"
     },
     //schemes: [process.env.options.https ? "https" : "http"],
     consumes: ["application/json"],
