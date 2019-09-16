@@ -10,6 +10,9 @@ const { config, documentation } = require("./config/config");
 const fastify = require("fastify")(config);
 const swagger = require("fastify-swagger");
 
+//add morgan
+//fastify.use(require("morgan")("combined", { stream: logger.stream }));
+
 //add our winston/logdna logger to fastify
 fastify.decorate("winston", logger);
 
