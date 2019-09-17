@@ -94,9 +94,13 @@ export default {
           issue.fullIssue.replace(/\W/g, "") +
           ".jpg";
 
-        const url = `/v1/imageFetch?url=http://searchlightcomics.com${
+        const cleanUrl = `http://searchlightcomics.com${encodeURIComponent(
           issue.imageUrl
-        }`;
+        )}`;
+
+        console.log(cleanUrl);
+
+        const url = `/v1/imageFetch?url=${cleanUrl}`;
 
         this.downloadImageLink(url, filename);
       });
@@ -114,6 +118,7 @@ export default {
     downloadImageLink(url, filename) {
       var link = document.createElement("a");
       // TODO: place in a config or common file
+      console.log(url);
       link.href = url;
       link.target = "_blank";
       link.download = filename;
