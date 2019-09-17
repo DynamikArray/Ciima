@@ -1,52 +1,43 @@
 //list of queue actions we can use
 const { SUBMIT_DRAFT } = require("../../../../util/amqp/queueActionsList.js");
-const { QUEUE_NAME } = require("../../../../util/amqp/config.js");
 
 module.exports = fastify => ({
   submitDraft: async (req, reply) => {
+    //pull off rabbit and winston to send to amqp helper
+    const { rabbit, winston } = fastify;
+    const amqp = require("../../../util/amqpMsgHelper.js")(rabbit, winston);
     const connection = await fastify.mysql.getConnection();
 
+    //// TODO: FILTER OUT DRAFTS BY STATUS
+    //// NOT_LISTED, PENDING, LISTED
+    const id = req.body.draftId; //should be handled in schema validator
+
+    //with a mysql connection go get our draft
     if (connection) {
-      const id = req.body.draftId;
-
-      //// TODO: FILTER OUT DRAFTS BY STATUS
-      //// NOT_LISTED, PENDING, LISTED
+      //query
       const query = `SELECT * FROM slc_drafts WHERE id = ?`;
-      const result = await connection.query(query);
-      if (!result) connection.release();
+      const [rows, fields] = await connection.query(query, [id]);
+      connection.release(); //dont forget to release ;)
 
-      //if we have single row list it
-      if (result.rows && result.rows.length == 1) {
-        const channel = fastify.rabbit.channel;
+      //Handle no results
+      if (rows.length == 0) {
+        //no results
+        fastify.winston.warn(`No draft with matching id of ${id} found`);
+        return { result: `No draft with matching id of ${id} found` };
+      } else {
+        //we have draft we want to submit
+        fastify.winston.info(`Draft ${id} submitting to worker`);
 
-        // Create queue if it does not exist
-        const ok = await channel.assertQueue(QUEUE_NAME);
-        // handle failed to assert queue
-        if (!ok) {
-          const error = `Unable to assert ${QUEUE_NAME}`;
-          logger.error("error", error);
-          return { error };
-        }
-
-        //create amqp action/data paylodd and convert objectt
-        //to string so we can buffer
-        const item = JSON.stringify({
+        //build our payload
+        const payload = JSON.stringify({
           action: SUBMIT_DRAFT,
-          data: result.rows[0]
+          data: rows[0]
         });
 
-        // Push message to queue
-        try {
-          await channel.sendToQueue(QUEUE_NAME, Buffer.from(item));
-          return { result: "Your draft has been submitted for listing." };
-          //reply.send("Message sent!");
-        } catch (err) {
-          logger.error("error", err);
-          return { error: "There was a problem submitting your listing" };
-        }
+        //call our helper handles sending and repsonse
+        const result = await amqp.sendMessage(payload);
+        return result;
       }
-
-      return { result: rows };
     }
 
     return { error: "No DB Connection" };

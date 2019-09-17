@@ -12,7 +12,7 @@ const swagger = require("fastify-swagger");
 fastify.decorate("winston", logger);
 
 //add morgan
-fastify.use(require("morgan")("combined", { stream: logger.stream }));
+fastify.use(require("morgan")("short", { stream: logger.stream }));
 //add our winston/logdna logger to fastify
 
 //proper mysql connection string if prod
@@ -75,7 +75,7 @@ const start = async () => {
   }); //end catch;
 
   //infolog
-  fastify.winston.info(
+  fastify.log.info(
     `Server is running at ${JSON.stringify(fastify.server.address())}`
   );
 };

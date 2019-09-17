@@ -13,15 +13,9 @@ module.exports = {
   response: {
     200: {
       description: "Succesful response",
-      type: "object"
+      type: "object",
 
-      properties: {
-        result: {
-          type: "array",
-          items: [{ type: "object" }]
-        }
-      }
-
+      properties: {}
     }
   }
   */

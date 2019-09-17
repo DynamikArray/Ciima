@@ -9,6 +9,7 @@ const fs = require("fs");
  */
 const imageFetch = async (req, res) => {
   const resp = await request(req.query.url);
+
   // TODO: should this be a stream or pipe or something like that
   res.send(resp);
 };
