@@ -9,12 +9,11 @@ const { config, documentation } = require("./config/config");
 // Require the framework and instantiate it
 const fastify = require("fastify")(config);
 const swagger = require("fastify-swagger");
+fastify.decorate("winston", logger);
 
 //add morgan
-//fastify.use(require("morgan")("combined", { stream: logger.stream }));
-
+fastify.use(require("morgan")("combined", { stream: logger.stream }));
 //add our winston/logdna logger to fastify
-fastify.decorate("winston", logger);
 
 //proper mysql connection string if prod
 let connectionString = process.env.MYSQL_CONN;
@@ -60,10 +59,22 @@ fastify.get("*", function(request, reply) {
 
 // Server
 const start = async () => {
+  //infolog
+  fastify.winston.info("Starting Fastify Server");
+
   await fastify.listen(config).catch(e => {
-    fastify.winston.error("error", e);
-    process.exit(1);
-  });
+    fastify.log.error(
+      `We caught an error trying to start the server: ${JSON.stringify(
+        e.message
+      )}`
+    );
+    //wait a 3 seconds for logs to finish so we know what happened?
+    setTimeout(() => {
+      process.exit(1);
+    }, 2000);
+  }); //end catch;
+
+  //infolog
   fastify.winston.info(
     `Server is running at ${JSON.stringify(fastify.server.address())}`
   );

@@ -5,19 +5,15 @@ const { QUEUE_NAME } = require("../../../../util/amqp/config.js");
 module.exports = fastify => ({
   submitDraft: async (req, reply) => {
     const connection = await fastify.mysql.getConnection();
-    console.log(connection);
 
     if (connection) {
       const id = req.body.draftId;
-
-      console.log(req.body);
 
       //// TODO: FILTER OUT DRAFTS BY STATUS
       //// NOT_LISTED, PENDING, LISTED
       const query = `SELECT * FROM slc_drafts WHERE id = ?`;
       const result = await connection.query(query);
-
-      connection.release();
+      if (!result) connection.release();
 
       //if we have single row list it
       if (result.rows && result.rows.length == 1) {
@@ -52,6 +48,7 @@ module.exports = fastify => ({
 
       return { result: rows };
     }
+
     return { error: "No DB Connection" };
   }
 });
