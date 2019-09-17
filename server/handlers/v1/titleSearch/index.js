@@ -23,7 +23,7 @@ module.exports = fastify => ({
     //removes all extra chars from search string
     const alphaTitle = req.query.q.replace(/[^a-z0-9+]+/gi, "");
     //run placeholder query
-    const result = await dbHelper.query(query, [req.query.q, cleanTitle]);
+    const result = await dbHelper.query(query, [req.query.q, alphaTitle]);
 
     //return query reponse
     if (result.rows) {
