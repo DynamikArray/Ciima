@@ -281,11 +281,13 @@ export default {
         );
       };
 
+      const cleanUrl = `http://searchlightcomics.com${encodeURIComponent(
+        imageUrl
+      )}`;
+      //TODO move this through vuex???
       //set img.src so the image loads
       img.crossOrigin = "Anonymous";
-      //PROXY THIS URL THROUGH OUR API
-      //TODO move this through vuex???
-      img.src = `/v1/imageFetch?url=${settings.MEDIA_URL}${imageUrl}`;
+      img.src = `/v1/imageFetch?url=${cleanUrl}`;
     },
     //
     //

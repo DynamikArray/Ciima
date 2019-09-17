@@ -97,9 +97,6 @@ export default {
         const cleanUrl = `http://searchlightcomics.com${encodeURIComponent(
           issue.imageUrl
         )}`;
-
-        console.log(cleanUrl);
-
         const url = `/v1/imageFetch?url=${cleanUrl}`;
 
         this.downloadImageLink(url, filename);
