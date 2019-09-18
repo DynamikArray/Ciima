@@ -1,11 +1,13 @@
 const logdnaWinston = require("logdna-winston");
 const winston = require("winston");
 
+const apiKey = JSON.parse(process.env.LOGDNA_KEY);
+
 module.exports = opts => {
   const logger = winston.createLogger({});
 
   const options = {
-    key: process.env.LOGDNA_KEY,
+    key: apiKey[0],
     // hostname: myHostname,
     // ip: ipAddress,
     // mac: macAddress,
