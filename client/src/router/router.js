@@ -8,6 +8,7 @@ Vue.use(Router);
 
 export default new Router({
   mode: "history",
+  //// TODO: WHAT is this base for and what from process... ????
   base: process.env.BASE_URL,
   routes: [
     /*
