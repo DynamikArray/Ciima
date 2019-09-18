@@ -1,5 +1,7 @@
 require("dotenv").config();
 
+console.log("env", process.env.NODE_ENV);
+
 //const { logger } = require("../util/winston/winston.js");
 const logger = require("../util/winston/winston.js")({
   hostname: "Worker"
