@@ -37,8 +37,11 @@ export default {
       draft.other_images = this.getImageUrlsFromIssues(issues);
       draft.main_image = this.draft.coverPhoto;
 
-      this.$store.dispatch(`currentDraft/${CURRENT_DRAFT_SAVE}`, draft);
+      //Add a toastr
+      draft.toastr = this.$toastr;
 
+      //make the calls
+      this.$store.dispatch(`currentDraft/${CURRENT_DRAFT_SAVE}`, { draft });
       this.$store.dispatch(`openDrafts/${OPEN_DRAFTS_FETCH}`);
     }
   }

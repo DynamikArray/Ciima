@@ -318,7 +318,7 @@ export default {
       ctx.textAlign = "center";
       ctx.fillStyle = "#EEE";
       ctx.fillText(
-        "Stock Cover Images Shown In Product Photos",
+        "Stock covers shown, not actual product photos.",
         canvas.width / 2,
         canvas.height - 10
       );

@@ -11,7 +11,7 @@ const categoryInfo = {
 module.exports = logger => ({
   //format for creating basic new inventory item
   newInventoryItem: draft => {
-    logger.debug(`Format draft for inventory draft: ${JSON.stringify(draft)}`);
+    logger.debug(`Format draft for inventory draft`, draft);
     const stockItemId = uuidv1();
 
     const inventoryItem = {

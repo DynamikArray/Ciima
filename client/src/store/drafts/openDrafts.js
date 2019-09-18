@@ -48,6 +48,10 @@ const openDrafts = {
       );
     },
     [OPEN_DRAFTS_SUBMIT_DRAFT]({ dispatch, commit }, params) {
+      //pull off our toast obj if exsits
+      const { toastr } = params;
+      if (toastr) delete params.toastr;
+
       dispatch(
         "api/requestHandler",
         {
@@ -55,7 +59,8 @@ const openDrafts = {
           url: "/v1/submitDraft",
           params: params,
           success: `openDrafts/${OPEN_DRAFTS_LISTED}`,
-          loading: `openDrafts/${OPEN_DRAFTS_LOADING}`
+          loading: `openDrafts/${OPEN_DRAFTS_LOADING}`,
+          toastr
         },
         { root: true }
       );

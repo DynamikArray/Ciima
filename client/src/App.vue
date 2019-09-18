@@ -90,4 +90,7 @@ body {
 .w-100 {
   width: 100%;
 }
+.ourToast {
+  box-shadow: 2px solid #000;
+}
 </style>

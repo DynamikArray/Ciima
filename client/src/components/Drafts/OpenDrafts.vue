@@ -93,8 +93,10 @@ export default {
       this.$store.dispatch(`openDrafts/${OPEN_DRAFTS_FETCH}`, opts);
     },
     submitDraft(draftId) {
+      const toastr = this.$toastr || false;
       this.$store.dispatch(`openDrafts/${OPEN_DRAFTS_SUBMIT_DRAFT}`, {
-        draftId
+        draftId,
+        toastr
       });
     }
   }

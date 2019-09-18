@@ -38,11 +38,10 @@ const api = {
   actions: {
     requestHandler: async ({ dispatch, commit }, payload) => {
       //pull of payload params
-      const { method, url, params, success, loading } = payload;
+      const { method, url, params, success, loading, toastr } = payload;
+
       //handle loading indicator
-
       //see if we passed a callback function with the payload,
-
       //create local copy, remove it from params
       let callback = false;
       if (params && params.callback) {
@@ -80,19 +79,38 @@ const api = {
             callback(data.result);
           }
           commit(success, data.result, { root: true });
+
+          if (toastr) {
+            let resp = `Success!`;
+            if (typeof data.result === "string")
+              resp = `<h4>${resp}</h4><p>${data.result}</p>`;
+            toastr.s(resp);
+          }
         }
 
         //handle error from our server that we created
         if (data.error && !data.result) {
           // we caught and reported back to the user
           //TODO ALERT THIS BETTER DOES  TOAST WORK
+          if (toastr) {
+            let resp = `An Error Occured!`;
+            if (typeof data.error === "string")
+              resp = `<h4>${resp}</h4><p>${data.error}</p>`;
+            toastr.e(resp);
+          }
           console.error(data.error);
         }
       } catch (error) {
         //axios-retry will have retried any requests if they get this failed we need
         //to tell the user an error occured
         //TODO ALERT THIS BETTER DOES  TOAST WORK
-        console.error(error);
+        if (toastr) {
+          let resp = `An Error Occured!`;
+          if (typeof data.error === "string")
+            resp = `<h4>${resp}</h4><p>${error}</p>`;
+          toastr.e(resp);
+        }
+        console.error(error.message);
         //throw new Error(error);
         //apiErrorHandler(dispatch, error);
       } finally {

@@ -14,7 +14,7 @@
       ></v-app-bar-nav-icon>
 
       <v-toolbar-title class="mr-12 align-center">
-        <img src="@/assets/logo.png" height="35px" class="mt-1" />
+        <img src="@/assets/logo.png" width="125px" class="mt-2" />
       </v-toolbar-title>
 
       <v-spacer></v-spacer>

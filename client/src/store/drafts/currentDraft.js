@@ -110,14 +110,23 @@ const currentDraft = {
   },
   actions: {
     [CURRENT_DRAFT_SAVE]({ dispatch, commit }, params) {
+      //pull off our toast obj if exsits
+      //
+      const { draft } = params;
+      let toastr = false;
+      if (draft.toastr) toastr = draft.toastr;
+      if (toastr) delete draft.toastr;
+      //pull off our draft
+
       dispatch(
         "api/requestHandler",
         {
           method: "post",
           url: "/v1/draft",
-          params: params,
-          success: [`currentDraft/${CURRENT_DRAFT_UPDATE}`],
-          loading: `currentDraft/${CURRENT_DRAFT_SAVING}`
+          params: draft,
+          success: `currentDraft/${CURRENT_DRAFT_UPDATE}`,
+          loading: `currentDraft/${CURRENT_DRAFT_SAVING}`,
+          toastr
         },
         { root: true }
       );

@@ -16,7 +16,10 @@ Vue.use(VueSwal);
 import VueToastr from "vue-toastr";
 // use plugin
 Vue.use(VueToastr, {
-  defaultPosition: "toast-bottom-center"
+  defaultPosition: "toast-top-right",
+  progressbar: true,
+  timeout: 3500,
+  classNames: "ourToast"
 });
 
 new Vue({

@@ -87,20 +87,22 @@
           <!--NEXT ROW -->
           <v-row>
             <v-col cols="6">
-              <v-text-field
-                outlined
+              <v-select
                 v-model="ebayStoreCategoryIdOne"
+                :items="ebayStoreCategories"
                 label="Ebay Store Category 1"
-                hint="Your Ebay store category for this product"
-              ></v-text-field>
+                hint="Primary Ebay Store Category"
+              >
+              </v-select>
             </v-col>
             <v-col cols="6">
-              <v-text-field
-                outlined
+              <v-select
                 v-model="ebayStoreCategoryIdTwo"
+                :items="ebayStoreCategories"
                 label="Ebay Store Category 2"
-                hint="Secondary Ebay store category for this product"
-              ></v-text-field>
+                hint="Secondary Ebay Store Category"
+              >
+              </v-select>
             </v-col>
           </v-row>
           <!--END ROW -->
@@ -178,6 +180,8 @@ import { SEARCH_EBAY_CATEGORIES } from "@/store/action-types.js";
 import debounce from "lodash.debounce";
 import ActionButtons from "./fields/ActionButtons.vue";
 
+import { ebayStoreCategories } from "@/util/ebay/ebayStoreCategories.js";
+
 import { createHelpers } from "vuex-map-fields";
 
 const { mapFields } = createHelpers({
@@ -192,7 +196,8 @@ export default {
   },
   data: () => ({
     selectedEbayCategory: null, //select
-    searchEbayCategory: null //search
+    searchEbayCategory: null, //search
+    ebayStoreCategories
   }),
   computed: {
     ...mapState({

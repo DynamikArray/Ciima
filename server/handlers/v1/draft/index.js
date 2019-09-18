@@ -8,10 +8,6 @@ module.exports = fastify => ({
   draft: async (req, res) => {
     const draft = req.body;
 
-    const dbHelper = require("../../../../util/mysql/fastifyMysqlConn.js")(
-      fastify
-    );
-
     const {
       inventoryTitle,
       locationCode,
@@ -44,7 +40,17 @@ module.exports = fastify => ({
       '${publisher}', '${publishedYear}', '${publishedDate}',
       '${main_image}', ('${JSON.stringify(other_images)}'));`;
 
-    const result = await dbHelper.query(query);
-    return result;
+    const connection = await fastify.mysql.getConnection();
+    if (connection) {
+      try {
+        const [rows, fields] = await connection.query(query);
+        connection.release();
+        return { result: rows };
+      } catch (error) {
+        fastify.winston.error(error);
+        return { error: error.message };
+      }
+    }
+    return { error: "No db connection" };
   }
 });
