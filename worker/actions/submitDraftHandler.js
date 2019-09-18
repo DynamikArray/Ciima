@@ -4,22 +4,17 @@ const { linnworks } = require("../../util/linnworks/linnworks.js");
 module.exports = (connection, logger) => ({
   messageHandler: async (message, callback) => {
     logger.info("listDrafHandler called");
-    //create GUID for this product
 
-    //build item details formatted correctally
-    //
-    //  fetch record from db?
-    //
-    //
+    const draft = message.data;
+    const { newInventoryItem } = linnworks.formatters;
+    const formattedData = newInventoryItem(draft);
 
     //AddInventoryItem
     const result = await linnworks.makeApiCall({
       method: "POST",
       url: "Inventory/AddInventoryItem",
-      headers: ["Content-Type: application/x-www-form-urlencoded"],
-      data: {
-        inventoryItem: {}
-      }
+      headers: "Content-Type: plain/text",
+      data: formattedData
     });
 
     //if item is added we can do the next ones
