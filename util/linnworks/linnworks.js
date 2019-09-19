@@ -60,7 +60,7 @@ const linnworks = {
       if (data.Token) {
         this.serverUrl = data.Server;
         this.sessionToken = data.Token;
-        this.logger.info(`Linnworks Authorized Us - ${data.Token}`);
+        this.logger.info(`Linnworks Authorized Us`);
         return true;
       }
       //// TODO: problally wouldnt want to leak the full response to logs here
@@ -138,7 +138,7 @@ const linnworks = {
       if (response) {
         //200
         if (response.status == 200) {
-          this.logger.debug("linnworks 200 response");
+          this.logger.debug("Linnworks 200 response");
           const { data } = response;
           return { result: data };
         }
@@ -151,7 +151,7 @@ const linnworks = {
 
         //check response status
         if (response.status == 400) {
-          this.logger.debug("Linnwork 400 response");
+          this.logger.debug("Linnworks 400 response");
           const { statusText } = response;
           return { error: statusText };
         }
