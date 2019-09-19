@@ -1,44 +1,56 @@
-const { logger } = require("../../util/winston/winston.js");
+//const { logger } = require("../../util/winston/winston.js");
 const { linnworks } = require("../../util/linnworks/linnworks.js");
+const draftHelper = require("../../util/ciima/draftHelper.js");
 
-module.exports = (connection, logger) => ({
-  messageHandler: async (message, callback) => {
-    logger.info("listDrafHandler called");
+const logger = require("../../util/winston/winston.js")({
+  hostname: "Worker"
+});
 
-    const draft = message.data;
-    const { newInventoryItem } = linnworks.formatters;
-    const formattedData = newInventoryItem(draft);
+const statusCode = require("../../util/ciima/draftStatusCode.js");
 
-    //AddInventoryItem
-    const result = await linnworks.makeApiCall({
-      method: "POST",
-      url: "Inventory/AddInventoryItem",
-      headers: "Content-Type: plain/text",
-      data: formattedData
-    });
+module.exports = () => ({
+  submitDraftHandler: async (message, callback) => {
+    try {
+      logger.debug("listDrafHandler called");
+      const draft = message.data;
+      //update draft as processing
+      const statusUpdated = await draftHelper.updateDraftStatus(
+        draft.id,
+        statusCode.SUBMITTED
+      );
 
-    //if item is added we can do the next ones
+      if (statusUpdated) {
+        //start submitting the draft
+        const { newInventoryItem } = linnworks.formatters;
+        const formattedData = newInventoryItem(draft);
 
-    //AddItemLocations
+        //AddInventoryItem
+        const { result, error } = await linnworks.makeApiCall({
+          method: "POST",
+          url: "Inventory/AddInventoryItem",
+          headers: "Content-Type: plain/text",
+          data: formattedData
+        });
+        if (result) {
+          console.log(
+            "Item added to linnworks now process the rest of the details"
+          );
+          //process rest of message
+          //Add images
+          //Add extended properties
+          //item was added now add the rest
+          //AddItemLocations
+          //AddImagesToInventoryItem
+          //AddProductIdentifiers
+        }
 
-    //AddImagesToInventoryItem
-
-    //AddProductIdentifiers
-
-    //// TODO: handle this better or log it better if we feel like we are losing messages
-    if (!result) {
-      callback(false, false);
+        if (error) {
+          logger.debug("Item Not Added", error, draft);
+        }
+      }
+      callback(null, false);
+    } catch (err) {
+      logger.error(err);
     }
-    //Should be the successfully result from linnworks
-    if (result) {
-      callback(false, false);
-    }
-  },
-  //
-  //
-  getDraft: async id => {
-    connection;
-  }
-  //
-  //
+  } //end messageHandler
 });

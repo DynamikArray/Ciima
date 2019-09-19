@@ -1,22 +1,21 @@
 const { SUBMIT_DRAFT } = require("../util/amqp/queueActionsList.js");
+const logger = require("../util/winston/winston.js")({
+  hostname: "Worker"
+});
 
-module.exports = (connection, logger) => ({
+const { submitDraftHandler } = require("./actions/submitDraftHandler.js")();
+
+module.exports = () => ({
   handleMessage: (message, callback) => {
-    logger.info("Incoming message");
-
-    //// TODO: there a better way to get this connection object around?
-    const { messageHandler } = require("./actions/submitDraftHandler.js")(
-      connection,
-      logger
-    );
+    logger.debug("Incoming message");
 
     //pull off the action and process out of the payload
     const { action } = message;
     if (action) {
       switch (action) {
         case SUBMIT_DRAFT:
-          logger.info(SUBMIT_DRAFT);
-          messageHandler(message, callback);
+          logger.debug(SUBMIT_DRAFT);
+          submitDraftHandler(message, callback);
           break;
         default:
           logger.warn("MESSAGE_NOT_HANDLED");
@@ -25,7 +24,7 @@ module.exports = (connection, logger) => ({
       }
     } else {
       //no action present, ignore message but log
-      logger.warn("Message with no action supplied", message);
+      logger.warn("Message with no action supplied" + JSON.stringify(message));
       callback("No action supplied", false);
     }
   }
