@@ -1,4 +1,6 @@
 //const { logger } = require("../../util/winston/winston.js");
+const { amqp } = require("../../util/amqp/amqpConn.js");
+
 const { linnworks } = require("../../util/linnworks/linnworks.js");
 const draftHelper = require("../../util/ciima/draftHelper.js");
 
@@ -6,7 +8,7 @@ const logger = require("../../util/winston/winston.js")({
   hostname: "Worker"
 });
 
-const statusCode = require("../../util/ciima/draftStatusCode.js");
+const { PENDING, ERROR } = require("../../util/ciima/draftStatusCode.js");
 
 module.exports = () => ({
   submitDraftHandler: async (message, callback) => {
@@ -16,7 +18,7 @@ module.exports = () => ({
       //update draft as processing
       const statusUpdated = await draftHelper.updateDraftStatus(
         draft.id,
-        statusCode.SUBMITTED
+        PENDING
       );
 
       if (statusUpdated) {
@@ -31,7 +33,15 @@ module.exports = () => ({
           headers: "Content-Type: plain/text",
           data: formattedData
         });
+        //With an inserted item
         if (result) {
+          //publish message to insert other piece
+          await amqp.connect();
+          await amqp.publish("ciima.DEV", {
+            action: "DO_THINGS",
+            data: { somekey: "somevalue" }
+          });
+
           console.log(
             "Item added to linnworks now process the rest of the details"
           );
@@ -43,14 +53,18 @@ module.exports = () => ({
           //AddImagesToInventoryItem
           //AddProductIdentifiers
         }
-
-        if (error) {
-          logger.debug("Item Not Added", error, draft);
-        }
+        //error inserting item
+        if (error) this.handleErrorStatus(err);
       }
+      //handle amqp NACK'ing
       callback(null, false);
     } catch (err) {
-      logger.error(err);
+      this.handleErrorStatus(err);
     }
-  } //end messageHandler
+  }, //end messageHandler
+
+  handleErrorStatus: async error => {
+    await draftHelper.updateDraftStatus(draft.id, ERROR, JSON.stringify(error));
+    logger.error(error);
+  }
 });

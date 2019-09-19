@@ -27,18 +27,21 @@ module.exports = fastify => ({
       other_images
     } = req.body;
 
+    //TODO ESCAPE CHARACHTER LIST???
+    //   this is not a single tick = "’"
+
     // TODO: ADD other images to this insert
     const query = `INSERT INTO slc_drafts (
         inventoryTitle, locationCode, grade, quantity,
         price, ebaySiteCategoryId, ebayStoreCategoryIdOne,
         ebayStoreCategoryIdTwo, series, mainCharacter, issueNumbers,
         publisher, publishedYear, publishedDate,
-        main_image, other_images
+        main_image
     ) VALUES ('${inventoryTitle}', '${locationCode}', '${grade}', '${quantity}',
       '${price}', '${ebaySiteCategoryId}', '${ebayStoreCategoryIdOne}',
       '${ebayStoreCategoryIdTwo}', '${series}', '${mainCharacter}', '${issueNumbers}',
       '${publisher}', '${publishedYear}', '${publishedDate}',
-      '${main_image}', ('${JSON.stringify(other_images)}'));`;
+      '${main_image}');`;
 
     const connection = await fastify.mysql.getConnection();
     if (connection) {
