@@ -1,6 +1,10 @@
 ////TODO: These maybe be passed in as part of a config?
 //const { logger } = require("../winston/winston.js");
 
+const logger = require("../../util/winston/winston.js")({
+  hostname: "Worker"
+});
+
 //Use axios
 const axios = require("axios");
 
@@ -30,7 +34,7 @@ const linnworks = {
    * [initiliaze description]
    * @return {Promise} [description]
    */
-  async initiliaze(logger) {
+  async initiliaze() {
     this.logger = logger;
     //include our formatters helper
     this.formatters = require("./linnworksFormatters.js")(logger);
@@ -45,7 +49,7 @@ const linnworks = {
    */
   async authorizeByApplication() {
     try {
-      this.logger.info("Authorizing Ciima with Linnworks");
+      this.logger.debug("Authorizing Ciima with Linnworks");
       const url = `${API_URL}/Auth/AuthorizeByApplication`;
 
       const response = await axios.post(url, {
@@ -60,7 +64,7 @@ const linnworks = {
       if (data.Token) {
         this.serverUrl = data.Server;
         this.sessionToken = data.Token;
-        this.logger.info(`Linnworks Authorized Us`);
+        this.logger.debug(`Linnworks Authorized Us`);
         return true;
       }
       //// TODO: problally wouldnt want to leak the full response to logs here
@@ -82,7 +86,7 @@ const linnworks = {
     if (this.shouldRetry()) {
       const authd = await this.authorizeByApplication();
       if (!authd) {
-        this.logger.info("Unable to Re-Authorize ciima with Linnworks");
+        this.logger.warn("Unable to Re-Authorize ciima with Linnworks");
         return false;
       }
       this.logger.info("Re-Authorizing Success");
@@ -110,7 +114,7 @@ const linnworks = {
    * @return {Promise}        [description]
    */
   async makeApiCall(config, isRetry = false) {
-    this.logger.info("Attempting to makeApiCall()" + JSON.stringify(config));
+    this.logger.debug("apiCall Linnworks: " + JSON.stringify(config));
     //check if we can make call
     if (!this.sessionToken) {
       this.logger.warn("No sessionToken found ");
@@ -145,7 +149,7 @@ const linnworks = {
 
         //when adding items there is no response status ?
         if (response.status === 204) {
-          this.logger.debug("Linnworks 204 response");
+          this.logger.debug("Linnworks 204 response.  Success!");
           return { result: "success" };
         }
 

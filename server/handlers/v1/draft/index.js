@@ -27,6 +27,16 @@ module.exports = fastify => ({
       other_images
     } = req.body;
 
+    //TODO ESCAPE CHARACHTER LIST???
+    //   this is not a single tick = "’"
+
+    const cleanImages = other_images.map(img => {
+      const url = img.imageUrl.replace("'", "\u2019");
+      return {
+        imageUrl: url
+      };
+    });
+
     // TODO: ADD other images to this insert
     const query = `INSERT INTO slc_drafts (
         inventoryTitle, locationCode, grade, quantity,
@@ -38,7 +48,7 @@ module.exports = fastify => ({
       '${price}', '${ebaySiteCategoryId}', '${ebayStoreCategoryIdOne}',
       '${ebayStoreCategoryIdTwo}', '${series}', '${mainCharacter}', '${issueNumbers}',
       '${publisher}', '${publishedYear}', '${publishedDate}',
-      '${main_image}', ('${JSON.stringify(other_images)}'));`;
+      '${main_image}',  '${JSON.stringify(cleanImages)}');`;
 
     const connection = await fastify.mysql.getConnection();
     if (connection) {
