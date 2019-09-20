@@ -39,10 +39,12 @@ export default {
 
       //Add a toastr
       draft.toastr = this.$toastr;
-
+      //add callback for loading open drafts after save
+      draft.callback = () => {
+        this.$store.dispatch(`openDrafts/${OPEN_DRAFTS_FETCH}`);
+      };
       //make the calls
       this.$store.dispatch(`currentDraft/${CURRENT_DRAFT_SAVE}`, { draft });
-      this.$store.dispatch(`openDrafts/${OPEN_DRAFTS_FETCH}`);
     }
   }
 };

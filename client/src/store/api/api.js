@@ -75,10 +75,9 @@ const api = {
 
         //hande results of api call data.result
         if (data.result && !data.error) {
-          if (callback) {
-            callback(data.result);
-          }
           commit(success, data.result, { root: true });
+
+          if (callback) callback(data.result);
 
           if (toastr) {
             let resp = `Success!`;

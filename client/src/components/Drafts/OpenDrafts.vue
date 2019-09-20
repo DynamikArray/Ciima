@@ -11,7 +11,7 @@
           <div class="d-flex align-top">
             <div class="mb-2">
               <v-btn @click="refreshDrafts" small color="grey darken-1">
-                <v-icon small class="mr-1">fa-redo</v-icon></v-btn
+                <v-icon small class="">fa-redo</v-icon></v-btn
               >
             </div>
           </div>
@@ -55,10 +55,26 @@
             </div>
           </div>
           <div class="d-flex align-center mx-1">
-            <div>
-              <v-btn small color="primary" @click="submitDraft(draft.id)"
-                ><v-icon small class="mr-1">fa-upload</v-icon></v-btn
-              >
+            <div v-if="draft.status === 'Open'">
+              <div>
+                <v-btn small color="primary" @click="submitDraft(draft.id)"
+                  ><v-icon small class="">fa-upload</v-icon></v-btn
+                >
+              </div>
+            </div>
+            <div v-if="draft.status === 'Pending'">
+              <div>
+                <v-label class="mx-3" color="warning">
+                  <v-icon small class="">fa-hourglass</v-icon>
+                </v-label>
+              </div>
+            </div>
+            <div v-if="draft.status === 'Submitted'">
+              <div>
+                <v-label class="mx-3" color="success">
+                  <v-icon small class="">fa-check-circle</v-icon>
+                </v-label>
+              </div>
             </div>
           </div>
         </div>
@@ -68,6 +84,8 @@
 </template>
 
 <script>
+import draftStatusCodes from "@/util/draftStatusCode.js";
+
 import { mapState } from "vuex";
 import {
   OPEN_DRAFTS_FETCH,
@@ -75,6 +93,9 @@ import {
 } from "@/store/action-types";
 
 export default {
+  data: () => ({
+    draftStatusCodes: { ...draftStatusCodes }
+  }),
   created() {
     this.loadDrafts();
   },
@@ -96,7 +117,8 @@ export default {
       const toastr = this.$toastr || false;
       this.$store.dispatch(`openDrafts/${OPEN_DRAFTS_SUBMIT_DRAFT}`, {
         draftId,
-        toastr
+        toastr,
+        callback: this.loadDrafts
       });
     }
   }
