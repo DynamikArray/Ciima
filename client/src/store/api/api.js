@@ -90,27 +90,28 @@ const api = {
 
         //handle error from our server that we created
         if (data.error && !data.result) {
-          // we caught and reported back to the user
-          //TODO ALERT THIS BETTER DOES  TOAST WORK
           if (toastr) {
             let resp = `An Error Occured!`;
-            if (typeof data.error === "string")
-              resp = `<h4>${resp}</h4><p>${data.error}</p>`;
+            resp = `<h4>${resp}</h4><p>${data.error}</p>`;
             toastr.e(resp);
           }
           console.error(data.error);
         }
       } catch (error) {
-        //axios-retry will have retried any requests if they get this failed we need
-        //to tell the user an error occured
+        //see if this an error we handled on our server
+        const { data } = error.response;
+
         //TODO ALERT THIS BETTER DOES  TOAST WORK
+        let resp = `An Error Occured!`;
         if (toastr) {
-          let resp = `An Error Occured!`;
-          if (typeof data.error === "string")
+          if (data) {
+            resp = `<h4>${data.error}</h4><p>${data.message}</p>`;
+          } else {
             resp = `<h4>${resp}</h4><p>${error}</p>`;
+          }
           toastr.e(resp);
         }
-        console.error(error.message);
+        console.error(error);
         //throw new Error(error);
         //apiErrorHandler(dispatch, error);
       } finally {

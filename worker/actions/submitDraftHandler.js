@@ -10,6 +10,11 @@ const logger = require("../../util/winston/winston.js")({
 
 const { PENDING, ERROR } = require("../../util/ciima/draftStatusCode.js");
 
+const handleErrorStatus = async (draft = false, error) => {
+  await draftHelper.updateDraftStatus(draft.id, ERROR, JSON.stringify(error));
+  logger.error(error);
+};
+
 module.exports = () => ({
   submitDraftHandler: async (message, callback) => {
     try {
@@ -36,11 +41,17 @@ module.exports = () => ({
         //With an inserted item
         if (result) {
           //publish message to insert other piece
+
+          /*
           await amqp.connect();
           await amqp.publish("ciima.DEV", {
             action: "DO_THINGS",
             data: { somekey: "somevalue" }
           });
+          */
+          console.log(draft.other_images);
+
+          console.log("\n\n");
 
           console.log(
             "Item added to linnworks now process the rest of the details"
@@ -54,17 +65,12 @@ module.exports = () => ({
           //AddProductIdentifiers
         }
         //error inserting item
-        if (error) this.handleErrorStatus(err);
+        if (error) handleErrorStatus(draft, err);
       }
       //handle amqp NACK'ing
       callback(null, false);
     } catch (err) {
-      this.handleErrorStatus(err);
+      handleErrorStatus(false, err);
     }
-  }, //end messageHandler
-
-  handleErrorStatus: async error => {
-    await draftHelper.updateDraftStatus(draft.id, ERROR, JSON.stringify(error));
-    logger.error(error);
-  }
+  } //end messageHandler
 });

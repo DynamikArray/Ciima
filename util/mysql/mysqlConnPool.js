@@ -6,14 +6,16 @@ const logger = require("../../util/winston/winston.js")({
   hostname: "Worker"
 });
 
+const mysqlCreds = require("../../util/mysql/mysqlConnectionStringParser.js");
+
 const mysqlConnPool = mysql.createPool({
-  host: process.env.MYSQL_HOST,
-  user: process.env.MYSQL_USER,
-  password: process.env.MYSQL_PASS,
-  database: process.env.MYSQL_DB,
-  //waitForConnection: true,
+  host: mysqlCreds.host,
+  user: mysqlCreds.user,
+  password: mysqlCreds.password,
+  database: mysqlCreds.database,
   connectionLimit: 10,
   queueLimit: 0
+  //waitForConnection: true,
 });
 
 mysqlConnPool.getConnection((err, connection) => {
