@@ -149,7 +149,7 @@ const linnworks = {
 
         //when adding items there is no response status ?
         if (response.status === 204) {
-          this.logger.debug("Linnworks 204 response");
+          this.logger.debug("Linnworks 204 response.  Success!");
           return { result: "success" };
         }
 

@@ -1,13 +1,10 @@
-//const { logger } = require("../../util/winston/winston.js");
-const { amqp } = require("../../util/amqp/amqpConn.js");
-
-const { linnworks } = require("../../util/linnworks/linnworks.js");
-const draftHelper = require("../../util/ciima/draftHelper.js");
-
 const logger = require("../../util/winston/winston.js")({
   hostname: "Worker"
 });
 
+const { amqp } = require("../../util/amqp/amqpConn.js");
+const { linnworks } = require("../../util/linnworks/linnworks.js");
+const draftHelper = require("../../util/ciima/draftHelper.js");
 const { PENDING, ERROR } = require("../../util/ciima/draftStatusCode.js");
 
 const handleErrorStatus = async (draft = false, error) => {
@@ -15,62 +12,64 @@ const handleErrorStatus = async (draft = false, error) => {
   logger.error(error);
 };
 
-module.exports = () => ({
-  submitDraftHandler: async (message, callback) => {
-    try {
-      logger.debug("listDrafHandler called");
-      const draft = message.data;
-      //update draft as processing
-      const statusUpdated = await draftHelper.updateDraftStatus(
-        draft.id,
-        PENDING
-      );
+const addInventoryItem = async draft => {
+  //start submitting the draft
+  const { newInventoryItem, formattedInventoryItem } = linnworks.formatters;
+  const itemData = newInventoryItem(draft);
+  const formattedData = formattedInventoryItem(itemData);
+  //AddInventoryItem
+  const { result, error } = await linnworks.makeApiCall({
+    method: "POST",
+    url: "Inventory/AddInventoryItem",
+    headers: "Content-Type: plain/text",
+    data: formattedData
+  });
 
-      if (statusUpdated) {
-        //start submitting the draft
-        const { newInventoryItem } = linnworks.formatters;
-        const formattedData = newInventoryItem(draft);
+  if (result) {
+    const result = {
+      fkStockItemId: itemData.StockItemId,
+      ItemNumber: itemData.ItemNumber
+    };
+    return { result };
+  }
 
-        //AddInventoryItem
-        const { result, error } = await linnworks.makeApiCall({
-          method: "POST",
-          url: "Inventory/AddInventoryItem",
-          headers: "Content-Type: plain/text",
-          data: formattedData
-        });
-        //With an inserted item
-        if (result) {
-          //publish message to insert other piece
+  if (error) return { error };
+};
 
-          /*
-          await amqp.connect();
-          await amqp.publish("ciima.DEV", {
-            action: "DO_THINGS",
-            data: { somekey: "somevalue" }
-          });
-          */
-          console.log(draft.other_images);
+const submitDraftHandler = async (message, callback) => {
+  try {
+    logger.debug("listDrafHandler called");
+    const draft = message.data;
 
-          console.log("\n\n");
+    //update draft as processing
+    const statusUpdated = await draftHelper.updateDraftStatus(
+      draft.id,
+      PENDING
+    );
 
-          console.log(
-            "Item added to linnworks now process the rest of the details"
-          );
-          //process rest of message
-          //Add images
-          //Add extended properties
-          //item was added now add the rest
-          //AddItemLocations
-          //AddImagesToInventoryItem
-          //AddProductIdentifiers
-        }
-        //error inserting item
-        if (error) handleErrorStatus(draft, err);
+    if (statusUpdated) {
+      //add item
+      const { result, error } = await addInventoryItem(draft);
+
+      //With an inserted item
+      if (result && !error) {
+        console.log(result);
+        //process rest of message
+        //Add images
+        //Add extended properties
+        //item was added now add the rest
+        //AddItemLocations
+        //AddImagesToInventoryItem
+        //AddProductIdentifiers
       }
-      //handle amqp NACK'ing
-      callback(null, false);
-    } catch (err) {
-      handleErrorStatus(false, err);
+      //error inserting item
+      if (!result && error) handleErrorStatus(draft, error);
     }
-  } //end messageHandler
-});
+    //handle amqp NACK'ing
+    callback(null, false);
+  } catch (err) {
+    handleErrorStatus(false, err);
+  }
+}; //end messageHandler
+
+module.exports = { submitDraftHandler };

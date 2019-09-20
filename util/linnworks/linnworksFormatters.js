@@ -47,10 +47,14 @@ module.exports = logger => ({
       //SerialNumberScanRequired: true,
     };
 
+    return inventoryItem;
+  },
+  formattedInventoryItem: inventoryItem => {
     //format this object to the needed data style for linnwokrs
     const formattedData = `inventoryItem=` + JSON.stringify(inventoryItem);
     return formattedData;
   },
+
   //
   //
   addImageToInventoryItem: draft => {},

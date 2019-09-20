@@ -3,19 +3,18 @@ const logger = require("../util/winston/winston.js")({
   hostname: "Worker"
 });
 
-const { submitDraftHandler } = require("./actions/submitDraftHandler.js")();
+const { submitDraftHandler } = require("./actions/submitDraftHandler.js");
 
 module.exports = () => ({
-  handleMessage: (message, callback) => {
+  handleMessage: async (message, callback) => {
     logger.debug("Incoming message");
-
     //pull off the action and process out of the payload
     const { action } = message;
     if (action) {
       switch (action) {
         case SUBMIT_DRAFT:
           logger.debug(SUBMIT_DRAFT);
-          submitDraftHandler(message, callback);
+          await submitDraftHandler(message, callback);
           break;
         default:
           logger.warn("MESSAGE_NOT_HANDLED");
