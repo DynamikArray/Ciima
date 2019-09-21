@@ -47,12 +47,12 @@ const openDrafts = {
         { root: true }
       );
     },
-    [OPEN_DRAFTS_SUBMIT_DRAFT]({ dispatch, commit }, params) {
+    async [OPEN_DRAFTS_SUBMIT_DRAFT]({ dispatch, commit }, params) {
       //pull off our toast obj if exsits
       const { toastr } = params;
       if (toastr) delete params.toastr;
 
-      dispatch(
+      await dispatch(
         "api/requestHandler",
         {
           method: "post",

@@ -77,8 +77,6 @@ const api = {
         if (data.result && !data.error) {
           commit(success, data.result, { root: true });
 
-          if (callback) callback(data.result);
-
           if (toastr) {
             let resp = `Success!`;
             if (typeof data.result === "string")

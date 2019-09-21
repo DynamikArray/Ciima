@@ -125,16 +125,16 @@ export default {
       this.loadDrafts();
     },
     loadDrafts() {
-      const opts = {};
-      this.$store.dispatch(`openDrafts/${OPEN_DRAFTS_FETCH}`, opts);
+      this.$store.dispatch(`openDrafts/${OPEN_DRAFTS_FETCH}`, {});
     },
-    submitDraft(draftId) {
+    async submitDraft(draftId) {
       const toastr = this.$toastr || false;
-      this.$store.dispatch(`openDrafts/${OPEN_DRAFTS_SUBMIT_DRAFT}`, {
+      await this.$store.dispatch(`openDrafts/${OPEN_DRAFTS_SUBMIT_DRAFT}`, {
         draftId,
-        toastr,
-        callback: this.loadDrafts
+        toastr
       });
+
+      this.loadDrafts();
     }
   }
 };
