@@ -73,6 +73,21 @@
                 <v-icon small>fa-check-circle</v-icon>
               </v-chip>
             </div>
+            <div v-if="draft.status === 'Error'">
+              <v-tooltip top>
+                <template v-slot:activator="{ on }">
+                  <v-chip label color="red" v-on="on">
+                    <v-icon small>fa-exclamation-circle</v-icon>
+                  </v-chip>
+                </template>
+                <div v-if="draft.statusNotes">
+                  <h3>Notes:</h3>
+                  <div v-for="note in jsonStatusNotes(draft.statusNotes)">
+                    <h4>{{ note }}</h4>
+                  </div>
+                </div>
+              </v-tooltip>
+            </div>
           </div>
         </div>
       </v-card-text>
@@ -103,6 +118,9 @@ export default {
     })
   },
   methods: {
+    jsonStatusNotes(statusNotes) {
+      return JSON.parse(statusNotes);
+    },
     refreshDrafts() {
       this.loadDrafts();
     },

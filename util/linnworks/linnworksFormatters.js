@@ -19,7 +19,6 @@ module.exports = logger => ({
   newInventoryItem: draft => {
     logger.debug(`Format draft for inventory draft`, draft);
     const stockItemId = uuidv1();
-
     const inventoryItem = {
       StockItemId: stockItemId,
       ItemNumber: Date.now(), //aka SKU
