@@ -53,6 +53,11 @@ const addImage = async (draftId, imageProps) => {
   }
 };
 
+const cleanImagePath = imageUrl => {
+  const str = imageUrl.replace("’", "'");
+  return str;
+};
+
 /**
  * [addInventoryImages description]
  * @param  {[type]}  StockItemId [description]
@@ -66,10 +71,9 @@ const addInventoryImages = async (StockItemId, ItemNumber, draft) => {
   if (otherImages.length > 0) {
     const results = [];
     for (let img of otherImages) {
+      const cleanedPath = cleanImagePath(img.imageUrl);
       //format image string
-      const ImageUrl = encodeURI(
-        `https://searchlightcomics.com${img.imageUrl}`
-      );
+      const ImageUrl = encodeURI(`https://searchlightcomics.com${cleanedPath}`);
       const isMain = false;
       const { result, error } = await addImage(draft.id, {
         StockItemId,
@@ -142,17 +146,17 @@ const submitDraftHandler = async (message, callback) => {
     );
     //
     if (statusUpdated) {
-      //Add extended properties
-      //item was added now add the rest
-      //AddItemLocations
-      //AddImagesToInventoryItem
-      //AddProductIdentifiers
-
-      //lastly add items?
       const { result, error } = await addInventoryItem(draft);
       if (result && !error) {
-        logger.debug("Inventory Item added adding images next.");
+        //Add extended properties
+        //item was added now add the rest
+        //AddItemLocations
+        //AddImagesToInventoryItem
+        //AddProductIdentifiers
+
+        //lastly add images
         //With an inserted item grabs its identifiers
+        logger.debug("Inventory Item added adding images next.");
         const StockItemId = result.fkStockItemId;
         const ItemNumber = result.ItemNumber;
         //add images
