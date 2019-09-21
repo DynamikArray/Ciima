@@ -54,27 +54,24 @@
               </div>
             </div>
           </div>
-          <div class="d-flex align-center mx-1">
+          <div
+            class="d-flex justify-center align-center mx-1"
+            :style="{ minWidth: '100px' }"
+          >
             <div v-if="draft.status === 'Open'">
-              <div>
-                <v-btn small color="primary" @click="submitDraft(draft.id)"
-                  ><v-icon small class="">fa-upload</v-icon></v-btn
-                >
-              </div>
+              <v-chip label color="primary" @click="submitDraft(draft.id)">
+                <v-icon small>fa-upload</v-icon>
+              </v-chip>
             </div>
             <div v-if="draft.status === 'Pending'">
-              <div>
-                <v-label class="mx-3" color="warning">
-                  <v-icon small class="">fa-hourglass</v-icon>
-                </v-label>
-              </div>
+              <v-chip label color="warning">
+                <v-icon small class="">fa-cog fa-spin</v-icon>
+              </v-chip>
             </div>
             <div v-if="draft.status === 'Submitted'">
-              <div>
-                <v-label class="mx-3" color="success">
-                  <v-icon small class="">fa-check-circle</v-icon>
-                </v-label>
-              </div>
+              <v-chip label color="success">
+                <v-icon small>fa-check-circle</v-icon>
+              </v-chip>
             </div>
           </div>
         </div>
