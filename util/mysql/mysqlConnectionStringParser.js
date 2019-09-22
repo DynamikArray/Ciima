@@ -6,7 +6,12 @@
 
 getCredsFromFullHost = () => {
   const creds = {};
-  const connStr = process.env.MYSQL_CONN;
+
+  let connStr = process.env.MYSQL_CONN;
+  if (process.env.NODE_ENV === "production") {
+    connStr = process.env.JAWSDB_URL;
+  }
+
   const shortConn = connStr.replace("mysql://", "");
   const pieces = shortConn.split("@");
 
