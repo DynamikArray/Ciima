@@ -110,9 +110,11 @@ export default {
     draftStatusCodes: { ...draftStatusCodes }
   }),
   created() {
+    /*
     setInterval(() => {
       this.loadDrafts();
     }, 5000);
+    */
   },
   computed: {
     ...mapState({

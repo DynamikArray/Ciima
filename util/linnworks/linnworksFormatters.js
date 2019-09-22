@@ -1,5 +1,3 @@
-const uuidv1 = require("uuid/v1");
-
 // TODO: move to a call with the initiliaze statement to look up by CategoryName
 // and apply to linnworks object for use
 const categoryInfo = {
@@ -20,11 +18,11 @@ module.exports = logger => ({
    */
   newInventoryItem: draft => {
     logger.debug(`Format draft for inventory draft`, draft);
-    const stockItemId = uuidv1();
+
     const inventoryItem = {
       MetaData: "Added through Ciima: " + Date.now(),
-      StockItemId: stockItemId,
-      ItemNumber: Date.now().toString(), //aka SKU
+      StockItemId: draft.stockItemId,
+      ItemNumber: draft.itemNumber, //AKA sku?    Date.now().toString(), //aka SKU
       ItemTitle: encodeURIComponent(draft.inventoryTitle),
       Quantity: draft.quantity,
       // BarcodeNumber: "234324234",

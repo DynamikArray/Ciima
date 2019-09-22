@@ -1,3 +1,5 @@
+const uuidv1 = require("uuid/v1");
+
 /**
  * Keep Alive handler
  *
@@ -29,7 +31,6 @@ module.exports = fastify => ({
 
     //TODO ESCAPE CHARACHTER LIST???
     //   this is not a single tick = "’"
-
     const cleanImages = other_images.map(img => {
       const url = img.imageUrl.replace("'", "\u2019");
       return {
@@ -37,14 +38,20 @@ module.exports = fastify => ({
       };
     });
 
+    //create the UUID for the items inclusion on linnworks
+    //as well as the ItemNumber, this might become the SKU and populated by us
+    //further down the line.
+    const stockItemId = uuidv1();
+    const itemNumber = Date.now().toString(); //aka SKU
+
     // TODO: ADD other images to this insert
     const query = `INSERT INTO slc_drafts (
-        inventoryTitle, locationCode, grade, quantity,
+        stockItemId, itemNumber,  inventoryTitle, locationCode, grade, quantity,
         price, ebaySiteCategoryId, ebayStoreCategoryIdOne,
         ebayStoreCategoryIdTwo, series, mainCharacter, issueNumbers,
         publisher, publishedYear, publishedDate,
         main_image, other_images
-    ) VALUES ('${inventoryTitle}', '${locationCode}', '${grade}', '${quantity}',
+    ) VALUES ('${stockItemId}', '${itemNumber}', '${inventoryTitle}', '${locationCode}', '${grade}', '${quantity}',
       '${price}', '${ebaySiteCategoryId}', '${ebayStoreCategoryIdOne}',
       '${ebayStoreCategoryIdTwo}', '${series}', '${mainCharacter}', '${issueNumbers}',
       '${publisher}', '${publishedYear}', '${publishedDate}',
