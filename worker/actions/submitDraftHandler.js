@@ -224,7 +224,7 @@ const submitDraftHandler = async (message, callback) => {
         if (hasErrors.length > 0) {
           handleStatusUpdate(draft.id, hasErrors, ERROR);
         } else {
-          handleStatusUpdate(draft.id, false, SUBMITTED);
+          handleStatusUpdate(draft.id, "Draft Submitted!", SUBMITTED);
         }
       }
 
