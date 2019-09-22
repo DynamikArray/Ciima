@@ -4,6 +4,12 @@
  * @return {object} object cotaining {user, password, host, database} info
  */
 
+/*************
+ *
+ *     NOT WORKING, MOVED ON TO JUST PUTTNG THE BROKEN DOWN PIECES INTO TEH .ENV
+ *
+ *
+ * ************/
 getCredsFromFullHost = () => {
   const creds = {};
   let connStr = false;
@@ -11,6 +17,7 @@ getCredsFromFullHost = () => {
   if (process.env.NODE_ENV === "production") {
     connStr = process.env.JAWSDB_URL;
   }
+
   if (process.env.NODE_ENV === "development") {
     connStr = process.env.MYSQL_CONN;
   }

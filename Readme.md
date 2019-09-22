@@ -9,11 +9,19 @@ Comic Issue Inventory Media Application
 ```
 NODE_ENV=
 PORT=
-
 APP_NAME=CIIMA
+
 CLOUDAMQP_URL=
 
 MYSQL_CONN=
+#Production Only
+JAWSDB_URL=
+# These are used by the worker and should be the MYSQL connction pieces
+MYSQL_HOST=rxxxxxxxxxxxxxxz.cxxxxxxxxxxb.us-east-1.rds.amazonaws.com
+MYSQL_USER=exxxxxxxxxxxxxxw
+MYSQL_PASS=vxxxxxxxxxxxxxxy
+MYSQL_DB=yxxxxxxxxxxxxxx3
+
 LOGDNA_KEY=["2fxxxxxxxxxxxxxxxxxxxxxxxxxxxx5e"]
 
 LINNWORKS_APPLICATION_ID=
