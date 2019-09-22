@@ -142,8 +142,10 @@ export default {
         draftId,
         toastr
       });
-
-      this.loadDrafts();
+      //hack to let the message queue pick up mark a process status
+      setTimeout(() => {
+        this.loadDrafts();
+      }, 500);
     }
   }
 };
