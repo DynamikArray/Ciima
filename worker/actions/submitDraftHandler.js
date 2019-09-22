@@ -22,8 +22,10 @@ const {
 const handleStatusUpdate = async (draftId, msg, level = ERROR) => {
   const jsonMsg = JSON.stringify(msg);
   await draftHelper.updateDraftStatus(draftId, level, jsonMsg);
-  if (level === ERROR) logger.error(jsonMsg);
-  logger.debug(jsonMsg);
+  if (jsonMsg) {
+    if (level === ERROR) logger.error(jsonMsg);
+    logger.debug(jsonMsg);
+  }
 };
 
 /**
