@@ -74,7 +74,7 @@
               </v-chip>
             </div>
             <div v-if="draft.status === 'Error'">
-              <v-tooltip top>
+              <v-tooltip left :max-width="420">
                 <template v-slot:activator="{ on }">
                   <v-chip label color="red" v-on="on">
                     <v-icon small>fa-exclamation-circle</v-icon>
@@ -82,9 +82,11 @@
                 </template>
                 <div v-if="draft.statusNotes">
                   <h3>Notes:</h3>
-                  <div v-for="note in jsonStatusNotes(draft.statusNotes)">
-                    <h4>{{ note }}</h4>
-                  </div>
+                  <h4
+                    :key="Date.now()"
+                    v-for="note in formatStatusNotes(draft.statusNotes)"
+                    v-html="makeNoteText(note)"
+                  ></h4>
                 </div>
               </v-tooltip>
             </div>
@@ -118,8 +120,14 @@ export default {
     })
   },
   methods: {
-    jsonStatusNotes(statusNotes) {
-      return JSON.parse(statusNotes);
+    formatStatusNotes(note) {
+      return JSON.parse(note);
+    },
+    makeNoteText(note) {
+      if (typeof note === "string") return note;
+      if (typeof note === "object") {
+        return note;
+      }
     },
     refreshDrafts() {
       this.loadDrafts();

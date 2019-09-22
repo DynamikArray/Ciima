@@ -12,6 +12,13 @@ const {
   ERROR
 } = require("../../util/ciima/draftStatusCode.js");
 
+/**
+ * [handleStatusUpdate description]
+ * @param  {number}  draftId       the draftId to be logged in the db
+ * @param  {string/object}  msg
+ * @param  {string}  [level=ERROR] error level
+ * @return {Promise}               [description]
+ */
 const handleStatusUpdate = async (draftId, msg, level = ERROR) => {
   const jsonMsg = JSON.stringify(msg);
   await draftHelper.updateDraftStatus(draftId, level, jsonMsg);
@@ -19,15 +26,16 @@ const handleStatusUpdate = async (draftId, msg, level = ERROR) => {
   logger.debug(jsonMsg);
 };
 
-/*
-request = {
-  ItemNumber: "sample string 1",
-  StockItemId: "2738d11a-eea3-4276-99ed-603775849347",
-  IsMain: true,
-  ImageUrl: "sample string 4"
+/**
+ * cleanImagePath - removes the special charachters from the url names so the json
+ * can be passed into mysql or to linnworks or used in url paths
+ * @param  {string} imageUrl the imageUrl from our database
+ * @return {string}          [description]
+ */
+const cleanImagePath = imageUrl => {
+  const str = imageUrl.replace("’", "'");
+  return str;
 };
-*/
-//StockItemId, ItemNumber, ImageUrl, isMain
 
 /**
  * [addImage description]
@@ -51,11 +59,6 @@ const addImage = async (draftId, imageProps) => {
   } catch (error) {
     handleStatusUpdate(draftId, error, ERROR);
   }
-};
-
-const cleanImagePath = imageUrl => {
-  const str = imageUrl.replace("’", "'");
-  return str;
 };
 
 /**
@@ -137,6 +140,7 @@ const addInventoryItem = async draft => {
 const submitDraftHandler = async (message, callback) => {
   logger.debug("listDrafHandler called");
   const draft = message.data;
+  let hasErrors = [];
 
   try {
     //update draft as processing
@@ -148,32 +152,59 @@ const submitDraftHandler = async (message, callback) => {
     if (statusUpdated) {
       const { result, error } = await addInventoryItem(draft);
       if (result && !error) {
-        //Add extended properties
-        //item was added now add the rest
-        //AddItemLocations
-        //AddImagesToInventoryItem
-        //AddProductIdentifiers
-
-        //lastly add images
-        //With an inserted item grabs its identifiers
         logger.debug("Inventory Item added adding images next.");
+
         const StockItemId = result.fkStockItemId;
         const ItemNumber = result.ItemNumber;
-        //add images
-        const { imagesResult, imagesError } = await addInventoryImages(
+
+        //  Main Image
+        const addImageResp = await addImage(draft.id, {
+          StockItemId,
+          ItemNumber,
+          ImageUrl: draft.main_image,
+          isMain: true
+        });
+
+        //  Main Image Didnt Save
+        if (addImageResp.error) hasErrors.push(addImageResp.error);
+
+        /*
+        //Add extended properties
+        const {extPropsResult, extPropsError}= await addExtendedProperties({
           StockItemId,
           ItemNumber,
           draft
-        );
+        });
 
-        //IMAGES SAVED
-        if (imagesResult && !imagesError) {
-          handleStatusUpdate(draft.id, imagesResult, SUBMITTED);
-        }
+        //  extended Properties Saved
+        if (extPropsResult && !extPropsError)
+          handleStatusUpdate(draft.id, extPropsResult, SUBMITTED);
 
-        //IMAGES DIDNT SAVE
-        if (!imagesResult && imagesError) {
-          handleStatusUpdate(draft.id, imagesError, ERROR);
+        // extended Properties didnt Save
+        if (!extPropsResult && extPropsError)
+          handleStatusUpdate(draft.id, extPropsError, ERROR);
+        */
+
+        if (draft.other_images.length > 0) {
+          //  Add Other Images
+          const { imagesResult, imagesError } = await addInventoryImages(
+            StockItemId,
+            ItemNumber,
+            draft
+          );
+
+          //IMAGES DIDNT SAVE
+          if (!imagesResult && imagesError) {
+            console.log(imagesError);
+            hasErrors.push(imagesError);
+          }
+        } //end other_image > 0
+
+        //Error check the resutls
+        if (hasErrors.length > 0) {
+          handleStatusUpdate(draft.id, hasErrors, ERROR);
+        } else {
+          handleStatusUpdate(draft.id, false, SUBMITTED);
         }
       }
 
