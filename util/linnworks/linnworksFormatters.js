@@ -24,7 +24,7 @@ module.exports = logger => ({
     const inventoryItem = {
       MetaData: "Added through Ciima: " + Date.now(),
       StockItemId: stockItemId,
-      ItemNumber: Date.now(), //aka SKU
+      ItemNumber: Date.now().toString(), //aka SKU
       ItemTitle: encodeURIComponent(draft.inventoryTitle),
       Quantity: draft.quantity,
       // BarcodeNumber: "234324234",
@@ -51,15 +51,25 @@ module.exports = logger => ({
 
     return inventoryItem;
   },
+
+  /**
+   * [formattedInventoryItem description]
+   * @param  {[type]} inventoryItem [description]
+   * @return {[type]}               [description]
+   */
   formattedInventoryItem: inventoryItem => {
     //format this object to the needed data style for linnwokrs
     const formattedData = `inventoryItem=` + JSON.stringify(inventoryItem);
     return formattedData;
   },
 
-  //
-  //
-  //
+  /**
+   * [itemExtendedProperties description]
+   * @param  {[type]} fkStockItemId [description]
+   * @param  {[type]} SKU           [description]
+   * @param  {[type]} draft         [description]
+   * @return {[type]}               [description]
+   */
   itemExtendedProperties: (fkStockItemId, SKU, draft) => {
     //we need to turn these into and array of objects to add
     const props = extendedProperties.map(prop => {
@@ -68,7 +78,7 @@ module.exports = logger => ({
         SKU,
         ProperyName: prop.name,
         PropertyValue: draft[prop.field],
-        PropertyType: "attribute"
+        PropertyType: "Attribute"
       };
     });
 

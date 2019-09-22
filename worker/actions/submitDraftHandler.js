@@ -22,7 +22,7 @@ const {
 const handleStatusUpdate = async (draftId, msg, level = ERROR) => {
   const jsonMsg = JSON.stringify(msg);
   await draftHelper.updateDraftStatus(draftId, level, jsonMsg);
-  if (level == ERROR) logger.error(jsonMsg);
+  if (level === ERROR) logger.error(jsonMsg);
   logger.debug(jsonMsg);
 };
 
@@ -43,7 +43,8 @@ const cleanImagePath = imageUrl => {
  * @return {Promise}            [description]
  */
 const addImage = async (draftId, imageProps) => {
-  const { StockItemId, ItemNumber, ImageUrl, isMain } = imageProps;
+  //encode the imageUrl
+  imageProps.ImageUrl = encodeURIComponent(imageProps.ImageUrl);
   const formattedData = `request=${JSON.stringify(imageProps)}`;
 
   try {
