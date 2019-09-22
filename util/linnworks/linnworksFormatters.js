@@ -7,10 +7,12 @@ const categoryInfo = {
   CategoryName: "EBAY-SETS"
 };
 
+//grab our list of one to one fields to extended properties
+const extendedProperties = require("./extendedProperties.js");
+
 //build out a handler to format our data to linnworks needed values
 module.exports = logger => ({
   //format for creating basic new inventory item
-
   /**
    * newInventoryItem - adds a new item into linnworks inventory    *
    * @param  {object} draft draft entry from ciima
@@ -20,12 +22,13 @@ module.exports = logger => ({
     logger.debug(`Format draft for inventory draft`, draft);
     const stockItemId = uuidv1();
     const inventoryItem = {
+      MetaData: "Added through Ciima: " + Date.now(),
       StockItemId: stockItemId,
       ItemNumber: Date.now(), //aka SKU
       ItemTitle: encodeURIComponent(draft.inventoryTitle),
       Quantity: draft.quantity,
       // BarcodeNumber: "234324234",
-      // MetaData: "sample string 8",
+
       // PurchasePrice: 9.1,   number of issues x or include it here
       RetailPrice: draft.price,
       //PostalServiceId: "7adfafe9-ff34-4f43-aca9-5782d1c4394e",
@@ -56,33 +59,19 @@ module.exports = logger => ({
 
   //
   //
-  addImageToInventoryItem: draft => {},
   //
-  //
-  //
-  //
-  //
-  itemExtendedProperties: (fkStockItemId, sku, draft) => {
-    const extendedProperties = [];
-    //
+  itemExtendedProperties: (fkStockItemId, SKU, draft) => {
+    //we need to turn these into and array of objects to add
+    const props = extendedProperties.map(prop => {
+      return {
+        fkStockItemId,
+        SKU,
+        ProperyName: prop.name,
+        PropertyValue: draft[prop.field],
+        PropertyType: "attribute"
+      };
+    });
 
-    /*
-    {
-        "fkStockItemId": "ff72395d-a0ba-442f-a38a-e44323851974",
-        "SKU": "sample string 1",
-        "ProperyName": "sample string 2",
-        "PropertyValue": "sample string 3",
-        "PropertyType": "sample string 4"
-      },
-      {
-        "fkStockItemId": "ff72395d-a0ba-442f-a38a-e44323851974",
-        "SKU": "sample string 1",
-        "ProperyName": "sample string 2",
-        "PropertyValue": "sample string 3",
-        "PropertyType": "sample string 4"
-      }
-     */
-    const item = {};
-    return item;
+    return `inventoryItemExtendedProperties=${JSON.stringify(props)}`;
   }
 });

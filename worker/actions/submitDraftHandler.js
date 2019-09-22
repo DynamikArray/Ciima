@@ -132,6 +132,34 @@ const addInventoryItem = async draft => {
 };
 
 /**
+ * [addExtendedProperties description]
+ * @param  {[type]}  StockItemId [description]
+ * @param  {[type]}  ItemNumber  [description]
+ * @param  {[type]}  draft       [description]
+ * @return {Promise}             [description]
+ */
+const addExtendedProperties = async (StockItemId, ItemNumber, draft) => {
+  const { itemExtendedProperties } = linnworks.formatters;
+  const extendedProperties = itemExtendedProperties(
+    StockItemId,
+    ItemNumber,
+    draft
+  );
+
+  //CreateInventoryItemExtendedProperties
+  const { result, error } = await linnworks.makeApiCall({
+    method: "POST",
+    url: "Inventory/CreateInventoryItemExtendedProperties",
+    headers: "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
+    data: extendedProperties
+  });
+
+  if (result) return { result };
+  if (error) return { error };
+  //for each one of these draft properties we have to add an extended property
+};
+
+/**
  * [submitDraftHandler description]
  * @param  {[type]}   message  [description]
  * @param  {Function} callback [description]
@@ -164,27 +192,20 @@ const submitDraftHandler = async (message, callback) => {
           ImageUrl: draft.main_image,
           isMain: true
         });
-
         //  Main Image Didnt Save
         if (addImageResp.error) hasErrors.push(addImageResp.error);
 
-        /*
         //Add extended properties
-        const {extPropsResult, extPropsError}= await addExtendedProperties({
+        const { extPropsResult, extPropsError } = await addExtendedProperties(
           StockItemId,
           ItemNumber,
           draft
-        });
-
-        //  extended Properties Saved
-        if (extPropsResult && !extPropsError)
-          handleStatusUpdate(draft.id, extPropsResult, SUBMITTED);
-
+        );
         // extended Properties didnt Save
         if (!extPropsResult && extPropsError)
           handleStatusUpdate(draft.id, extPropsError, ERROR);
-        */
 
+        //See if we have other images to send
         if (draft.other_images.length > 0) {
           //  Add Other Images
           const { imagesResult, imagesError } = await addInventoryImages(
@@ -192,15 +213,11 @@ const submitDraftHandler = async (message, callback) => {
             ItemNumber,
             draft
           );
-
           //IMAGES DIDNT SAVE
-          if (!imagesResult && imagesError) {
-            console.log(imagesError);
-            hasErrors.push(imagesError);
-          }
+          if (!imagesResult && imagesError) hasErrors.push(imagesError);
         } //end other_image > 0
 
-        //Error check the resutls
+        //Error check for any errors and log them
         if (hasErrors.length > 0) {
           handleStatusUpdate(draft.id, hasErrors, ERROR);
         } else {

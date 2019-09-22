@@ -83,9 +83,8 @@
                 <div v-if="draft.statusNotes">
                   <h3>Notes:</h3>
                   <h4
-                    :key="Date.now()"
-                    v-for="note in formatStatusNotes(draft.statusNotes)"
-                    v-html="makeNoteText(note)"
+                    :key="makeStatusNotesKey()"
+                    v-html="makeNoteText(draft.statusNotes)"
                   ></h4>
                 </div>
               </v-tooltip>
@@ -120,14 +119,16 @@ export default {
     })
   },
   methods: {
+    /*
     formatStatusNotes(note) {
       return JSON.parse(note);
     },
+    */
+    makeStatusNotesKey() {
+      return `${Date.now()}-${Math.random()}`;
+    },
     makeNoteText(note) {
-      if (typeof note === "string") return note;
-      if (typeof note === "object") {
-        return note;
-      }
+      return note;
     },
     refreshDrafts() {
       this.loadDrafts();
