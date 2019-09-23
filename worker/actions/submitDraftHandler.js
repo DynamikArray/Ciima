@@ -12,6 +12,11 @@ const {
   ERROR
 } = require("../../util/ciima/draftStatusCode.js");
 
+const locationInfo = {
+  StockLocationId: "00000000-0000-0000-0000-000000000000",
+  LocationName: "Default"
+};
+
 /**
  * [handleStatusUpdate description]
  * @param  {number}  draftId       the draftId to be logged in the db
@@ -157,9 +162,34 @@ const addExtendedProperties = async (StockItemId, ItemNumber, draft) => {
     data: extendedProperties
   });
 
-  if (result) return { result };
-  if (error) return { error };
+  if (result) return { extPropsResult: result };
+  if (error) return { extPropsError: error };
   //for each one of these draft properties we have to add an extended property
+};
+
+const updateInventoryLocation = async (StockItemId, location) => {
+  const inventoryItemLocation = [
+    {
+      StockLocationId: locationInfo.StockLocationId,
+      LocationName: locationInfo.LocationName,
+      BinRack: location,
+      StockItemId
+    }
+  ];
+  const formattedLocation = `itemLocations=${JSON.stringify(
+    inventoryItemLocation
+  )}`;
+
+  //CreateInventoryItemExtendedProperties
+  const { result, error } = await linnworks.makeApiCall({
+    method: "POST",
+    url: "Inventory/UpdateItemLocations ",
+    headers: "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
+    data: formattedLocation
+  });
+
+  if (result && !error) return { invResult: true };
+  if (error && !result) return { invError: error };
 };
 
 /**
@@ -188,6 +218,7 @@ const submitDraftHandler = async (message, callback) => {
         const StockItemId = result.fkStockItemId;
         const ItemNumber = result.ItemNumber;
 
+        //
         //  Main Image
         const addImageResp = await addImage(draft.id, {
           StockItemId,
@@ -198,6 +229,7 @@ const submitDraftHandler = async (message, callback) => {
         //  Main Image Didnt Save
         if (addImageResp.error) hasErrors.push(addImageResp.error);
 
+        //
         //Add extended properties
         const { extPropsResult, extPropsError } = await addExtendedProperties(
           StockItemId,
@@ -208,6 +240,17 @@ const submitDraftHandler = async (message, callback) => {
         if (!extPropsResult && extPropsError)
           handleStatusUpdate(draft.id, extPropsError, ERROR);
 
+        //
+        //Update Inventory Location
+        const { invResult, invError } = await updateInventoryLocation(
+          StockItemId,
+          draft.locationCode
+        );
+        // Inventory Location didnt Save
+        if (!invResult && invError)
+          handleStatusUpdate(draft.id, invError, ERROR);
+
+        //
         //See if we have other images to send
         if (draft.other_images.length > 0) {
           //  Add Other Images
@@ -220,6 +263,7 @@ const submitDraftHandler = async (message, callback) => {
           if (!imagesResult && imagesError) hasErrors.push(imagesError);
         } //end other_image > 0
 
+        //
         //Error check for any errors and log them
         if (hasErrors.length > 0) {
           handleStatusUpdate(draft.id, hasErrors, ERROR);
@@ -228,13 +272,15 @@ const submitDraftHandler = async (message, callback) => {
         }
       }
 
-      //error inserting item
+      //
+      //error inserting main inventory item
       if (!result && error) handleStatusUpdate(draft.id, error, ERROR);
     }
-    //handle amqp NACK'ing
-    callback(null, false);
   } catch (err) {
     handleStatusUpdate(draft.id, err, ERROR);
+  } finally {
+    //handle amqp NACK'ing
+    callback(null, false);
   }
 }; //end messageHandler
 

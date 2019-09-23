@@ -4,6 +4,14 @@ Comic Issue Inventory Media Application
 
 ## Installation / Configuration
 
+In Production the application runs on a mixture of services aimed to keep deployments easy, monitoring simple and convenient and uptime maximum.
+
+- Heroku cloud hosting and other services
+- Web Dyno and Worker for Linnworks handling
+- JAWSDB for remote MYSQL hosting
+- RabbitMQ for Message Queueing
+- LogDna for Log Aggregration
+
 .env file required
 
 ```
