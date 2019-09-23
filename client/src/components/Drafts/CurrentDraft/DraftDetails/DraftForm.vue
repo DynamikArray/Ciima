@@ -16,6 +16,7 @@
                 clearable
                 counter
                 id="inventoryTitle"
+                name="inventoryTitle"
                 v-model="inventoryTitle"
               ></v-text-field>
             </v-col>
@@ -26,6 +27,7 @@
             <v-col cols="5">
               <v-text-field
                 v-model="locationCode"
+                id="locationCode"
                 name="locationCode"
                 outlined
                 label="Location"
@@ -36,6 +38,7 @@
               <v-text-field
                 v-model="grade"
                 id="grade"
+                name="grade"
                 outlined
                 label="Grade"
                 hint="Grade of the product"
@@ -45,6 +48,7 @@
             <v-col cols="2">
               <v-text-field
                 v-model="quantity"
+                name="quantity"
                 id="quantity"
                 outlined
                 label="Qty"
@@ -55,6 +59,7 @@
             <v-col cols="2">
               <v-text-field
                 v-model="price"
+                name="price"
                 id="price"
                 outlined
                 label="Price"
@@ -72,6 +77,7 @@
               <v-autocomplete
                 outlined
                 v-model="ebaySiteCategoryId"
+                name="ebaySiteCategoryId"
                 :loading="loading"
                 :items="eBayCategories"
                 item-text="ebayCategoryName"
@@ -89,6 +95,8 @@
             <v-col cols="6">
               <v-select
                 v-model="ebayStoreCategoryIdOne"
+                placeholder="Store Category 1"
+                name="ebayStoreCategoryIdOne"
                 :items="ebayStoreCategories"
                 label="Ebay Store Category 1"
                 hint="Primary Ebay Store Category"
@@ -98,6 +106,8 @@
             <v-col cols="6">
               <v-select
                 v-model="ebayStoreCategoryIdTwo"
+                placeholder="Store Category 2"
+                name="ebayStoreCategoryIdTwo"
                 :items="ebayStoreCategories"
                 label="Ebay Store Category 2"
                 hint="Secondary Ebay Store Category"
@@ -113,6 +123,7 @@
             <v-col cols="6">
               <v-text-field
                 v-model="series"
+                name="series"
                 outlined
                 label="Series"
                 hint="Storyline/Series of this product"
@@ -122,6 +133,7 @@
             <v-col cols="6">
               <v-text-field
                 v-model="mainCharacter"
+                name="mainCharacter"
                 outlined
                 label="Character"
                 hint="Main character featured throughout"
@@ -134,6 +146,7 @@
             <v-col cols="4">
               <v-text-field
                 v-model="issueNumbers"
+                name="issueNumbers"
                 outlined
                 label="Issue Numbers"
                 hint="Issue Number(s) when applicable"
@@ -142,6 +155,7 @@
             <v-col cols="3">
               <v-text-field
                 v-model="publisher"
+                name="publisher"
                 outlined
                 label="Publisher"
                 hint="Main publisher of these issues"
@@ -150,6 +164,7 @@
             <v-col cols="2">
               <v-text-field
                 v-model="publishedYear"
+                name="publishedYear"
                 outlined
                 label="Year"
                 hint="The year published for these issues "
@@ -158,6 +173,7 @@
             <v-col cols="3">
               <v-text-field
                 v-model="publishedDate"
+                name="publishedDate"
                 outlined
                 label="Date Published"
                 hint="The Date published eg(Mar 86) "
