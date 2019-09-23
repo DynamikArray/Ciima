@@ -8,22 +8,6 @@
           <v-divider class="my-1"></v-divider>
 
           <v-row>
-            <v-col cols="12">
-              <v-text-field
-                outlined
-                label="Inventory Title"
-                hint="Title as it will appear on Ebay"
-                clearable
-                counter
-                id="inventoryTitle"
-                name="inventoryTitle"
-                v-model="inventoryTitle"
-              ></v-text-field>
-            </v-col>
-          </v-row>
-          <!--END ROW -->
-
-          <v-row>
             <v-col cols="5">
               <v-text-field
                 v-model="locationCode"
@@ -69,50 +53,24 @@
           </v-row>
           <!--END ROW -->
 
-          <!--NEXT ROW -->
-          <h3>Categories:</h3>
-          <v-divider class="my-1"></v-divider>
           <v-row>
             <v-col cols="12">
-              <v-autocomplete
-                outlined
-                v-model="ebaySiteCategoryId"
-                name="ebaySiteCategoryId"
-                :loading="loading"
-                :items="eBayCategories"
-                item-text="ebayCategoryName"
-                item-value="ebayCategoryId"
-                :search-input.sync="searchEbayCategory"
-                label="Search ebay categories"
-                hide-no-data
-              >
-              </v-autocomplete>
+              <AutoFillButton :switchToTab="switchToTab"></AutoFillButton>
             </v-col>
           </v-row>
 
-          <!--NEXT ROW -->
           <v-row>
-            <v-col cols="6">
-              <v-select
-                v-model="ebayStoreCategoryIdOne"
-                placeholder="Store Category 1"
-                name="ebayStoreCategoryIdOne"
-                :items="ebayStoreCategories"
-                label="Ebay Store Category 1"
-                hint="Primary Ebay Store Category"
-              >
-              </v-select>
-            </v-col>
-            <v-col cols="6">
-              <v-select
-                v-model="ebayStoreCategoryIdTwo"
-                placeholder="Store Category 2"
-                name="ebayStoreCategoryIdTwo"
-                :items="ebayStoreCategories"
-                label="Ebay Store Category 2"
-                hint="Secondary Ebay Store Category"
-              >
-              </v-select>
+            <v-col cols="12">
+              <v-text-field
+                outlined
+                label="Inventory Title"
+                hint="Title as it will appear on Ebay"
+                clearable
+                counter
+                id="inventoryTitle"
+                name="inventoryTitle"
+                v-model="inventoryTitle"
+              ></v-text-field>
             </v-col>
           </v-row>
           <!--END ROW -->
@@ -181,6 +139,54 @@
             </v-col>
           </v-row>
           <!--END ROW -->
+
+          <!--NEXT ROW -->
+          <h3>Categories:</h3>
+          <v-divider class="my-1"></v-divider>
+          <v-row>
+            <v-col cols="12">
+              <v-autocomplete
+                outlined
+                v-model="ebaySiteCategoryId"
+                name="ebaySiteCategoryId"
+                :loading="loading"
+                :items="eBayCategories"
+                item-text="ebayCategoryName"
+                item-value="ebayCategoryId"
+                :search-input.sync="searchEbayCategory"
+                label="Search ebay categories"
+                hide-no-data
+              >
+              </v-autocomplete>
+            </v-col>
+          </v-row>
+
+          <!--NEXT ROW -->
+          <v-row>
+            <v-col cols="6">
+              <v-select
+                v-model="ebayStoreCategoryIdOne"
+                placeholder="Store Category 1"
+                name="ebayStoreCategoryIdOne"
+                :items="ebayStoreCategories"
+                label="Ebay Store Category 1"
+                hint="Primary Ebay Store Category"
+              >
+              </v-select>
+            </v-col>
+            <v-col cols="6">
+              <v-select
+                v-model="ebayStoreCategoryIdTwo"
+                placeholder="Store Category 2"
+                name="ebayStoreCategoryIdTwo"
+                :items="ebayStoreCategories"
+                label="Ebay Store Category 2"
+                hint="Secondary Ebay Store Category"
+              >
+              </v-select>
+            </v-col>
+          </v-row>
+          <!--END ROW -->
         </v-form>
       </v-card-text>
       <v-card-actions class="justify-center">
@@ -195,6 +201,7 @@ import { mapState } from "vuex";
 import { SEARCH_EBAY_CATEGORIES } from "@/store/action-types.js";
 import debounce from "lodash.debounce";
 import ActionButtons from "./fields/ActionButtons.vue";
+import AutoFillButton from "./fields/AutoFillButton.vue";
 
 import { ebayStoreCategories } from "@/util/ebay/ebayStoreCategories.js";
 
@@ -206,11 +213,16 @@ const { mapFields } = createHelpers({
 });
 
 export default {
+  created() {
+    //location
+    this.locationCode = "EBAY-SETS-";
+  },
   props: {
     switchToTab: [Function]
   },
   components: {
-    ActionButtons
+    ActionButtons,
+    AutoFillButton
   },
   data: () => ({
     selectedEbayCategory: null, //select

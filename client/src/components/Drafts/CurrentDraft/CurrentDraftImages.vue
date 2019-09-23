@@ -17,7 +17,7 @@
         class="grey darken-4"
         key="draftIssues"
       >
-        <DraftImages></DraftImages>
+        <DraftImages :switchToTab="switchToTab"></DraftImages>
       </v-card>
     </v-slide-y-transition>
   </div>
@@ -30,6 +30,9 @@ import DraftImages from "./DraftImages";
 import GetStarted from "./GetStarted";
 
 export default {
+  props: {
+    switchToTab: [Function]
+  },
   components: {
     DraftImages,
     GetStarted

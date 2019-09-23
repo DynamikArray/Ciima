@@ -26,7 +26,7 @@
       </v-tab>
 
       <v-tab-item key="draftIssues" class="h-100 ">
-        <CurrentDraftImages></CurrentDraftImages>
+        <CurrentDraftImages :switchToTab="switchToTab"></CurrentDraftImages>
       </v-tab-item>
 
       <v-tab-item key="draftDetails" class="h-100">
