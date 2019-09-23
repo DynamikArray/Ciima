@@ -63,6 +63,24 @@ const currentDraft = {
       state.coverPhoto = false;
       state.issues = [];
       state.titles = [];
+      state.savingCover = false;
+      state.inventoryTitle = "";
+      state.locationCode = "";
+      state.grade = "";
+      state.quantity = "";
+      state.price = "";
+      state.ebaySiteCategoryId = 0;
+      state.ebayStoreCategoryIdOne = "";
+      state.ebayStoreCategoryIdTwo = "";
+      state.series = "";
+      state.mainCharacter = "";
+      state.issueNumbers = "";
+      state.publisher = "";
+      state.publishedYear = "";
+      state.publishedDate = "";
+      state.main_image = false;
+      state.other_images = [];
+      state.savingDraft = false;
     },
     //add issue to draft issues list
     [CURRENT_DRAFT_ISSUE_ADD](state, issue) {

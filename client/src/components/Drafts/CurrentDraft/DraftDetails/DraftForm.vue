@@ -184,7 +184,7 @@
         </v-form>
       </v-card-text>
       <v-card-actions class="justify-center">
-        <ActionButtons></ActionButtons>
+        <ActionButtons :switchToTab="switchToTab"></ActionButtons>
       </v-card-actions>
     </v-card>
   </div>
@@ -206,7 +206,9 @@ const { mapFields } = createHelpers({
 });
 
 export default {
-  props: {},
+  props: {
+    switchToTab: [Function]
+  },
   components: {
     ActionButtons
   },

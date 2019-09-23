@@ -30,7 +30,7 @@
       </v-tab-item>
 
       <v-tab-item key="draftDetails" class="h-100">
-        <DraftForm class="mb-10"></DraftForm>
+        <DraftForm :switchToTab="switchToTab" class="mb-10"></DraftForm>
       </v-tab-item>
 
       <v-tab-item key="openDrafts" class="h-100">
