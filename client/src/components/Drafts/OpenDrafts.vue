@@ -141,7 +141,9 @@ export default {
       this.$store.dispatch(`openDrafts/${OPEN_DRAFTS_FETCH}`, {});
     },
     async submitDraft(draftId) {
+      const loadDrafts = this.loadDrafts();
       const toastr = this.$toastr || false;
+
       await this.$store.dispatch(`openDrafts/${OPEN_DRAFTS_SUBMIT_DRAFT}`, {
         draftId,
         toastr
@@ -150,6 +152,11 @@ export default {
       setTimeout(() => {
         this.loadDrafts();
       }, 500);
+
+      //hack to let the message queue pick up mark a process status
+      setTimeout(() => {
+        this.loadDrafts();
+      }, 5000);
     }
   }
 };
