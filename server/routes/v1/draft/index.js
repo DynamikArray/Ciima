@@ -9,7 +9,7 @@ module.exports = function(fastify, opts, next) {
   const handler = require("../../../handlers/v1/draft")(fastify);
 
   const draft = {
-    schema: schema.draft,
+    schema: schema,
     handler: handler.draft
   };
 

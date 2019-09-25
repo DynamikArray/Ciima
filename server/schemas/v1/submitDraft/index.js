@@ -1,6 +1,6 @@
 module.exports = {
   description: "Submit draft for listing to linnworks",
-  tags: ["submitDraft"],
+  tags: ["drafts"],
   summary: "Submits the draft to linnworks to be pushed to ebay",
 
   body: {

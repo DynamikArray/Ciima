@@ -1,6 +1,6 @@
 module.exports = {
   description: "Search the database",
-  tags: ["issueSearch"],
+  tags: ["issues"],
   summary: "Search the database for comics",
 
   querystring: {

@@ -1,6 +1,6 @@
 module.exports = {
   description: "Search For Ebay Categories",
-  tags: ["ebayCategories"],
+  tags: ["ebay"],
   summary: "Search the database for the Ebay category",
 
   querystring: {

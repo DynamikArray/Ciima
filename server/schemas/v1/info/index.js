@@ -1,7 +1,7 @@
 module.exports = {
   keepAlive: {
     description: "Get the status of the API",
-    tags: ["Info"],
+    tags: ["info"],
     summary: "Obtain the status of the API",
     response: {
       200: {

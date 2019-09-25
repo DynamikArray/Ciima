@@ -1,7 +1,7 @@
 module.exports = {
   imageFetch: {
     description: "Fetch the image for our app",
-    tags: ["imageFetch"],
+    tags: ["images"],
     summary: "Fetch the image for our app",
 
     querystring: {

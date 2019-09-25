@@ -1,6 +1,6 @@
 module.exports = {
   description: "CRUD for a Draft",
-  tags: ["draft"],
+  tags: ["drafts"],
   summary: "Creat Read Update Delete for draft records",
 
   //TODO MAKE PROPER BODY - also doenst seem to be working yet ?
