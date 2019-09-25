@@ -23,14 +23,14 @@ const headers = [
     value: "quantity",
     sortable: true,
     align: "center",
-    width: "40px"
+    width: "70px"
   },
   {
     text: "Price",
     value: "price",
     sortable: true,
     align: "center",
-    width: "40px"
+    width: "90px"
   },
   {
     text: "Location",
@@ -51,7 +51,7 @@ const headers = [
     value: "action",
     sortable: false,
     align: "center",
-    width: "50px"
+    width: "40px"
   }
 ];
 

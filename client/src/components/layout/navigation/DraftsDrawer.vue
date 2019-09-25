@@ -20,21 +20,12 @@
         >Draft Details
       </v-tab>
 
-      <v-tab key="openDrafts" class="align-center justify-start">
-        <v-icon name="open-drafts" class="mr-1 mb-1">fas fa-list-alt</v-icon
-        >Open Drafts
-      </v-tab>
-
       <v-tab-item key="draftIssues" class="h-100 ">
         <CurrentDraftImages :switchToTab="switchToTab"></CurrentDraftImages>
       </v-tab-item>
 
       <v-tab-item key="draftDetails" class="h-100">
         <DraftForm :switchToTab="switchToTab" class="mb-10"></DraftForm>
-      </v-tab-item>
-
-      <v-tab-item key="openDrafts" class="h-100">
-        <OpenDrafts class="mb-10"></OpenDrafts>
       </v-tab-item>
     </v-tabs>
   </v-navigation-drawer>
@@ -44,7 +35,6 @@
 import { mapState } from "vuex";
 import CurrentDraftImages from "@/components/Drafts/CurrentDraft/CurrentDraftImages";
 import DraftForm from "@/components/Drafts/CurrentDraft/DraftDetails/DraftForm";
-import OpenDrafts from "@/components/Drafts/OpenDrafts.vue";
 
 import vuescroll from "vuescroll";
 
@@ -67,8 +57,7 @@ export default {
   components: {
     CurrentDraftImages,
     DraftForm,
-    vuescroll,
-    OpenDrafts
+    vuescroll
   },
   computed: {
     ...mapState({

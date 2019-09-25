@@ -6,20 +6,18 @@
  */
 module.exports = fastify => ({
   drafts: async (req, res) => {
-    const draft = req.body;
+    let { status } = req.query;
+    if (!status) status = "Open"; //default to open if no param
 
-    const dbHelper = require("../../../../util/mysql/fastifyMysqlConn.js")(
-      fastify
-    );
+    const query = `SELECT * FROM slc_drafts WHERE status LIKE CONCAT("%",?,"%")`;
 
-    const query = `SELECT * FROM slc_drafts order by id DESC`;
-
-    const result = await dbHelper.query(query);
-
-    //return query reponse
-    if (result.rows) {
-      return { result: result.rows }; //result.rows;
+    const connection = await fastify.mysql.getConnection();
+    if (connection) {
+      const [rows, fields] = await connection.query(query, [status]);
+      connection.release();
+      return { result: rows }; //result.rows;
     }
-    return result;
+
+    return { error: "No Db Connection" };
   }
 });

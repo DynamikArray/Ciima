@@ -3,7 +3,9 @@ module.exports = {
   tags: ["drafts"],
   summary: "Return a list of open drafts",
 
-  //query params?
+  querystring: {
+    status: { type: "string" }
+  },
 
   //TODO MAKE PROPER RESPONSE
 

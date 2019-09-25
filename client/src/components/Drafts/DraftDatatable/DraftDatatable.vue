@@ -19,41 +19,55 @@
       </v-card>
     </v-dialog>
 
+    <DraftsDatatableHeader
+      :onSelect="loadDrafts"
+      title="Drafts"
+      icon="fa-list-alt"
+    ></DraftsDatatableHeader>
+
     <v-data-table
       v-if="drafts"
       :headers="headers"
       :items="drafts"
+      item-name="id"
       :loading="loading"
       loading-text="Loading..."
       :items-per-page="10"
+      show-select
+      @input="itemSelected"
     >
       <!--IMAGE COLUMN-->
       <template v-slot:item.main_image="{ item }">
-        <v-img
-          :src="item.main_image"
-          width="50"
-          class="ma-1"
-          @click="showImageModal(item.main_image)"
-        >
-          <template v-slot:placeholder>
-            <v-row class="fill-height ma-0" align="center" justify="center">
-              <v-progress-circular
-                indeterminate
-                color="blue darken-1"
-              ></v-progress-circular>
-            </v-row>
-          </template>
-        </v-img>
+        <div v-if="item.main_image !== 'false'">
+          <v-img
+            :src="item.main_image"
+            width="50"
+            class="ma-1"
+            @click="showImageModal(item.main_image)"
+          >
+            <template v-slot:placeholder>
+              <v-row class="fill-height ma-0" align="center" justify="center">
+                <v-progress-circular
+                  indeterminate
+                  color="blue darken-1"
+                ></v-progress-circular>
+              </v-row>
+            </template>
+          </v-img>
+        </div>
+        <div v-else>
+          <v-icon>fa-exclamation-triangle</v-icon>
+        </div>
       </template>
 
       <!--DETAIL COLUMN-->
 
       <template v-slot:item.inventoryTitle="{ item }">
         <div class="d-flex align-center">
-          <div class="d-flex align-center grow mx-3">
+          <div class="d-flex align-center grow mx-3 long-and-truncated">
             <div class="d-flex flex-column">
               <div class="d-flex align-center">
-                <h4 class="subtitle">{{ item.inventoryTitle }}</h4>
+                {{ item.inventoryTitle }}
               </div>
               <div class="d-flex align-center">
                 <h5 class="mr-2">Issues: {{ item.issueNumbers }}</h5>
@@ -106,6 +120,18 @@
         </div>
       </template>
     </v-data-table>
+
+    <!--Table Record Actions -->
+    <div v-if="status === 'Open'" class="my-3">
+      <div class="d-flex justify-start">
+        <div class="d-flex align-center">
+          <v-btn class="warning" @click="withSelected"
+            ><v-icon class="mr-2">fa-cloud-upload-alt</v-icon>Submit
+            Drafts</v-btn
+          >
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -113,6 +139,7 @@
 import { headers } from "./config.js";
 import { mapState } from "vuex";
 import settings from "@/util/settings.js";
+import DraftsDatatableHeader from "./DraftsDatatableHeader.vue";
 
 import {
   OPEN_DRAFTS_FETCH,
@@ -120,13 +147,22 @@ import {
 } from "@/store/action-types";
 
 export default {
+  components: {
+    DraftsDatatableHeader
+  },
   data() {
     return {
+      status: "Open",
+      selectedItems: [],
       selected: false,
       imageSrc: false,
       imagePopup: false,
       headers
     };
+  },
+  created() {
+    const { status } = this;
+    this.loadDrafts({ status });
   },
   computed: {
     ...mapState({
@@ -135,8 +171,8 @@ export default {
     })
   },
   methods: {
-    loadDrafts() {
-      this.$store.dispatch(`openDrafts/${OPEN_DRAFTS_FETCH}`, {});
+    loadDrafts(params = {}) {
+      this.$store.dispatch(`openDrafts/${OPEN_DRAFTS_FETCH}`, params);
     },
     showImageModal(imgSrc) {
       this.selected = imgSrc;
@@ -152,9 +188,10 @@ export default {
     makeNoteText(note) {
       return note;
     },
-    async submitDraft(draftId) {
+    async submitDraft(draftId, toast = true) {
       const loadDrafts = this.loadDrafts();
-      const toastr = this.$toastr || false;
+      let toastr = false;
+      if (toast) toastr = this.$toastr || false;
 
       await this.$store.dispatch(`openDrafts/${OPEN_DRAFTS_SUBMIT_DRAFT}`, {
         draftId,
@@ -169,9 +206,28 @@ export default {
       setTimeout(() => {
         this.loadDrafts();
       }, 5000);
+    },
+    withSelected() {
+      this.selectedItems.forEach(item => {
+        this.submitDraft(item.id, false);
+      });
+      this.$toastr.s("All items submitted!");
+    },
+    itemSelected(items) {
+      this.selectedItems = items;
     }
   }
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.long-and-truncated {
+  flex: 1;
+  &,
+  & > * {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+</style>
