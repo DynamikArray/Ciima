@@ -7,6 +7,7 @@ import vuetify from "./plugins/vuetify";
 //Filters for date's from db
 import { createDateFilter } from "vue-date-fns";
 Vue.filter("date", createDateFilter("MMM DD, YYYY"));
+Vue.filter("dateTime", createDateFilter("MMM DD, YYYY hh:mm a"));
 
 // register the plugin on vue for Sweet Alerts
 import VueSwal from "vue-swal";

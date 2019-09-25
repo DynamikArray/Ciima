@@ -41,6 +41,7 @@ module.exports = {
               publishedYear: { type: "string" },
               publisher: { type: "string" },
               quantity: { type: "number" },
+              grade: { type: "string" },
               series: { type: "string" },
               status: { type: "string" },
 
@@ -53,7 +54,8 @@ module.exports = {
 
               ebaySiteCategoryId: { type: "number" },
               ebayStoreCategoryIdOne: { type: "number" },
-              ebayStoreCategoryIdTwo: { type: "number" }
+              ebayStoreCategoryIdTwo: { type: "number" },
+              createdDate: { type: "string" }
             }
           }
         }

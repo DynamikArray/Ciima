@@ -4,7 +4,7 @@
     app
     clipped
     right
-    width="50%"
+    width="45%"
     mobile-break-point="960"
     class="draftsDrawer"
   >
