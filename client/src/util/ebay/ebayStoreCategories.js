@@ -32,10 +32,6 @@ const ebayStoreCategories = [
     value: 360239015
   },
   {
-    text: "Image Comics",
-    value: 360237015
-  },
-  {
     text: "Independent Comics",
     value: 360237015
   },
