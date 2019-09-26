@@ -9,7 +9,7 @@
       </div>
 
       <div class="d-flex justify-center ml-4">
-        <v-btn small text icon href="/docs">
+        <v-btn small text icon href="/docs" target="_blank">
           <v-icon small>fa-server</v-icon>
         </v-btn>
       </div>
