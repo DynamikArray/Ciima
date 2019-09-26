@@ -3,7 +3,9 @@
     <div v-if="titles.length" class="w-100">
       <div class="d-flex justify-space-between blue titlesHeader">
         <div class="d-flex flex grow align-center ml-2">
-          <h2>{{ titles.length }}<span class="subtitle-1">Titles</span></h2>
+          <h2>
+            {{ titles.length }}<span class="subtitle-1 mx-1">Titles</span>
+          </h2>
         </div>
         <div class="d-flex align-center mr-4">
           <h3 class="overline">Publisher</h3>
@@ -19,13 +21,17 @@
         <div
           v-for="title in titles"
           :key="title.titleId"
-          class="d-flex flex-row w-100 px-3 justify-space-between "
+          class="d-flex flex-row w-100 px-3 justify-space-end "
+          style="overflowX"
         >
-          <div class="d-flex grow align-center">
-            <h4>{{ title.title }}</h4>
+          <div
+            class="d-flex flex-wrap align-center mr-auto"
+            style="min-width:0px;"
+          >
+            <h4 class=" text-truncate">{{ title.title }}</h4>
           </div>
-          <div class="d-flex align-center mr-3">
-            <h4>{{ title.publisher }}</h4>
+          <div class="d-flex align-center justify-center">
+            <h4 class="text-center">{{ title.publisher }}</h4>
           </div>
           <div class="d-flex align-center ml-3">
             <v-btn small text color="red" @click="removeDraftTitle(title)">

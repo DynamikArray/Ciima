@@ -9,7 +9,7 @@
     class="draftsDrawer"
   >
     <vuescroll :ops="ops">
-      <CurrentDraftImages :switchToTab="switchToTab"></CurrentDraftImages>
+      <CurrentDraftImages></CurrentDraftImages>
     </vuescroll>
   </v-navigation-drawer>
 </template>

@@ -9,7 +9,10 @@
       <div class="d-flex align-center justify-center grow">
         <CurrentImage></CurrentImage>
       </div>
-      <div class="d-flex align-center justify-center grow">
+      <div
+        class="d-flex align-center justify-center px-3"
+        style="min-width:0px"
+      >
         <DraftsIssuesList></DraftsIssuesList>
       </div>
     </div>

@@ -1,12 +1,12 @@
 <template>
-  <div v-if="draftIssues.length > 0" class="w-100 mr-2 grey darken-3">
+  <div v-if="draftIssues.length > 0" class="w-100 mx-3 grey darken-3">
     <v-list dense class="py-0">
       <v-list-item-title class="text-left mx-4">
         <div class="d-flex justify-space-between">
           <div class="d-flex grow justify-start">
             <h2>
-              {{ draftIssues.length
-              }}<span class="subtitle-1 mx-1">Issues</span>
+              {{ draftIssues.length }}
+              <span class="subtitle-1 mx-3">Issues</span>
             </h2>
           </div>
 
@@ -18,38 +18,33 @@
 
       <draggable v-model="draftIssues">
         <v-scale-transition group leave-absolute>
-          <v-list-item
-            class="grey darken-2 mb-1"
+          <div
+            class="grey darken-2 mb-1 d-flex flex-row w-100 px-3 justify-space-end"
             v-for="issue in draftIssues"
             :key="issue.id"
             @click=""
           >
-            <div class="d-flex flex-row w-100 justify-space-between">
-              <div class="d-flex mr-3">
-                <v-img :src="makeImageUrl(issue)" width="25"></v-img>
-              </div>
-
-              <div class="d-flex grow justify-start  align-self-center ">
-                <div
-                  class="d-flex mr-3 justify-center"
-                  :style="{ minWidth: '70px' }"
-                >
-                  <h4>{{ issue.fullIssue }}</h4>
-                </div>
-                <div class="d-flex">
-                  <h4>{{ issue.title }}</h4>
-                </div>
-              </div>
-
-              <div class="d-flex align-self-center ">
-                <div>
-                  <v-btn small color="red" @click="removeDraftIssue(issue)">
-                    <v-icon small>fa-times-circle</v-icon>
-                  </v-btn>
-                </div>
-              </div>
+            <div class="d-flex mr-1">
+              <v-img :src="makeImageUrl(issue)" width="25"></v-img>
             </div>
-          </v-list-item>
+
+            <div class="d-flex align-center justify-center mx-3">
+              <h4>{{ issue.fullIssue }}</h4>
+            </div>
+
+            <div
+              class="d-flex flex-wrap align-center mr-auto"
+              style="min-width:0px;"
+            >
+              <h4 class=" text-truncate">{{ issue.title }}</h4>
+            </div>
+
+            <div class="d-flex align-center ml-3">
+              <v-btn small text color="red" @click="removeDraftIssue(title)">
+                <v-icon small>fa-times-circle</v-icon>
+              </v-btn>
+            </div>
+          </div>
         </v-scale-transition>
       </draggable>
     </v-list>
