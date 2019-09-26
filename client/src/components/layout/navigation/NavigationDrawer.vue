@@ -17,22 +17,25 @@
         </div>
 
         <v-list dense class="py-0">
-          <router-link
-            v-for="link in links"
-            :key="link.text"
-            :to="{ name: link.to }"
-            class="noUnderline"
-          >
-            <v-list-item @click="" v-ripple>
-              <v-list-item-action :class="removeMargin()"
-                ><v-icon>{{ link.icon }}</v-icon>
-              </v-list-item-action>
+          <div v-for="link in links">
+            <router-link
+              v-if="!link.menuDivider"
+              :key="link.text"
+              :to="{ name: link.to }"
+              class="noUnderline"
+            >
+              <v-list-item @click="" v-ripple>
+                <v-list-item-action :class="removeMargin()"
+                  ><v-icon>{{ link.icon }}</v-icon>
+                </v-list-item-action>
 
-              <v-list-item-content v-if="!compDrawer">{{
-                link.text
-              }}</v-list-item-content>
-            </v-list-item>
-          </router-link>
+                <v-list-item-content v-if="!compDrawer">{{
+                  link.text
+                }}</v-list-item-content>
+              </v-list-item>
+            </router-link>
+            <v-divider v-if="link.menuDivider" class="my-1"></v-divider>
+          </div>
         </v-list>
       </div>
 

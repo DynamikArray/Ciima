@@ -47,7 +47,21 @@ const currentDraft = {
     savingDraft: false
   },
   getters: {
-    getField
+    getField,
+    hasTitles: state => {
+      if (!state.titles) return false;
+      if (state.titles.length > 0) return true;
+      return false;
+    },
+    hasIssues: state => {
+      if (!state.issues) return false;
+      if (state.issues.length > 0) return true;
+      return false;
+    },
+    hasCoverPhoto: state => {
+      if (!state.coverPhoto) return false;
+      return true;
+    }
   },
   mutations: {
     updateField,

@@ -19,8 +19,14 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn text ripple small @click.stop="toggleSettingsDrawer" class="mr-1">
-        <v-icon class="mr-2">fa-clipboard-list</v-icon>View Drafts
+      <v-btn
+        text
+        ripple
+        small
+        @click="toggleSettingsDrawer(!draftDrawer)"
+        class="mr-1"
+      >
+        <v-icon class="mr-2">fa-clipboard-list</v-icon>Draft Data
       </v-btn>
     </v-app-bar>
   </section>
@@ -28,16 +34,22 @@
 
 <script>
 import { mapState } from "vuex";
+import { TOGGLE_DRAFT_DRAWER } from "@/store/mutation-types";
 
 export default {
   props: {
-    toggleNavigationDrawer: [Function],
-    toggleSettingsDrawer: [Function]
+    toggleNavigationDrawer: [Function]
   },
   computed: {
     ...mapState({
+      draftDrawer: state => state.settings.draftDrawer,
       loading: state => state.api.loading
     })
+  },
+  methods: {
+    toggleSettingsDrawer(value) {
+      this.$store.commit(`settings/${TOGGLE_DRAFT_DRAWER}`, value);
+    }
   }
 };
 </script>

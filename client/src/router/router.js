@@ -48,6 +48,12 @@ export default new Router({
       name: "drafts",
       component: () =>
         import(/*webpackChunkName: "drafts"*/ "@/views/Drafts.vue")
+    },
+    {
+      path: "/draft",
+      props: true,
+      name: "draft",
+      component: () => import(/*webpackChunkName: "draft"*/ "@/views/Draft.vue")
     }
   ]
 });

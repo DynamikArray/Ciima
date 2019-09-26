@@ -23,7 +23,7 @@
         >
       </div>
       <div v-if="coverPhoto" class="d-flex">
-        <v-btn color="success" @click="continueDraft"
+        <v-btn color="success" to="draft"
           ><v-icon class="mr-2">fa-arrow-circle-right</v-icon>Continue
         </v-btn>
       </div>
