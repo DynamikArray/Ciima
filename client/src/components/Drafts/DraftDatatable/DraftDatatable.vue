@@ -35,6 +35,7 @@
       :items-per-page="10"
       show-select
       @input="itemSelected"
+      :footer-props="footerProps"
     >
       <!--IMAGE COLUMN-->
       <template v-slot:item.main_image="{ item }">
@@ -157,7 +158,10 @@ export default {
       selected: false,
       imageSrc: false,
       imagePopup: false,
-      headers
+      headers,
+      footerProps: {
+        "items-per-page-options": [10, 20, 50, 100]
+      }
     };
   },
   created() {
