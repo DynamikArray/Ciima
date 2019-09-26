@@ -5,7 +5,7 @@ module.exports = {
 
   querystring: {
     query: { type: "string" },
-    advanced: { type: "string" }
+    advanced: { type: "number" }
   },
 
   response: {

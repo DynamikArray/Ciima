@@ -1,8 +1,8 @@
 //// TODO: Handle strange single quote charachters in the datbase
-/*
-OR
-i.Storylines LIKE concat('%',?,'%')
-*/
+////
+////  MUCH FASTER LESS ACCURATE
+////  MATCH (storylines) against (? IN NATURAL LANGUAGE MODE)
+////
 const buildAdvanced = (search, alpha) => {
   const query = `SELECT
         COUNT(i.Title)as issueCount,
@@ -27,7 +27,7 @@ const buildAdvanced = (search, alpha) => {
   return { query, params };
 };
 
-const buildSearch = () => {
+const buildSearch = (search, alpha) => {
   const query = `SELECT
         COUNT(i.Title)as issueCount,
         t.Title as title,
@@ -35,8 +35,8 @@ const buildSearch = () => {
         t.Publisher as publisher,
         t.YearsPublished as yearsPublished
       FROM
-        slc_titles t
-        slc_issues i,
+        slc_titles t,
+        slc_issues i
       WHERE
       (
         ( t.Title LIKE concat('%',?,'%')  OR  t.AlphabetizedTitle LIKE concat('%',?,'%') )

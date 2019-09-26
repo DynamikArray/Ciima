@@ -31,7 +31,7 @@
             hide-details
             persistent-hint
             v-model="searchIssuesString"
-            label="Search Issues (slower)"
+            label="Search Titles, Issues and Storylines (slower)"
             prepend-icon="fa-search"
             v-on:keyup.enter="searchIssues"
           ></v-text-field>
