@@ -15,7 +15,7 @@ const buildAdvanced = (search, alpha) => {
         slc_titles t
       WHERE
       (
-        ( t.Title LIKE concat('%',?,'%')  OR  t.AlphabetizedTitle LIKE concat('%',?,'%') OR  i.Storylines LIKE concat('%',?,'%') )
+        MATCH (storylines) against (? IN NATURAL LANGUAGE MODE)
       AND
         (t.Title = i.Title)
       )
@@ -23,7 +23,7 @@ const buildAdvanced = (search, alpha) => {
       ORDER BY issueCount DESC, t.title ASC
       LIMIT 100`;
 
-  const params = [search, alpha, search];
+  const params = [search];
   return { query, params };
 };
 

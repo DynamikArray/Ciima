@@ -31,7 +31,7 @@
             hide-details
             persistent-hint
             v-model="searchIssuesString"
-            label="Search Titles, Issues and Storylines (slower)"
+            label="Storylines (Natural Language Mode)"
             prepend-icon="fa-search"
             v-on:keyup.enter="searchIssues"
           ></v-text-field>
