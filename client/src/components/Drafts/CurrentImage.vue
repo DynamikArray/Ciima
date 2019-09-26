@@ -115,7 +115,6 @@ export default {
     downloadImageLink(url, filename) {
       var link = document.createElement("a");
       // TODO: place in a config or common file
-      console.log(url);
       link.href = url;
       link.target = "_blank";
       link.download = filename;

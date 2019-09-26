@@ -56,7 +56,7 @@
 
       <v-row>
         <v-col cols="12">
-          <AutoFillButton :switchToTab="switchToTab"></AutoFillButton>
+          <AutoFillButton></AutoFillButton>
         </v-col>
       </v-row>
 
@@ -79,7 +79,7 @@
       <h3>Comic Attributes:</h3>
       <v-divider class="my-1"></v-divider>
       <v-row>
-        <v-col cols="6">
+        <v-col cols="5">
           <v-text-field
             v-model="series"
             name="series"
@@ -89,13 +89,23 @@
           ></v-text-field>
         </v-col>
 
-        <v-col cols="6">
+        <v-col cols="4">
           <v-text-field
             v-model="mainCharacter"
             name="mainCharacter"
             outlined
             label="Character"
             hint="Main character featured throughout"
+          ></v-text-field>
+        </v-col>
+
+        <v-col cols="3">
+          <v-text-field
+            v-model="upc"
+            name="upc"
+            outlined
+            label="UPC"
+            hint="UPC/Barcode"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -226,7 +236,7 @@ export default {
   },
   data: () => ({
     selectedEbayCategory: null, //select
-    searchEbayCategory: null, //search
+    searchEbayCategory: null,
     ebayStoreCategories
   }),
   computed: {
@@ -250,7 +260,9 @@ export default {
       "publisher",
       "publishedYear",
       "publishedDate",
-      "main_image"
+      "main_image",
+      "upc",
+      "eBayCat1"
     ])
   },
   watch: {

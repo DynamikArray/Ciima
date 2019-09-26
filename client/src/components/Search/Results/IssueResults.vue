@@ -25,7 +25,7 @@
       :items="issues"
       :loading="loading"
       loading-text="Searching Database"
-      :items-per-page="50"
+      :items-per-page="15"
       :custom-filter="customFilter"
     >
       <template v-slot:item.imageUrl="{ item }">

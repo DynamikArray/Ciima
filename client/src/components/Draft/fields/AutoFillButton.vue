@@ -13,6 +13,9 @@ import { format } from "date-fns";
 import { mapState } from "vuex";
 
 export default {
+  data: () => ({
+    ebayStoreCategoryIdOne: 5837309015
+  }),
   props: {
     switchToTab: [Function]
   },
@@ -29,12 +32,12 @@ export default {
     //
     autofillDraft() {
       if (!this.titles.length > 0) {
-        this.$toastr.w("No Titles selected for Automagically	&trade; .");
+        this.$toastr.w("No Title(s) selected to get Comic data from.");
         return;
       }
 
       if (!this.issues.length > 0) {
-        this.$toastr.w("No Issues selected for Automagically	&trade; .");
+        this.$toastr.w("No Issue(s) selected to get Comic data from.");
         return;
       }
 
@@ -67,8 +70,21 @@ export default {
         this.draft.grade
       }`;
 
+      //bring in upc from 1st issue
+      const { upc } = this.issues[0];
+      this.draft.upc = upc;
+
+      //set ebayCat from db list
+      const { eBayCat1 } = this.issues[0];
+      this.draft.ebaySiteCategoryId = eBayCat1;
+
+      //set 1st store cat
+      this.draft.ebayStoreCategoryIdOne = this.ebayStoreCategoryIdOne;
+
       //Tell user we did a thing
-      this.$toastr.s("Values Automagically&trade; entered!");
+      this.$toastr.s(
+        "Form data Automagically&trade; filled in using selected title & issues!"
+      );
     }
     //
     //

@@ -2,6 +2,33 @@ import Vue from "vue";
 import Vuex from "vuex";
 Vue.use(Vuex);
 
+//build a blankDraft object for mapping over to both set, and clear state
+const blankDraft = {
+  titles: [],
+  issues: [],
+  coverPhoto: false,
+  savingCover: false,
+  //form data
+  savingDraft: false,
+  inventoryTitle: "",
+  locationCode: "",
+  grade: "",
+  quantity: null,
+  price: null,
+  upc: "",
+  ebaySiteCategoryId: null,
+  ebayStoreCategoryIdOne: null,
+  ebayStoreCategoryIdTwo: null,
+  series: "",
+  mainCharacter: "",
+  issueNumbers: "",
+  publisher: "",
+  publishedYear: "",
+  publishedDate: "",
+  main_image: false,
+  other_images: []
+};
+
 import { CURRENT_DRAFT_SAVE } from "@/store/action-types";
 import {
   CURRENT_DRAFT_UPDATE,
@@ -23,28 +50,7 @@ const currentDraft = {
   namespaced: true,
 
   state: {
-    titles: [],
-    issues: [],
-    coverPhoto: false,
-    savingCover: false,
-    //form data
-    inventoryTitle: "",
-    locationCode: "",
-    grade: "",
-    quantity: "",
-    price: "",
-    ebaySiteCategoryId: 0,
-    ebayStoreCategoryIdOne: "",
-    ebayStoreCategoryIdTwo: "",
-    series: "",
-    mainCharacter: "",
-    issueNumbers: "",
-    publisher: "",
-    publishedYear: "",
-    publishedDate: "",
-    main_image: false,
-    other_images: [],
-    savingDraft: false
+    ...blankDraft
   },
   getters: {
     getField,
@@ -74,27 +80,9 @@ const currentDraft = {
     },
     //Clear all properties of draft
     [CURRENT_DRAFT_CLEAR](state) {
-      state.coverPhoto = false;
-      state.issues = [];
-      state.titles = [];
-      state.savingCover = false;
-      state.inventoryTitle = "";
-      state.locationCode = "";
-      state.grade = "";
-      state.quantity = "";
-      state.price = "";
-      state.ebaySiteCategoryId = 0;
-      state.ebayStoreCategoryIdOne = "";
-      state.ebayStoreCategoryIdTwo = "";
-      state.series = "";
-      state.mainCharacter = "";
-      state.issueNumbers = "";
-      state.publisher = "";
-      state.publishedYear = "";
-      state.publishedDate = "";
-      state.main_image = false;
-      state.other_images = [];
-      state.savingDraft = false;
+      for (let [key, value] of Object.entries(blankDraft)) {
+        state[key] = value;
+      }
     },
     //add issue to draft issues list
     [CURRENT_DRAFT_ISSUE_ADD](state, issue) {

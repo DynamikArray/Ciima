@@ -19,7 +19,7 @@ module.exports = fastify => ({
           UPC as upc,
           ImageUrl as imageUrl,
           eBayCat1 as eBayCat1,
-          eBayCat2 as eBayCat2
+          eBayCat2 as eBayCat2                   
         FROM slc_issues i
         WHERE i.Title = ?
         ORDER BY issueOrder`;
