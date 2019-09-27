@@ -40,7 +40,7 @@
             </div>
 
             <div class="d-flex align-center ml-3">
-              <v-btn small text color="red" @click="removeDraftIssue(title)">
+              <v-btn small text color="red" @click="removeDraftIssue(issue)">
                 <v-icon small>fa-times-circle</v-icon>
               </v-btn>
             </div>
