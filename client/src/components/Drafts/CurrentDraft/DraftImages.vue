@@ -10,7 +10,7 @@
         <CurrentImage></CurrentImage>
       </div>
       <div
-        class="d-flex align-center justify-center px-3"
+        class="d-flex align-center justify-center w-100"
         style="min-width:0px"
       >
         <DraftsIssuesList></DraftsIssuesList>

@@ -90,7 +90,8 @@ import { mapState } from "vuex";
 import {
   CURRENT_DRAFT_COVER_PHOTO_UPDATE,
   CURRENT_DRAFT_COVER_PHOTO_CLEAR,
-  CURRENT_DRAFT_COVER_PHOTO_SAVING
+  CURRENT_DRAFT_COVER_PHOTO_SAVING,
+  TOGGLE_DRAFT_DRAWER
 } from "@/store/mutation-types.js";
 
 import settings from "@/util/settings.js";
@@ -372,6 +373,8 @@ export default {
               `currentDraft/${CURRENT_DRAFT_COVER_PHOTO_SAVING}`,
               false
             );
+
+            _this.$store.commit(`settings/${TOGGLE_DRAFT_DRAWER}`, true);
           } else {
             _this.$store.commit(
               `currentDraft/${CURRENT_DRAFT_COVER_PHOTO_SAVING}`,
