@@ -95,6 +95,7 @@ import {
 } from "@/store/mutation-types.js";
 
 import settings from "@/util/settings.js";
+import { calculateRowsCols } from "./calculateRowsCols.js";
 
 export default {
   data() {
@@ -132,7 +133,22 @@ export default {
       issues: state => state.currentDraft.issues
     })
   },
-  mounted() {},
+  created() {
+    const total = this.issues.length;
+    if (total) {
+      const { rows, cols } = calculateRowsCols(total);
+      this.gridCols = cols;
+      this.gridRows = rows;
+    }
+  },
+  watch: {
+    issues: {
+      handler(newVal, oldVal) {
+        const total = this.issues.length;
+        console.log(total);
+      }
+    }
+  },
   methods: {
     handleOnChangeCols(value) {
       this.gridCols = value;
