@@ -75,8 +75,8 @@ export default {
       this.draft.upc = upc;
 
       //set ebayCat from db list
-      const { eBayCat1 } = this.issues[0];
-      this.draft.ebaySiteCategoryId = eBayCat1;
+      //const { eBayCat1 } = this.issues[0];
+      //this.draft.ebaySiteCategoryId = eBayCat1;
 
       //set 1st store cat
       this.draft.ebayStoreCategoryIdOne = this.ebayStoreCategoryIdOne;

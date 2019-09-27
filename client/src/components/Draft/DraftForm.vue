@@ -3,7 +3,7 @@
     <RequiredDataChecks></RequiredDataChecks>
     <v-divider class="my-1"></v-divider>
 
-    <v-form class="pa-3">
+    <v-form ref="draftForm" v-model="valid" lazy-validation class="pa-3">
       <!--TITLE ROW-->
       <h3>Inventory Specifics:</h3>
       <v-divider class="my-1"></v-divider>
@@ -17,6 +17,8 @@
             outlined
             label="Location"
             hint="Location code for the item"
+            :rules="fieldRules.locationCode"
+            counter
           ></v-text-field>
         </v-col>
         <v-col cols="3">
@@ -27,6 +29,7 @@
             outlined
             label="Grade"
             hint="Grade of the product"
+            :rules="fieldRules.grade"
           ></v-text-field
         ></v-col>
 
@@ -38,6 +41,7 @@
             outlined
             label="Qty"
             hint="Quantity"
+            :rules="fieldRules.quantity"
           ></v-text-field
         ></v-col>
 
@@ -49,6 +53,7 @@
             outlined
             label="Price"
             hint="Price it will list for on eBay"
+            :rules="fieldRules.price"
           ></v-text-field
         ></v-col>
       </v-row>
@@ -71,6 +76,7 @@
             id="inventoryTitle"
             name="inventoryTitle"
             v-model="inventoryTitle"
+            :rules="fieldRules.inventoryTitle"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -86,6 +92,8 @@
             outlined
             label="Series"
             hint="Storyline/Series of this product"
+            :rules="fieldRules.series"
+            counter
           ></v-text-field>
         </v-col>
 
@@ -96,6 +104,8 @@
             outlined
             label="Character"
             hint="Main character featured throughout"
+            :rules="fieldRules.mainCharacter"
+            counter
           ></v-text-field>
         </v-col>
 
@@ -106,6 +116,7 @@
             outlined
             label="UPC"
             hint="UPC/Barcode"
+            :rules="fieldRules.upc"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -119,6 +130,8 @@
             outlined
             label="Issue Numbers"
             hint="Issue Number(s) when applicable"
+            :rules="fieldRules.issueNumbers"
+            counter
           ></v-text-field>
         </v-col>
         <v-col cols="3">
@@ -128,6 +141,8 @@
             outlined
             label="Publisher"
             hint="Main publisher of these issues"
+            :rules="fieldRules.publisher"
+            counter
           ></v-text-field>
         </v-col>
         <v-col cols="2">
@@ -137,6 +152,7 @@
             outlined
             label="Year"
             hint="The year published for these issues "
+            :rules="fieldRules.publishedYear"
           ></v-text-field>
         </v-col>
         <v-col cols="3">
@@ -146,6 +162,7 @@
             outlined
             label="Date Published"
             hint="The Date published eg(Mar 86) "
+            :rules="fieldRules.publishedDate"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -167,6 +184,7 @@
             :search-input.sync="searchEbayCategory"
             label="Search ebay categories"
             hide-no-data
+            :rules="fieldRules.ebaySiteCategoryId"
           >
           </v-autocomplete>
         </v-col>
@@ -182,6 +200,7 @@
             :items="ebayStoreCategories"
             label="Ebay Store Category 1"
             hint="Primary Ebay Store Category"
+            :rules="fieldRules.ebayStoreCategoryIdOne"
           >
           </v-select>
         </v-col>
@@ -201,7 +220,7 @@
     </v-form>
 
     <v-card-actions class="justify-center">
-      <ActionButtons :switchToTab="switchToTab"></ActionButtons>
+      <ActionButtons :validateForm="validateForm"></ActionButtons>
     </v-card-actions>
   </div>
 </template>
@@ -215,8 +234,10 @@ const { mapFields } = createHelpers({
   mutationType: "currentDraft/updateField"
 });
 import { SEARCH_EBAY_CATEGORIES } from "@/store/action-types.js";
-
 import { ebayStoreCategories } from "@/util/ebay/ebayStoreCategories.js";
+
+import { fieldNames, fieldRules } from "./fieldNamesAndRules.js";
+
 import RequiredDataChecks from "./RequiredDataChecks.vue";
 import ActionButtons from "./fields/ActionButtons.vue";
 import AutoFillButton from "./fields/AutoFillButton.vue";
@@ -226,18 +247,17 @@ export default {
     //location
     this.locationCode = "EBAY-SETS-";
   },
-  props: {
-    switchToTab: [Function]
-  },
   components: {
     RequiredDataChecks,
     ActionButtons,
     AutoFillButton
   },
   data: () => ({
+    valid: true,
     selectedEbayCategory: null, //select
     searchEbayCategory: null,
-    ebayStoreCategories
+    ebayStoreCategories,
+    fieldRules
   }),
   computed: {
     ...mapState({
@@ -245,25 +265,7 @@ export default {
       eBayCategories: state => state.ebaySearch.items
       //  draft: state => state.currentDraft
     }),
-    ...mapFields([
-      "inventoryTitle",
-      "locationCode",
-      "grade",
-      "quantity",
-      "price",
-      "ebaySiteCategoryId",
-      "ebayStoreCategoryIdOne",
-      "ebayStoreCategoryIdTwo",
-      "series",
-      "mainCharacter",
-      "issueNumbers",
-      "publisher",
-      "publishedYear",
-      "publishedDate",
-      "main_image",
-      "upc",
-      "eBayCat1"
-    ])
+    ...mapFields(fieldNames)
   },
   watch: {
     searchEbayCategory: debounce(function(value) {
@@ -275,11 +277,10 @@ export default {
     }, 500)
   },
   methods: {
-    /*
-    handleEbayStoreCategoryChange: val => {
-      this.ebaySiteCategoryId = val;
+    validateForm() {
+      const valid = this.$refs.draftForm.validate();
+      return valid;
     }
-    */
   }
 };
 </script>
