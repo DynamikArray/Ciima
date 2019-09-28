@@ -62,11 +62,14 @@ export default {
         });
         //clear the draft
         this.$store.commit(`currentDraft/${CURRENT_DRAFT_CLEAR}`);
+        //goto title search
+        this.$router.push({ name: "titles" });
         //get the drafts
-        await this.$store.dispatch(`openDrafts/${OPEN_DRAFTS_FETCH}`);
+        //await this.$store.dispatch(`openDrafts/${OPEN_DRAFTS_FETCH}`);
       }
     },
 
+    /* -- */
     resetDraft() {
       console.log("Add a confirmation for resetting draft");
       this.$store.commit(`currentDraft/${CURRENT_DRAFT_CLEAR}`);
