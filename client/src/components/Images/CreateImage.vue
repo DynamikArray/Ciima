@@ -343,12 +343,21 @@ export default {
 
     //
     //
-    clearImageGridCanvas() {
-      const canvas = this.$refs.imageCanvas;
-      let ctx = canvas.getContext("2d");
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      this.$store.commit(`currentDraft/${CURRENT_DRAFT_COVER_PHOTO_CLEAR}`);
-      this.canvasClean = true;
+    async clearImageGridCanvas() {
+      const confirm = await this.$confirm(
+        `<h3 class="text-center py-3">Clear the current Image?</h3>
+          <p>This will clear the current canvas. <em>All your Title, Issue data will remain intact.</em> </p>`,
+        {
+          title: " Are you sure?"
+        }
+      );
+      if (confirm) {
+        const canvas = this.$refs.imageCanvas;
+        let ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        this.$store.commit(`currentDraft/${CURRENT_DRAFT_COVER_PHOTO_CLEAR}`);
+        this.canvasClean = true;
+      }
     },
     //
     //

@@ -72,8 +72,15 @@ export default {
     continueDraft() {
       this.switchToTab(1);
     },
-    resetDraft() {
-      this.$store.commit(`currentDraft/${CURRENT_DRAFT_CLEAR}`);
+    async resetDraft() {
+      const confirm = await this.$confirm(
+        `<h3 class="text-center py-3">Reset the current draft?</h3>
+        <p>This will clear all form fields and remove all Photos, Titles and Issues</p>`,
+        {
+          title: " Are you sure?"
+        }
+      );
+      if (confirm) this.$store.commit(`currentDraft/${CURRENT_DRAFT_CLEAR}`);
     }
   }
 };
