@@ -39,6 +39,7 @@ import {
   CURRENT_DRAFT_ISSUES_REORDER,
   CURRENT_DRAFT_TITLE_ADD,
   CURRENT_DRAFT_TITLE_REMOVE,
+  CURRENT_DRAFT_TITLES_REORDER,
   CURRENT_DRAFT_COVER_PHOTO_SAVING,
   CURRENT_DRAFT_COVER_PHOTO_UPDATE,
   CURRENT_DRAFT_COVER_PHOTO_CLEAR
@@ -116,6 +117,10 @@ const currentDraft = {
         return item.titleId !== title.titleId;
       });
       state.titles = filteredState;
+    },
+
+    [CURRENT_DRAFT_TITLES_REORDER](state, titles) {
+      state.titles = titles;
     },
 
     [CURRENT_DRAFT_COVER_PHOTO_UPDATE](state, image) {

@@ -3,10 +3,15 @@
     <div class="d-flex align-center flex-row justify-center grow">
       <DraftTitlesList></DraftTitlesList>
     </div>
+    <div class="d-flex justify-center">
+      <p class="caption font-italic font-weight-thin my-0">
+        Drag titles to reorder them as needed
+      </p>
+    </div>
     <v-divider class="my-2"></v-divider>
 
     <div class="d-flex w-100 flex-row flex-wrap">
-      <div class="d-flex align-center justify-center grow">
+      <div class="d-flex align-center justify-center grow my-3">
         <CurrentImage></CurrentImage>
       </div>
       <div
@@ -16,7 +21,11 @@
         <DraftsIssuesList></DraftsIssuesList>
       </div>
     </div>
-
+    <div class="d-flex align-center justify-center">
+      <div class="text-center font-italic caption font-weight-thin my-0">
+        Drag Issues to reorder them as needed.
+      </div>
+    </div>
     <v-divider class="my-2"></v-divider>
 
     <div class="d-flex justify-space-between w-100 pa-3">

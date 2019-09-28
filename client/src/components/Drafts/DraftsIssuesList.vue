@@ -16,14 +16,17 @@
         </div>
       </v-list-item-title>
 
-      <draggable v-model="draftIssues">
+      <draggable v-model="draftIssues" class="draftIssuesHover">
         <v-scale-transition group leave-absolute>
           <div
-            class="grey darken-2 mb-1 d-flex flex-row w-100 px-3 justify-space-end"
+            class="grey darken-2 mb-1 d-flex flex-row w-100 justify-space-end"
             v-for="issue in draftIssues"
             :key="issue.id"
             @click=""
           >
+            <div class="d-flex justify-center align-center" style="width:20px;">
+              <v-icon x-small>fa-ellipsis-v</v-icon>
+            </div>
             <div class="d-flex mr-1">
               <v-img :src="makeImageUrl(issue)" width="25"></v-img>
             </div>
@@ -99,4 +102,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.draftIssuesHover:hover {
+  cursor: grab;
+}
+</style>
