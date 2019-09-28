@@ -25,7 +25,7 @@ module.exports = logger => ({
       ItemNumber: draft.itemNumber, //AKA sku?    Date.now().toString(), //aka SKU
       ItemTitle: encodeURIComponent(draft.inventoryTitle),
       Quantity: draft.quantity,
-      // BarcodeNumber: "234324234",
+      BarcodeNumber: draft.upc,
 
       // PurchasePrice: 9.1,   number of issues x or include it here
       RetailPrice: draft.price,
