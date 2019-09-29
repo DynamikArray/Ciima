@@ -17,6 +17,7 @@ module.exports = {
           items: {
             type: "object",
             properties: {
+              rowNumber: { type: "number" },
               id: { type: "number" },
               title: { type: "string" },
               issueNumber: { type: "number" },

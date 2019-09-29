@@ -1,6 +1,8 @@
 module.exports = fastify => ({
   issueSearch: async (req, reply) => {
-    const query = `SELECT
+    const query = `
+          SELECT
+          @curRow := @curRow + 1 AS rowNumber,
           Id as id,
           Title as title,
           IssueNum as issueNumber,
@@ -19,8 +21,9 @@ module.exports = fastify => ({
           UPC as upc,
           ImageUrl as imageUrl,
           eBayCat1 as eBayCat1,
-          eBayCat2 as eBayCat2                   
+          eBayCat2 as eBayCat2
         FROM slc_issues i
+        JOIN    (SELECT @curRow := 0) r
         WHERE i.Title = ?
         ORDER BY issueOrder`;
 
