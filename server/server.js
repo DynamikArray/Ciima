@@ -63,7 +63,7 @@ const start = async () => {
   fastify.winston.info("Starting Fastify Server");
 
   await fastify.listen(config).catch(e => {
-    fastify.log.error(
+    fastify.winston.error(
       `We caught an error trying to start the server: ${JSON.stringify(
         e.message
       )}`
@@ -75,7 +75,7 @@ const start = async () => {
   }); //end catch;
 
   //infolog
-  fastify.log.info(
+  fastify.winston.info(
     `Server is running at ${JSON.stringify(fastify.server.address())}`
   );
 };
