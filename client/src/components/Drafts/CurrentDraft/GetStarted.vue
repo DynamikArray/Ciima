@@ -4,22 +4,42 @@
       <div class="f-flex align-center">
         <h1 class="display-2 mb-3">Get Started</h1>
       </div>
+      <v-divider class="my-1"> </v-divider>
       <div class="d-flex flex-row justify-start ">
-        <div class="d-flex align-center">
-          <ul>
-            <li>
-              Start searching through the Comic Titles to find the desired
-              issues.
-            </li>
-            <li>
-              Once you have selected a title, you will be presented with that
-              titles comic issues.
-            </li>
-            <li>
-              You will then be able create a Main prodcut photo as well as
-              download all the issue photos.
-            </li>
-          </ul>
+        <div class="d-flex flex-column justify-start align-center">
+          <div class="d-flex align-center justify-start w-100 my-1">
+            <h4>
+              <v-icon class="mr-2">fa-search</v-icon>Search for a title
+              containing the product issues.
+            </h4>
+          </div>
+
+          <div class="d-flex align-center justify-start w-100 my-1">
+            <h4>
+              <v-icon class="mr-2">fa-list-ol</v-icon>Select matching issues to
+              be used in listing.
+            </h4>
+          </div>
+
+          <div class="d-flex align-center justify-start w-100 my-1">
+            <h4>
+              <v-icon class="mr-2">fa-search</v-icon>Create a product photo from
+              issue covers
+            </h4>
+          </div>
+          <div class="d-flex align-center justify-start w-100 my-1">
+            <h4>
+              <v-icon class="mr-2">fa-plus-square</v-icon>Complete draft details
+              form.
+            </h4>
+          </div>
+
+          <div class="d-flex align-center justify-start w-100 my-1">
+            <h4>
+              <v-icon class="mr-2">fa-list-alt</v-icon>Submit drafts to
+              Linnworks for listing.
+            </h4>
+          </div>
         </div>
       </div>
       <div class="d-flex justify-center align-center pt-4">
