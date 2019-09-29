@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container>
     <div class="d-flex flex-row justify-space-between align-self-center">
       <div class="d-flex flex-column align-self-center mr-4">
         <v-btn color="primary" :to="'/titles'">

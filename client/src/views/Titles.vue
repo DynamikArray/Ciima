@@ -1,5 +1,5 @@
 <template>
-  <v-container class="h-100-force">
+  <v-container>
     <v-scroll-y-reverse-transition>
       <div class="pageTitleWrapper" v-if="!issueResults">
         <h1 class="display-3 text-left">Search Titles</h1>

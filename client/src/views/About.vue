@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container>
     <div class="about text-center">
       <h1 class="display-4">CiiMA</h1>
       <v-divider class="my-4"></v-divider>
