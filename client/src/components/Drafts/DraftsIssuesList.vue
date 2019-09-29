@@ -1,12 +1,12 @@
 <template>
-  <div v-if="draftIssues.length > 0" class="w-100 mx-3 grey darken-3">
+  <div v-if="draftIssues.length > 0" class="w-100 grey darken-3">
     <v-list dense class="py-0">
       <v-list-item-title class="text-left mx-4">
         <div class="d-flex justify-space-between">
-          <div class="d-flex grow justify-start">
+          <div class="d-flex grow justify-start ml-2">
             <h2>
               {{ draftIssues.length }}
-              <span class="subtitle-1 mx-3">Issues</span>
+              <span class="subtitle-1 mx-3 ">Issues</span>
             </h2>
           </div>
 
@@ -31,7 +31,10 @@
               <v-img :src="makeImageUrl(issue)" width="25"></v-img>
             </div>
 
-            <div class="d-flex align-center justify-center mx-3">
+            <div
+              class="d-flex align-center justify-center mx-3"
+              style="min-width:40px;"
+            >
               <h4>{{ issue.fullIssue }}</h4>
             </div>
 

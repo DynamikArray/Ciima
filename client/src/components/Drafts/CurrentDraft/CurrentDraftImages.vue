@@ -1,5 +1,5 @@
 <template>
-  <div class="currentDraftImagesWrapper ma-2">
+  <div class="currentDraftImagesWrapper pa-3">
     <v-slide-y-transition group>
       <v-card
         v-if="!draftIssues.length"
