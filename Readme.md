@@ -7,10 +7,11 @@ Comic Issue Inventory Media Application
 In Production the application runs on a mixture of services aimed to keep deployments easy, monitoring simple and convenient and uptime maximum.
 
 - Heroku cloud hosting and other services
-- Web Dyno and Worker for Linnworks handling
+- Web Dyno and Worker for Queueing items to be added to Linnworks
 - JAWSDB for remote MYSQL hosting
 - RabbitMQ for Message Queueing
 - LogDna for Log Aggregration
+- Cloudinary for created Product photo Storage and uploading. (thes creds are baked into the client side app, and allow for unsigned uploading so its okay to include in client side)
 
 .env file required
 
