@@ -1,4 +1,4 @@
-const schema = require("../../../schemas/v1/drafts");
+const { readSchema } = require("../../../schemas/v1/drafts");
 
 /**
  * Info routes endpoints
@@ -6,13 +6,17 @@ const schema = require("../../../schemas/v1/drafts");
  * @param {Fastify} fastify
  */
 module.exports = function(fastify, opts, next) {
-  const handler = require("../../../handlers/v1/drafts")(fastify);
+  const { readHandler } = require("../../../handlers/v1/drafts")(fastify);
 
-  const drafts = {
-    schema: schema,
-    handler: handler.drafts
+  const readDrafts = {
+    preValidation: fastify.authenticate,
+    schema: readSchema,
+    handler: readHandler
   };
 
-  fastify.get("/drafts", drafts);
+  //Read Drafts
+  fastify.get("/drafts", readDrafts);
+
+  //Call Next()
   next();
 };

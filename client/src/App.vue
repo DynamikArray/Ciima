@@ -16,6 +16,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 import DraftsDrawer from "@/components/layout/navigation/DraftsDrawer";
 import NavigationDrawer from "@/components/layout/navigation/NavigationDrawer";
 import AppBar from "@/components/layout/navigation/AppBar";
@@ -35,25 +37,34 @@ export default {
     navigationDrawer: true,
     settingsDrawer: false
   }),
+  computed: {
+    ...mapGetters({
+      isLoggedIn: "user/isLoggedIn",
+      user: "user/user"
+    })
+  },
   created() {
+    //this can get moved to user settings once we get taht sorted
     this.$vuetify.theme.dark = true;
+    //check if we have a token, and then get this account
+    if (this.isLoggedIn && !this.user) this.$store.dispatch("user/account");
   },
   methods: {
-    // TODO: move to vuex action/store
+    created: function() {},
     toggleSettingsDrawer() {
       this.settingsDrawer = !this.settingsDrawer;
     },
     toggleNavigationDrawer() {
       this.navigationDrawer = !this.navigationDrawer;
     },
+
+    /*HANDLE SIZING OF THE WINDOW TRANSITION*/
     beforeLeave(element) {
       this.prevHeight = getComputedStyle(element).height;
     },
     enter(element) {
       const { height } = getComputedStyle(element);
-
       element.style.height = this.prevHeight;
-
       setTimeout(() => {
         element.style.height = height;
       });

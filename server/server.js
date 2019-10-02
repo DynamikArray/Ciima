@@ -30,9 +30,10 @@ fastify.register(require("fastify-rabbit"), {
   url: process.env.CLOUDAMQP_URL
 });
 
-fastify.register(require("fastify-cors"), {
-  // put your options here
-});
+fastify.register(require("fastify-cors"));
+
+//JWT Auth Handling
+fastify.register(require("./plugins/authViaJWT.js"));
 
 //static build dir
 fastify.register(require("fastify-static"), {
@@ -52,32 +53,22 @@ fastify.register(require("./routes/v1/imageFetch"), { prefix: "v1" });
 fastify.register(require("./routes/v1/draft"), { prefix: "v1" });
 fastify.register(require("./routes/v1/drafts"), { prefix: "v1" });
 fastify.register(require("./routes/v1/submitDraft"), { prefix: "v1" });
+fastify.register(require("./routes/v1/user"), { prefix: "v1" });
 
-fastify.get("*", function(request, reply) {
-  reply.sendFile("index.html");
-});
+//catch all route for loading client application
+fastify.get("*", (request, reply) => reply.sendFile("index.html"));
 
-// Server
+// async start method thing!!!!
 const start = async () => {
-  //infolog
   fastify.winston.info("Starting Fastify Server");
 
-  await fastify.listen(config).catch(e => {
-    fastify.winston.error(
-      `We caught an error trying to start the server: ${JSON.stringify(
-        e.message
-      )}`
-    );
-    //wait a 3 seconds for logs to finish so we know what happened?
-    setTimeout(() => {
-      process.exit(1);
-    }, 2000);
+  await fastify.listen(config).catch(async e => {
+    if (process.env.NODE_ENV === "development") console.error(e);
+    await log.error(`${JSON.stringify(e.message)}`);
   }); //end catch;
 
-  //infolog
-  fastify.winston.info(
-    `Server is running at ${JSON.stringify(fastify.server.address())}`
-  );
+  const msg = `Running at: ${JSON.stringify(fastify.server.address())}`;
+  fastify.winston.info(msg);
 };
 
 //start the server

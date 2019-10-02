@@ -15,11 +15,19 @@ const documentation = {
     info: {
       version: "1.0.0", //get from package
       title: "Ciima API Documentation",
-      description: "Ciima API Endpoints Documentation"
+      description:
+        "Ciima API Endpoints Documentation. When authorizationing through these documentation helpers, the `Value:` should be in the format of `Bearer TokenString`"
     },
     //schemes: [process.env.options.https ? "https" : "http"],
     consumes: ["application/json"],
-    produces: ["application/json"]
+    produces: ["application/json"],
+    securityDefinitions: {
+      token: {
+        type: "apiKey",
+        name: "Authorization",
+        in: "header"
+      }
+    }
   },
   exposeRoute: true
 };

@@ -20,6 +20,8 @@ NODE_ENV=
 PORT=
 APP_NAME=CIIMA
 
+SUPER_SECRET=1xxxxxxxxxxxxxxxxxxxxxxxxxxxxx32
+
 CLOUDAMQP_URL=
 
 MYSQL_CONN=

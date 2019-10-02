@@ -20,7 +20,9 @@
     </v-dialog>
 
     <DraftsDatatableHeader
-      :onSelect="loadDrafts"
+      :onSelect="fetchDraftsWithParams"
+      :showAllUsers.sync="showAllUsers"
+      :status.sync="status"
       title="Drafts"
       icon="fa-list-alt"
     ></DraftsDatatableHeader>
@@ -78,6 +80,25 @@
         </div>
       </template>
 
+      <template v-slot:item.ownerId="{ item }">
+        <div class="d-flex align-center">
+          <div class="d-flex align-center grow mx-3 long-and-truncated">
+            <div class="d-flex flex-column">
+              <div class="d-flex align-center">
+                <avatar
+                  v-if="item.ownerName"
+                  :username="item.ownerName"
+                  :size="40"
+                ></avatar>
+                <div class="text-center w-100" v-if="!item.ownerName">
+                  No User
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+
       <template v-slot:item.createdDate="{ item }">
         <div class="d-flex align-center">
           <span class="caption">{{ item.createdDate | dateTime }}</span>
@@ -88,7 +109,7 @@
       <template v-slot:item.action="{ item }">
         <div class="d-flex justify-center align-center mx-1">
           <div v-if="item.status === 'Open'">
-            <v-chip label color="primary" @click="submitDraft(item.id)">
+            <v-chip label color="primary" @click="confirmSubmit(item.id)">
               <v-icon small>fa-upload</v-icon>
             </v-chip>
           </div>
@@ -142,6 +163,8 @@ import { mapState } from "vuex";
 import settings from "@/util/settings.js";
 import DraftsDatatableHeader from "./DraftsDatatableHeader.vue";
 
+import avatar from "vue-avatar";
+
 import {
   OPEN_DRAFTS_FETCH,
   OPEN_DRAFTS_SUBMIT_DRAFT
@@ -149,13 +172,15 @@ import {
 
 export default {
   components: {
-    DraftsDatatableHeader
+    DraftsDatatableHeader,
+    avatar
   },
   data() {
     return {
       status: "Open",
       selectedItems: [],
       selected: false,
+      showAllUsers: 0, //numeic bln
       imageSrc: false,
       imagePopup: false,
       headers,
@@ -175,7 +200,17 @@ export default {
     })
   },
   methods: {
+    fetchDraftsWithParams(params = {}) {
+      //defaults,
+      const _params = {
+        all: +this.showAllUsers,
+        status: this.status,
+        ...params
+      };
+      this.loadDrafts(_params);
+    },
     loadDrafts(params = {}) {
+      //const _params = { ...params, all: +this.showAllUsers };
       this.$store.dispatch(`openDrafts/${OPEN_DRAFTS_FETCH}`, params);
     },
     showImageModal(imgSrc) {
@@ -192,8 +227,19 @@ export default {
     makeNoteText(note) {
       return note;
     },
+    async confirmSubmit(draftId, toast = true) {
+      //add confirm
+      const confirm = await this.$confirm(
+        `<h3 class="text-center py-3">Submit the current draft?</h3>
+        <p>This will submit draft to Linnworks. Are you sure it's complete?</p>`,
+        {
+          title: "  Submit this draft?"
+        }
+      );
+      if (confirm) this.submitDraft(draftId, toast);
+    },
     async submitDraft(draftId, toast = true) {
-      const loadDrafts = this.loadDrafts();
+      //const loadDrafts = this.loadDrafts();
       let toastr = false;
       if (toast) toastr = this.$toastr || false;
 
@@ -203,15 +249,29 @@ export default {
       });
       //hack to let the message queue pick up mark a process status
       setTimeout(() => {
-        this.loadDrafts();
+        this.fetchDraftsWithParams();
       }, 500);
 
       //hack to let the message queue pick up mark a process status
       setTimeout(() => {
-        this.loadDrafts();
+        this.fetchDraftsWithParams();
       }, 5000);
     },
-    withSelected() {
+    async withSelected() {
+      if (!this.selectedItems.length > 0) {
+        this.$toastr.w("Nothing to submit");
+        return;
+      }
+      //confirm
+      const confirm = await this.$confirm(
+        `<h3 class="text-center py-3">Submit the selected drafts?</h3>
+        <p>You are about to submit all the selected drafts to Linnworks. Are you sure they are complete and you have selected the correct drafts to submit?</p>`,
+        {
+          title: "  Submit these drafts?"
+        }
+      );
+      if (!confirm) return;
+
       this.selectedItems.forEach(item => {
         this.submitDraft(item.id, false);
       });

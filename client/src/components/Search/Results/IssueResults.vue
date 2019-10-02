@@ -10,6 +10,7 @@
       loading-text="Searching Database"
       :items-per-page="15"
       :custom-filter="customFilter"
+      :footer-props="footerProps"
     >
       <template v-slot:item.imageUrl="{ item }">
         <v-img
@@ -110,6 +111,9 @@ export default {
   data() {
     return {
       search: "",
+      footerProps: {
+        "items-per-page-options": [10, 20, 50, 100]
+      },
       headers: [
         {
           text: "Cover",

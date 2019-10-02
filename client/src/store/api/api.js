@@ -2,9 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 Vue.use(Vuex);
 
-const axios = require("axios");
-//import axiosRetry from "axios-retry";
-//axiosRetry(axios, { retries: 2 });
+import { axiosInstance, createInterceptor } from "@/util/axios/axiosInstance";
 
 import {
   ADD_API_CALL,
@@ -37,6 +35,13 @@ const api = {
   },
   actions: {
     requestHandler: async ({ dispatch, commit }, payload) => {
+      //create axios interceptor by passing our logout function to our helper
+      //and then pull off the function it returns
+      const { expired } = createInterceptor(() => {
+        dispatch("user/logout", false, { root: true });
+      });
+      axiosInstance.interceptors.response.use(undefined, expired);
+
       //pull of payload params
       const { method, url, params, success, loading, toastr } = payload;
 
@@ -70,7 +75,10 @@ const api = {
         //simple attempt at requst tracking
         commit(`${ADD_API_CALL}`);
 
-        const response = await axios(config);
+        const response = await axiosInstance({
+          ...axiosInstance.defaults,
+          ...config
+        });
         const { data } = response;
 
         //hande results of api call data.result

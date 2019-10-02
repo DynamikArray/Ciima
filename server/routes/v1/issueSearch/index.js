@@ -8,6 +8,7 @@ module.exports = function(fastify, opts, next) {
   const handler = require("../../../handlers/v1/issueSearch")(fastify);
 
   const issueSearch = {
+    preValidation: fastify.authenticate,
     schema: schema,
     handler: handler.issueSearch
   };

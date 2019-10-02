@@ -9,6 +9,7 @@
       :items-per-page="50"
       :sort-by.sync="sortBy"
       :sort-desc.sync="descending"
+      :footer-props="footerProps"
     >
       <template v-slot:item.action="{ item }">
         <v-btn color="primary" @click="selectTitle(item)"
@@ -38,6 +39,9 @@ export default {
     return {
       sortBy: "issuesCount",
       descending: true,
+      footerProps: {
+        "items-per-page-options": [10, 20, 50, 100]
+      },
       headers: [
         { text: "View", value: "action", sortable: false, align: "center" },
         {

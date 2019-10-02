@@ -40,6 +40,13 @@ const headers = [
     width: "180px"
   },
   {
+    text: "Owner",
+    value: "ownerId",
+    sortable: true,
+    align: "center",
+    width: "80px"
+  },
+  {
     text: "Date",
     value: "createdDate",
     sortable: true,

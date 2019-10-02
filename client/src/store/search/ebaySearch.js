@@ -36,7 +36,7 @@ const ebaySearch = {
         "api/requestHandler",
         {
           method: "get",
-          url: "/v1/ebayCategories",
+        url: "/ebayCategories",
           params: params,
           success: `ebaySearch/${SEARCH_EBAY_CATEGORIES_RESULTS}`,
           loading: `ebaySearch/${SEARCH_EBAY_CATEGORIES_LOADING}`

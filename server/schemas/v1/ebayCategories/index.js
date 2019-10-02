@@ -3,6 +3,12 @@ module.exports = {
   tags: ["ebay"],
   summary: "Search the database for the Ebay category",
 
+  security: [
+    {
+      token: []
+    }
+  ],
+
   querystring: {
     q: { type: "string" }
   },

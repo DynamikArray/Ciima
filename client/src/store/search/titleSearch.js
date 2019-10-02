@@ -46,7 +46,7 @@ const titleSearch = {
         "api/requestHandler",
         {
           method: "get",
-          url: "/v1/titleSearch",
+        url: "/titleSearch",
           params: params,
           success: `titleSearch/${SEARCH_TITLES_RESULTS_SET}`,
           loading: `titleSearch/${SEARCH_TITLES_RESULTS_LOADING}`

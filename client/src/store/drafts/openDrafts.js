@@ -39,7 +39,7 @@ const openDrafts = {
         "api/requestHandler",
         {
           method: "get",
-          url: "/v1/drafts",
+          url: "/drafts",
           params: params,
           success: `openDrafts/${OPEN_DRAFTS_RESULTS}`,
           loading: `openDrafts/${OPEN_DRAFTS_LOADING}`
@@ -56,7 +56,7 @@ const openDrafts = {
         "api/requestHandler",
         {
           method: "post",
-          url: "/v1/submitDraft",
+          url: "/submitDraft",
           params: params,
           success: `openDrafts/${OPEN_DRAFTS_LISTED}`,
           loading: `openDrafts/${OPEN_DRAFTS_LOADING}`,

@@ -14,42 +14,40 @@
       ></v-app-bar-nav-icon>
 
       <v-toolbar-title class="mr-12 align-center">
-        <img src="@/assets/logo.png" width="125px" class="mt-2" />
+        <router-link :to="'/'">
+          <v-img
+            v-ripple
+            src="@/assets/logo.png"
+            width="125px"
+            class="mt-1"
+            to="home"
+          ></v-img>
+        </router-link>
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
 
-      <v-btn
-        text
-        ripple
-        small
-        @click="toggleSettingsDrawer(!draftDrawer)"
-        class="mr-1"
-      >
-        <v-icon class="mr-2">fa-clipboard-list</v-icon>Draft Data
-      </v-btn>
+      <UserMenu></UserMenu>
     </v-app-bar>
   </section>
 </template>
 
 <script>
+import UserMenu from "./user/UserMenu";
 import { mapState } from "vuex";
-import { TOGGLE_DRAFT_DRAWER } from "@/store/mutation-types";
 
 export default {
   props: {
     toggleNavigationDrawer: [Function]
+  },
+  components: {
+    UserMenu
   },
   computed: {
     ...mapState({
       draftDrawer: state => state.settings.draftDrawer,
       loading: state => state.api.loading
     })
-  },
-  methods: {
-    toggleSettingsDrawer(value) {
-      this.$store.commit(`settings/${TOGGLE_DRAFT_DRAWER}`, value);
-    }
   }
 };
 </script>

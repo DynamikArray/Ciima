@@ -7,9 +7,11 @@ const uuidv1 = require("uuid/v1");
  * @param {FastifyReply} reply
  */
 module.exports = fastify => ({
-  draft: async (req, res) => {
-    const draft = req.body;
+  createHandler: async (req, res) => {
+    //get our userId since they were auth'd
+    const ownerId = req.user.id;
 
+    //pull off our body props
     const {
       inventoryTitle,
       locationCode,
@@ -50,12 +52,12 @@ module.exports = fastify => ({
         price, ebaySiteCategoryId, ebayStoreCategoryIdOne,
         ebayStoreCategoryIdTwo, series, mainCharacter, issueNumbers,
         publisher, publishedYear, publishedDate,
-        main_image, other_images
+        main_image, other_images, ownerId
     ) VALUES ('${stockItemId}', '${itemNumber}', '${inventoryTitle}', '${locationCode}', '${grade}', '${quantity}',
       '${price}', '${ebaySiteCategoryId}', '${ebayStoreCategoryIdOne}',
       '${ebayStoreCategoryIdTwo}', '${series}', '${mainCharacter}', '${issueNumbers}',
       '${publisher}', '${publishedYear}', '${publishedDate}',
-      '${main_image}',  '${JSON.stringify(cleanImages)}');`;
+      '${main_image}',  '${JSON.stringify(cleanImages)}', '${ownerId}');`;
 
     const connection = await fastify.mysql.getConnection();
     if (connection) {

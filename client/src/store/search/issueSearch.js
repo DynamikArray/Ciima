@@ -46,7 +46,7 @@ const issueSearch = {
         "api/requestHandler",
         {
           method: "get",
-          url: "/v1/issueSearch",
+        url: "/issueSearch",
           params: params,
           success: `issueSearch/${SEARCH_ISSUES_RESULTS_SET}`,
           loading: `issueSearch/${SEARCH_ISSUES_RESULTS_LOADING}`

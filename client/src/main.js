@@ -1,8 +1,11 @@
 import Vue from "vue";
 import App from "./App.vue";
-import router from "./router/router.js";
 import store from "./store/store.js";
-import vuetify from "./plugins/vuetify";
+import router from "./router/router.js";
+import vuetify from "./plugins/vuetify.js";
+
+import { axiosInstance } from "./util/axios/axiosInstance";
+Vue.prototype.$http = axiosInstance;
 
 //Filters for date's from db
 import { createDateFilter } from "vue-date-fns";
@@ -27,8 +30,10 @@ Vue.use(VueToastr, {
 import VuetifyConfirm from "vuetify-confirm";
 Vue.use(VuetifyConfirm, {
   vuetify,
-  buttonTrueText: "Accept",
-  buttonFalseText: "Discard",
+  buttonTrueText: "Ok",
+  buttonTrueColor: "success",
+  buttonFalseText: "Cancel",
+  buttonFalseColor: "red",
   color: "red",
   icon: "fa-exclamation-circle",
   title: "Are you sure?",

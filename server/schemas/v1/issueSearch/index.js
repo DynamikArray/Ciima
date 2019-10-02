@@ -3,6 +3,12 @@ module.exports = {
   tags: ["issues"],
   summary: "Search the database for comics",
 
+  security: [
+    {
+      token: []
+    }
+  ],
+
   querystring: {
     title: { type: "string" }
   },

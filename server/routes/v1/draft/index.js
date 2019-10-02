@@ -1,4 +1,4 @@
-const schema = require("../../../schemas/v1/draft");
+const { createSchema } = require("../../../schemas/v1/draft");
 
 /**
  * Info routes endpoints
@@ -6,13 +6,14 @@ const schema = require("../../../schemas/v1/draft");
  * @param {Fastify} fastify
  */
 module.exports = function(fastify, opts, next) {
-  const handler = require("../../../handlers/v1/draft")(fastify);
+  const { createHandler } = require("../../../handlers/v1/draft")(fastify);
 
-  const draft = {
-    schema: schema,
-    handler: handler.draft
+  const createDraft = {
+    preValidation: fastify.authenticate,
+    schema: createSchema,
+    handler: createHandler
   };
 
-  fastify.post("/draft", draft);
+  fastify.post("/draft/create", createDraft);
   next();
 };

@@ -147,7 +147,7 @@ const currentDraft = {
         "api/requestHandler",
         {
           method: "post",
-          url: "/v1/draft",
+          url: "/draft/create",
           params: draft,
           success: `currentDraft/${CURRENT_DRAFT_UPDATE}`,
           loading: `currentDraft/${CURRENT_DRAFT_SAVING}`,
