@@ -1,4 +1,4 @@
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 module.exports = fastify => ({
   /**
@@ -36,7 +36,7 @@ module.exports = fastify => ({
 
     //hash the plain pass into something cryptic
     const salt = await bcrypt.genSalt(10);
-    const hashPassword = await bcrypt.hash(password, salt);
+    const hashPassword = await bcrypt.hashSync(password, salt);
 
     //try to add this user into the db
     try {
