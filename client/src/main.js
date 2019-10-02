@@ -41,6 +41,9 @@ Vue.use(VuetifyConfirm, {
   property: "$confirm"
 });
 
+//shortkey
+Vue.use(require("vue-shortkey"));
+
 new Vue({
   router,
   store,

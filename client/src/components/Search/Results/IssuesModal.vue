@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="showModal" max-width="580px">
+  <v-dialog :value="showModal" max-width="580px">
     <v-card>
       <v-card-title class="text-center justify-space-between">
         <h4>{{ selectedIssue.title }}</h4>
@@ -13,6 +13,8 @@
               v-if="hasPrevIssue(selectedIssue.rowNumber)"
               color="primary"
               @click="gotoIssue(selectedIssue.rowNumber - 1)"
+              v-shortkey="['arrowleft']"
+              @shortkey="gotoIssue(selectedIssue.rowNumber - 1)"
               ><v-icon class="mr-1">fa-arrow-circle-left</v-icon></v-btn
             >
           </div>
@@ -26,6 +28,8 @@
             <v-btn
               v-if="hasNextIssue(selectedIssue.rowNumber)"
               @click="gotoIssue(selectedIssue.rowNumber + 1)"
+              v-shortkey="['arrowright']"
+              @shortkey="gotoIssue(selectedIssue.rowNumber + 1)"
               color="primary"
               ><v-icon class="ml-1">fa-arrow-circle-right</v-icon></v-btn
             >
@@ -39,7 +43,11 @@
           ><v-icon small class="mr-1">fa-window-close</v-icon>Close</v-btn
         >
 
-        <v-btn color="success" @click="addIssueToDraft"
+        <v-btn
+          color="success"
+          @click="addIssueToDraft"
+          v-shortkey="['enter']"
+          @shortkey="addIssueToDraft"
           ><v-icon small class="mr-1">fa-plus</v-icon>Add</v-btn
         >
       </v-card-actions>
