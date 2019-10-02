@@ -7,6 +7,14 @@ import router from "@/router/router";
 
 import {} from "@/store/mutation-types";
 
+const handleResponse = (commit, resolve, resp) => {
+  const { id, username, email, token } = resp.data;
+  localStorage.setItem("token", token);
+  axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  commit("auth_success", { id, username, email, token });
+  resolve(resp);
+};
+
 const user = {
   namespaced: true,
   state: {
@@ -53,13 +61,7 @@ const user = {
           method: "POST"
         })
           .then(resp => {
-            const { id, username, email, token } = resp.data;
-            localStorage.setItem("token", token);
-            axiosInstance.defaults.headers.common[
-              "Authorization"
-            ] = `Bearer ${token}`;
-            commit("auth_success", { id, username, email, token });
-            resolve(resp);
+            handleResponse(commit, resolve, resp);
           })
           .catch(err => {
             commit("auth_error", err);
@@ -81,13 +83,7 @@ const user = {
           method: "POST"
         })
           .then(resp => {
-            const { id, username, email, token } = resp.data;
-            localStorage.setItem("token", token);
-            axiosInstance.defaults.headers.common[
-              "Authorization"
-            ] = `Bearer ${token}`;
-            commit("auth_success", { id, username, email, token });
-            resolve(resp);
+            handleResponse(commit, resolve, resp);
           })
           .catch(err => {
             commit("auth_error");
@@ -114,13 +110,7 @@ const user = {
           method: "POST"
         })
           .then(resp => {
-            const { id, username, email, token } = resp.data;
-            localStorage.setItem("token", token);
-            axiosInstance.defaults.headers.common[
-              "Authorization"
-            ] = `Bearer ${token}`;
-            commit("auth_success", { id, username, email, token });
-            resolve(resp);
+            handleResponse(commit, resolve, resp);
           })
           .catch(err => {
             console.log(err);
