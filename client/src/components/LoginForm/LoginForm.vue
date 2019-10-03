@@ -9,7 +9,7 @@
     <v-divider class="my-1"></v-divider>
     <v-card-text>
       <v-alert type="error" dense v-if="authError">{{ authError }}</v-alert>
-      <v-form @submit="signInUser" v-model="valid">
+      <v-form ref="loginForm" @submit="signInUser" v-model="valid">
         <v-text-field
           autocomplete="current-username"
           label="Username"
@@ -30,6 +30,7 @@
           v-model="password"
           outlined
           hint="Password"
+          placeholder="Password"
           prepend-inner-icon="fa-key"
           v-on:keyup.enter="handleEnterKeyPress"
           :rules="fieldRules.password"
@@ -80,17 +81,32 @@ export default {
       this.signInUser();
     },
 
-    signInUser() {
+    async signInUser() {
+      if (!this.$refs.loginForm.validate()) return false;
       const { username, password } = this;
-      this.$store
-        .dispatch("user/login", { username, password })
-        .then(() => this.$router.push("/"))
-        .catch(err => console.log(err));
+      try {
+        await this.$store.dispatch("user/login", { username, password });
+
+        this.$router.push("/").catch(err => {
+          if (!err.name === "NavigationDuplicated") console.log(err);
+        });
+      } catch (err) {
+        if (!err.response.status === 403) {
+          this.$toastr.e(err.message);
+          //we need to log these somewhere somehow?
+        }
+      }
     },
 
     cancelSignIn() {
-      console.log("Cancel Sign In push user back to home");
-      this.$router.push("/");
+      this.username = "";
+      this.password = "";
+      this.valid = true;
+
+      this.$store.commit("user/logout"); //clear all auth status/msgs
+      this.$router.push("/").catch(err => {
+        if (!err.name === "NavigationDuplicated") console.log(err);
+      });
     }
   }
 };
