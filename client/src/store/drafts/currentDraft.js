@@ -11,7 +11,7 @@ const blankDraft = {
   //form data
   savingDraft: false,
   inventoryTitle: "",
-  locationCode: "",
+  locationCode: "EBAY-SETS-",
   grade: "",
   quantity: null,
   price: null,

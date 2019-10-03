@@ -11,8 +11,9 @@
       <v-row>
         <v-col cols="5">
           <v-text-field
-            v-model="locationCode"
+            :value="locationCode"
             id="locationCode"
+            @input="handleInputLocationCode"
             name="locationCode"
             outlined
             label="Location"
@@ -23,7 +24,8 @@
         </v-col>
         <v-col cols="3">
           <v-text-field
-            v-model="grade"
+            :value="grade"
+            @input="handleInputGrade"
             id="grade"
             name="grade"
             outlined
@@ -243,10 +245,6 @@ import ActionButtons from "./fields/ActionButtons.vue";
 import AutoFillButton from "./fields/AutoFillButton.vue";
 
 export default {
-  created() {
-    //location
-    this.locationCode = "EBAY-SETS-";
-  },
   components: {
     RequiredDataChecks,
     ActionButtons,
@@ -280,6 +278,12 @@ export default {
     validateForm() {
       const valid = this.$refs.draftForm.validate();
       return valid;
+    },
+    handleInputLocationCode(val) {
+      this.locationCode = val.toUpperCase();
+    },
+    handleInputGrade(val) {
+      this.grade = val.toUpperCase();
     }
   }
 };
