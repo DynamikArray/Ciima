@@ -9,24 +9,27 @@
  */
 module.exports = fastify => ({
   readHandler: async (req, res) => {
-    let { status } = req.query;
+    let { status, all } = req.query;
     if (!status) status = "Open"; //default to open if no param
 
     //users record by status
     let query = `SELECT
         d.*,
         u.username as ownerName
-      FROM slc_drafts d, slc_users u
-      WHERE status LIKE CONCAT("%",?,"%") AND (d.ownerId = u.id)`;
+      FROM slc_drafts d
+      LEFT JOIN slc_users u ON d.ownerId = u.id
+      WHERE (status LIKE CONCAT("%",?,"%") AND (d.ownerId = ${req.user.id}))
+      ORDER BY d.id DESC `;
 
-    if (req.query.all) {
+    if (all) {
       //all records by status
       query = `SELECT
           d.*,
           u.username as ownerName
         FROM slc_drafts d
         LEFT JOIN slc_users u ON d.ownerId = u.id
-        WHERE status LIKE CONCAT("%",?,"%")`;
+        WHERE status LIKE CONCAT("%",?,"%")
+        ORDER BY d.id DESC `;
     }
 
     const connection = await fastify.mysql.getConnection();
