@@ -19,6 +19,7 @@ const user = {
   namespaced: true,
   state: {
     status: "",
+    errMsg: false,
     token: localStorage.getItem("token") || "",
     user: false
   },
@@ -26,23 +27,28 @@ const user = {
     isLoggedIn: state => !!state.token,
     user: state => state.user,
     authStatus: state => state.status,
+    authError: state => state.errMsg,
     userName: state => state.user.username,
     email: state => state.user.email
   },
   mutations: {
     auth_request(state) {
       state.status = "loading";
+      state.errMsg = false;
     },
     auth_success(state, user) {
       state.status = "success";
+      state.errMsg = false;
       state.token = user.token;
       state.user = { id: user.id, username: user.username, email: user.email };
     },
-    auth_error(state) {
+    auth_error(state, errMsg = false) {
       state.status = "error";
+      state.errMsg = errMsg;
     },
     logout(state) {
       state.status = "";
+      state.errMsg = false;
       state.token = "";
       state.user = false;
     }
@@ -64,7 +70,12 @@ const user = {
             handleResponse(commit, resolve, resp);
           })
           .catch(err => {
-            commit("auth_error", err);
+            const { response, message } = err;
+            if (response.status === 403) {
+              commit("auth_error", response.data);
+            } else {
+              commit("auth_error", message);
+            }
             localStorage.removeItem("token");
             reject(err);
           });
@@ -86,7 +97,12 @@ const user = {
             handleResponse(commit, resolve, resp);
           })
           .catch(err => {
-            commit("auth_error");
+            const { response, message } = err;
+            if (response.status === 403) {
+              commit("auth_error", response.data);
+            } else {
+              commit("auth_error", message);
+            }
             localStorage.removeItem("token");
             reject(err);
           });
@@ -113,8 +129,12 @@ const user = {
             handleResponse(commit, resolve, resp);
           })
           .catch(err => {
-            console.log(err);
-            commit("auth_error");
+            const { response, message } = err;
+            if (response.status === 403) {
+              commit("auth_error", response.data);
+            } else {
+              commit("auth_error", message);
+            }
             localStorage.removeItem("token");
             reject(err);
           });

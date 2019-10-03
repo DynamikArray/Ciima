@@ -8,7 +8,8 @@
     >
     <v-divider class="my-1"></v-divider>
     <v-card-text>
-      <v-form @submit="signInUser">
+      <v-alert type="error" dense v-if="authError">{{ authError }}</v-alert>
+      <v-form @submit="signInUser" v-model="valid">
         <v-text-field
           autocomplete="current-username"
           label="Username"
@@ -18,6 +19,7 @@
           hint="Username"
           placeholder="Username"
           prepend-inner-icon="fa-user"
+          :rules="fieldRules.username"
         >
         </v-text-field>
         <v-text-field
@@ -30,6 +32,7 @@
           hint="Password"
           prepend-inner-icon="fa-key"
           v-on:keyup.enter="handleEnterKeyPress"
+          :rules="fieldRules.password"
         >
         </v-text-field>
       </v-form>
@@ -52,12 +55,24 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   data: () => {
     return {
       username: "",
-      password: ""
+      password: "",
+      valid: true,
+      fieldRules: {
+        username: [v => !!v || "Username is a required field"],
+        password: [v => !!v || "Password is a required field"]
+      }
     };
+  },
+  computed: {
+    ...mapGetters({
+      authError: "user/authError"
+    })
   },
   methods: {
     handleEnterKeyPress() {
