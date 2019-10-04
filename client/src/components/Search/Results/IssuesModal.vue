@@ -1,5 +1,5 @@
 <template>
-  <v-dialog :value="showModal" max-width="580px">
+  <v-dialog :value="showModal" max-width="580px" @keydown="handleKeyDown">
     <v-card>
       <v-card-title class="text-center justify-space-between">
         <h4>{{ selectedIssue.title }}</h4>
@@ -87,9 +87,15 @@ export default {
         if (issue.rowNumber === rowNumber) return true;
       });
       if (item.length === 1) this.selectedIssue = item[0];
+      if (item.length === 0) this.seletedItem = false;
     }
   },
   methods: {
+    handleKeyDown(e) {
+      if (e.key === "Escape") {
+        this.hideImageModal();
+      }
+    },
     hasPrevIssue(rowNumber) {
       if (rowNumber > 1) return true;
       return false;
@@ -112,6 +118,8 @@ export default {
         `issueSearch/${SEARCH_ISSUES_SHOW_SELECTED_ITEM}`,
         false
       );
+
+      this.$store.commit(`issueSearch/${SEARCH_ISSUES_SELECTED_ITEM}`, false);
     },
     addIssueToDraft() {
       const item = this.selectedIssue;
