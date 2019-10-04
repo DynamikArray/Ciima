@@ -38,6 +38,7 @@
       show-select
       @input="itemSelected"
       :footer-props="footerProps"
+      v-model="selectedItems"
     >
       <!--IMAGE COLUMN-->
       <template v-slot:item.main_image="{ item }">
@@ -276,6 +277,7 @@ export default {
         this.submitDraft(item.id, false);
       });
       this.$toastr.s("All items submitted!");
+      this.selectedItems = [];
     },
     itemSelected(items) {
       this.selectedItems = items;
