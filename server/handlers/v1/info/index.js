@@ -6,11 +6,17 @@
  */
 module.exports = fastify => ({
   keepAliveHandler: async (req, res) => {
-    const { linnworks } = fastify;
+    const { serverUrl, sessionToken } = fastify.linnworks;
 
-    let token = false;
-    if (linnworks.sessionToken) token = true;
+    let server,
+      token = false;
 
-    return `API is alive | Linnworks Server Url: ${linnworks.serverUrl} | Linnworks Token Set: ${token}`;
+    if (serverUrl) server = serverUrl;
+    if (sessionToken) token = true;
+
+    return {
+      api: true,
+      linnworks: { server, token }
+    };
   }
 });

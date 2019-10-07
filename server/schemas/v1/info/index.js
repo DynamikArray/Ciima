@@ -6,7 +6,23 @@ module.exports = {
     response: {
       200: {
         description: "Succesful response",
-        type: "string"
+        type: "object",
+        properties: {
+          api: {
+            type: "boolean"
+          },
+          linnworks: {
+            type: "object",
+            properties: {
+              server: {
+                type: "string"
+              },
+              token: {
+                type: "boolean"
+              }
+            }
+          }
+        }
       }
     }
   }
