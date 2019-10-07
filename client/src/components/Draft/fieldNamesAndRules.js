@@ -52,6 +52,9 @@ const fieldRules = {
   ebaySiteCategoryId: [v => !!v || "Ebay Site Category is a required field"],
   ebayStoreCategoryIdOne: [
     v => !!v || "Ebay Store Category 1 is a required field"
+  ],
+  ebayStoreCategoryIdTwo: [
+    v => !!v || "Ebay Store Category 2 is a required field"
   ]
 };
 
