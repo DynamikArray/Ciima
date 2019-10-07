@@ -10,7 +10,7 @@
         <avatar :username="userName" :size="140" class="ma-2"></avatar>
       </v-flex>
       <v-flex>
-        <div class="my-1" style="max-width:180px;">
+        <div class="my-1" style="max-width:200px;">
           <div class="text-truncate">
             <h3 class="my-1">{{ userName }}</h3>
             <h4>{{ email }}</h4>
