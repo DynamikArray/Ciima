@@ -112,7 +112,7 @@ export default {
     return {
       search: "",
       footerProps: {
-        "items-per-page-options": [10, 20, 50, 100]
+        "items-per-page-options": [15, 30, 50, 100]
       },
       headers: [
         {

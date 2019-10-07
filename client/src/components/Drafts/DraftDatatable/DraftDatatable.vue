@@ -34,7 +34,7 @@
       item-name="id"
       :loading="loading"
       loading-text="Loading..."
-      :items-per-page="10"
+      :items-per-page="15"
       show-select
       @input="itemSelected"
       :footer-props="footerProps"
@@ -186,7 +186,7 @@ export default {
       imagePopup: false,
       headers,
       footerProps: {
-        "items-per-page-options": [10, 20, 50, 100]
+        "items-per-page-options": [15, 30, 50, 100]
       }
     };
   },

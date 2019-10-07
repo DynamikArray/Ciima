@@ -46,17 +46,16 @@ export default {
   created() {
     //no selected title so start back at input
     if (!this.selectedTitle) {
-      //this.$toastr.i("Select a title first.");
       this.$router.push({ name: "titles" });
-    }
+    } else {
+      //search for issues
+      const title = (this.selectedTitle || {}).title;
 
-    //search for issues
-    const title = (this.selectedTitle || {}).title;
-
-    if (title) {
-      this.$store.dispatch(`issueSearch/${SEARCH_ISSUES}`, {
-        title
-      });
+      if (title) {
+        this.$store.dispatch(`issueSearch/${SEARCH_ISSUES}`, {
+          title
+        });
+      }
     }
   }
 };

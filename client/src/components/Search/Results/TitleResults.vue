@@ -22,9 +22,6 @@
         <h3 class="title text-center">
           Search for Issues using the textbox located above.
         </h3>
-        <p>
-          Hotkeys & shortcuts coming next.
-        </p>
       </div>
     </div>
   </div>
@@ -40,7 +37,7 @@ export default {
       sortBy: "issuesCount",
       descending: true,
       footerProps: {
-        "items-per-page-options": [10, 20, 50, 100]
+        "items-per-page-options": [25, 50, 100, 200]
       },
       headers: [
         { text: "View", value: "action", sortable: false, align: "center" },
