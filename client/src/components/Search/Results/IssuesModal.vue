@@ -1,5 +1,10 @@
 <template>
-  <v-dialog :value="showModal" max-width="580px" @keydown="handleKeyDown">
+  <v-dialog
+    :value="showModal"
+    max-width="580px"
+    @keydown="handleKeyDown"
+    @click:outside="handleClickOutside"
+  >
     <v-card>
       <v-card-title class="text-center justify-space-between">
         <h4>{{ selectedIssue.title }}</h4>
@@ -95,6 +100,9 @@ export default {
       if (e.key === "Escape") {
         this.hideImageModal();
       }
+    },
+    handleClickOutside() {
+      this.hideImageModal();
     },
     hasPrevIssue(rowNumber) {
       if (rowNumber > 1) return true;
