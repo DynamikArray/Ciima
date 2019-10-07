@@ -1,10 +1,6 @@
 ////TODO: These maybe be passed in as part of a config?
 //const { logger } = require("../winston/winston.js");
 
-const logger = require("../../util/winston/winston.js")({
-  hostname: "Worker"
-});
-
 //Use axios
 const axios = require("axios");
 
@@ -34,8 +30,9 @@ const linnworks = {
    * [initiliaze description]
    * @return {Promise} [description]
    */
-  async initiliaze() {
+  async initiliaze(logger) {
     this.logger = logger;
+
     //include our formatters helper
     this.formatters = require("./linnworksFormatters.js")(logger);
     this.logger.info("initiliazing Linnworks API...");

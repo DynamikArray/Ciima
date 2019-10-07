@@ -11,6 +11,9 @@ const fastify = require("fastify")(config);
 const swagger = require("fastify-swagger");
 fastify.decorate("winston", logger);
 
+const { linnworks } = require("../util/linnworks/linnworks.js");
+fastify.decorate("linnworks", linnworks);
+
 //add morgan
 fastify.use(require("morgan")("short", { stream: logger.stream }));
 //add our winston/logdna logger to fastify
@@ -61,6 +64,8 @@ fastify.get("*", (request, reply) => reply.sendFile("index.html"));
 // async start method thing!!!!
 const start = async () => {
   fastify.winston.info("Starting Fastify Server");
+
+  await fastify.linnworks.initiliaze(fastify.winston);
 
   await fastify.listen(config).catch(async e => {
     if (process.env.NODE_ENV === "development") console.error(e);

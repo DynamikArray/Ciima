@@ -1,5 +1,5 @@
 module.exports = {
-  keepAlive: {
+  keepAliveSchema: {
     description: "Get the status of the API",
     tags: ["info"],
     summary: "Obtain the status of the API",

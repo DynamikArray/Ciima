@@ -4,7 +4,13 @@
  * @param {FastifyRequest} request
  * @param {FastifyReply} reply
  */
-const keepAlive = async (req, res) => {
-  return "API is alive";
-};
-module.exports = { keepAlive };
+module.exports = fastify => ({
+  keepAliveHandler: async (req, res) => {
+    const { linnworks } = fastify;
+
+    let token = false;
+    if (linnworks.sessionToken) token = true;
+
+    return `API is alive | Linnworks Server Url: ${linnworks.serverUrl} | Linnworks Token Set: ${token}`;
+  }
+});
