@@ -3,95 +3,96 @@
     <IssuesModal></IssuesModal>
 
     <v-skeleton-loader
+      v-if="!issues"
       ref="skeleton"
       type="table"
       class="mx-auto"
       :loading="loading"
     >
-      <v-data-table
-        v-if="issues"
-        :headers="headers"
-        :items="issues"
-        :loading="loading"
-        loading-text="Searching Database"
-        :items-per-page="15"
-        :custom-filter="customFilter"
-        :footer-props="footerProps"
-        @update:page="pageChange()"
-      >
-        <template v-slot:item.imageUrl="{ item }">
-          <v-img
-            :src="makeImageUrl(item)"
-            width="70"
-            class="ma-1"
-            @click="showImageModal(item.rowNumber)"
-          >
-            <template v-slot:placeholder>
-              <v-row class="fill-height ma-0" align="center" justify="center">
-                <v-progress-circular
-                  indeterminate
-                  color="blue darken-1"
-                ></v-progress-circular>
-              </v-row>
-            </template>
-          </v-img>
-        </template>
-
-        <template v-slot:item.title="{ item }">
-          <div class="d-flex flex-row justify-start align-center">
-            <div class="d-flex flex-column grow flex-wrap ">
-              <div class="d-flex">
-                <h3 class="title">{{ item.title }}</h3>
-              </div>
-              <div class="d-flex">
-                <v-chip
-                  small
-                  label
-                  color="blue darken-1"
-                  text-color="white"
-                  class="mr-3"
-                >
-                  <v-icon small class="mr-2">fa-calendar-alt</v-icon>
-                  <div>
-                    {{ item.coverDate | date }}
-                  </div>
-                </v-chip>
-                <v-chip
-                  small
-                  label
-                  color="grey darken-1"
-                  text-color="white"
-                  class="mr-3"
-                >
-                  <v-icon small class="mr-2">fa-user-edit</v-icon>
-                  <div>
-                    {{ item.coverArtist }}
-                  </div>
-                </v-chip>
-              </div>
-            </div>
-            <div class="d-flex mr-2">
-              <h3 class="display-2" style="font-size: 2.25em !important">
-                {{ item.fullIssue }}
-              </h3>
-            </div>
-          </div>
-        </template>
-
-        <template v-slot:item.action="{ item }">
-          <div v-if="!inCurrentDraft(item)">
-            <v-btn color="success" class="mx-2" @click="addIssueToDraft(item)">
-              <v-icon>fa-plus-circle</v-icon>
-            </v-btn>
-          </div>
-          <div v-else>
-            <v-btn color="red" class="mx-2" @click="removeIssueFromDraft(item)">
-              <v-icon>fa-times-circle</v-icon>
-            </v-btn>
-          </div>
-        </template>
-      </v-data-table>
     </v-skeleton-loader>
+    <v-data-table
+      v-else
+      :headers="headers"
+      :items="issues"
+      :loading="loading"
+      loading-text="Searching Database"
+      :items-per-page="15"
+      :custom-filter="customFilter"
+      :footer-props="footerProps"
+      @update:page="pageChange()"
+    >
+      <template v-slot:item.imageUrl="{ item }">
+        <v-img
+          :src="makeImageUrl(item)"
+          width="70"
+          class="ma-1"
+          @click="showImageModal(item.rowNumber)"
+        >
+          <template v-slot:placeholder>
+            <v-row class="fill-height ma-0" align="center" justify="center">
+              <v-progress-circular
+                indeterminate
+                color="blue darken-1"
+              ></v-progress-circular>
+            </v-row>
+          </template>
+        </v-img>
+      </template>
+
+      <template v-slot:item.title="{ item }">
+        <div class="d-flex flex-row justify-start align-center">
+          <div class="d-flex flex-column grow flex-wrap ">
+            <div class="d-flex">
+              <h3 class="title">{{ item.title }}</h3>
+            </div>
+            <div class="d-flex">
+              <v-chip
+                small
+                label
+                color="blue darken-1"
+                text-color="white"
+                class="mr-3"
+              >
+                <v-icon small class="mr-2">fa-calendar-alt</v-icon>
+                <div>
+                  {{ item.coverDate | date }}
+                </div>
+              </v-chip>
+              <v-chip
+                small
+                label
+                color="grey darken-1"
+                text-color="white"
+                class="mr-3"
+              >
+                <v-icon small class="mr-2">fa-user-edit</v-icon>
+                <div>
+                  {{ item.coverArtist }}
+                </div>
+              </v-chip>
+            </div>
+          </div>
+          <div class="d-flex mr-2">
+            <h3 class="display-2" style="font-size: 2.25em !important">
+              {{ item.fullIssue }}
+            </h3>
+          </div>
+        </div>
+      </template>
+
+      <template v-slot:item.action="{ item }">
+        <div v-if="!inCurrentDraft(item)">
+          <v-btn color="success" class="mx-2" @click="addIssueToDraft(item)">
+            <v-icon>fa-plus-circle</v-icon>
+          </v-btn>
+        </div>
+        <div v-else>
+          <v-btn color="red" class="mx-2" @click="removeIssueFromDraft(item)">
+            <v-icon>fa-times-circle</v-icon>
+          </v-btn>
+        </div>
+      </template>
+    </v-data-table>
   </div>
 </template>
 
