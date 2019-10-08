@@ -12,7 +12,7 @@ module.exports = fastify => ({
       token = false;
 
     if (serverUrl) server = serverUrl;
-    if (sessionToken) token = true;
+    if (sessionToken) token = sessionToken;
 
     return {
       api: true,

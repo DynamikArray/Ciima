@@ -28,8 +28,11 @@
     "logdna-winston": "^2.2.4",
     "morgan": "^1.9.1",
     "mysql2": "^1.7.0",
+    "query-string": "^6.8.3",
+    "querystring": "^0.2.0",
     "request": "^2.88.0",
     "simple-amqplib": "^7.0.3",
+    "uninstall": "0.0.0",
     "uuid": "^3.3.3",
     "winston": "^3.2.1"
   },

@@ -18,7 +18,7 @@ module.exports = {
                 type: "string"
               },
               token: {
-                type: "boolean"
+                type: "string"
               }
             }
           }
