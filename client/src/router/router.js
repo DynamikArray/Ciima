@@ -50,6 +50,16 @@ let router = new Router({
       }
     },
     {
+      path: "/draft",
+      props: true,
+      name: "draft",
+      component: () =>
+        import(/*webpackChunkName: "draft"*/ "@/views/Draft.vue"),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
       path: "/drafts",
       props: true,
       name: "drafts",
@@ -60,11 +70,11 @@ let router = new Router({
       }
     },
     {
-      path: "/draft",
+      path: "/inventory",
       props: true,
-      name: "draft",
+      name: "inventory",
       component: () =>
-        import(/*webpackChunkName: "draft"*/ "@/views/Draft.vue"),
+        import(/*webpackChunkName: "inventory"*/ "@/views/Inventory.vue"),
       meta: {
         requiresAuth: true
       }

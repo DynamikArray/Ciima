@@ -6,5 +6,7 @@ module.exports = [
   { menuDivider: true },
   { icon: "fa fa-plus-square", text: "New Draft", to: "draft" },
   { menuDivider: true },
-  { icon: "fa fa-list-alt", text: "View Drafts", to: "drafts" }
+  { icon: "fa fa-list-alt", text: "View Drafts", to: "drafts" },
+  { menuDivider: true },
+  { icon: "fa fa-boxes", text: "Search Inventory", to: "inventory" }
 ];

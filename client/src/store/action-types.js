@@ -11,3 +11,5 @@ export const CURRENT_DRAFT_SAVE = "CURRENT_DRAFT_SAVE";
 /*Open Drafts */
 export const OPEN_DRAFTS_FETCH = "OPEN_DRAFTS_FETCH";
 export const OPEN_DRAFTS_SUBMIT_DRAFT = "OPEN_DRAFTS_SUBMIT_DRAFT";
+/* Inventory */
+export const SEARCH_INVENTORY = "SEARCH_INVENTORY";

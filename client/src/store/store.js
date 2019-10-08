@@ -9,20 +9,22 @@ import issueSearch from "@/store/search/issueSearch";
 import ebaySearch from "@/store/search/ebaySearch";
 import currentDraft from "@/store/drafts/currentDraft";
 import openDrafts from "@/store/drafts/openDrafts";
+import linnworks from "@/store/inventory/linnworks";
 
 // NEW protected routes
 import user from "@/store/user/user";
 
 export default new Vuex.Store({
   modules: {
-    user,
-    settings,
     api,
-    titleSearch,
-    issueSearch,
-    ebaySearch,
     currentDraft,
-    openDrafts
+    ebaySearch,
+    issueSearch,
+    linnworks,
+    openDrafts,
+    settings,
+    titleSearch,
+    user
   },
   state: {},
   mutations: {}
