@@ -15,7 +15,7 @@ const issueSearch = {
   namespaced: true,
 
   state: {
-    items: false,
+    items: [],
     loading: false,
     //image modal helpers
     selectedItem: false,
@@ -46,7 +46,7 @@ const issueSearch = {
         "api/requestHandler",
         {
           method: "get",
-        url: "/issueSearch",
+          url: "/issueSearch",
           params: params,
           success: `issueSearch/${SEARCH_ISSUES_RESULTS_SET}`,
           loading: `issueSearch/${SEARCH_ISSUES_RESULTS_LOADING}`

@@ -3,7 +3,7 @@
     <IssuesModal></IssuesModal>
 
     <v-skeleton-loader
-      v-if="!issues"
+      v-if="loading"
       ref="skeleton"
       type="table"
       class="mx-auto"
