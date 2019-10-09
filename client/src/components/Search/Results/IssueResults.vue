@@ -25,6 +25,7 @@
         <v-img
           :src="makeImageUrl(item)"
           width="70"
+          height="105"
           class="ma-1"
           @click="showImageModal(item.rowNumber)"
         >
