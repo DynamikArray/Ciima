@@ -24,9 +24,10 @@
             >
           </div>
           <div class="d-flex align-center mx-3">
-            <v-img
-              :src="makeImageUrl(selectedIssue.imageUrl)"
-              max-width="400"
+            <img
+              class="img img-responsive"
+              :src="modalImage()"
+              style="max-width:400px; max-height:600px;"
             />
           </div>
           <div class="d-flex align-center" style="min-width:60px;">
@@ -90,9 +91,11 @@ export default {
     selectedItem(rowNumber) {
       const item = this.issues.filter(issue => {
         if (issue.rowNumber === rowNumber) return true;
+        return false;
       });
+
       if (item.length === 1) this.selectedIssue = item[0];
-      if (item.length === 0) this.seletedItem = false;
+      if (item.length === 0) this.selectedIssue = false;
     }
   },
   methods: {
@@ -119,6 +122,10 @@ export default {
       );
     },
     makeImageUrl(imageUrl) {
+      return `${settings.MEDIA_URL}${imageUrl}`;
+    },
+    modalImage() {
+      const { imageUrl } = this.selectedIssue;
       return `${settings.MEDIA_URL}${imageUrl}`;
     },
     hideImageModal() {
