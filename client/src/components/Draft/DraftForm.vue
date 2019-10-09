@@ -87,18 +87,6 @@
       <h3>Comic Attributes:</h3>
       <v-divider class="my-1"></v-divider>
       <v-row>
-        <v-col cols="5">
-          <v-text-field
-            v-model="series"
-            name="series"
-            outlined
-            label="Series"
-            hint="Storyline/Series of this product"
-            :rules="fieldRules.series"
-            counter
-          ></v-text-field>
-        </v-col>
-
         <v-col cols="4">
           <v-text-field
             v-model="mainCharacter"
@@ -107,6 +95,18 @@
             label="Character"
             hint="Main character featured throughout"
             :rules="fieldRules.mainCharacter"
+            counter
+          ></v-text-field>
+        </v-col>
+
+        <v-col cols="5">
+          <v-text-field
+            v-model="series"
+            name="series"
+            outlined
+            label="Series"
+            hint="Storyline/Series of this product"
+            :rules="fieldRules.series"
             counter
           ></v-text-field>
         </v-col>
