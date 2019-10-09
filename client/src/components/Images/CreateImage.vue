@@ -29,7 +29,7 @@
     <div class="d-flex align-center w-100 justify-space-around ">
       <div v-if="issues.length" class="d-flex justify-center">
         <v-btn class="my-3" color="primary" @click="handleOnClickLoadImages()">
-          <v-icon class="mr-1">fa-th</v-icon>Build Photo</v-btn
+          <v-icon class="mr-1">fa-th</v-icon>Create Photo</v-btn
         >
       </div>
     </div>
@@ -141,13 +141,8 @@ export default {
       this.gridRows = rows;
     }
   },
-  watch: {
-    issues: {
-      handler(newVal, oldVal) {
-        const total = this.issues.length;
-        console.log(total);
-      }
-    }
+  mounted(){
+    this.handleOnClickLoadImages();
   },
   methods: {
     handleOnChangeCols(value) {
