@@ -11,6 +11,7 @@
       <v-row>
         <v-col cols="5">
           <v-text-field
+            autofocus
             :value="locationCode"
             id="locationCode"
             @input="handleInputLocationCode"
