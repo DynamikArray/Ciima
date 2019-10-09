@@ -5,7 +5,7 @@
     @keydown="handleKeyDown"
     @click:outside="handleClickOutside"
   >
-    <v-card>
+    <v-card class="noScollbars">
       <v-card-title class="text-center justify-space-between">
         <h4>{{ selectedIssue.title }}</h4>
         <h4>{{ selectedIssue.fullIssue }}</h4>
@@ -24,11 +24,14 @@
             >
           </div>
           <div class="d-flex align-center mx-3">
-            <img
-              class="img img-responsive"
-              :src="modalImage()"
-              style="max-width:400px; max-height:600px;"
-            />
+            <v-scale-transition>
+              <v-img
+                :key="selectedIssue.id"
+                :src="modalImage()"
+                :max-width="400"
+                :max-height="600"
+              />
+            </v-scale-transition>
           </div>
           <div class="d-flex align-center" style="min-width:60px;">
             <v-btn
@@ -151,4 +154,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.noScollbars {
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+</style>
