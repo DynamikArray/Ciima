@@ -28,8 +28,8 @@ const linnworks = {
       dispatch(
         "api/requestHandler",
         {
-          method: "get",
-          url: "/inventory/linnworks",
+          method: "post",
+          url: "/inventory/linnworks/search",
           params: params,
           success: `linnworks/${SEARCH_INVENTORY_RESULTS}`,
           loading: `linnworks/${SEARCH_INVENTORY_LOADING}`
