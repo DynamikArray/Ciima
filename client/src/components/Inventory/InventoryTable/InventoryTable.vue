@@ -23,6 +23,7 @@
     <v-divider class="my-3"></v-divider>
 
     <v-data-table
+      :loading="loading"
       :headers="headers"
       :items-per-page="200"
       :items="getData"

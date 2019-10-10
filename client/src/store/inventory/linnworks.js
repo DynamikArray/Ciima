@@ -19,8 +19,8 @@ const linnworks = {
     [SEARCH_INVENTORY_RESULTS](state, data) {
       state.items = data;
     },
-    [SEARCH_INVENTORY_LOADING](state, loading) {
-      state.loading = loading;
+    [SEARCH_INVENTORY_LOADING](state, data) {
+      state.loading = data.loading;
     }
   },
   actions: {
