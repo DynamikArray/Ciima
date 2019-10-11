@@ -79,12 +79,12 @@ const api = {
           ...axiosInstance.defaults,
           ...config
         });
+
         const { data } = response;
 
         //hande results of api call data.result
         if (data.result && !data.error) {
           commit(success, data.result, { root: true });
-
           if (toastr) {
             let resp = `Success!`;
             if (typeof data.result === "string")
@@ -92,12 +92,14 @@ const api = {
             toastr.s(resp);
           }
         }
-
         //handle error from our server that we created
         if (data.error && !data.result) {
+          commit(success, { error: data.error }, { root: true });
+
+          //TODO ALERT THIS BETTER DOES  TOAST WORK
+          let resp = `An Error Occured!`;
           if (toastr) {
-            let resp = `An Error Occured!`;
-            resp = `<h4>${resp}</h4><p>${data.error}</p>`;
+            resp = `<h4>${data.error}</h4><p>${data.message}</p>`;
             toastr.e(resp);
           }
           console.error(data.error);

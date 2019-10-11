@@ -19,5 +19,32 @@ module.exports = fastify => ({
     } catch (error) {
       fastify.winston.error(error);
     }
+  },
+
+  updateLocationOrQuantityHandler: async (req, res) => {
+    const {
+      changeSource,
+      fieldName,
+      fieldValue,
+      inventoryItemId,
+      locationId
+    } = req.body;
+
+    const formattedData = `inventoryItemId=${inventoryItemId}&fieldName=${fieldName}&fieldValue=${fieldValue}&locationId=${locationId}&changeSource=${changeSource}`;
+
+    try {
+      const { result, error } = await fastify.linnworks.makeApiCall({
+        method: "POST",
+        url: "Inventory/UpdateInventoryItemLocationField",
+        headers:
+          "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
+        data: formattedData
+      });
+
+      if (result) return { result };
+      if (error) return { error };
+    } catch (error) {
+      fastify.winston.error(error);
+    }
   }
 });

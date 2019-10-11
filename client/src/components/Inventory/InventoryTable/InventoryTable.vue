@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card raised outlined>
+    <v-card class="elevation-1">
       <v-card-text class="">
         <div class="d-flex justify-space-between">
           <SearchForm class="d-flex grow align-center" />
@@ -38,9 +38,11 @@
       </template>
 
       <template v-slot:item.action="{ item }">
-        <v-btn color="warning" small circle
-          ><v-icon small>fas fa-edit</v-icon></v-btn
-        >
+        <UpdateDialog
+          v-for="(StockLevel, index) in item.StockLevels"
+          :key="index + item.StockItemId"
+          :stockLevel.sync="StockLevel"
+        />
       </template>
     </v-data-table>
   </div>
@@ -50,10 +52,12 @@
 import { mapState } from "vuex";
 import { headers } from "./tableConfig.js";
 import SearchForm from "@/components/Inventory/Search/SearchForm";
+import UpdateDialog from "./UpdateDialog";
 
 export default {
   components: {
-    SearchForm
+    SearchForm,
+    UpdateDialog
   },
   data() {
     return {
@@ -95,7 +99,7 @@ export default {
       if (stockLevels.length === 0) return "-";
       const locations = stockLevels.map(local => {
         if (local.Location) {
-          return local.Location.BinRack;
+          return `<div> ${local.Location.BinRack} </div>`;
         }
       });
       return locations.join("");
