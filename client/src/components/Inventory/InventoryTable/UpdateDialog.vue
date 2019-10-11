@@ -11,12 +11,14 @@
         Update Stock Location or Quantity
       </v-card-title>
       <v-card-text>
+        <div class="subtitle-2 w-100 text-center">
+          Press enter to save field changes
+        </div>
         <v-form v-model="isValid" @submit.prevent="handleSubmits">
           <v-row>
             <v-col cols="8">
               <v-text-field
                 autofocus
-                dense
                 v-model="BinRack"
                 id="BinRack"
                 name="BinRack"
@@ -28,7 +30,6 @@
             </v-col>
             <v-col cols="4">
               <v-text-field
-                dense
                 v-model="StockLevel"
                 id="StockLevel"
                 name="StockLevel"
@@ -39,16 +40,23 @@
               ></v-text-field>
             </v-col>
           </v-row>
-
-          <div class="text-center w-100">Press Enter to save changes.</div>
         </v-form>
       </v-card-text>
+      <v-card-actions>
+        <div class="d-flex justify-start">
+          <div class="d-flex align-center">
+            <v-btn color="red" @click="cancelDialog"
+              ><v-icon class="mr-1">fa fa-times-circle</v-icon>Cancel
+            </v-btn>
+          </div>
+          <div class="d-flex align-center mx-2"></div>
+        </div>
+      </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
 
 <script>
-import { mapState } from "vuex";
 import { UPDATE_INVENTORY_ITEM_LEVELS } from "@/store/action-types.js";
 
 export default {
@@ -62,11 +70,6 @@ export default {
       dialog: false,
       isValid: false
     };
-  },
-  computed: {
-    ...mapState({
-      updateResponse: state => state.linnworks.updateResponse
-    })
   },
   created() {
     //set props equal to new local values
@@ -85,29 +88,28 @@ export default {
       const data = this.getUpdatedFields("StockLevel");
       this.handleSubmits(data);
     },
-
-    handleSubmits(data) {
+    async handleSubmits(data) {
       try {
-        this.$store
-          .dispatch(`linnworks/${UPDATE_INVENTORY_ITEM_LEVELS}`, {
+        const resp = await this.$store.dispatch(
+          `linnworks/${UPDATE_INVENTORY_ITEM_LEVELS}`,
+          {
             ...data,
             toastr: this.$toastr
-          })
-          .then(this.handleAfterSubmit);
+          }
+        );
+        if (!resp.error) this.handleAfterSubmit();
       } catch (err) {
         this.$toastr.e(err);
       }
     },
-
     handleAfterSubmit() {
-      if (!this.updateResponse.error) {
-        this.stockLevel.StockLevel = this.StockLevel;
-        this.stockLevel.Location.BinRack = this.BinRack;
-        this.dialog = false;
-        this.$emit("update:stockLevel", this.stockLevel);
-      }
+      this.stockLevel.StockLevel = this.StockLevel;
+      this.stockLevel.Location.BinRack = this.BinRack;
+      this.$emit("update:stockLevel", this.stockLevel);
     },
-
+    cancelDialog() {
+      this.dialog = false;
+    },
     getUpdatedFields(type) {
       //grab our updated values
       const { BinRack, StockLevel } = this;

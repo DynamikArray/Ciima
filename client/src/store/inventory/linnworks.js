@@ -17,8 +17,7 @@ const linnworks = {
   namespaced: true,
   state: {
     loading: false,
-    items: [],
-    updateResponse: false
+    items: []
   },
 
   mutations: {
@@ -31,9 +30,7 @@ const linnworks = {
     [UPDATE_INVENTORY_LOADING](state, data) {
       state.loading = data.loading;
     },
-    [UPDATE_INVENTORY_RESPONSE](state, data) {
-      state.updateResponse = data;
-    }
+    [UPDATE_INVENTORY_RESPONSE](state, data) {}
   },
   actions: {
     [SEARCH_INVENTORY]({ dispatch, commit }, params) {
@@ -50,11 +47,11 @@ const linnworks = {
       );
     },
 
-    [UPDATE_INVENTORY_ITEM_LEVELS]({ dispatch, commit }, params) {
+    async [UPDATE_INVENTORY_ITEM_LEVELS]({ dispatch, commit }, params) {
       const { toastr } = params;
       delete params.toastr;
 
-      dispatch(
+      const resp = await dispatch(
         "api/requestHandler",
         {
           method: "post",
@@ -66,6 +63,7 @@ const linnworks = {
         },
         { root: true }
       );
+      return resp;
     }
   }
 };
