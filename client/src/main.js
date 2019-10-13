@@ -12,6 +12,17 @@ import { createDateFilter } from "vue-date-fns";
 Vue.filter("date", createDateFilter("MMM DD, YYYY"));
 Vue.filter("dateTime", createDateFilter("MMM DD, YYYY hh:mm a"));
 
+//for handling currencys
+import VueCurrencyFilter from "vue-currency-filter";
+Vue.use(VueCurrencyFilter, {
+  symbol: "$",
+  thousandsSeparator: "-",
+  fractionCount: 2,
+  fractionSeparator: ".",
+  symbolPosition: "front",
+  symbolSpacing: true
+});
+
 // register the plugin on vue for Sweet Alerts
 //import VueSwal from "vue-swal";
 //Vue.use(VueSwal);

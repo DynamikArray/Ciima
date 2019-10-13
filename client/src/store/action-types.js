@@ -4,7 +4,7 @@ export const SEARCH_TITLES_RESULTS_CLEAR = "SEARCH_TITLES_RESULTS_CLEAR";
 /* Search Issues */
 export const SEARCH_ISSUES = "SEARCH_ISSUES";
 export const SEARCH_ISSUES_RESULTS_CLEAR = "SEARCH_ISSUES_RESULTS_CLEAR";
-/* Search Ebay Categories */
+/* Search Ebay Categories LOCALDB */
 export const SEARCH_EBAY_CATEGORIES = "SEARCH_EBAY_CATEGORIES";
 /* Save Current Draft  */
 export const CURRENT_DRAFT_SAVE = "CURRENT_DRAFT_SAVE";
@@ -14,3 +14,5 @@ export const OPEN_DRAFTS_SUBMIT_DRAFT = "OPEN_DRAFTS_SUBMIT_DRAFT";
 /* Inventory */
 export const SEARCH_INVENTORY = "SEARCH_INVENTORY";
 export const UPDATE_INVENTORY_ITEM_LEVELS = "UPDATE_INVENTORY_ITEM_LEVELS";
+/* Ebay API */
+export const SEARCH_EBAY = "SEARCH_EBAY";

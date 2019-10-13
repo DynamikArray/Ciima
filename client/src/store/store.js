@@ -6,12 +6,13 @@ import settings from "@/store/settings/settings";
 import api from "@/store/api/api";
 import titleSearch from "@/store/search/titleSearch";
 import issueSearch from "@/store/search/issueSearch";
+
+//todo rewrite this later, buts its for Categories in DRAFT Listings
 import ebaySearch from "@/store/search/ebaySearch";
 import currentDraft from "@/store/drafts/currentDraft";
 import openDrafts from "@/store/drafts/openDrafts";
 import linnworks from "@/store/inventory/linnworks";
-
-// NEW protected routes
+import ebay from "@/store/ebay/search";
 import user from "@/store/user/user";
 
 export default new Vuex.Store({
@@ -21,6 +22,7 @@ export default new Vuex.Store({
     ebaySearch,
     issueSearch,
     linnworks,
+    ebay,
     openDrafts,
     settings,
     titleSearch,
