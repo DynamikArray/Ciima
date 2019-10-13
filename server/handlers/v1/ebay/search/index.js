@@ -7,9 +7,9 @@ module.exports = fastify => ({
 
       const params = {
         keywords,
-        outputSelector: ["SellerInfo", "AspectHistogram"],
+        outputSelector: ["SellerInfo", "AspectHistogram", "PictureURLLarge"],
         paginationInput: {
-          entriesPerPage: 50
+          entriesPerPage: 100
         },
         sortOrder: "CurrentPriceHighest"
       };

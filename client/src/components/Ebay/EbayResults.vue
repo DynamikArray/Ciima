@@ -138,6 +138,7 @@ export default {
       return this.results;
     },
     calculateSalesPrices() {
+      if (this.results.length === 0) return [];
       const prices = this.results.map(item => {
         const { shippingServiceCost } = item.shippingInfo;
         let shipping = 0;
