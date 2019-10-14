@@ -28,14 +28,19 @@ import { mapState } from "vuex";
 
 export default {
   data: () => ({
-    ebayStoreCategoryIdOne: 5837309015 //catId for Sets
+    ebayStoreCategories: {
+      sets: 5837309015,
+      singles: 15969436015
+    }
   }),
+
   props: {},
   computed: {
     ...mapState({
       draft: state => state.currentDraft,
       titles: state => state.currentDraft.titles,
-      issues: state => state.currentDraft.issues
+      issues: state => state.currentDraft.issues,
+      defaultProductType: state => state.settings.defaultProductType
     })
   },
   methods: {
@@ -115,6 +120,9 @@ export default {
       if (!this.runDataCheck()) return false;
       //set 1st store cat
       this.draft.ebayStoreCategoryIdOne = this.ebayStoreCategoryIdOne;
+      this.draft.ebayStoreCategoryIdOne = this.ebayStoreCategories[
+        this.defaultProductType
+      ];
 
       //issue Number
       this.draft.issueNumbers = this.getIssueNumbers().join(" ");

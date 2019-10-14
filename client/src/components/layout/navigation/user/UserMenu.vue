@@ -26,35 +26,89 @@
           @click="toggleSettingsDrawer(!draftDrawer)"
           class=""
         >
-          <v-icon class="">fa-clipboard-list</v-icon>
+          <v-icon class="mr-1">{{ setDefaultProductTypeIcon() }}</v-icon>
+          <span class="">Current Draft <br />({{ defaultProductType }}) </span>
         </v-btn>
       </div>
 
       <div class="d-flex align-center">
-        <v-menu offset-y nudge-bottom="6">
+        <v-menu
+          :max-width="380"
+          :nudge-bottom="42"
+          v-model="blnMenu"
+          :close-on-content-click="false"
+          offset-x
+        >
           <template v-slot:activator="{ on }">
             <v-btn text v-on="on">
-              <avatar :username="userName" :size="34" class="mr-1"></avatar>
-              <div class="" style="max-width:120px;">
+              <v-icon class="mr-1">fas fa-user-cog</v-icon>
+              <div class="" style="max-width:80px;">
                 <div class="text-truncate">
                   {{ userName }}
                 </div>
               </div>
             </v-btn>
           </template>
-          <v-list>
-            <v-subheader>User Menu:</v-subheader>
-            <v-list-item-group>
-              <v-list-item @click="logoutUser">
-                <v-list-item-icon>
-                  <v-icon>fa-sign-out-alt</v-icon>
-                </v-list-item-icon>
+
+          <v-card>
+            <v-list>
+              <v-list-item>
+                <v-list-item-avatar>
+                  <avatar :username="userName" :size="35" class="mr-1"></avatar>
+                </v-list-item-avatar>
+
                 <v-list-item-content>
-                  <v-list-item-title v-text="'Logout'"></v-list-item-title>
+                  <v-list-item-title>{{ userName }}</v-list-item-title>
+                  <v-list-item-subtitle
+                    >Set your preferences below:</v-list-item-subtitle
+                  >
                 </v-list-item-content>
               </v-list-item>
-            </v-list-item-group>
-          </v-list>
+            </v-list>
+
+            <v-divider></v-divider>
+
+            <v-list>
+              <v-list-item>
+                <v-list-item-content>
+                  <v-list-item-title>Default Product Type:</v-list-item-title>
+                  <v-list-item-subtitle>
+                    Applies defaults for Draft form fields.
+                  </v-list-item-subtitle>
+                  <div class="px-2">
+                    <v-radio-group
+                      row
+                      :value="defaultProductType"
+                      @change="changeDefaultProductType"
+                    >
+                      <v-radio
+                        label="Sets"
+                        color="primary"
+                        value="sets"
+                      ></v-radio>
+                      <v-radio
+                        label="Singles"
+                        color="primary"
+                        value="singles"
+                      ></v-radio>
+                    </v-radio-group>
+                  </div>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
+
+            <v-divider></v-divider>
+
+            <v-card-actions>
+              <div class="d-flex justify-end grow py-2">
+                <div class="d-flex align-center">
+                  <v-btn color="red" @click="logoutUser"
+                    ><v-icon class="mr-1">fa-sign-out-alt</v-icon>Logout</v-btn
+                  >
+                </div>
+              </div>
+            </v-card-actions>
+          </v-card>
         </v-menu>
       </div>
     </div>
@@ -64,14 +118,21 @@
 <script>
 import avatar from "vue-avatar";
 import { mapGetters, mapState } from "vuex";
-import { TOGGLE_DRAFT_DRAWER } from "@/store/mutation-types";
+import {
+  TOGGLE_DRAFT_DRAWER,
+  SET_DEFAULT_PRODUCT_TYPE
+} from "@/store/mutation-types";
 
 export default {
   components: {
     avatar
   },
+  data: () => ({
+    blnMenu: false
+  }),
   computed: {
     ...mapState({
+      defaultProductType: state => state.settings.defaultProductType,
       draftDrawer: state => state.settings.draftDrawer
     }),
     ...mapGetters({
@@ -79,7 +140,22 @@ export default {
       userName: "user/userName"
     })
   },
+
   methods: {
+    setDefaultProductTypeIcon() {
+      const type = this.defaultProductType;
+      switch (type) {
+        case "sets":
+          return "fa-layer-group";
+          break;
+        case "singles":
+          return "fa-image";
+          break;
+        default:
+          return "fa-clipboard";
+          break;
+      }
+    },
     signInUser() {
       this.$router.push("/login");
     },
@@ -88,6 +164,9 @@ export default {
     },
     toggleSettingsDrawer(value) {
       this.$store.commit(`settings/${TOGGLE_DRAFT_DRAWER}`, value);
+    },
+    changeDefaultProductType(value) {
+      this.$store.commit(`settings/${SET_DEFAULT_PRODUCT_TYPE}`, value);
     },
     async logoutUser() {
       const confirm = await this.$confirm(

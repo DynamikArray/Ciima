@@ -261,8 +261,8 @@ export default {
   computed: {
     ...mapState({
       loading: state => state.ebaySearch.loading,
-      eBayCategories: state => state.ebaySearch.items
-      //  draft: state => state.currentDraft
+      eBayCategories: state => state.ebaySearch.items,
+      defaultProductType: state => state.settings.defaultProductType
     }),
     ...mapFields(fieldNames)
   },
@@ -273,7 +273,11 @@ export default {
           q: value
         });
       }
-    }, 500)
+    }, 500),
+    defaultProductType(val) {
+      if (val === "sets") this.locationCode = "EBAY-SETS-";
+      if (val === "singles") this.locationCode = "EBAY-SINGLES-";
+    }
   },
   methods: {
     validateForm() {
