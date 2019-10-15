@@ -28,6 +28,7 @@ import { mapState } from "vuex";
 
 export default {
   data: () => ({
+    // TODO: get this from the util file
     ebayStoreCategories: {
       sets: 5837309015,
       singles: 15969436015
@@ -91,10 +92,17 @@ export default {
       if (pub) title.push(publisher);
       //year
       if (year) title.push(titleYear);
-      //default verbiage
-      title.push("Complete Set Run Lot");
-      //issue first to last
-      title.push(`${issueNumbers.shift()}-${issueNumbers.pop()}`);
+
+      if (this.defaultProductType === "sets") {
+        //default verbiage for sets
+        title.push("Complete Set Run Lot");
+      }
+
+      //if over 2 issues then add first and last
+      if (issueNumbers.length >= 2) {
+        title.push(`${[...issueNumbers].shift()}-${[...issueNumbers].pop()}`);
+      }
+
       //grade
       title.push(this.draft.grade);
       //join it all up and ship it back
@@ -155,27 +163,6 @@ export default {
     //
   }
 };
-/*
-
-
-    //
-    //
-    createTitle() {
-      const issueNumbers = this.getIssueNumbers();
-
-      //Fancy Title attempt
-      const autoTitle = `${this.draft.titles[0].title} ${
-        this.draft.issueNumbers
-      } Complete Set Run Lot ${issueNumbers.shift()}-${issueNumbers.pop()} ${
-        this.draft.grade
-      }`;
-
-      return autoTitle;
-    },
-
-
-
- */
 </script>
 
 <style scoped></style>

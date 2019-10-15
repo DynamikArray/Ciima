@@ -199,7 +199,6 @@ const updateInventoryLocation = async (StockItemId, location) => {
  * @return {Promise}           [description]
  */
 const submitDraftHandler = async (message, callback) => {
-  console.log("submitDraftHandler", message);
   logger.debug("listDrafHandler called", message);
   const draft = message.data;
   let hasErrors = [];
@@ -210,14 +209,9 @@ const submitDraftHandler = async (message, callback) => {
       draft.id,
       PENDING
     );
-
-    console.log(statusUpdated);
-
     //
     if (statusUpdated) {
       const { result, error } = await addInventoryItem(draft);
-
-      console.log(result, error);
 
       if (result && !error) {
         logger.debug("Inventory Item added adding images next.");
@@ -282,13 +276,12 @@ const submitDraftHandler = async (message, callback) => {
       //
       //error inserting main inventory item
       if (!result && error) {
-        console.error(error);
         handleStatusUpdate(draft.id, error, ERROR);
       }
     }
 
     if (!statusUpdated) {
-      console.log("Unable to update status???");
+      logger.debug("Unable to update draft status");
     }
   } catch (err) {
     handleStatusUpdate(draft.id, err, ERROR);

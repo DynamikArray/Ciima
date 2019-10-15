@@ -141,7 +141,7 @@ export default {
       this.gridRows = rows;
     }
   },
-  mounted(){
+  mounted() {
     this.handleOnClickLoadImages();
   },
   methods: {
@@ -155,9 +155,7 @@ export default {
       this.canvasClean = false;
       const canvas = this.$refs.imageCanvas;
       this.configureCanvas();
-
-      let ctx = canvas.getContext("2d");
-      this.loadImagesGrid(ctx);
+      this.loadImagesGrid(canvas);
       this.addDisclaimer(canvas);
     },
     //
@@ -178,7 +176,11 @@ export default {
       //get canvase and context objects
       const canvas = this.$refs.imageCanvas;
 
-      const pHeight = this.defaulImageSize.height + this.padding;
+      let pHeight = this.defaulImageSize.height + this.padding;
+      //single issue padding so text fits
+      if (this.issues.length == 1)
+        pHeight = this.defaulImageSize.height + this.padding + 30;
+
       const pWidth = this.defaulImageSize.width + this.padding;
 
       const cHeight = this.gridRows * pHeight;
@@ -196,7 +198,7 @@ export default {
     //
     //
     //
-    loadImagesGrid(ctx) {
+    loadImagesGrid(canvas) {
       //we first need to know our gird layout and there locations
       const rows = this.gridRows;
       const cols = this.gridCols;
@@ -211,7 +213,7 @@ export default {
         for (y = 0; y < cols; y++) {
           const issue = this.issues[z]; //selected Issue Number
           if (!issue) return false;
-          this.handleImageLoading(issue, x, y, ctx);
+          this.handleImageLoading(issue, x, y, canvas);
           z++; //increase issue count
         } //for cols
       } //for rows
@@ -254,7 +256,11 @@ export default {
     //
     //
     //
-    handleImageLoading(issue, x, y, ctx, z) {
+    handleImageLoading(issue, x, y, canvas, z) {
+      const addDisclaimer = this.addDisclaimer;
+      const _canvas = canvas;
+      let ctx = canvas.getContext("2d");
+
       const calculateAspectRatioFit = this.calculateAspectRatioFit;
       const drawImageGridLines = this.drawImageGridLines;
 
@@ -291,6 +297,9 @@ export default {
           rWidth,
           rHeight
         );
+
+        //addDisclaimer(canvas);
+        //        _this.addDisclaimer(canvas);
       };
 
       const fullImagePath = `${settings.MEDIA_URL}${imageUrl}`;
@@ -320,7 +329,7 @@ export default {
       const fontHeight = this.gridCols * 11;
       const disclaimerHeight = this.gridCols * 20;
 
-      canvas.height = canvas.height + +disclaimerHeight;
+      canvas.height = canvas.height + disclaimerHeight;
 
       const ctx = canvas.getContext("2d");
       ctx.fillRect(0, 0, canvas.width, canvas.height);

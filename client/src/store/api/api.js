@@ -120,9 +120,8 @@ const api = {
           }
           toastr.e(resp);
         }
-        console.error(error);
-        //throw new Error(error);
-        //apiErrorHandler(dispatch, error);
+
+        throw new Error(data.message);
       } finally {
         commit(`${REMOVE_API_CALL}`);
         if (loading) commit(loading, { loading: false }, { root: true });

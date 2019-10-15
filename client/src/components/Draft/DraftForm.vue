@@ -215,6 +215,7 @@
             :items="ebayStoreCategories"
             label="Ebay Store Category 2"
             hint="Secondary Ebay Store Category"
+            :rules="fieldRules.ebayStoreCategoryIdTwo"
           >
           </v-select>
         </v-col>
@@ -250,6 +251,18 @@ export default {
     RequiredDataChecks,
     ActionButtons,
     AutoFillButton
+  },
+  created() {
+    switch (this.defaultProductType) {
+      case "sets":
+        this.locationCode = "EBAY-SETS-";
+        break;
+      case "singles":
+        this.locationCode = "EBAY-SINGLES-";
+        break;
+      default:
+        break;
+    }
   },
   data: () => ({
     valid: true,

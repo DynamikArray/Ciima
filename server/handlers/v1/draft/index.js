@@ -70,7 +70,7 @@ module.exports = fastify => ({
         return { result: rows };
       } catch (error) {
         fastify.winston.error(error);
-        return { error: error.message };
+        res.send(error);
       }
     }
     return { error: "No db connection" };

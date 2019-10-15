@@ -24,6 +24,14 @@ const CategoryInfo = {
 //grab our list of one to one fields to extended properties
 const extendedProperties = require("./extendedProperties.js");
 
+const setLinnworksCategory = draftType => {
+  let categoryInfo = {};
+  if (draftType === "sets") categoryInfo = CategoryInfo.sets;
+  if (draftType === "singles") categoryInfo = CategoryInfo.singles;
+  if (process.env.NODE_ENV === "development") categoryInfo = CategoryInfo.test;
+  return categoryInfo;
+};
+
 //build out a handler to format our data to linnworks needed values
 module.exports = logger => ({
   //format for creating basic new inventory item
@@ -51,16 +59,6 @@ module.exports = logger => ({
     };
 
     return inventoryItem;
-  },
-
-  setLinnworksCategory: draftType => {
-    const categoryInfo = {};
-    if (draftType === "sets") categoryInfo = CategoryInfo.sets;
-    if (draftType === "singles") categoryInfo = CategoryInfo.singles;
-    if (process.env.NODE_ENV === "development")
-      categoryInfo = CategoryInfo.singles;
-
-    return categoryInfo;
   },
 
   /**

@@ -49,26 +49,28 @@ export default {
         const { draft } = this;
 
         const issues = draft.issues;
-        const titles = draft.titles;
 
         draft.other_images = this.getImageUrlsFromIssues(issues);
         draft.main_image = this.draft.coverPhoto;
-
         draft.draftType = this.defaultProductType;
 
-        //Add a toastr
-        draft.toastr = this.$toastr;
+        try {
+          //make the calls
+          const result = await this.$store.dispatch(
+            `currentDraft/${CURRENT_DRAFT_SAVE}`,
+            { draft }
+          );
 
-        //make the calls
-        await this.$store.dispatch(`currentDraft/${CURRENT_DRAFT_SAVE}`, {
-          draft
-        });
-        //clear the draft
-        this.$store.commit(`currentDraft/${CURRENT_DRAFT_CLEAR}`);
-        //goto title search
-        this.$router.push({ name: "titles" });
-        //get the drafts
-        //await this.$store.dispatch(`openDrafts/${OPEN_DRAFTS_FETCH}`);
+          if (result) {
+            this.$toastr.s("Draft Saved!");
+            //clear the draft
+            this.$store.commit(`currentDraft/${CURRENT_DRAFT_CLEAR}`);
+            //goto title search
+            this.$router.push({ name: "titles" });
+          }
+        } catch (error) {
+          this.$toastr.e(error.message);
+        }
       }
     },
 
