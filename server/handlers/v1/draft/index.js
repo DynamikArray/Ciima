@@ -27,6 +27,7 @@ module.exports = fastify => ({
       publisher,
       publishedYear,
       publishedDate,
+      draftType,
       main_image,
       other_images
     } = req.body;
@@ -52,12 +53,14 @@ module.exports = fastify => ({
         price, ebaySiteCategoryId, ebayStoreCategoryIdOne,
         ebayStoreCategoryIdTwo, series, mainCharacter, issueNumbers,
         publisher, publishedYear, publishedDate,
-        main_image, other_images, ownerId
+        main_image, other_images, ownerId, draftType
     ) VALUES ('${stockItemId}', '${itemNumber}', '${inventoryTitle}', '${locationCode}', '${grade}', '${quantity}',
       '${price}', '${ebaySiteCategoryId}', '${ebayStoreCategoryIdOne}',
       '${ebayStoreCategoryIdTwo}', '${series}', '${mainCharacter}', '${issueNumbers}',
       '${publisher}', '${publishedYear}', '${publishedDate}',
-      '${main_image}',  '${JSON.stringify(cleanImages)}', '${ownerId}');`;
+      '${main_image}',  '${JSON.stringify(
+      cleanImages
+    )}', '${ownerId}', '${draftType}');`;
 
     const connection = await fastify.mysql.getConnection();
     if (connection) {

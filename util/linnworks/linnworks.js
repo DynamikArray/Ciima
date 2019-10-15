@@ -111,6 +111,8 @@ const linnworks = {
    * @return {Promise}        [description]
    */
   async makeApiCall(config, isRetry = false) {
+    console.log("MAKE API CALL");
+
     this.logger.debug("apiCall Linnworks: " + JSON.stringify(config));
     //check if we can make call
     if (!this.sessionToken) {
@@ -156,10 +158,13 @@ const linnworks = {
           const { statusText } = response;
           return { error: statusText };
         }
+
+        console.log(response);
       }
     } catch (error) {
       const { data } = error.response;
       this.logger.error(`Error Response: ${JSON.stringify(data.Message)}`);
+
       if (data.Message === "Token is wrong.") {
         const ok = await this.reAuth();
         if (!ok) return { error: data };

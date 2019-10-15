@@ -27,7 +27,8 @@ export default {
     ...mapState({
       draft: state => state.currentDraft,
       titles: state => state.currentDraft.titles,
-      issues: state => state.currentDraft.issues
+      issues: state => state.currentDraft.issues,
+      defaultProductType: state => state.settings.defaultProductType
     })
   },
   methods: {
@@ -52,6 +53,8 @@ export default {
 
         draft.other_images = this.getImageUrlsFromIssues(issues);
         draft.main_image = this.draft.coverPhoto;
+
+        draft.draftType = this.defaultProductType;
 
         //Add a toastr
         draft.toastr = this.$toastr;

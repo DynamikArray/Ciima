@@ -1,8 +1,24 @@
 // TODO: move to a call with the initiliaze statement to look up by CategoryName
 // and apply to linnworks object for use
-const categoryInfo = {
+/*const categoryInfo = {
   CategoryId: "7904e4ec-0487-4d62-ba8b-b0934e106dbd",
   CategoryName: "EBAY-SETS"
+};
+*/
+
+const CategoryInfo = {
+  test: {
+    CategoryId: "85e5eecb-de9b-451f-9481-b660d79ca7d0",
+    CategoryName: "CIIMA-TEST"
+  },
+  sets: {
+    CategoryId: "7904e4ec-0487-4d62-ba8b-b0934e106dbd",
+    CategoryName: "EBAY-SETS"
+  },
+  singles: {
+    CategoryId: "3048b178-b1bb-421f-8a63-5daf40506665",
+    CategoryName: "EBAY-SINGLES"
+  }
 };
 
 //grab our list of one to one fields to extended properties
@@ -18,36 +34,33 @@ module.exports = logger => ({
    */
   newInventoryItem: draft => {
     logger.debug(`Format draft for inventory draft`, draft);
+    const today = new Date();
+
+    const categoryInfo = setLinnworksCategory(draft.draftType);
 
     const inventoryItem = {
-      MetaData: "Added through Ciima: " + Date.now(),
+      MetaData: "Added through Ciima: " + today,
       StockItemId: draft.stockItemId,
       ItemNumber: draft.itemNumber, //AKA sku?    Date.now().toString(), //aka SKU
       ItemTitle: encodeURIComponent(draft.inventoryTitle),
       Quantity: draft.quantity,
       BarcodeNumber: draft.upc,
-
-      // PurchasePrice: 9.1,   number of issues x or include it here
       RetailPrice: draft.price,
-      //PostalServiceId: "7adfafe9-ff34-4f43-aca9-5782d1c4394e",
-      //PostalServiceName: "sample string 12",
-
-      //get linnworks store category for ebay category id
-      CategoryId: categoryInfo.CategoryId, //"f0fe6db1-70e9-40e9-8744-2dbda458f574",
-      CategoryName: categoryInfo.CategoryName //"EBAY-SETS"
-      /*package data */
-      //PackageGroupId: "bad339a7-d9c3-4542-a96c-afe154abac81",
-      //PackageGroupName: "sample string 16",
-      //Height: 17.1,
-      //Width: 18.1,
-      //Depth: 19.1,
-      //Weight: 20.1,
-      //InventoryTrackingType: 21,
-      //BatchNumberScanRequired: true,
-      //SerialNumberScanRequired: true,
+      CategoryId: categoryInfo.CategoryId,
+      CategoryName: categoryInfo.CategoryName
     };
 
     return inventoryItem;
+  },
+
+  setLinnworksCategory: draftType => {
+    const categoryInfo = {};
+    if (draftType === "sets") categoryInfo = CategoryInfo.sets;
+    if (draftType === "singles") categoryInfo = CategoryInfo.singles;
+    if (process.env.NODE_ENV === "development")
+      categoryInfo = CategoryInfo.singles;
+
+    return categoryInfo;
   },
 
   /**
