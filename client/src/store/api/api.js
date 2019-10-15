@@ -103,7 +103,7 @@ const api = {
             resp = `<h4>${data.error}</h4><p>${data.message}</p>`;
             toastr.e(resp);
           }
-          console.error(data.error);
+          console.error("API ERROR:", data.error);
           return { error: data.error };
         }
       } catch (error) {

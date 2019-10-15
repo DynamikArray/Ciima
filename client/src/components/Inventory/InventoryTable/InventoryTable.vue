@@ -71,6 +71,8 @@ export default {
       inventory: state => state.linnworks.items
     }),
     ebaySetsOnly() {
+      if (!this.inventory.length) return [];
+
       const setsOnly = this.inventory.filter(item => {
         return item.CategoryName == "EBAY-SETS";
       });

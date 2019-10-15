@@ -33,8 +33,8 @@ const linnworks = {
     [UPDATE_INVENTORY_RESPONSE](state, data) {}
   },
   actions: {
-    [SEARCH_INVENTORY]({ dispatch, commit }, params) {
-      dispatch(
+    async [SEARCH_INVENTORY]({ dispatch, commit }, params) {
+      const resp = await dispatch(
         "api/requestHandler",
         {
           method: "post",
@@ -45,6 +45,8 @@ const linnworks = {
         },
         { root: true }
       );
+
+      return resp;
     },
 
     async [UPDATE_INVENTORY_ITEM_LEVELS]({ dispatch, commit }, params) {

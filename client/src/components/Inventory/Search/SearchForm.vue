@@ -25,14 +25,19 @@ export default {
     };
   },
   methods: {
-    searchLinnworks: debounce(function(event) {
+    searchLinnworks: debounce(async function(event) {
       const { searchString } = this;
       if (event.type === "submit") {
         if (!searchString.length == 0) {
           //greater than 3 so search
-          this.$store.dispatch(`linnworks/${SEARCH_INVENTORY}`, {
-            searchString
-          });
+          const { error, result } = await this.$store.dispatch(
+            `linnworks/${SEARCH_INVENTORY}`,
+            {
+              searchString
+            }
+          );
+          //results get set in apiHandler
+          if (error && !result) this.$toastr.e(error);
         }
       }
     }, 500)
