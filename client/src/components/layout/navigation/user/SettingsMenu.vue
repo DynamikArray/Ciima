@@ -13,19 +13,23 @@
           class=""
         >
           <v-icon class="mr-1">fa fa-clipboard-list</v-icon>
+          <div class="">
+            Selected
+          </div>
+          <v-icon class="mx-1">fa fa-caret-down</v-icon>
         </v-btn>
       </div>
 
       <div class="d-flex align-center">
         <v-menu
           :max-width="380"
-          :nudge-bottom="42"
+          :nudge-bottom="38"
           v-model="blnMenu"
           :close-on-content-click="false"
           offset-x
         >
           <template v-slot:activator="{ on }">
-            <v-btn text v-on="on">
+            <v-btn small text v-on="on">
               <v-icon claass="mr-1 x-small">fa fa-cog</v-icon>
               <div class="text-center mx-1">
                 <div>({{ defaultProductType }})</div>

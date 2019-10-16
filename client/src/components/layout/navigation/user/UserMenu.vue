@@ -34,6 +34,7 @@
                   {{ userName }}
                 </div>
               </div>
+              <v-icon class="mr-1">fa fa-caret-down</v-icon>
             </v-btn>
           </template>
 
