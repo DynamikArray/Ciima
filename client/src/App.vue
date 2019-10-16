@@ -1,7 +1,7 @@
 <template>
-  <v-app id="inspire">
-    <NavigationDrawer :drawer="navigationDrawer" />
-    <DraftsDrawer :drawer="settingsDrawer" />
+  <v-app>
+    <NavigationDrawer v-if="isLoggedIn && user" :drawer="navigationDrawer" />
+    <DraftsDrawer v-if="isLoggedIn && user" :drawer="settingsDrawer" />
     <AppBar
       :toggleNavigationDrawer="toggleNavigationDrawer"
       :toggleSettingsDrawer="toggleSettingsDrawer"
@@ -11,7 +11,7 @@
         <router-view />
       </TransitionPage>
     </v-content>
-    <Footer />
+    <Footer v-if="isLoggedIn && user" />
   </v-app>
 </template>
 
