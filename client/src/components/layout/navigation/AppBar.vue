@@ -27,6 +27,7 @@
 
       <v-spacer></v-spacer>
 
+      <SettingsMenu></SettingsMenu>
       <UserMenu></UserMenu>
     </v-app-bar>
   </section>
@@ -34,6 +35,8 @@
 
 <script>
 import UserMenu from "./user/UserMenu";
+import SettingsMenu from "./user/SettingsMenu";
+
 import { mapState } from "vuex";
 
 export default {
@@ -41,7 +44,8 @@ export default {
     toggleNavigationDrawer: [Function]
   },
   components: {
-    UserMenu
+    UserMenu,
+    SettingsMenu
   },
   computed: {
     ...mapState({

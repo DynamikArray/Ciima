@@ -19,19 +19,6 @@
       v-if="isLoggedIn && userName"
     >
       <div class="d-flex align-center">
-        <v-btn
-          text
-          ripple
-          small
-          @click="toggleSettingsDrawer(!draftDrawer)"
-          class=""
-        >
-          <v-icon class="mr-1">{{ setDefaultProductTypeIcon() }}</v-icon>
-          <span class="">Current Draft <br />({{ defaultProductType }}) </span>
-        </v-btn>
-      </div>
-
-      <div class="d-flex align-center">
         <v-menu
           :max-width="380"
           :nudge-bottom="42"
@@ -41,7 +28,7 @@
         >
           <template v-slot:activator="{ on }">
             <v-btn text v-on="on">
-              <v-icon class="mr-1">fas fa-user-cog</v-icon>
+              <avatar :username="userName" :size="30" class="mr-1"></avatar>
               <div class="" style="max-width:80px;">
                 <div class="text-truncate">
                   {{ userName }}
@@ -59,43 +46,12 @@
 
                 <v-list-item-content>
                   <v-list-item-title>{{ userName }}</v-list-item-title>
-                  <v-list-item-subtitle
-                    >Set your preferences below:</v-list-item-subtitle
-                  >
+                  <v-list-item-subtitle>{{ userEmail }}</v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>
             </v-list>
 
             <v-divider></v-divider>
-
-            <v-list>
-              <v-list-item>
-                <v-list-item-content>
-                  <v-list-item-title>Default Product Type:</v-list-item-title>
-                  <v-list-item-subtitle>
-                    Applies defaults for Draft form fields.
-                  </v-list-item-subtitle>
-                  <div class="px-2">
-                    <v-radio-group
-                      row
-                      :value="defaultProductType"
-                      @change="changeDefaultProductType"
-                    >
-                      <v-radio
-                        label="Sets"
-                        color="primary"
-                        value="sets"
-                      ></v-radio>
-                      <v-radio
-                        label="Singles"
-                        color="primary"
-                        value="singles"
-                      ></v-radio>
-                    </v-radio-group>
-                  </div>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list>
 
             <v-divider></v-divider>
 
@@ -118,10 +74,6 @@
 <script>
 import avatar from "vue-avatar";
 import { mapGetters, mapState } from "vuex";
-import {
-  TOGGLE_DRAFT_DRAWER,
-  SET_DEFAULT_PRODUCT_TYPE
-} from "@/store/mutation-types";
 
 export default {
   components: {
@@ -131,42 +83,19 @@ export default {
     blnMenu: false
   }),
   computed: {
-    ...mapState({
-      defaultProductType: state => state.settings.defaultProductType,
-      draftDrawer: state => state.settings.draftDrawer
-    }),
     ...mapGetters({
       isLoggedIn: "user/isLoggedIn",
-      userName: "user/userName"
+      userName: "user/userName",
+      userEmail: "user/email"
     })
   },
 
   methods: {
-    setDefaultProductTypeIcon() {
-      const type = this.defaultProductType;
-      switch (type) {
-        case "sets":
-          return "fa-layer-group";
-          break;
-        case "singles":
-          return "fa-image";
-          break;
-        default:
-          return "fa-clipboard";
-          break;
-      }
-    },
     signInUser() {
       this.$router.push("/login");
     },
     signOutUser() {
       this.$store.dispatch("user/logout");
-    },
-    toggleSettingsDrawer(value) {
-      this.$store.commit(`settings/${TOGGLE_DRAFT_DRAWER}`, value);
-    },
-    changeDefaultProductType(value) {
-      this.$store.commit(`settings/${SET_DEFAULT_PRODUCT_TYPE}`, value);
     },
     async logoutUser() {
       const confirm = await this.$confirm(
