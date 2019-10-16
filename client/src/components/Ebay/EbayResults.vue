@@ -50,6 +50,11 @@
         v-for="item in getFilteredResults"
         class="my-4"
         :key="item.itemId"
+        :color="
+          item.sellerInfo.sellerUserName === `searchlightcomics`
+            ? `orange darken-4`
+            : ``
+        "
       >
         <v-card-text class="pa-1">
           <div class="d-flex grow pa-1">
