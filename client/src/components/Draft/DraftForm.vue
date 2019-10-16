@@ -1,7 +1,6 @@
 <template>
   <div class="draftFormWrapper">
     <RequiredDataChecks></RequiredDataChecks>
-    <v-divider class="my-1"></v-divider>
 
     <v-form ref="draftForm" v-model="valid" lazy-validation class="pa-3">
       <!--TITLE ROW-->
@@ -63,13 +62,10 @@
       <!--END ROW -->
 
       <v-row>
-        <v-col cols="12">
+        <v-col cols="4">
           <AutoFillButton></AutoFillButton>
         </v-col>
-      </v-row>
-
-      <v-row>
-        <v-col cols="12">
+        <v-col cols="8">
           <v-text-field
             outlined
             label="Inventory Title"
@@ -307,4 +303,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.col {
+  padding: 3px 12px;
+}
+</style>

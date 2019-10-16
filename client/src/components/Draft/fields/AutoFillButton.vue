@@ -1,23 +1,33 @@
 <template>
-  <div class="d-flex justify-center w-100">
-    <div class="d-flex align-center">
-      <h3 class="mx-1"><v-icon class="mr-1"></v-icon>Defaults:</h3>
-    </div>
-    <div class="d-flex mx-1 align-center mr-3">
-      <v-btn :loading="draft.savingDraft" color="primary" @click="autofillDraft"
-        ><v-icon class="mr-2">fa-magic</v-icon>Autofill</v-btn
-      >
-    </div>
-    <div class="d-flex align-center ml-3">
-      <h3 class="mx-1"><v-icon class="mr-1"></v-icon>Enhanced Title:</h3>
-    </div>
-    <div class="d-flex mx-1 align-center">
-      <v-btn
-        :loading="draft.savingDraft"
-        color="primary"
-        @click="autoFillTitleWithPublisherYear"
-        ><v-icon class="mr-2">fab fa-leanpub</v-icon>Pub&Year</v-btn
-      >
+  <div class="d-flex flex-column grow justify-center">
+    <div class="d-flex flex-row">
+      <div class="flex flex-column justify-center">
+        <div class="d-flex mx-1 justify-center">
+          <v-btn
+            :loading="draft.savingDraft"
+            color="primary"
+            @click="autofillDraft"
+            ><v-icon class="mr-2">fa-magic</v-icon>Autofill</v-btn
+          >
+        </div>
+        <div class="d-flex align-center grow">
+          <h3 class="grow text-center">Set Defaults</h3>
+        </div>
+      </div>
+
+      <div class="flex flex-column justify-center">
+        <div class="d-flex mx-1 justify-center">
+          <v-btn
+            :loading="draft.savingDraft"
+            color="primary"
+            @click="autoFillTitleWithPublisherYear"
+            ><v-icon class="mr-2">fab fa-leanpub</v-icon>Pub&Year</v-btn
+          >
+        </div>
+        <div class="d-flex align-center grow">
+          <h3 class="grow text-center">Enhance Title</h3>
+        </div>
+      </div>
     </div>
   </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section v-if="!hasTitles || !hasIssues || !hasCoverPhoto">
     <div class="d-flex justify-space-around my-3">
       <!--TITLE SELECTED-->
       <div class="d-flex align-center justify-start">
@@ -92,6 +92,7 @@
     >
       <h3>You have not completed the required steps to begin a draft.</h3>
     </div>
+    <v-divider class="my-1"></v-divider>
   </section>
 </template>
 
