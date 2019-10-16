@@ -33,7 +33,7 @@ import VueToastr from "vue-toastr";
 Vue.use(VueToastr, {
   defaultPosition: "toast-top-right",
   progressbar: true,
-  timeout: 3500,
+  timeout: 2500,
   classNames: "ourToast"
 });
 

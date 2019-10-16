@@ -54,8 +54,6 @@
 
             <v-divider></v-divider>
 
-            <v-divider></v-divider>
-
             <v-card-actions>
               <div class="d-flex justify-end grow py-2">
                 <div class="d-flex align-center">

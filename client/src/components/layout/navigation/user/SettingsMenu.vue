@@ -46,26 +46,37 @@
                   <v-list-item-subtitle>
                     Applies defaults for Draft form fields.
                   </v-list-item-subtitle>
-                  <div class="px-2">
-                    <v-radio-group
-                      row
-                      :value="defaultProductType"
-                      @change="changeDefaultProductType"
-                    >
-                      <v-radio
-                        label="Sets"
-                        color="primary"
-                        value="sets"
-                      ></v-radio>
-                      <v-radio
-                        label="Singles"
-                        color="primary"
-                        value="singles"
-                      ></v-radio>
-                    </v-radio-group>
-                  </div>
                 </v-list-item-content>
               </v-list-item>
+              <v-divider></v-divider>
+              <v-list-item>
+                <div class="px-2">
+                  <v-radio-group
+                    row
+                    :value="defaultProductType"
+                    @change="changeDefaultProductType"
+                  >
+                    <v-radio
+                      label="Sets"
+                      color="primary"
+                      value="sets"
+                    ></v-radio>
+                    <v-radio
+                      label="Singles"
+                      color="primary"
+                      value="singles"
+                    ></v-radio>
+                  </v-radio-group>
+                </div>
+              </v-list-item>
+              <v-divider></v-divider>
+              <v-card-actions>
+                <div class="d-flex justify-end grow">
+                  <v-btn @click="closeSettingsMenu" color="success"
+                    ><v-icon class="mr-1">fa fa-times</v-icon>Close</v-btn
+                  >
+                </div>
+              </v-card-actions>
             </v-list>
           </v-card>
         </v-menu>
@@ -101,6 +112,9 @@ export default {
   },
 
   methods: {
+    closeSettingsMenu() {
+      this.blnMenu = false;
+    },
     signInUser() {
       this.$router.push("/login");
     },
@@ -112,6 +126,9 @@ export default {
     },
     changeDefaultProductType(value) {
       this.$store.commit(`settings/${SET_DEFAULT_PRODUCT_TYPE}`, value);
+      this.$toastr.defaultTimeout = 1000;
+      this.$toastr.s("Setting updated!");
+      this.$toastr.defaultTimeout = 2500;
     },
     async logoutUser() {
       const confirm = await this.$confirm(
