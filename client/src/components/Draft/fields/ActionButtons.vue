@@ -58,7 +58,7 @@ export default {
           //make the calls
           const result = await this.$store.dispatch(
             `currentDraft/${CURRENT_DRAFT_SAVE}`,
-            { draft }
+            draft
           );
 
           if (result) {

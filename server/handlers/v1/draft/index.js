@@ -32,6 +32,10 @@ module.exports = fastify => ({
       other_images
     } = req.body;
 
+    //create the UUID and ItemNumber for the items inclusion on linnworks
+    const stockItemId = uuidv1();
+    const itemNumber = Date.now().toString(); //aka SKU
+
     //TODO ESCAPE CHARACHTER LIST???
     //   this is not a single tick = "’"
     const cleanImages = other_images.map(img => {
@@ -41,13 +45,51 @@ module.exports = fastify => ({
       };
     });
 
-    //create the UUID for the items inclusion on linnworks
-    //as well as the ItemNumber, this might become the SKU and populated by us
-    //further down the line.
-    const stockItemId = uuidv1();
-    const itemNumber = Date.now().toString(); //aka SKU
+    const draft = {
+      stockItemId,
+      itemNumber,
+      inventoryTitle,
+      locationCode,
+      grade,
+      quantity,
+      price,
+      ebaySiteCategoryId,
+      ebayStoreCategoryIdOne,
+      ebayStoreCategoryIdTwo,
+      series,
+      mainCharacter,
+      issueNumbers,
+      publisher,
+      publishedYear,
+      publishedDate,
+      draftType,
+      main_image,
+      other_images: JSON.stringify(cleanImages),
+      ownerId
+    };
 
+    const query = "INSERT INTO slc_drafts SET ?";
+
+    const connection = await fastify.mysql.getConnection();
+    if (connection) {
+      try {
+        const [rows, fields] = await connection.query(query, draft);
+        connection.release();
+        return { result: rows };
+      } catch (error) {
+        fastify.winston.error(error);
+        res.send(error);
+      }
+    }
+    return { error: "No db connection" };
+  }
+});
+
+/*
     // TODO: ADD other images to this insert
+    //
+    //
+    /*
     const query = `INSERT INTO slc_drafts (
         stockItemId, itemNumber,  inventoryTitle, locationCode, grade, quantity,
         price, ebaySiteCategoryId, ebayStoreCategoryIdOne,
@@ -62,17 +104,4 @@ module.exports = fastify => ({
       cleanImages
     )}', '${ownerId}', '${draftType}');`;
 
-    const connection = await fastify.mysql.getConnection();
-    if (connection) {
-      try {
-        const [rows, fields] = await connection.query(query);
-        connection.release();
-        return { result: rows };
-      } catch (error) {
-        fastify.winston.error(error);
-        res.send(error);
-      }
-    }
-    return { error: "No db connection" };
-  }
-});
+*/
