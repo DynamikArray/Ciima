@@ -12,7 +12,7 @@
               color="primary"
               class="mb-5"
               v-model="blnSetsOnly"
-              :label="convertBlnToYesNo()"
+              :label="blnSetsOnly ? `Yes` : `No`"
               hide-details
             ></v-switch>
           </div>
@@ -29,6 +29,13 @@
       :items="getData"
       class="elevation-1"
     >
+      <template v-slot:item.Images="{ item }">
+        <ImagesHoverOver
+          :imageFull="getMainImage(item.Images, `FullSource`)"
+          :imageThumb="getMainImage(item.Images, `Source`)"
+        />
+      </template>
+
       <template v-slot:item.StockLevels="{ item }">
         <div v-html="createStockLevels(item.StockLevels)" />
       </template>
@@ -53,11 +60,13 @@ import { mapState } from "vuex";
 import { headers } from "./tableConfig.js";
 import SearchForm from "@/components/Inventory/Search/SearchForm";
 import UpdateDialog from "./UpdateDialog";
+import ImagesHoverOver from "@/components/Images/ImageHoverOver";
 
 export default {
   components: {
     SearchForm,
-    UpdateDialog
+    UpdateDialog,
+    ImagesHoverOver
   },
   data() {
     return {
@@ -84,6 +93,11 @@ export default {
     }
   },
   methods: {
+    getMainImage(images, property) {
+      if (!images.length > 0) return false;
+      const mainImage = images.filter(image => image.IsMain);
+      return mainImage[0][property];
+    },
     convertBlnToYesNo() {
       if (this.blnSetsOnly) return "Yes";
       return "No";

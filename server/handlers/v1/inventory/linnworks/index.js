@@ -3,7 +3,7 @@ const queryString = require("query-string");
 module.exports = fastify => ({
   searchInventoryHandler: async (req, res) => {
     const keyword = req.body.searchString;
-    const formattedData = `keyword=${keyword}&loadCompositeParents=true&loadVariationParents=true&entriesPerPage=200&pageNumber=1&dataRequirements=[0,2,4,5,6]&searchTypes=[0,1,2]`;
+    const formattedData = `keyword=${keyword}&loadCompositeParents=true&loadVariationParents=true&entriesPerPage=200&pageNumber=1&dataRequirements=[0,2,4,5,6,7,8]&searchTypes=[0,1,2]`;
 
     try {
       const { result, error } = await fastify.linnworks.makeApiCall({

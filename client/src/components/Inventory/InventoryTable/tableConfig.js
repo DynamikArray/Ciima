@@ -1,5 +1,12 @@
 export const headers = [
   {
+    text: "Image",
+    align: "center",
+    sortable: false,
+    value: "Images",
+    width: "60"
+  },
+  {
     text: "Category",
     align: "center",
     sortable: true,
