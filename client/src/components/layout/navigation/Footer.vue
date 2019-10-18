@@ -1,7 +1,9 @@
 <template>
   <v-footer app>
     <div class="d-flex grow justify-space-between w-100">
-      <div class="d-flex grow align-center"></div>
+      <div class="d-flex grow align-center">
+        <StatusBar />
+      </div>
 
       <div class="d-flex align-center">
         <span class="mx-1">Brian Ridsdale</span>
@@ -30,12 +32,17 @@
 </template>
 
 <script>
+import StatusBar from "./user/StatusBar";
+
 export default {
   computed: {
     currentYear() {
       const d = new Date();
       return d.getFullYear();
     }
+  },
+  components: {
+    StatusBar
   }
 };
 </script>

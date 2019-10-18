@@ -15,7 +15,8 @@
 
 <script>
 import debounce from "lodash.debounce";
-import { SEARCH_INVENTORY } from "@/store/action-types.js";
+import { UPDATE_API_STATUS } from "@/store/mutation-types";
+import { SEARCH_INVENTORY } from "@/store/action-types";
 
 export default {
   data() {
@@ -36,8 +37,20 @@ export default {
               searchString
             }
           );
+          if (result) {
+            this.$store.commit(
+              `api/${UPDATE_API_STATUS}`,
+              `Loaded Inventory Results`,
+              { root: true }
+            );
+          }
           //results get set in apiHandler
-          if (error && !result) this.$toastr.e(error);
+          if (error && !result) {
+            this.$store.commit(`api/${UPDATE_API_STATUS}`, error, {
+              root: true
+            });
+            this.$toastr.e(error);
+          }
         }
       }
     }, 500)

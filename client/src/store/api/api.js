@@ -7,7 +7,8 @@ import { axiosInstance, createInterceptor } from "@/util/axios/axiosInstance";
 import {
   ADD_API_CALL,
   REMOVE_API_CALL,
-  UPDATE_LOADING_SCREEN_FLAG
+  UPDATE_LOADING_SCREEN_FLAG,
+  UPDATE_API_STATUS
 } from "../mutation-types";
 
 const api = {
@@ -15,7 +16,8 @@ const api = {
   state: {
     loading: false,
     useLoadingScreen: false,
-    error: false
+    error: false,
+    status: ""
   },
   mutations: {
     [ADD_API_CALL](state, payload) {
@@ -26,11 +28,17 @@ const api = {
     },
     [UPDATE_LOADING_SCREEN_FLAG](state, payload) {
       state.useLoadingScreen = payload;
+    },
+    [UPDATE_API_STATUS](state, payload) {
+      state.status = payload;
     }
   },
   getters: {
     loadingState: state => {
       return state.loading;
+    },
+    lastStatus: state => {
+      return state.status;
     }
   },
   actions: {

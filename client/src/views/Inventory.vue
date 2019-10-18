@@ -11,7 +11,11 @@
       </div>
     </div>
     <v-divider class="my-3"></v-divider>
-    <InventoryTable />
+    <div class="mb-10">
+      <InventoryTable />
+      <br />
+      <br />
+    </div>
   </v-container>
 </template>
 <script>

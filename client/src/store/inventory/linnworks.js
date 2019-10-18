@@ -6,7 +6,8 @@ import {
   SEARCH_INVENTORY_RESULTS,
   SEARCH_INVENTORY_LOADING,
   UPDATE_INVENTORY_LOADING,
-  UPDATE_INVENTORY_RESPONSE
+  UPDATE_INVENTORY_RESPONSE,
+  UPDATE_API_STATUS
 } from "@/store/mutation-types";
 import {
   SEARCH_INVENTORY,
@@ -45,7 +46,6 @@ const linnworks = {
         },
         { root: true }
       );
-
       return resp;
     },
 

@@ -5,13 +5,16 @@ Vue.use(Vuex);
 import { axiosInstance, createInterceptor } from "@/util/axios/axiosInstance";
 import router from "@/router/router";
 
-import {} from "@/store/mutation-types";
+import { UPDATE_API_STATUS } from "@/store/mutation-types";
 
 const handleResponse = (commit, resolve, resp) => {
   const { id, username, email, token } = resp.data;
   localStorage.setItem("token", token);
   axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   commit("auth_success", { id, username, email, token });
+  commit(`api/${UPDATE_API_STATUS}`, `Logged in user ${username}`, {
+    root: true
+  });
   resolve(resp);
 };
 
