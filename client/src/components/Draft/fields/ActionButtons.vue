@@ -16,7 +16,10 @@
 <script>
 import { mapState } from "vuex";
 import { CURRENT_DRAFT_SAVE, OPEN_DRAFTS_FETCH } from "@/store/action-types.js";
-import { CURRENT_DRAFT_CLEAR } from "@/store/mutation-types.js";
+import {
+  CURRENT_DRAFT_CLEAR,
+  UPDATE_API_STATUS
+} from "@/store/mutation-types.js";
 
 export default {
   props: {
@@ -63,17 +66,33 @@ export default {
 
           if (result) {
             this.$toastr.s("Draft Saved!");
+            this.updateStatus(draft, false);
             //clear the draft
             this.$store.commit(`currentDraft/${CURRENT_DRAFT_CLEAR}`);
             //goto title search
             this.$router.push({ name: "titles" });
           }
         } catch (error) {
+          this.updateStatus(draft, error);
           this.$toastr.e(error.message);
         }
       }
     },
+    updateStatus(draft, error) {
+      if (error) this.$store.commit(`api/${UPDATE_API_STATUS}`, error.message);
 
+      if (!error) {
+        const title = draft.inventoryTitle;
+        const qty = draft.quantity;
+        const location = draft.locationCode;
+        const price = this.$options.filters.currency(draft.price);
+
+        this.$store.commit(
+          `api/${UPDATE_API_STATUS}`,
+          `${qty} @ ${price} in ${location} | ${title} draft saved.`
+        );
+      }
+    },
     /* -- */
     async resetDraft() {
       const confirm = await this.$confirm(
