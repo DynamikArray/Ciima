@@ -1,6 +1,6 @@
 <template>
   <section>
-    <v-dialog v-model="loading" hide-overlay persistent width="300">
+    <v-dialog v-model="active_loading" hide-overlay persistent width="300">
       <v-card color="primary" dark class="pt-2">
         <v-card-text>
           <h4 class="text-center mb-2">
@@ -15,127 +15,61 @@
       </v-card>
     </v-dialog>
 
-    <v-card class="" :loading="loading">
-      <v-card-text class="py-0">
-        <div class="d-flex justify-space-between">
-          <div class="d-flex align-center">
-            <div class="d-flex align-center">
-              Filter Out Calculated Shipping:
-            </div>
-
-            <div class="d-flex align-center">
-              <v-switch
-                color="primary"
-                class="mb-5"
-                v-model="ignoreCalcShipping"
-                :label="ignoreCalcShipping ? `Yes` : `No`"
-                hide-details
-              ></v-switch>
-            </div>
-          </div>
-
-          <div class="d-flex align-center">
-            <h3 class="display-2">
-              Avg: {{ calculateAveragePrice | currency }}
-            </h3>
-          </div>
-        </div>
-      </v-card-text>
-    </v-card>
-
-    <v-divider class="my-3"></v-divider>
-
-    <V-scroll-y-transition group>
-      <v-card
-        v-for="item in getFilteredResults"
-        class="my-4"
-        :key="item.itemId"
-        :color="
-          item.sellerInfo.sellerUserName === `searchlightcomics`
-            ? `orange darken-4`
-            : ``
-        "
-      >
-        <v-card-text class="pa-1">
-          <div class="d-flex grow pa-1">
-            <div class="d-flex justify-space-around grow">
-              <div class="d-flex shrink mr-1">
-                <v-img
-                  border
-                  contain
-                  height="80"
-                  width="140"
-                  :src="item.galleryURL"
-                ></v-img>
-              </div>
-
-              <div class="d-flex grow">
-                <div class="d-flex flex-column grow">
-                  <div class="d-flex">
-                    <span class="caption"
-                      >Sold {{ item.listingInfo.endTime | date }}</span
-                    >
-                  </div>
-                  <div class="d-flex grow justify-space-between">
-                    <div class="d-flex">
-                      <h3 class="title my-0">{{ item.title }}</h3>
-                    </div>
-                  </div>
-                  <div class="d-flex">
-                    <v-icon
-                      left
-                      x-small
-                      v-if="item.sellerInfo.topRatedSeller"
-                      class="mx-1"
-                      >fa fa-medal</v-icon
-                    >
-                    {{ item.sellerInfo.sellerUserName }}
-                  </div>
-                </div>
-              </div>
-
-              <div class="d-flex flex-column justify-center align-end mr-2">
-                <div class="d-flex align-center">
-                  <h3 class="headline">
-                    {{
-                      item.sellingStatus.convertedCurrentPrice.amount | currency
-                    }}
-                  </h3>
-                </div>
-                <div class="d-flex align-center">
-                  <h4 class="subtitle-2">
-                    {{ getShippingCost(item.shippingInfo) }}
-                    <span class="caption">Shipping</span>
-                  </h4>
-                </div>
-              </div>
-            </div>
-          </div>
-        </v-card-text>
-      </v-card>
-    </V-scroll-y-transition>
+    <v-row>
+      <v-col cols="6">
+        <Listings
+          :items="active_results"
+          :loading="active_loading"
+          title="Active Listing Results"
+          endDateText="Ends:"
+          listingsType="active"
+        />
+      </v-col>
+      <v-col cols="6">
+        <Listings
+          :items="ended_results"
+          :loading="ended_loading"
+          title="Ended Listing Results"
+          endDateText="Sold:"
+          listingsType="ended"
+        />
+      </v-col>
+    </v-row>
   </section>
 </template>
 
 <script>
 import { mapState } from "vuex";
 import EbaySummary from "./EbaySummary";
+import Listings from "./Results/Listings";
 
 export default {
   components: {
-    EbaySummary
+    EbaySummary,
+    Listings
   },
   data: () => ({
     ignoreCalcShipping: false
   }),
   computed: {
     ...mapState({
-      results: state => state.ebay.items,
-      loading: state => state.ebay.loading
+      active_results: state => state.ebay.active_items,
+      active_loading: state => state.ebay.active_loading,
+      ended_results: state => state.ebay.ended_items,
+      ended_loading: state => state.ebay.ended_loading
     }),
-    getFilteredResults() {
+    getActiveFilteredResults() {
       if (this.ignoreCalcShipping) {
-        const filtered = this.results.filter(
+        const filtered = this.active_results.filter(
+          item => item.shippingInfo.shippingType !== "Calculated"
+        );
+        return filtered;
+      }
+      return this.results;
+    },
+    getEndedFilteredResults() {
+      if (this.ignoreCalcShipping) {
+        const filtered = this.ended_results.filter(
           item => item.shippingInfo.shippingType !== "Calculated"
         );
         return filtered;
@@ -143,8 +77,8 @@ export default {
       return this.results;
     },
     calculateSalesPrices() {
-      if (this.results.length === 0) return [];
-      const prices = this.results.map(item => {
+      if (this.ended_results.length === 0) return [];
+      const prices = this.ended_results.map(item => {
         const { shippingServiceCost } = item.shippingInfo;
         let shipping = 0;
 
