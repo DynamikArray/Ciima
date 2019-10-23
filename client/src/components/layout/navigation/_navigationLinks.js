@@ -10,6 +10,5 @@ module.exports = [
   { menuDivider: true },
   { icon: "fa fa-boxes", text: "Search Inventory", to: "inventory" },
   { menuDivider: true },
-  { icon: "fab fa-ebay", text: "Search eBay", to: "ebay" },
-  { menuDivider: true }
+  { icon: "fab fa-ebay", text: "Search eBay", to: "ebay" }
 ];

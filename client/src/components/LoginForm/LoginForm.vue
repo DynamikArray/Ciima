@@ -2,7 +2,7 @@
   <v-card raised hover>
     <v-card-title class="mb-1"
       ><h4 class="mb-0">
-        <v-icon class="mr-1 mb-1">fa-sign-in-alt</v-icon>Please login to
+        <v-icon class="mr-1 mb-1">fa-sign-in-alt</v-icon>Please Sign In to
         continue
       </h4></v-card-title
     >

@@ -39,6 +39,13 @@
         </v-list>
 
         <v-list v-else>
+          <v-list-item v-if="!compDrawer" class="text-center pa-2 mx-2 mb-3">
+            <v-list-item-content v-if="!compDrawer">
+              <h4>You must be signed in to continue using the application.</h4>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-divider v-if="!compDrawer" class="my-1"></v-divider>
           <router-link to="login" class="noUnderline">
             <v-list-item @click="" v-ripple>
               <v-list-item-action :class="removeMargin()"
