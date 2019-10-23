@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <div class="d-flex flex-row justify-space-between align-self-center">
       <div class="d-flex grow align-center">
         <h5 class="text-center mt-2 display-3">

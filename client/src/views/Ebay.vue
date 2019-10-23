@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-scroll-y-reverse-transition>
       <div class="pageTitleWrapper" v-if="!ebayResults">
         <h1 class="display-3 text-left">Search Ebay</h1>
