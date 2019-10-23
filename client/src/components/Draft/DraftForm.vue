@@ -10,6 +10,7 @@
       <v-row>
         <v-col cols="5">
           <v-text-field
+            dense
             autofocus
             :value="locationCode"
             id="locationCode"
@@ -24,6 +25,7 @@
         </v-col>
         <v-col cols="3">
           <v-text-field
+            dense
             :value="grade"
             @input="handleInputGrade"
             id="grade"
@@ -37,6 +39,7 @@
 
         <v-col cols="2">
           <v-text-field
+            dense
             v-model="quantity"
             name="quantity"
             id="quantity"
@@ -49,6 +52,7 @@
 
         <v-col cols="2">
           <v-text-field
+            dense
             v-model="price"
             name="price"
             id="price"
@@ -66,7 +70,11 @@
           <AutoFillButton></AutoFillButton>
         </v-col>
         <v-col cols="8">
+          <div>
+
+
           <v-text-field
+            dense
             outlined
             label="Inventory Title"
             hint="Title as it will appear on Ebay"
@@ -76,9 +84,34 @@
             name="inventoryTitle"
             v-model="inventoryTitle"
             :rules="fieldRules.inventoryTitle"
-          ></v-text-field>
+          >
+            <template v-slot:append-outer>
+              <v-btn
+                style="margin-top:-5px"
+                color="primary"
+                @click="toggleExtraDescriptionDetails"
+              >
+                <v-icon class="mr-1">{{ extraDescriptionIcon() }}</v-icon
+                >More
+              </v-btn>
+            </template>
+          </v-text-field>
+          </div>
+
+          <div v-if="showExtra">
+            <v-textarea
+            v-model="extraDescription"
+              auto-grow
+              outlined
+              label="Extra Description Information"
+              hint="Will be added underneath the title in the description of the ebay listing"
+            >
+            </v-textarea>
+          </div>
+
         </v-col>
       </v-row>
+
       <!--END ROW -->
 
       <h3>Comic Attributes:</h3>
@@ -86,6 +119,7 @@
       <v-row>
         <v-col cols="4">
           <v-text-field
+            dense
             v-model="mainCharacter"
             name="mainCharacter"
             outlined
@@ -98,6 +132,7 @@
 
         <v-col cols="5">
           <v-text-field
+            dense
             v-model="series"
             name="series"
             outlined
@@ -110,6 +145,7 @@
 
         <v-col cols="3">
           <v-text-field
+            dense
             v-model="upc"
             name="upc"
             outlined
@@ -124,6 +160,7 @@
       <v-row>
         <v-col cols="4">
           <v-text-field
+            dense
             v-model="issueNumbers"
             name="issueNumbers"
             outlined
@@ -135,6 +172,7 @@
         </v-col>
         <v-col cols="3">
           <v-text-field
+            dense
             v-model="publisher"
             name="publisher"
             outlined
@@ -146,6 +184,7 @@
         </v-col>
         <v-col cols="2">
           <v-text-field
+            dense
             v-model="publishedYear"
             name="publishedYear"
             outlined
@@ -156,6 +195,7 @@
         </v-col>
         <v-col cols="3">
           <v-text-field
+            dense
             v-model="publishedDate"
             name="publishedDate"
             outlined
@@ -173,6 +213,7 @@
       <v-row>
         <v-col cols="12">
           <v-autocomplete
+            dense
             outlined
             v-model="ebaySiteCategoryId"
             name="ebaySiteCategoryId"
@@ -193,6 +234,7 @@
       <v-row>
         <v-col cols="6">
           <v-select
+            dense
             v-model="ebayStoreCategoryIdOne"
             placeholder="Store Category 1"
             name="ebayStoreCategoryIdOne"
@@ -205,6 +247,7 @@
         </v-col>
         <v-col cols="6">
           <v-select
+            dense
             v-model="ebayStoreCategoryIdTwo"
             placeholder="Store Category 2"
             name="ebayStoreCategoryIdTwo"
@@ -265,7 +308,8 @@ export default {
     selectedEbayCategory: null, //select
     searchEbayCategory: null,
     ebayStoreCategories,
-    fieldRules
+    fieldRules,
+    showExtra: false
   }),
   computed: {
     ...mapState({
@@ -298,6 +342,13 @@ export default {
     },
     handleInputGrade(val) {
       this.grade = val.toUpperCase();
+    },
+    toggleExtraDescriptionDetails() {
+      this.showExtra = !this.showExtra;
+    },
+    extraDescriptionIcon() {
+      if (this.showExtra) return "fa-arrow-alt-circle-up";
+      return "fa-arrow-alt-circle-down";
     }
   }
 };

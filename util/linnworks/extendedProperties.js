@@ -4,6 +4,11 @@
  */
 const extendedProperties = [
   {
+    name: "Extra Description",
+    field: "extraDescription",
+    default: ""
+  },
+  {
     name: "UPC",
     field: "upc",
     default: ""
