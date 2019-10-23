@@ -1,6 +1,9 @@
 <template>
   <v-app>
-    <NavigationDrawer v-if="isLoggedIn && user" :drawer="navigationDrawer" />
+    <NavigationDrawer
+      :loggedIn="isLoggedIn && user"
+      :drawer="navigationDrawer"
+    />
     <DraftsDrawer v-if="isLoggedIn && user" :drawer="settingsDrawer" />
     <AppBar
       :toggleNavigationDrawer="toggleNavigationDrawer"
