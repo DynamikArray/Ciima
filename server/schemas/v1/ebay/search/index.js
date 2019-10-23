@@ -1,5 +1,5 @@
 module.exports = {
-  searchSoldSchema: {
+  searchSchema: {
     description: "Search Ebay for sold items",
     tags: ["ebay"],
     summary: "Search Ebays sold items",
@@ -18,6 +18,10 @@ module.exports = {
           items: {
             type: "string"
           }
+        },
+        searchType: {
+          type: "string",
+          enum: ["findCompletedItems", "findItemsByKeywords"]
         }
       }
     },

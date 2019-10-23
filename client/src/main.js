@@ -16,7 +16,7 @@ Vue.filter("dateTime", createDateFilter("MMM DD, YYYY hh:mm a"));
 import VueCurrencyFilter from "vue-currency-filter";
 Vue.use(VueCurrencyFilter, {
   symbol: "$",
-  thousandsSeparator: "-",
+  thousandsSeparator: ",",
   fractionCount: 2,
   fractionSeparator: ".",
   symbolPosition: "front",

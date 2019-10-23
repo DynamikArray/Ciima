@@ -19,7 +19,7 @@
 
 <script>
 import debounce from "lodash.debounce";
-import { SEARCH_EBAY } from "@/store/action-types";
+import { SEARCH_EBAY_ENDED, SEARCH_EBAY_ACTIVE } from "@/store/action-types";
 
 export default {
   data: () => ({
@@ -31,8 +31,14 @@ export default {
       const { keywords } = this;
       if (event.type === "submit") {
         if (!keywords.length == 0) {
-          this.$store.dispatch(`ebay/${SEARCH_EBAY}`, {
-            keywords: [keywords]
+          this.$store.dispatch(`ebay/${SEARCH_EBAY_ENDED}`, {
+            keywords: [keywords],
+            searchType: "findCompletedItems"
+          });
+
+          this.$store.dispatch(`ebay/${SEARCH_EBAY_ACTIVE}`, {
+            keywords: [keywords],
+            searchType: "findItemsByKeywords"
           });
         }
       }

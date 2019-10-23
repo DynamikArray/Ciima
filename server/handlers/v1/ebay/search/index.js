@@ -1,9 +1,9 @@
 const ebay = require("ebay-api");
 
 module.exports = fastify => ({
-  searchSoldHandler: (req, res) => {
+  searchHandler: (req, res) => {
     return new Promise(function(resolve, reject) {
-      const { keywords } = req.body;
+      const { keywords, searchType } = req.body;
 
       const params = {
         keywords,
@@ -17,8 +17,7 @@ module.exports = fastify => ({
       ebay.xmlRequest(
         {
           serviceName: "Finding",
-          //opType: "findItemsByKeywords",
-          opType: "findCompletedItems",
+          opType: searchType,
           appId: process.env.EBAY_APP_ID,
           params: params,
           parser: ebay.parseResponseJson // (default)
