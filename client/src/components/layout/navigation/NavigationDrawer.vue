@@ -16,7 +16,7 @@
           <v-divider v-if="!compDrawer" class="my-2"></v-divider>
         </div>
 
-        <v-list dense class="py-0">
+        <v-list v-if="loggedIn" dense class="py-0">
           <div v-for="link in links">
             <router-link
               v-if="!link.menuDivider"
@@ -36,6 +36,20 @@
             </router-link>
             <v-divider v-if="link.menuDivider" class="my-1"></v-divider>
           </div>
+        </v-list>
+
+        <v-list v-else>
+          <router-link to="login" class="noUnderline">
+            <v-list-item @click="" v-ripple>
+              <v-list-item-action :class="removeMargin()"
+                ><v-icon>fa-sign-in-alt</v-icon>
+              </v-list-item-action>
+
+              <v-list-item-content v-if="!compDrawer"
+                >Sign In</v-list-item-content
+              >
+            </v-list-item>
+          </router-link>
         </v-list>
       </div>
 
@@ -58,7 +72,8 @@ export default {
     Usercard
   },
   props: {
-    drawer: [Boolean]
+    drawer: [Boolean],
+    loggedIn: [Boolean, Object]
   },
   watch: {
     drawer: function(val) {
