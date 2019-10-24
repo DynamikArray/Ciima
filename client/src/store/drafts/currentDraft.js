@@ -11,6 +11,7 @@ const blankDraft = {
   //form data
   savingDraft: false,
   inventoryTitle: "",
+  extraDescription: "",
   locationCode: "",
   grade: "",
   quantity: null,

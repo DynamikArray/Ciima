@@ -14,6 +14,7 @@ module.exports = fastify => ({
     //pull off our body props
     const {
       inventoryTitle,
+      extraDescription,
       locationCode,
       grade,
       quantity,
@@ -49,6 +50,7 @@ module.exports = fastify => ({
       stockItemId,
       itemNumber,
       inventoryTitle,
+      extraDescription,
       locationCode,
       grade,
       quantity,

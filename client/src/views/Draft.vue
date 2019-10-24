@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <h1 class="display-1">Draft Details</h1>
 
     <v-divider></v-divider>

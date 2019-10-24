@@ -1,5 +1,6 @@
 const fieldNames = [
   "inventoryTitle",
+  "extraDescription",
   "locationCode",
   "grade",
   "quantity",

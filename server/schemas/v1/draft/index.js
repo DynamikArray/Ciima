@@ -20,7 +20,15 @@ module.exports = {
         type: "object",
         properties: {
           result: {
-            type: "object"
+            type: "object",
+            properties: {
+              affectedRows: {
+                type: "string"
+              },
+              insertId: {
+                type: "string"
+              }
+            }
           }
         }
       }
