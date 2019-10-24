@@ -53,12 +53,7 @@ module.exports = {
                 series: { type: "string" },
                 status: { type: "string" },
 
-                statusNotes: {
-                  anyOf: [
-                    { type: "string" },
-                    { type: "array", items: { type: "string" } }
-                  ]
-                },
+                statusNotes: { type: "string" },
 
                 ebaySiteCategoryId: { type: "number" },
                 ebayStoreCategoryIdOne: { type: "number" },
