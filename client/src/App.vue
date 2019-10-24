@@ -50,7 +50,16 @@ export default {
     //this can get moved to user settings once we get taht sorted
     this.$vuetify.theme.dark = true;
     //check if we have a token, and then get this account
-    if (this.isLoggedIn && !this.user) this.$store.dispatch("user/account");
+    if (this.isLoggedIn && !this.user) {
+      //we had a token so try to login in user
+      this.$store.dispatch("user/account").catch(err => {
+        this.$store.commit(
+          "user/auth_error",
+          "Your session has expired, login to continue."
+        );
+        this.$store.dispatch("user/logout");
+      });
+    }
   },
   methods: {
     created: function() {},
