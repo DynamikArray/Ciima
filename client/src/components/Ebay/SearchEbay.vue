@@ -38,7 +38,7 @@ export default {
 
           this.$store.dispatch(`ebay/${SEARCH_EBAY_ACTIVE}`, {
             keywords: [keywords],
-            searchType: "findItemsByKeywords"
+            searchType: "findItemsAdvanced"
           });
         }
       }
