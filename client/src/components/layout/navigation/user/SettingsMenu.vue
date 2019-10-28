@@ -46,30 +46,52 @@
                   <v-list-item-subtitle>
                     Applies defaults for Draft form fields.
                   </v-list-item-subtitle>
+
+                  <div class="px-2">
+                    <v-radio-group
+                      row
+                      :value="defaultProductType"
+                      @change="changeDefaultProductType"
+                    >
+                      <v-radio
+                        label="Sets"
+                        color="primary"
+                        value="sets"
+                      ></v-radio>
+                      <v-radio
+                        label="Singles"
+                        color="primary"
+                        value="singles"
+                      ></v-radio>
+                    </v-radio-group>
+                  </div>
+                </v-list-item-content>
+              </v-list-item>
+
+              <v-divider></v-divider>
+
+              <v-list-item>
+                <v-list-item-content>
+                  <v-list-item-title>Utility Drawer</v-list-item-title>
+                  <v-list-item-subtitle>
+                    Adjust the width of the right side Utility drawer.
+                  </v-list-item-subtitle>
+
+                  <v-slider
+                    class="mt-2 mb-0"
+                    prepend-icon="fa fa-arrow-alt-circle-left"
+                    append-icon="fa fa-arrow-alt-circle-right"
+                    min="25"
+                    max="75"
+                    v-model="utilityDrawerWidth"
+                  ></v-slider>
+                  <div class="text-center">
+                    {{ 100 - utilityDrawerWidth }}% Wide
+                  </div>
                 </v-list-item-content>
               </v-list-item>
               <v-divider></v-divider>
-              <v-list-item>
-                <div class="px-2">
-                  <v-radio-group
-                    row
-                    :value="defaultProductType"
-                    @change="changeDefaultProductType"
-                  >
-                    <v-radio
-                      label="Sets"
-                      color="primary"
-                      value="sets"
-                    ></v-radio>
-                    <v-radio
-                      label="Singles"
-                      color="primary"
-                      value="singles"
-                    ></v-radio>
-                  </v-radio-group>
-                </div>
-              </v-list-item>
-              <v-divider></v-divider>
+
               <v-card-actions>
                 <div class="d-flex justify-end grow">
                   <v-btn @click="closeSettingsMenu" color="success"
@@ -90,7 +112,8 @@ import avatar from "vue-avatar";
 import { mapGetters, mapState } from "vuex";
 import {
   TOGGLE_UTILITY_DRAWER,
-  SET_DEFAULT_PRODUCT_TYPE
+  SET_DEFAULT_PRODUCT_TYPE,
+  UTILITY_DRAWER_WIDTH
 } from "@/store/mutation-types";
 
 export default {
@@ -108,7 +131,15 @@ export default {
     ...mapGetters({
       isLoggedIn: "user/isLoggedIn",
       userName: "user/userName"
-    })
+    }),
+    utilityDrawerWidth: {
+      set(width) {
+        this.$store.commit(`settings/${UTILITY_DRAWER_WIDTH}`, width);
+      },
+      get() {
+        return this.$store.state.settings.utilityDrawerWidth;
+      }
+    }
   },
 
   methods: {

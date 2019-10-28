@@ -4,7 +4,7 @@
     app
     clipped
     right
-    width="640px"
+    :width="`${100 - width}%`"
     mobile-break-point="960"
     class="utilityDrawer"
   >
@@ -22,6 +22,9 @@ export default {
     UtilityTabs
   },
   computed: {
+    ...mapState({
+      width: state => state.settings.utilityDrawerWidth
+    }),
     drawer: {
       set(blnOpen) {
         this.$store.commit(`settings/${TOGGLE_UTILITY_DRAWER}`, blnOpen);

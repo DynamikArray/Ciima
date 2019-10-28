@@ -5,7 +5,8 @@ Vue.use(Vuex);
 import {
   //TOGGLE_DRAFT_DRAWER, //// TODO:  DEPREcATE
   TOGGLE_UTILITY_DRAWER,
-  SET_DEFAULT_PRODUCT_TYPE
+  SET_DEFAULT_PRODUCT_TYPE,
+  UTILITY_DRAWER_WIDTH
 } from "@/store/mutation-types";
 
 const settings = {
@@ -14,6 +15,7 @@ const settings = {
   state: {
     //draftDrawer: false, //helps us open/close draft photo/titles/issues drawer
     utilityDrawer: false,
+    utilityDrawerWidth: 50,
     defaultProductType: "sets" //sets, singles
   },
   mutations: {
@@ -22,6 +24,9 @@ const settings = {
       state.draftDrawer = blnOpen;
     },
     */
+    [UTILITY_DRAWER_WIDTH](state, width) {
+      state.utilityDrawerWidth = width;
+    },
     [TOGGLE_UTILITY_DRAWER](state, blnOpen) {
       state.utilityDrawer = blnOpen;
     },
