@@ -60,6 +60,8 @@ fastify.register(require("./routes/v1/user"), { prefix: "v1" });
 fastify.register(require("./routes/v1/inventory/linnworks"), { prefix: "v1" });
 fastify.register(require("./routes/v1/ebay/search"), { prefix: "v1" });
 
+fastify.register(require("./routes/v1/pricing"), { prefix: "v1" });
+
 //catch all route for loading client application
 fastify.get("/*", (request, reply) => reply.sendFile("index.html"));
 
@@ -71,7 +73,7 @@ const start = async () => {
 
   await fastify.listen(config).catch(async e => {
     if (process.env.NODE_ENV === "development") console.error(e);
-    await log.error(`${JSON.stringify(e.message)}`);
+    await fastify.winston.error(`${JSON.stringify(e.message)}`);
   }); //end catch;
 
   const msg = `Running at: ${JSON.stringify(fastify.server.address())}`;
