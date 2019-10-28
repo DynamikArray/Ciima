@@ -1,0 +1,101 @@
+<template>
+  <div class="utilityTabsWrapper fullHeight">
+    <v-tabs
+      v-model="tab"
+      grow
+      center-active
+      color="primary"
+      active-class="grey darken-3 white--text"
+      background-color="grey darken-4"
+    >
+      <v-tab>
+        <v-icon left>fa fa-tasks</v-icon>
+        Selected
+      </v-tab>
+      <v-tab>
+        <v-icon left>fa fa-dollar-sign</v-icon>
+        Prices
+      </v-tab>
+    </v-tabs>
+    <v-tabs-items v-model="tab" class="w-100 tabsItemWrapper">
+      <v-tab-item key="thing1" class="h-100">
+        <vuescroll :ops="ops" class="mr-1">
+          <CurrentDraftImages></CurrentDraftImages>
+        </vuescroll>
+      </v-tab-item>
+      <v-tab-item key="thing2" class="h-100">
+        <div class="white--text ma-3 text-center h-100">
+          <h3>Price List Coming Soon</h3>
+        </div>
+      </v-tab-item>
+    </v-tabs-items>
+  </div>
+</template>
+
+<script>
+import { mapState } from "vuex";
+import { TOGGLE_UTILITY_DRAWER } from "@/store/mutation-types";
+
+import vuescroll from "vuescroll";
+import CurrentDraftImages from "@/components/Drafts/CurrentDraft/CurrentDraftImages";
+
+export default {
+  components: {
+    vuescroll,
+    CurrentDraftImages
+  },
+  computed: {
+    ...mapState({
+      settings: state => state.settings,
+      issues: state => state.currentDraft.issues
+    })
+  },
+  data: () => ({
+    tab: 0,
+    ops: {
+      scrollPanel: {
+        scrollingX: false,
+        scrollingY: true,
+        verticalNativeBarPos: "right"
+      },
+      rail: {
+        size: "12px",
+        background: "#333",
+        specifyBorderRadius: "4px",
+        border: "1px solid #595959",
+        opacity: ".5"
+      },
+      bar: {
+        size: "8px",
+        background: "#2196f3",
+        border: "1px solid #efefef",
+        keepShow: true,
+        specifyBorderRadius: "5px",
+        opacity: ".7"
+      }
+    }
+  }),
+  watch: {
+    //to toggle back to this tab anytime an issue is added
+    issues: {
+      handler(newVal, oldVal) {
+        if (newVal && newVal.length > 0) {
+          this.$store.commit(`settings/${TOGGLE_UTILITY_DRAWER}`, true);
+        }
+      }
+    }
+  }
+};
+</script>
+
+<style scoped>
+.utilityTabsWrapper {
+  overflow-y: hidden;
+  height: 100%;
+}
+.tabsItemWrapper {
+  height: 100%;
+  max-height: calc(100% - 50px);
+  overflow-y: hidden;
+}
+</style>

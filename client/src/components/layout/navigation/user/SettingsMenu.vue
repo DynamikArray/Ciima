@@ -9,10 +9,10 @@
           text
           ripple
           small
-          @click="toggleSettingsDrawer(!draftDrawer)"
+          @click="toggleUtilityDrawer(!utilityDrawer)"
           class=""
         >
-          <v-icon class="mr-1">fa fa-clipboard-list</v-icon>
+          <v-icon class="mr-1">fa fa-tasks</v-icon>
           <div class="">
             Selected
           </div>
@@ -89,7 +89,7 @@
 import avatar from "vue-avatar";
 import { mapGetters, mapState } from "vuex";
 import {
-  TOGGLE_DRAFT_DRAWER,
+  TOGGLE_UTILITY_DRAWER,
   SET_DEFAULT_PRODUCT_TYPE
 } from "@/store/mutation-types";
 
@@ -103,7 +103,7 @@ export default {
   computed: {
     ...mapState({
       defaultProductType: state => state.settings.defaultProductType,
-      draftDrawer: state => state.settings.draftDrawer
+      utilityDrawer: state => state.settings.utilityDrawer
     }),
     ...mapGetters({
       isLoggedIn: "user/isLoggedIn",
@@ -121,8 +121,8 @@ export default {
     signOutUser() {
       this.$store.dispatch("user/logout");
     },
-    toggleSettingsDrawer(value) {
-      this.$store.commit(`settings/${TOGGLE_DRAFT_DRAWER}`, value);
+    toggleUtilityDrawer(value) {
+      this.$store.commit(`settings/${TOGGLE_UTILITY_DRAWER}`, value);
     },
     changeDefaultProductType(value) {
       this.$store.commit(`settings/${SET_DEFAULT_PRODUCT_TYPE}`, value);
