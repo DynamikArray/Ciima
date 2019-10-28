@@ -89,7 +89,7 @@ export default {
 
         this.$store.commit(
           `api/${UPDATE_API_STATUS}`,
-          `${qty} @ ${price} in ${location} | ${title} draft saved.`
+          `Qty(${qty}) @ ${price} | ${location} | ${title} - SAVED!`
         );
       }
     },
