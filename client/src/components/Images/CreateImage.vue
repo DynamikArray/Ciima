@@ -91,7 +91,7 @@ import {
   CURRENT_DRAFT_COVER_PHOTO_UPDATE,
   CURRENT_DRAFT_COVER_PHOTO_CLEAR,
   CURRENT_DRAFT_COVER_PHOTO_SAVING,
-  TOGGLE_DRAFT_DRAWER
+  TOGGLE_UTILITY_DRAWER
 } from "@/store/mutation-types.js";
 
 import settings from "@/util/settings.js";
@@ -403,7 +403,7 @@ export default {
               false
             );
 
-            _this.$store.commit(`settings/${TOGGLE_DRAFT_DRAWER}`, true);
+            _this.$store.commit(`settings/${TOGGLE_UTILITY_DRAWER}`, true);
           } else {
             _this.$store.commit(
               `currentDraft/${CURRENT_DRAFT_COVER_PHOTO_SAVING}`,

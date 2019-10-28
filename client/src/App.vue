@@ -4,11 +4,8 @@
       :loggedIn="isLoggedIn && user"
       :drawer="navigationDrawer"
     />
-    <DraftsDrawer v-if="isLoggedIn && user" :drawer="settingsDrawer" />
-    <AppBar
-      :toggleNavigationDrawer="toggleNavigationDrawer"
-      :toggleSettingsDrawer="toggleSettingsDrawer"
-    />
+    <UtilityDrawer />
+    <AppBar :toggleNavigationDrawer="toggleNavigationDrawer" />
     <v-content>
       <TransitionPage>
         <router-view />
@@ -21,7 +18,8 @@
 <script>
 import { mapGetters } from "vuex";
 
-import DraftsDrawer from "@/components/layout/navigation/DraftsDrawer";
+import UtilityDrawer from "@/components/layout/navigation/UtilityDrawer/UtilityDrawer";
+
 import NavigationDrawer from "@/components/layout/navigation/NavigationDrawer";
 import AppBar from "@/components/layout/navigation/AppBar";
 import TransitionPage from "@/components/layout/transition/TransitionPage";
@@ -30,15 +28,15 @@ import Footer from "@/components/layout/navigation/Footer";
 export default {
   name: "App",
   components: {
-    DraftsDrawer,
-    NavigationDrawer,
     AppBar,
+    NavigationDrawer,
+    //DraftsDrawer,
+    UtilityDrawer,
     TransitionPage,
     Footer
   },
   data: () => ({
-    navigationDrawer: true,
-    settingsDrawer: false
+    navigationDrawer: true
   }),
   computed: {
     ...mapGetters({
@@ -54,9 +52,7 @@ export default {
   },
   methods: {
     created: function() {},
-    toggleSettingsDrawer() {
-      this.settingsDrawer = !this.settingsDrawer;
-    },
+
     toggleNavigationDrawer() {
       this.navigationDrawer = !this.navigationDrawer;
     },
