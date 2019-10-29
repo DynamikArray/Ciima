@@ -5,12 +5,7 @@
       <v-card
         v-for="(item, index) in items"
         class="my-4"
-        :key="`${listingsType}-${item.itemId}-${index}`"
-        :color="
-          item.sellerInfo.sellerUserName === `searchlightcomics`
-            ? `orange darken-4`
-            : ``
-        "
+        :key="`${item.site}-${Date.now()}-${index}`"
       >
         <v-card-text class="pa-1">
           <v-list class="pa-0">
@@ -24,7 +19,7 @@
                   contain
                   height="80"
                   width="80"
-                  :src="item.galleryURL"
+                  :src="item.thumbnail"
                 >
                   <template v-slot:placeholder>
                     <v-row
@@ -42,7 +37,7 @@
               </v-list-item-icon>
               <v-list-item-content class="py-1">
                 <div class="caption">
-                  {{ endDateText }} {{ item.listingInfo.endTime | date }}
+                  {{ endDateText }} {{ item.meta.listingDate.value | date }}
                 </div>
 
                 <h3 class="my-2">{{ item.title }}</h3>
@@ -51,11 +46,11 @@
                   <v-icon
                     left
                     x-small
-                    v-if="item.sellerInfo.topRatedSeller"
+                    v-if="item.meta.sellersInfo.topRated"
                     class="mx-1"
                     >fa fa-medal</v-icon
                   >
-                  {{ item.sellerInfo.sellerUserName }}
+                  {{ item.meta.sellersInfo.name }}
                 </div>
               </v-list-item-content>
               <v-list-item-action>
@@ -64,15 +59,12 @@
                 >
                   <div class="d-flex align-center">
                     <h3 class="headline">
-                      {{
-                        item.sellingStatus.convertedCurrentPrice.amount
-                          | currency
-                      }}
+                      {{ item.price | currency }}
                     </h3>
                   </div>
                   <div class="d-flex align-center">
                     <h4 class="subtitle-2">
-                      {{ getShippingCost(item.shippingInfo) }}
+                      ??
                       <span class="caption">Shipping</span>
                     </h4>
                   </div>
@@ -91,6 +83,7 @@ export default {
   props: ["items", "loading", "title", "endDateText", "listingsType"],
   methods: {
     getShippingCost(shippingInfo) {
+      /*
       const { shippingServiceCost, shippingType } = shippingInfo;
 
       switch (shippingType) {
@@ -108,6 +101,7 @@ export default {
           return "n/a";
           break;
       }
+      */
     }
   }
 };
