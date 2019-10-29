@@ -24,9 +24,7 @@
         </vuescroll>
       </v-tab-item>
       <v-tab-item key="thing2" class="h-100">
-        <div class="white--text ma-3 text-center h-100">
-          <h3>Price List Coming Soon</h3>
-        </div>
+        <PricingContainer></PricingContainer>
       </v-tab-item>
     </v-tabs-items>
   </div>
@@ -37,12 +35,17 @@ import { mapState } from "vuex";
 import { TOGGLE_UTILITY_DRAWER } from "@/store/mutation-types";
 
 import vuescroll from "vuescroll";
+import { scrollbarSettings } from "@/util/scrollbarSettings";
+
 import CurrentDraftImages from "@/components/Drafts/CurrentDraft/CurrentDraftImages";
+
+import PricingContainer from "@/components/Pricing/PricingContainer";
 
 export default {
   components: {
     vuescroll,
-    CurrentDraftImages
+    CurrentDraftImages,
+    PricingContainer
   },
   computed: {
     ...mapState({
@@ -52,28 +55,7 @@ export default {
   },
   data: () => ({
     tab: 0,
-    ops: {
-      scrollPanel: {
-        scrollingX: false,
-        scrollingY: true,
-        verticalNativeBarPos: "right"
-      },
-      rail: {
-        size: "12px",
-        background: "#333",
-        specifyBorderRadius: "4px",
-        border: "1px solid #595959",
-        opacity: ".5"
-      },
-      bar: {
-        size: "8px",
-        background: "#2196f3",
-        border: "1px solid #efefef",
-        keepShow: true,
-        specifyBorderRadius: "5px",
-        opacity: ".7"
-      }
-    }
+    ops: scrollbarSettings
   }),
   watch: {
     //to toggle back to this tab anytime an issue is added

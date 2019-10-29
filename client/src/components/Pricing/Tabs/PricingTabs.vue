@@ -1,0 +1,79 @@
+<template>
+  <div>
+    <v-tabs
+      v-model="tab"
+      centered
+      center-active
+      color="primary"
+      active-class="grey darken-3 white--text"
+      background-color="grey darken-4"
+      class="h-100"
+    >
+      <v-tab> <v-icon left>fab fa-ebay</v-icon>Active </v-tab>
+      <v-tab> <v-icon left>fab fa-ebay</v-icon>Ended </v-tab>
+      <v-tab>
+        <v-icon left>fa fa-globe</v-icon>
+        MyComicShop.com
+      </v-tab>
+    </v-tabs>
+    <v-tabs-items v-model="tab" class="w-100 pricingTabsItemWrapper">
+      <v-tab-item key="ebayActive" class="h-100">
+        <PricingResults
+          :items="ebayActive"
+          :loading="loading"
+          endDateText="Ends:"
+          listingsType="active"
+        />
+      </v-tab-item>
+      <v-tab-item key="ebayEnded" class="h-100">
+        <PricingResults
+          :items="ebayEnded"
+          :loading="loading"
+          endDateText="Sold:"
+          listingsType="ended"
+        />
+      </v-tab-item>
+      <v-tab-item key="mycomicshop" class="h-100">
+        <PricingResults
+          :items="myComicShop"
+          :loading="loading"
+          :endDateText="false"
+          listingsType="active"
+        />
+      </v-tab-item>
+    </v-tabs-items>
+  </div>
+</template>
+
+<script>
+import { mapState, mapGetters } from "vuex";
+
+import vuescroll from "vuescroll";
+import { scrollbarSettings } from "@/util/scrollbarSettings";
+
+import PricingResults from "@/components/Pricing/Results/PricingResults";
+
+export default {
+  components: {
+    vuescroll,
+    PricingResults
+  },
+  data: () => ({
+    tab: 0,
+    ops: scrollbarSettings
+  }),
+
+  computed: {
+    ...mapState({
+      loading: state => state.pricing.loading
+    }),
+    ...mapGetters({
+      ebayActive: "pricing/getEbayActive",
+      ebayEnded: "pricing/getEbayEnded",
+      myComicShop: "pricing/getMyComicShop"
+    })
+  }
+};
+</script>
+
+<style scoped></style>

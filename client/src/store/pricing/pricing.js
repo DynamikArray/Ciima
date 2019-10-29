@@ -5,6 +5,7 @@ Vue.use(Vuex);
 import { PRICE_SEARCH } from "@/store/action-types";
 import {
   PRICE_SEARCH_LOADING,
+  PRICE_SEARCH_STRING,
   PRICE_SEARCH_RESULTS,
   PRICE_SEARCH_CLEAR
 } from "@/store/mutation-types";
@@ -13,12 +14,16 @@ const pricing = {
   namespaced: true,
 
   state: {
+    searchString: "",
     loading: false,
     items: []
   },
   mutations: {
     [PRICE_SEARCH_CLEAR](state) {
       state.items = [];
+    },
+    [PRICE_SEARCH_STRING](state, searchString) {
+      state.searchString = searchString;
     },
     [PRICE_SEARCH_RESULTS](state, items) {
       state.items = [...state.items, ...items];
@@ -46,6 +51,9 @@ const pricing = {
           if (listingType === "findCompletedItems") return item;
         }
       });
+    },
+    getMyComicShop: state => {
+      return state.items.filter(item => item.site === "mycomicshop");
     }
   },
 
