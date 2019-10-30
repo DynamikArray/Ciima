@@ -9,7 +9,8 @@ class Quote {
 
     this.meta = {
       sellersInfo: false,
-      listingDate: false
+      listingDate: false,
+      shippingInfo: false
     };
   }
 }
@@ -51,6 +52,13 @@ class QuoteBuilder {
     this.quote.meta.listingDate = {};
     this.quote.meta.listingDate.type = listingType;
     this.quote.meta.listingDate.value = listingDate;
+    return this;
+  }
+
+  setMetaShippingInfo(shippingType, shippingCost) {
+    this.quote.meta.shippingInfo = {};
+    this.quote.meta.shippingInfo.shippingType = shippingType;
+    this.quote.meta.shippingInfo.shippingCost = shippingCost;
     return this;
   }
 

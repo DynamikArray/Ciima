@@ -39,17 +39,25 @@ function ebayWebsiteStrategy(searchType) {
     const price = sellingStatus.convertedCurrentPrice.amount;
     const { sellerUserName, feedbackScore, topRatedSeller } = sellerInfo;
     const { endTime } = listingInfo;
+    const { shippingServiceCost, shippingType } = shippingInfo;
 
-    let quote = new QuoteBuilder(title, price)
+    //make a price quote
+    let priceQuote = new QuoteBuilder(title, price)
       .setSite("ebay")
       .setLink(viewItemURL)
       .setImage(pictureURLLarge)
       .setThumbnail(galleryURL)
       .setMetaSellersInfo(sellerUserName, feedbackScore, topRatedSeller)
-      .setMetaListingDate(searchType, endTime)
-      .build();
+      .setMetaListingDate(searchType, endTime);
 
-    return quote;
+    //check if we shoudl add shipping
+    if (shippingServiceCost)
+      priceQuote.setMetaShippingInfo(shippingType, shippingServiceCost.amount);
+
+    //build it
+    priceQuote.build();
+
+    return priceQuote.quote;
   };
 
   /**

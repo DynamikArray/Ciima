@@ -10,7 +10,7 @@
     >
       <v-tab> <v-icon left>fab fa-ebay</v-icon>Active </v-tab>
       <v-tab> <v-icon left>fab fa-ebay</v-icon>Ended </v-tab>
-      <v-tab>
+      <v-tab v-if="defaultProductType === `singles`">
         <v-icon left>fa fa-globe</v-icon>
         MyComicShop.com
       </v-tab>
@@ -36,12 +36,16 @@
             listingsType="ended"
           />
         </v-tab-item>
-        <v-tab-item key="mycomicshop" class="-h-100">
+        <v-tab-item
+          key="mycomicshop"
+          class="-h-100"
+          v-if="defaultProductType === `singles`"
+        >
           <PricingResults
             :items="myComicShop"
             :loading="loading"
             :endDateText="false"
-            listingsType="active"
+            :listingsType="false"
           />
         </v-tab-item>
       </v-tabs-items>
@@ -69,6 +73,7 @@ export default {
 
   computed: {
     ...mapState({
+      defaultProductType: state => state.settings.defaultProductType,
       loading: state => state.pricing.loading
     }),
     ...mapGetters({

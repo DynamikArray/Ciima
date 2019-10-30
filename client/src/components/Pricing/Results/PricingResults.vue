@@ -3,10 +3,10 @@
     <v-card
       elevation="2"
       v-for="(item, index) in items"
-      class="ma-4 grey darken-2 "
+      class="border mr-3"
       :key="`${item.site}-${Date.now()}-${index}`"
     >
-      <v-card-text class="pa-1">
+      <v-card-text class="pa-1" :class="isMyListing(item.meta.sellersInfo)">
         <v-list class="pa-0">
           <v-list-item class="px-0">
             <v-list-item-icon
@@ -38,7 +38,7 @@
               class="py-1 grey--text text--lighten-2"
               style="text-shadow: 1px 1px 1px #000;"
             >
-              <div class="caption">
+              <div class="caption" v-if="listingsType">
                 {{ endDateText }} {{ item.meta.listingDate.value | date }}
               </div>
 
@@ -67,10 +67,17 @@
                   </h3>
                 </div>
                 <div class="d-flex align-center">
-                  <h4 class="subtitle-2">
-                    ??
-                    <span class="caption">Shipping</span>
-                  </h4>
+                  <div class="subtitle-2" v-if="item.meta.shippingInfo">
+                    <div class="text-right w-100">
+                      {{ item.meta.shippingInfo.shippingCost | currency }}
+                    </div>
+                    <div style="max-width:100px">
+                      <div class="caption text-truncate">
+                        {{ item.meta.shippingInfo.shippingType }}
+                        Shipping
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </v-list-item-action>
@@ -84,8 +91,24 @@
 <script>
 export default {
   props: ["items", "loading", "endDateText", "listingsType"],
-  methods: {}
+  methods: {
+    isMyListing(sellersInfo) {
+      if (sellersInfo.name && sellersInfo.name === "searchlightcomics") {
+        return "myListing";
+      }
+    }
+  }
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.border {
+  border: 0px;
+  border-bottom: 2px solid #595959;
+}
+.myListing {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-left: 10px solid orange;
+}
+</style>
