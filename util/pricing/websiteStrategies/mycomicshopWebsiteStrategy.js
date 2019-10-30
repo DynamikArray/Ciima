@@ -36,15 +36,9 @@ function mycomicshopWebsiteStrategy() {
       let issuesCount = 0;
       const prices = [];
 
-      const html = await axios
-        .get(URL, {
-          params: { q: searchString }
-        })
-        .catch(e => {
-          console.log(e);
-          throw e;
-          return { error: e };
-        });
+      const html = await axios.get(URL, {
+        params: { q: searchString }
+      });
 
       const $ = await cheerio.load(html.data);
 
@@ -71,6 +65,7 @@ function mycomicshopWebsiteStrategy() {
       //we now have a bunch of price quotes but they dont match our "standard"
       return { result: prices };
     } catch (error) {
+      console.log(error);
       logger.error(error);
       return { error };
     }
