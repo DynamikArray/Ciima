@@ -40,13 +40,18 @@ function mycomicshopWebsiteStrategy() {
 
       console.log("BEFORE AXIOS");
 
-      const html = await axios.get(URL, {
-        params: { q: searchString },
-        headers: {
-          "User-Agent":
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36"
-        }
-      });
+      const html = await axios
+        .get(URL, {
+          params: { q: searchString },
+          headers: {
+            "User-Agent":
+              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36"
+          }
+        })
+        .catch(e => {
+          console.log("Some thing in catch of axios", e);
+          console.log(e);
+        });
 
       console.log("AFTER AXIOS");
 
