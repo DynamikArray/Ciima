@@ -1,15 +1,19 @@
 <template>
   <div class="ma-3">
     <v-form v-model="validSearch" @submit.prevent="searchInventory">
-      <v-text-field
-        autofocus
-        hide-details
-        persistent-hint
-        v-model="searchString"
-        label="Search for products that match"
-        prepend-icon="fa-search"
-      >
-      </v-text-field>
+      <div class="d-flex justify-space-between">
+        <div class="d-flex align-center grow mx-2">
+          <v-text-field
+            autofocus
+            hide-details
+            persistent-hint
+            v-model="searchString"
+            label="Search for products that match"
+            prepend-icon="fa-search"
+          >
+          </v-text-field>
+        </div>
+      </div>
     </v-form>
   </div>
 </template>
@@ -29,6 +33,8 @@ export default {
   }),
   computed: {
     ...mapState({
+      issues: state => state.currentDraft.issues,
+      titles: state => state.currentDraft.titles,
       defaultProductType: state => state.settings.defaultProductType
     }),
     searchString: {
@@ -40,7 +46,24 @@ export default {
       }
     }
   },
+  watch: {
+    issues(val) {
+      if (val.length > 0) this.buildTitleString();
+    },
+    titles(val) {
+      if (val.length > 0) this.buildTitleString();
+    }
+  },
   methods: {
+    buildTitleString() {
+      let titleString = "";
+      const { titles, issues } = this;
+      if (titles.length) titleString = titles[0].title;
+      if (issues.length) titleString = `${titleString} ${issues[0].fullIssue}`;
+      this.searchString = titleString;
+    },
+    //
+    //
     searchInventory() {
       const { searchString } = this;
 

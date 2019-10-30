@@ -15,8 +15,8 @@
 
 <script>
 import debounce from "lodash.debounce";
-import { UPDATE_API_STATUS } from "@/store/mutation-types";
 import { SEARCH_INVENTORY } from "@/store/action-types";
+import { UPDATE_API_STATUS } from "@/store/mutation-types";
 
 export default {
   data() {

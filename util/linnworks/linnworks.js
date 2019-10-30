@@ -61,7 +61,9 @@ const linnworks = {
       if (data.Token) {
         this.serverUrl = data.Server;
         this.sessionToken = data.Token;
-        this.logger.debug(`Linnworks Authorized Us`);
+        this.logger.debug(
+          `Linnworks Authorized Us ${this.sessionToken}  ${this.serverUrl}`
+        );
         return true;
       }
       //// TODO: problally wouldnt want to leak the full response to logs here
