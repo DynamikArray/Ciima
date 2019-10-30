@@ -15,7 +15,7 @@ const pricing = {
 
   state: {
     searchString: "",
-    loading: false,
+    loading: 0,
     items: []
   },
   mutations: {
@@ -28,9 +28,9 @@ const pricing = {
     [PRICE_SEARCH_RESULTS](state, items) {
       state.items = [...state.items, ...items];
     },
-    [PRICE_SEARCH_LOADING](state, loading) {
-      if (loading) state.loading = state.loading++;
-      if (!loading) state.loading = state.loading--;
+    [PRICE_SEARCH_LOADING](state, { loading }) {
+      if (loading) state.loading = ++state.loading;
+      if (!loading) state.loading = --state.loading;
     }
   },
   getters: {

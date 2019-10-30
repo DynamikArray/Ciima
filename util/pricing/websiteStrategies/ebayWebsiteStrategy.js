@@ -105,10 +105,15 @@ function ebayWebsiteStrategy(searchType) {
       };
 
       const { result } = await callEbay(params);
-      const prices = result.item.map(data => {
-        return formatRawPriceQuote(data, this.searchType);
-      });
-      return { result: prices };
+
+      if (result.item && result.item.length > 0) {
+        const prices = result.item.map(data => {
+          return formatRawPriceQuote(data, this.searchType);
+        });
+        return { result: prices };
+      } else {
+        return { result: [] };
+      }
     } catch (error) {
       logger.error(error);
       return { error };

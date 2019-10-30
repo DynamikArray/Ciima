@@ -1,114 +1,57 @@
 <template>
-  <V-scroll-y-transition group>
-    <v-card
-      elevation="2"
-      v-for="(item, index) in items"
-      class="border mr-3"
-      :key="`${item.site}-${Date.now()}-${index}`"
+  <div class="w-100 h-100">
+    <div
+      v-if="loading"
+      class="mt-4 text-center"
+      style="text-shadow: 1px 1px 1px #000;"
     >
-      <v-card-text class="pa-1" :class="isMyListing(item.meta.sellersInfo)">
-        <v-list class="pa-0">
-          <v-list-item class="px-0">
-            <v-list-item-icon
-              style="max-height: 80px; min-width:80px"
-              class="ma-1 pa-0 mr-3"
-            >
-              <v-img
-                border
-                contain
-                height="80"
-                width="80"
-                :src="item.thumbnail"
-              >
-                <template v-slot:placeholder>
-                  <v-row
-                    class="fill-height ma-0"
-                    align="center"
-                    justify="center"
-                  >
-                    <v-progress-circular
-                      indeterminate
-                      color="blue darken-1"
-                    ></v-progress-circular>
-                  </v-row>
-                </template>
-              </v-img>
-            </v-list-item-icon>
-            <v-list-item-content
-              class="py-1 grey--text text--lighten-2"
-              style="text-shadow: 1px 1px 1px #000;"
-            >
-              <div class="caption" v-if="listingsType">
-                {{ endDateText }} {{ item.meta.listingDate.value | date }}
-              </div>
+      <v-progress-circular
+        class="mt-5"
+        size="200"
+        width="10"
+        indeterminate
+        color="blue darken-1"
+      ></v-progress-circular>
+      <h3 class=" text-center my-3">
+        Searching for prices
+      </h3>
+    </div>
 
-              <h3 class="my-2">
-                {{ item.title }}
-              </h3>
+    <div class="" v-if="!loading && items.length > 0">
+      <V-scroll-y-transition group>
+        <PriceCard
+          v-for="(item, index) in items"
+          :key="`${item.site}-${Date.now()}-${index}`"
+          :item="item"
+          :endDateText="endDateText"
+          :listingType="listingsType"
+        >
+        </PriceCard>
+      </V-scroll-y-transition>
+    </div>
 
-              <div v-if="item.meta.sellersInfo">
-                <v-icon
-                  left
-                  x-small
-                  v-if="item.meta.sellersInfo.topRated"
-                  class="mx-1"
-                  >fa fa-medal</v-icon
-                >
-                {{ item.meta.sellersInfo.name }}
-              </div>
-            </v-list-item-content>
-            <v-list-item-action>
-              <div
-                class="d-flex flex-column endFlex justify-center align-end mr-2"
-              >
-                <div class="d-flex align-center">
-                  <h3 class="headline">
-                    {{ item.price | currency }}
-                  </h3>
-                </div>
-                <div class="d-flex align-center">
-                  <div class="subtitle-2" v-if="item.meta.shippingInfo">
-                    <div class="text-right w-100">
-                      {{ item.meta.shippingInfo.shippingCost | currency }}
-                    </div>
-                    <div style="max-width:100px">
-                      <div class="caption text-truncate">
-                        {{ item.meta.shippingInfo.shippingType }}
-                        Shipping
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </v-list-item-action>
-          </v-list-item>
-        </v-list>
-      </v-card-text>
-    </v-card>
-  </V-scroll-y-transition>
+    <div
+      v-if="!loading && items.length == 0"
+      class="pa-4"
+      style="text-shadow: 1px 1px 1px #000;"
+    >
+      <h4 class="text-center mx-4 px-4">
+        Search for a product across Ebays Active Items, Completed Items, and
+        MyComicShop.com <span class="font-italic">(singles only)</span>
+      </h4>
+      <h1 class=" text-center display-1 my-3">No Results</h1>
+    </div>
+  </div>
 </template>
 
 <script>
+import PriceCard from "./PriceCard";
 export default {
-  props: ["items", "loading", "endDateText", "listingsType"],
-  methods: {
-    isMyListing(sellersInfo) {
-      if (sellersInfo.name && sellersInfo.name === "searchlightcomics") {
-        return "myListing";
-      }
-    }
-  }
+  components: {
+    PriceCard
+  },
+  props: ["items", "loading", "endDateText", "listingsType"]
 };
 </script>
 
-<style scoped>
-.border {
-  border: 0px;
-  border-bottom: 2px solid #595959;
-}
-.myListing {
-  border-top-left-radius: 0px;
-  border-bottom-left-radius: 0px;
-  border-left: 10px solid orange;
-}
-</style>
+<style scoped></style>

@@ -28,7 +28,7 @@
             listingsType="active"
           />
         </v-tab-item>
-        <v-tab-item key="ebayEnded" class="-h-100">
+        <v-tab-item key="ebayEnded" class="">
           <PricingResults
             :items="ebayEnded"
             :loading="loading"
@@ -70,7 +70,6 @@ export default {
     tab: 0,
     ops: scrollbarSettings
   }),
-
   computed: {
     ...mapState({
       defaultProductType: state => state.settings.defaultProductType,
