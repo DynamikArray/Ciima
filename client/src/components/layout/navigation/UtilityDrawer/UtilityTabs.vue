@@ -8,6 +8,12 @@
       active-class="grey darken-3 white--text"
       background-color="grey darken-4"
     >
+      <div class="inline grey darken-3 pa-2">
+        <v-btn class="red darken-3 pa-0" @click="closeUtilityDrawer()">
+          <v-icon color="grey lighten-3">fa fa-times-circle</v-icon>
+        </v-btn>
+      </div>
+
       <v-tab>
         <v-icon left>fa fa-tasks</v-icon>
         Selected
@@ -71,9 +77,15 @@ export default {
     issues: {
       handler(newVal, oldVal) {
         if (newVal && newVal.length > 0) {
+          this.$store.commit(`settings/${UTILITY_DRAWER_TAB}`, 0);
           this.$store.commit(`settings/${TOGGLE_UTILITY_DRAWER}`, true);
         }
       }
+    }
+  },
+  methods: {
+    closeUtilityDrawer() {
+      this.$store.commit(`settings/${TOGGLE_UTILITY_DRAWER}`, false);
     }
   }
 };

@@ -5,26 +5,14 @@
       v-if="isLoggedIn && userName"
     >
       <div class="d-flex align-center">
-        <v-btn
-          text
-          ripple
-          small
-          @click="toggleUtilityDrawer(!utilityDrawer, 1)"
-          class=""
-        >
+        <v-btn text ripple small @click="toggleUtilityDrawer(true, 1)" class="">
           <v-icon class="mr-1">fa fa-dollar-sign</v-icon>
           <div class="">
             Prices
           </div>
         </v-btn>
 
-        <v-btn
-          text
-          ripple
-          small
-          @click="toggleUtilityDrawer(!utilityDrawer, 0)"
-          class=""
-        >
+        <v-btn text ripple small @click="toggleUtilityDrawer(true, 0)" class="">
           <v-icon class="mr-1">fa fa-tasks</v-icon>
           <div class="">
             Selected
@@ -134,12 +122,15 @@ export default {
     avatar
   },
   data: () => ({
-    blnMenu: false
+    blnMenu: false,
+    blnPrices: false,
+    blnSelected: false
   }),
   computed: {
     ...mapState({
       defaultProductType: state => state.settings.defaultProductType,
-      utilityDrawer: state => state.settings.utilityDrawer
+      utilityDrawer: state => state.settings.utilityDrawer,
+      utilityDrawerTab: state => state.settings.utilityDrawerTab
     }),
     ...mapGetters({
       isLoggedIn: "user/isLoggedIn",
