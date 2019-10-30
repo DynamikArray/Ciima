@@ -2,6 +2,7 @@
   <v-tooltip v-model="blnShow" color="black" :max-width="340" right>
     <template v-slot:activator="{ on }">
       <img
+        :class="imgClass"
         v-if="imageThumb"
         :key="makeFileNameKey()"
         :src="imageThumb"
@@ -32,6 +33,7 @@ export default {
     blnShow: false
   }),
   props: {
+    imgClass: [String],
     maxHeight: [Number],
     imageFull: [String, Boolean],
     imageThumb: [String, Boolean]

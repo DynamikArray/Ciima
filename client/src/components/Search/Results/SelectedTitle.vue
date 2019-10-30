@@ -19,17 +19,30 @@
       </div>
     </v-card-text>
     <v-card-text class="grey darken-4 pa-0">
-      <RelatedInventory
-        :items="inventory"
-        :loading="inventory_loading"
-      ></RelatedInventory>
+      <div v-if="inventory_loading" class="text-center w-100">
+        <v-progress-circular
+          class="ma-3"
+          size="50"
+          width="6"
+          indeterminate
+          color="blue darken-1"
+        ></v-progress-circular>
+      </div>
+      <div v-else>
+        <RelatedInventory
+          :items="inventory"
+          :loading="inventory_loading"
+        ></RelatedInventory>
+      </div>
     </v-card-text>
   </v-card>
 </template>
 
 <script>
 import { mapState } from "vuex";
+
 import { SEARCH_TITLES_INVENTORY } from "@/store/action-types";
+import { SEARCH_TITLES_INVENTORY_CLEAR } from "@/store/mutation-types";
 import RelatedInventory from "./RelatedInventory/RelatedInventory";
 
 export default {
@@ -47,6 +60,7 @@ export default {
   created() {
     if (this.title) {
       const searchString = this.title.title;
+      this.$store.commit(`titleSearch/${SEARCH_TITLES_INVENTORY_CLEAR}`);
       this.$store.dispatch(`titleSearch/${SEARCH_TITLES_INVENTORY}`, {
         searchString
       });

@@ -1,34 +1,42 @@
 <template>
-  <div>
-    <h4 class="text-center pa-1">Related Inventory Items</h4>
-    <v-data-table
-      id="relatedInventory"
-      v-if="items"
-      dense
-      :loading="loading"
-      :headers="headers"
-      :items-per-page="5"
-      :items="items"
-      class="elevation-2"
-      hide-default-header
-    >
-      <template v-slot:item.Images="{ item }">
-        <ImagesHoverOver
-          class="mt-1"
-          :maxHeight="30"
-          :imageFull="getMainImage(item.Images, `FullSource`)"
-          :imageThumb="getMainImage(item.Images, `Source`)"
-        />
-      </template>
+  <div class="relatedInventoryWrapper">
+    <div v-if="Array.isArray(items)" class="">
+      <div class="text-left pa-1 ml-2">
+        <v-icon small class="mr-2">fa fa-boxes</v-icon>Related Inventory Items:
+      </div>
 
-      <template v-slot:item.StockLevels="{ item }">
-        <div v-html="createStockLevels(item.StockLevels)" />
-      </template>
+      <v-data-table
+        id="relatedInventory"
+        dense
+        :loading="loading"
+        :headers="headers"
+        :items-per-page="5"
+        :items="items"
+        class="elevation-2"
+        hide-default-header
+      >
+        <template v-slot:item.Images="{ item }">
+          <ImagesHoverOver
+            imgClass="mt-1"
+            :maxHeight="30"
+            :imageFull="getMainImage(item.Images, `FullSource`)"
+            :imageThumb="getMainImage(item.Images, `Source`)"
+          />
+        </template>
 
-      <template v-slot:item.StockItemId="{ item }">
-        <div v-html="createStockLocations(item.StockLevels)" />
-      </template>
-    </v-data-table>
+        <template v-slot:item.StockLevels="{ item }">
+          <div v-html="createStockLevels(item.StockLevels)" />
+        </template>
+
+        <template v-slot:item.StockItemId="{ item }">
+          <div v-html="createStockLocations(item.StockLevels)" />
+        </template>
+      </v-data-table>
+    </div>
+
+    <div v-else class="text-center pa-2">
+      <h3>No Related Inventory Results</h3>
+    </div>
   </div>
 </template>
 
@@ -41,7 +49,7 @@ export default {
     ImagesHoverOver
   },
   props: {
-    items: [Boolean, Array],
+    items: [Boolean, Array, Object],
     loading: [Boolean]
   },
   data: () => ({
