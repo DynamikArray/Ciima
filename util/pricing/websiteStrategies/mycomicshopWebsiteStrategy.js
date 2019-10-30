@@ -38,6 +38,8 @@ function mycomicshopWebsiteStrategy() {
       let issuesCount = 0;
       const prices = [];
 
+      console.log("BEFORE AXIOS");
+
       const html = await axios.get(URL, {
         params: { q: searchString },
         headers: {
