@@ -26,7 +26,6 @@ async function searchDirector(searchString, searchType) {
       websiteStrategy = new ebayWebsiteStrategy("findItemsAdvanced");
       break;
     case MYCOMICSHOP:
-      console.log("Search Director For it");
       websiteStrategy = new mycomicshopWebsiteStrategy();
       break;
   }
