@@ -9,14 +9,26 @@
           text
           ripple
           small
-          @click="toggleUtilityDrawer(!utilityDrawer)"
+          @click="toggleUtilityDrawer(!utilityDrawer, 1)"
+          class=""
+        >
+          <v-icon class="mr-1">fa fa-dollar-sign</v-icon>
+          <div class="">
+            Prices
+          </div>
+        </v-btn>
+
+        <v-btn
+          text
+          ripple
+          small
+          @click="toggleUtilityDrawer(!utilityDrawer, 0)"
           class=""
         >
           <v-icon class="mr-1">fa fa-tasks</v-icon>
           <div class="">
             Selected
           </div>
-          <v-icon class="mx-1">fa fa-caret-down</v-icon>
         </v-btn>
       </div>
 
@@ -113,7 +125,8 @@ import { mapGetters, mapState } from "vuex";
 import {
   TOGGLE_UTILITY_DRAWER,
   SET_DEFAULT_PRODUCT_TYPE,
-  UTILITY_DRAWER_WIDTH
+  UTILITY_DRAWER_WIDTH,
+  UTILITY_DRAWER_TAB
 } from "@/store/mutation-types";
 
 export default {
@@ -152,8 +165,9 @@ export default {
     signOutUser() {
       this.$store.dispatch("user/logout");
     },
-    toggleUtilityDrawer(value) {
+    toggleUtilityDrawer(value, tab) {
       this.$store.commit(`settings/${TOGGLE_UTILITY_DRAWER}`, value);
+      this.$store.commit(`settings/${UTILITY_DRAWER_TAB}`, tab);
     },
     changeDefaultProductType(value) {
       this.$store.commit(`settings/${SET_DEFAULT_PRODUCT_TYPE}`, value);

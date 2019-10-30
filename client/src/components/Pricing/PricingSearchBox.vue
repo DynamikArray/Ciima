@@ -9,7 +9,7 @@
             persistent-hint
             v-model="searchString"
             label="Search for products that match"
-            prepend-icon="fa-search"
+            prepend-icon="fa-search-dollar"
           >
           </v-text-field>
         </div>

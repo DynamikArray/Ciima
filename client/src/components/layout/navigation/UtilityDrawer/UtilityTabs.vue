@@ -32,7 +32,10 @@
 
 <script>
 import { mapState } from "vuex";
-import { TOGGLE_UTILITY_DRAWER } from "@/store/mutation-types";
+import {
+  TOGGLE_UTILITY_DRAWER,
+  UTILITY_DRAWER_TAB
+} from "@/store/mutation-types";
 
 import vuescroll from "vuescroll";
 import { scrollbarSettings } from "@/util/scrollbarSettings";
@@ -49,12 +52,18 @@ export default {
   },
   computed: {
     ...mapState({
-      settings: state => state.settings,
       issues: state => state.currentDraft.issues
-    })
+    }),
+    tab: {
+      get() {
+        return this.$store.state.settings.utilityDrawerTab;
+      },
+      set(value) {
+        this.$store.commit(`settings/${UTILITY_DRAWER_TAB}`, value);
+      }
+    }
   },
   data: () => ({
-    tab: 0,
     ops: scrollbarSettings
   }),
   watch: {

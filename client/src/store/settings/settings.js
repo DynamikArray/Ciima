@@ -6,7 +6,8 @@ import {
   //TOGGLE_DRAFT_DRAWER, //// TODO:  DEPREcATE
   TOGGLE_UTILITY_DRAWER,
   SET_DEFAULT_PRODUCT_TYPE,
-  UTILITY_DRAWER_WIDTH
+  UTILITY_DRAWER_WIDTH,
+  UTILITY_DRAWER_TAB
 } from "@/store/mutation-types";
 
 const settings = {
@@ -15,15 +16,14 @@ const settings = {
   state: {
     //draftDrawer: false, //helps us open/close draft photo/titles/issues drawer
     utilityDrawer: false,
-    utilityDrawerWidth: 50,
+    utilityDrawerWidth: 60,
+    utilityDrawerTab: 0,
     defaultProductType: "sets" //sets, singles
   },
   mutations: {
-    /*
-    [TOGGLE_DRAFT_DRAWER](state, blnOpen) {
-      state.draftDrawer = blnOpen;
+    [UTILITY_DRAWER_TAB](state, tab) {
+      state.utilityDrawerTab = tab;
     },
-    */
     [UTILITY_DRAWER_WIDTH](state, width) {
       state.utilityDrawerWidth = width;
     },
