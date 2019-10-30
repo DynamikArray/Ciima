@@ -91,14 +91,13 @@ function ebayWebsiteStrategy(searchType) {
         categoryId: 63, //comics
         outputSelector: ["SellerInfo", "AspectHistogram", "PictureURLLarge"],
         paginationInput: {
-          entriesPerPage: 100
+          entriesPerPage: 50
         },
         sortOrder: "CurrentPriceHighest"
       };
 
       const { result } = await callEbay(params);
       const prices = result.item.map(data => {
-        console.log(this.searchType);
         return formatRawPriceQuote(data, this.searchType);
       });
       return { result: prices };

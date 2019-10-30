@@ -38,23 +38,30 @@ function mycomicshopWebsiteStrategy() {
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36"
         }
       });
-      const $ = await cheerio.load(html.data);
+
       const prices = [];
-      $(".search-results li.issue").each((i, LI_elem) => {
+      let issuesCount = 0;
+      const $ = await cheerio.load(html.data);
+      $(".search-results li.issue").each((li, LI_elem) => {
         const itemData = {};
         //get our imagefields
         itemData.imgFull = $(".imgcol span.img a", LI_elem).attr("href");
         itemData.imgThumb = $(".imgcol span.img img", LI_elem).attr("src");
         //now get all the meta fields
-        $("table.issuestock tr td", LI_elem).each((i, TD_elem) => {
-          $("meta", TD_elem).each((i, el) => {
-            itemData[el.attribs.itemprop] = el.attribs.content;
+        $("table.issuestock tr td", LI_elem).each((td, TD_elem) => {
+          $("meta", TD_elem).each((meta, META_elem) => {
+            itemData[META_elem.attribs.itemprop] = META_elem.attribs.content;
           });
           //format this respose to one of our quote objects
-          const priceResult = formatRawPriceQuote(itemData);
-          prices.push(priceResult);
+          prices.push(formatRawPriceQuote(itemData));
+          issuesCount++;
         });
       });
+
+      logger.debug(
+        `${this}:search() found ${issuesCount} issues for ${searchString}`
+      );
+
       //we now have a bunch of price quotes but they dont match our "standard"
       return { result: prices };
     } catch (error) {
@@ -62,7 +69,6 @@ function mycomicshopWebsiteStrategy() {
       return { error };
     }
   };
-
   //return our search method to be used
   return { search };
 }

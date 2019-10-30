@@ -1,8 +1,9 @@
 <template>
   <V-scroll-y-transition group>
     <v-card
+      elevation="2"
       v-for="(item, index) in items"
-      class="ma-4 grey darken-2"
+      class="ma-4 grey darken-2 "
       :key="`${item.site}-${Date.now()}-${index}`"
     >
       <v-card-text class="pa-1">
@@ -33,14 +34,19 @@
                 </template>
               </v-img>
             </v-list-item-icon>
-            <v-list-item-content class="py-1">
+            <v-list-item-content
+              class="py-1 grey--text text--lighten-2"
+              style="text-shadow: 1px 1px 1px #000;"
+            >
               <div class="caption">
                 {{ endDateText }} {{ item.meta.listingDate.value | date }}
               </div>
 
-              <h3 class="my-2">{{ item.title }}</h3>
+              <h3 class="my-2">
+                {{ item.title }}
+              </h3>
 
-              <div>
+              <div v-if="item.meta.sellersInfo">
                 <v-icon
                   left
                   x-small

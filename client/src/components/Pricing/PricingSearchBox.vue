@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import {
   PRICE_SEARCH_STRING,
   PRICE_SEARCH_CLEAR
@@ -27,6 +28,9 @@ export default {
     validSearch: false
   }),
   computed: {
+    ...mapState({
+      defaultProductType: state => state.settings.defaultProductType
+    }),
     searchString: {
       get() {
         return this.$store.state.pricing.searchString;
@@ -55,8 +59,12 @@ export default {
           searchType: "ebayActive"
         });
 
-        //should we try mycomicshop
-        //check global settings for singles option
+        if (this.defaultProductType === "singles") {
+          this.$store.dispatch(`pricing/${PRICE_SEARCH}`, {
+            searchString,
+            searchType: "myComicShop"
+          });
+        }
       }
     }
   }
