@@ -5,14 +5,30 @@
       v-if="isLoggedIn && userName"
     >
       <div class="d-flex align-center">
-        <v-btn text ripple small @click="toggleUtilityDrawer(true, 1)" class="">
+        <v-btn
+          text
+          ripple
+          small
+          @click="toggleUtilityDrawer(true, 1)"
+          class=""
+          v-shortkey="['ctrl', 'alt', 'p']"
+          @shortkey="toggleUtilityDrawer(!utilityDrawer, 1)"
+        >
           <v-icon class="mr-1">fa fa-dollar-sign</v-icon>
           <div class="">
             Prices
           </div>
         </v-btn>
 
-        <v-btn text ripple small @click="toggleUtilityDrawer(true, 0)" class="">
+        <v-btn
+          text
+          ripple
+          small
+          @click="toggleUtilityDrawer(true, 0)"
+          class=""
+          v-shortkey="['ctrl', 'alt', 's']"
+          @shortkey="toggleUtilityDrawer(!utilityDrawer, 0)"
+        >
           <v-icon class="mr-1">fa fa-tasks</v-icon>
           <div class="">
             Selected
@@ -84,6 +100,7 @@
                     min="25"
                     max="75"
                     v-model="utilityDrawerWidth"
+                    hide-details
                   ></v-slider>
                   <div class="text-center">
                     {{ 100 - utilityDrawerWidth }}% Wide
@@ -91,6 +108,29 @@
                 </v-list-item-content>
               </v-list-item>
               <v-divider></v-divider>
+
+              <v-list-item>
+                <v-list-item-content>
+                  <v-list-item-title>Shortcut Keys</v-list-item-title>
+                  <v-list-item-subtitle>
+                    Shortcut Keys to navigate open utility drawer tabs
+                  </v-list-item-subtitle>
+                  <div class="text-left">
+                    <div class="ma-1">
+                      <v-chip color="info lighten-2" label outlined>
+                        CTRL + ALT + P
+                      </v-chip>
+                      Open Prices tab.
+                    </div>
+                    <div class="ma-1">
+                      <v-chip color="info lighten-2" label outlined>
+                        CTRL + ALT + S
+                      </v-chip>
+                      Open Selected tab.
+                    </div>
+                  </div>
+                </v-list-item-content>
+              </v-list-item>
 
               <v-card-actions>
                 <div class="d-flex justify-end grow">

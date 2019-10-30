@@ -2,7 +2,12 @@
   <v-container fluid>
     <div class="d-flex flex-row justify-space-between align-self-center">
       <div class="d-flex flex-column align-self-center mr-4">
-        <v-btn color="primary" :to="'/titles'">
+        <v-btn
+          style="min-width:30px"
+          class="mx-auto px-3"
+          color="primary"
+          :to="'/titles'"
+        >
           <v-icon>fa-arrow-alt-circle-left</v-icon>
         </v-btn>
         <h5 class="text-center mt-2">

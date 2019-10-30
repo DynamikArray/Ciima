@@ -17,7 +17,6 @@
       :loading="loading"
       loading-text="Searching Database"
       :items-per-page="15"
-      :custom-filter="customFilter"
       :footer-props="footerProps"
       @update:page="pageChange()"
     >
@@ -47,6 +46,16 @@
               <h3 class="title">{{ item.title }}</h3>
             </div>
             <div class="d-flex">
+              <v-btn
+                small
+                color="green"
+                class="mr-2 pa-0"
+                @click="priceCheckIssue(item.title, item.fullIssue)"
+                style="min-width: 34px"
+              >
+                <v-icon small>fa-dollar-sign</v-icon>
+              </v-btn>
+
               <v-chip
                 small
                 label
@@ -83,12 +92,22 @@
 
       <template v-slot:item.action="{ item }">
         <div v-if="!inCurrentDraft(item)">
-          <v-btn color="success" class="mx-2" @click="addIssueToDraft(item)">
+          <v-btn
+            style="min-width:25px"
+            color="success"
+            class="mx-2 px-2"
+            @click="addIssueToDraft(item)"
+          >
             <v-icon>fa-plus-circle</v-icon>
           </v-btn>
         </div>
         <div v-else>
-          <v-btn color="red" class="mx-2" @click="removeIssueFromDraft(item)">
+          <v-btn
+            style="min-width:25px"
+            color="red"
+            class="mx-2 px-2"
+            @click="removeIssueFromDraft(item)"
+          >
             <v-icon>fa-times-circle</v-icon>
           </v-btn>
         </div>
@@ -104,7 +123,10 @@ import {
   CURRENT_DRAFT_ISSUE_REMOVE,
   CURRENT_DRAFT_TITLE_ADD,
   SEARCH_ISSUES_SELECTED_ITEM,
-  SEARCH_ISSUES_SHOW_SELECTED_ITEM
+  SEARCH_ISSUES_SHOW_SELECTED_ITEM,
+  PRICE_SEARCH_STRING,
+  TOGGLE_UTILITY_DRAWER,
+  UTILITY_DRAWER_TAB
 } from "@/store/mutation-types.js";
 
 import settings from "@/util/settings.js";
@@ -136,34 +158,12 @@ export default {
           sortable: true,
           align: "left"
         },
-        /*
-        {
-          text: "Variant",
-          value: "variation",
-          sortable: true,
-          align: "center",
-          filter: value => {
-            return true;
-          }
-        },
-        {
-          text: "Printing",
-          value: "printing",
-          sortable: true,
-          align: "center"
-        },
-        {
-          text: "FullIssue",
-          value: "fullIssue",
-          sortable: true,
-          align: "center"
-        },
-        */
         {
           text: "Actions",
           value: "action",
           sortable: false,
-          align: "center"
+          align: "center",
+          width: "100"
         }
       ]
     };
@@ -220,9 +220,14 @@ export default {
     pageChange() {
       this.$vuetify.goTo("#datatableWrapper");
     },
-    //
-    //
-    customFilter() {}
+
+    priceCheckIssue(title, issue) {
+      const searchString = `${title} ${issue}`;
+      this.$store.commit(`pricing/${PRICE_SEARCH_STRING}`, searchString);
+      this.$store.commit(`settings/${TOGGLE_UTILITY_DRAWER}`, true);
+      this.$store.commit(`settings/${UTILITY_DRAWER_TAB}`, 1);
+    }
+
     //
     //
   }

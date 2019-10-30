@@ -9,7 +9,11 @@
       background-color="grey darken-4"
     >
       <div class="inline grey darken-3 pa-2">
-        <v-btn class="red darken-3 pa-0" @click="closeUtilityDrawer()">
+        <v-btn
+          style="min-width:20px;"
+          class="red darken-3 px-2"
+          @click="closeUtilityDrawer()"
+        >
           <v-icon color="grey lighten-3">fa fa-times-circle</v-icon>
         </v-btn>
       </div>

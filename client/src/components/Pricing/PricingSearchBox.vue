@@ -13,6 +13,11 @@
           >
           </v-text-field>
         </div>
+        <div class="d-flex align-center">
+          <v-btn class="primary mt-2" @click="searchInventory()">
+            <v-icon class="mr-1">fa fa-search-dollar</v-icon>SEARCH
+          </v-btn>
+        </div>
       </div>
     </v-form>
   </div>
