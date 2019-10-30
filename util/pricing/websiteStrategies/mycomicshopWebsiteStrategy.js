@@ -41,7 +41,8 @@ function mycomicshopWebsiteStrategy() {
           params: { q: searchString }
         })
         .catch(e => {
-          logger.error(e);
+          console.log(e);
+          throw e;
           return { error: e };
         });
 
