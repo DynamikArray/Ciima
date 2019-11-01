@@ -96,6 +96,6 @@ export default {
 .myListing {
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
-  border-left: 10px solid orange;
+  border: 6px solid orange;
 }
 </style>
