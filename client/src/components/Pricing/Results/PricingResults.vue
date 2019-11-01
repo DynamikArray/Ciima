@@ -51,6 +51,7 @@
           :listingType="listingsType"
         >
         </PriceCard>
+        <h5 key="endResults" class="text-center pa-4">End Results</h5>
       </V-scroll-y-transition>
     </div>
 
