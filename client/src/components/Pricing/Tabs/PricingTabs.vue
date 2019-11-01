@@ -24,16 +24,18 @@
           <PricingResults
             :items="ebayActive"
             :loading="loading"
-            endDateText="Ends:"
+            endDateText="Ends Date:"
             listingsType="active"
+            sortResultsByDate
           />
         </v-tab-item>
         <v-tab-item key="ebayEnded" class="">
           <PricingResults
             :items="ebayEnded"
             :loading="loading"
-            endDateText="Sold:"
+            endDateText="Sold Date:"
             listingsType="ended"
+            sortResultsByDate
           />
         </v-tab-item>
         <v-tab-item

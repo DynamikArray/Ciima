@@ -18,9 +18,33 @@
     </div>
 
     <div class="" v-if="!loading && items.length > 0">
+      <div class="d-flex justify-space-between">
+        <div class="d-flex align-center">
+          <div v-if="sortResultsByDate" class="ma-1">
+            <v-btn
+              v-if="sortDateDir == `ASC`"
+              class="mr-1"
+              color="info"
+              small
+              @click="sortResults(`DESC`)"
+              >{{ endDateText }}<v-icon small>fa fa-sort-numeric-up</v-icon>
+            </v-btn>
+            <v-btn
+              v-if="sortDateDir == `DESC`"
+              class="mr-1"
+              color="info"
+              small
+              @click="sortResults(`ASC`)"
+              >{{ endDateText }}<v-icon small>fa fa-sort-numeric-down</v-icon>
+            </v-btn>
+          </div>
+        </div>
+        <div class="d-flex align-center"><!--DO PRICES NEXT--></div>
+      </div>
+
       <V-scroll-y-transition group>
         <PriceCard
-          v-for="(item, index) in items"
+          v-for="(item, index) in sortItems(items)"
           :key="`${item.site}-${Date.now()}-${index}`"
           :item="item"
           :endDateText="endDateText"
@@ -50,7 +74,43 @@ export default {
   components: {
     PriceCard
   },
-  props: ["items", "loading", "endDateText", "listingsType"]
+  data: () => ({
+    sortDateDir: "ASC"
+  }),
+  props: {
+    items: [Boolean, Array],
+    loading: [Number, Boolean],
+    endDateText: [Boolean, String],
+    listingsType: [Boolean, String],
+    sortResultsByDate: {
+      type: Boolean,
+      default: false
+    }
+  },
+  methods: {
+    sortResults(dir) {
+      this.sortDateDir = dir;
+    },
+    sortItems() {
+      const items = this.items.sort((a, b) => {
+        switch (this.sortDateDir) {
+          case "DESC":
+            return (
+              new Date(b.meta.listingDate.value) -
+              new Date(a.meta.listingDate.value)
+            );
+            break;
+          case "ASC":
+            return (
+              new Date(a.meta.listingDate.value) -
+              new Date(b.meta.listingDate.value)
+            );
+            break;
+        }
+      });
+      return items;
+    }
+  }
 };
 </script>
 
