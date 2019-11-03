@@ -24,7 +24,7 @@
           <PricingResults
             :items="ebayActive"
             :loading="loading"
-            endDateText="Ends Date:"
+            endDateText="End Date:"
             listingsType="active"
             sortResultsByDate
             sortResultsByPrice

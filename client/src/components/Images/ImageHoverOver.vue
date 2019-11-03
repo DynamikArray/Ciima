@@ -13,7 +13,7 @@
       />
     </template>
 
-    <v-img :src="imageFull" :max-width="340" contain>
+    <v-img :src="imageFull" :max-width="340" :min-height="200" contain>
       <template v-slot:placeholder>
         <v-row class="fill-height ma-0" align="center" justify="center">
           <v-progress-circular

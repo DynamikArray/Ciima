@@ -7,16 +7,10 @@
             style="max-height: 80px; min-width:80px"
             class="ma-1 pa-0 mr-3"
           >
-            <v-img border contain height="80" width="80" :src="item.thumbnail">
-              <template v-slot:placeholder>
-                <v-row class="fill-height ma-0" align="center" justify="center">
-                  <v-progress-circular
-                    indeterminate
-                    color="blue darken-1"
-                  ></v-progress-circular>
-                </v-row>
-              </template>
-            </v-img>
+            <ImagesHoverOver
+              :imageFull="item.image"
+              :imageThumb="item.thumbnail"
+            />
           </v-list-item-icon>
           <v-list-item-content
             class="py-1 grey--text text--lighten-2"
@@ -72,7 +66,12 @@
 </template>
 
 <script>
+import ImagesHoverOver from "@/components/Images/ImageHoverOver";
+
 export default {
+  components: {
+    ImagesHoverOver
+  },
   props: {
     item: [Boolean, Object],
     endDateText: [Boolean, String],
