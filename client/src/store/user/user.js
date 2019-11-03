@@ -7,16 +7,20 @@ import router from "@/router/router";
 
 import { UPDATE_API_STATUS } from "@/store/mutation-types";
 
+/*
 const handleResponse = (commit, resolve, resp) => {
   const { id, username, email, token } = resp.data;
-  localStorage.setItem("token", token);
-  axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  if (token) {
+    localStorage.setItem("token", token);
+    axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  }
   commit("auth_success", { id, username, email, token });
   commit(`api/${UPDATE_API_STATUS}`, `Logged in user ${username}`, {
     root: true
   });
   resolve(resp);
 };
+*/
 
 const user = {
   namespaced: true,
@@ -27,7 +31,11 @@ const user = {
     user: false
   },
   getters: {
-    isLoggedIn: state => !!state.token,
+    isLoggedIn: state => {
+      if (state.user) return true;
+      return false;
+    },
+    token: state => state.token,
     user: state => state.user,
     authStatus: state => state.status,
     authError: state => state.errMsg,
@@ -70,7 +78,16 @@ const user = {
           method: "POST"
         })
           .then(resp => {
-            handleResponse(commit, resolve, resp);
+            const { id, username, email, token } = resp.data;
+            localStorage.setItem("token", token);
+            axiosInstance.defaults.headers.common[
+              "Authorization"
+            ] = `Bearer ${token}`;
+            commit("auth_success", { id, username, email, token });
+            commit(`api/${UPDATE_API_STATUS}`, `Logged in user ${username}`, {
+              root: true
+            });
+            resolve(resp);
           })
           .catch(err => {
             const { response, message } = err;
@@ -97,7 +114,16 @@ const user = {
           method: "POST"
         })
           .then(resp => {
-            handleResponse(commit, resolve, resp);
+            const { id, username, email, token } = resp.data;
+            localStorage.setItem("token", token);
+            axiosInstance.defaults.headers.common[
+              "Authorization"
+            ] = `Bearer ${token}`;
+            commit("auth_success", { id, username, email, token });
+            commit(`api/${UPDATE_API_STATUS}`, `Logged in user ${username}`, {
+              root: true
+            });
+            resolve(resp);
           })
           .catch(err => {
             const { response, message } = err;
@@ -129,7 +155,12 @@ const user = {
           method: "POST"
         })
           .then(resp => {
-            handleResponse(commit, resolve, resp);
+            const { id, username, email } = resp.data;
+            commit("auth_success", { id, username, email });
+            commit(`api/${UPDATE_API_STATUS}`, `Logged in user ${username}`, {
+              root: true
+            });
+            resolve(resp);
           })
           .catch(err => {
             const { response, message } = err;

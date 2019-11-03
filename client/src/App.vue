@@ -48,7 +48,7 @@ export default {
     //this can get moved to user settings once we get taht sorted
     this.$vuetify.theme.dark = true;
     //check if we have a token, and then get this account
-    if (this.isLoggedIn && !this.user) this.$store.dispatch("user/account");
+    if (!this.isLoggedIn) this.$store.dispatch("user/account");
   },
   methods: {
     created: function() {},

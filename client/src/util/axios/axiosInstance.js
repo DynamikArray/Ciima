@@ -5,22 +5,20 @@ const config = {
   timeout: 10000
 };
 
-// Add a request interceptor
-axios.interceptors.request.use(
+const clientAxios = axios.create({ ...config });
+
+clientAxios.interceptors.request.use(
   config => {
-    const token = localStorageService.getAccessToken();
+    const token = localStorage.getItem("token");
     if (token) {
-      config.headers["Authorization"] = "Bearer " + token;
+      config.headers.Authorization = `Bearer ${token}`;
     }
-    // config.headers['Content-Type'] = 'application/json';
     return config;
   },
-  error => {
-    Promise.reject(error);
-  }
+  error => Promise.reject(error)
 );
 
-export const axiosInstance = axios.create({ ...config });
+export const axiosInstance = clientAxios;
 
 export function createInterceptor(logout) {
   return {

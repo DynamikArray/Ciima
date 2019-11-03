@@ -12,7 +12,7 @@
           @click="toggleUtilityDrawer(true, 1)"
           class=""
           v-shortkey="['ctrl', 'alt', 'p']"
-          @shortkey="toggleUtilityDrawer(!utilityDrawer, 1)"
+          @shortkey="toggleUtilityDrawer(true, 1)"
         >
           <v-icon class="mr-1">fa fa-dollar-sign</v-icon>
           <div class="">
@@ -27,7 +27,7 @@
           @click="toggleUtilityDrawer(true, 0)"
           class=""
           v-shortkey="['ctrl', 'alt', 's']"
-          @shortkey="toggleUtilityDrawer(!utilityDrawer, 0)"
+          @shortkey="toggleUtilityDrawer(true, 0)"
         >
           <v-icon class="mr-1">fa fa-tasks</v-icon>
           <div class="">
