@@ -151,7 +151,9 @@ const user = {
         commit("logout");
         localStorage.removeItem("token");
         delete axiosInstance.defaults.headers.common["Authorization"];
-        router.push("/login");
+        this.$router.push("/login").catch(err => {
+          if (!err.name === "NavigationDuplicated") console.log(err);
+        });
         resolve();
       });
     }

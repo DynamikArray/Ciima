@@ -86,7 +86,7 @@ module.exports = fastify => ({
         password
       );
       if (user) {
-        const token = fastify.jwt.sign({ ...user }, { expiresIn: "10h" });
+        const token = fastify.jwt.sign({ ...user }, { expiresIn: "2m" });
         res.send({ token, ...user });
       }
     }
@@ -94,13 +94,18 @@ module.exports = fastify => ({
     res.status(403).send("Username or password not valid");
   },
 
+  /**
+   * [account description]
+   * @param  {[type]}  req [description]
+   * @param  {[type]}  res [description]
+   * @return {Promise}     [description]
+   */
   account: async (req, res) => {
     const connection = await fastify.mysql.getConnection();
     const { id } = req.user;
     const user = await getUserById(connection, id);
     if (user) {
-      const token = fastify.jwt.sign({ ...user }, { expiresIn: "10h" });
-      res.send({ token, ...user });
+      res.send({ ...user });
     }
   }
 });

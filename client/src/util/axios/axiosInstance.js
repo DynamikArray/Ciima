@@ -5,9 +5,20 @@ const config = {
   timeout: 10000
 };
 
-/* Token Check and add to Headers */
-const token = localStorage.getItem("token");
-if (token) config.headers = { Authorization: `Bearer ${token}` };
+// Add a request interceptor
+axios.interceptors.request.use(
+  config => {
+    const token = localStorageService.getAccessToken();
+    if (token) {
+      config.headers["Authorization"] = "Bearer " + token;
+    }
+    // config.headers['Content-Type'] = 'application/json';
+    return config;
+  },
+  error => {
+    Promise.reject(error);
+  }
+);
 
 export const axiosInstance = axios.create({ ...config });
 
