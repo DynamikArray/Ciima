@@ -86,7 +86,7 @@ module.exports = fastify => ({
         password
       );
       if (user) {
-        const token = fastify.jwt.sign({ ...user }, { expiresIn: "2m" });
+        const token = fastify.jwt.sign({ ...user }, { expiresIn: "5d" });
         res.send({ token, ...user });
       }
     }
