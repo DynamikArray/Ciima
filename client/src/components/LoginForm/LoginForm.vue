@@ -70,8 +70,16 @@ export default {
       }
     };
   },
+  created() {
+    if (this.isLoggedIn) {
+      this.$router.push("/").catch(err => {
+        if (!err.name === "NavigationDuplicated") console.log(err);
+      });
+    }
+  },
   computed: {
     ...mapGetters({
+      isLoggedIn: "user/isLoggedIn",
       authError: "user/authError"
     })
   },
