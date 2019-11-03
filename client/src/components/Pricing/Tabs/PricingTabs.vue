@@ -27,6 +27,7 @@
             endDateText="Ends Date:"
             listingsType="active"
             sortResultsByDate
+            sortResultsByPrice
           />
         </v-tab-item>
         <v-tab-item key="ebayEnded" class="">
@@ -36,6 +37,7 @@
             endDateText="Sold Date:"
             listingsType="ended"
             sortResultsByDate
+            sortResultsByPrice
           />
         </v-tab-item>
         <v-tab-item
@@ -48,6 +50,7 @@
             :loading="loading"
             :endDateText="false"
             :listingsType="false"
+            sortResultsByPrice
           />
         </v-tab-item>
       </v-tabs-items>

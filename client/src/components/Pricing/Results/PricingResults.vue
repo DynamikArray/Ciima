@@ -19,40 +19,65 @@
 
     <div class="" v-if="!loading && items.length > 0">
       <div class="d-flex justify-space-between">
-        <div class="d-flex align-center">
+        <div class="d-flex align-center ml-3">
           <div v-if="sortResultsByDate" class="ma-1">
             <v-btn
               v-if="sortDateDir == `ASC`"
               class="mr-1"
               color="info"
               small
-              @click="sortResults(`DESC`)"
-              >{{ endDateText }}<v-icon small>fa fa-sort-numeric-up</v-icon>
+              @click="setSortByDate(`DESC`)"
+              >{{ endDateText
+              }}<v-icon class="ml-1" small>fa fa-sort-numeric-up</v-icon>
             </v-btn>
             <v-btn
               v-if="sortDateDir == `DESC`"
               class="mr-1"
               color="info"
               small
-              @click="sortResults(`ASC`)"
-              >{{ endDateText }}<v-icon small>fa fa-sort-numeric-down</v-icon>
+              @click="setSortByDate(`ASC`)"
+              >{{ endDateText
+              }}<v-icon class="ml-1" small>fa fa-sort-numeric-down</v-icon>
             </v-btn>
           </div>
         </div>
-        <div class="d-flex align-center"><!--DO PRICES NEXT--></div>
+        <div class="d-flex align-center">
+          <h5 class="text-center pa-4">{{ items.length }} Results</h5>
+        </div>
+        <div class="d-flex align-center mr-3">
+          <div v-if="sortResultsByPrice" class="ma-1">
+            <v-btn
+              v-if="sortPriceDir == `ASC`"
+              class="mr-1"
+              color="info"
+              small
+              @click="setSortByPrice(`DESC`)"
+              >Price: <v-icon class="ml-1" small>fa fa-sort-numeric-up</v-icon>
+            </v-btn>
+            <v-btn
+              v-if="sortPriceDir == `DESC`"
+              class="mr-1"
+              color="info"
+              small
+              @click="setSortByPrice(`ASC`)"
+              >Price:
+              <v-icon class="ml-1" small>fa fa-sort-numeric-down</v-icon>
+            </v-btn>
+          </div>
+        </div>
       </div>
 
       <V-scroll-y-transition group>
         <PriceCard
-          v-for="(item, index) in sortItems(items)"
+          v-for="(item, index) in sortItems()"
           :key="`${item.site}-${Date.now()}-${index}`"
           :item="item"
           :endDateText="endDateText"
           :listingType="listingsType"
         >
         </PriceCard>
-        <h5 key="endResults" class="text-center pa-4">End Results</h5>
       </V-scroll-y-transition>
+      <h5 class="text-center pa-4">{{ items.length }} Results</h5>
     </div>
 
     <div
@@ -61,8 +86,7 @@
       style="text-shadow: 1px 1px 1px #000;"
     >
       <h4 class="text-center mx-4 px-4">
-        Search for a product across Ebays Active Items, Completed Items, and
-        MyComicShop.com <span class="font-italic">(singles only)</span>
+        Search for product prices across various websites.
       </h4>
       <h1 class=" text-center display-1 my-3">No Results</h1>
     </div>
@@ -76,7 +100,9 @@ export default {
     PriceCard
   },
   data: () => ({
-    sortDateDir: "ASC"
+    sortType: "price",
+    sortDateDir: "ASC",
+    sortPriceDir: "DESC"
   }),
   props: {
     items: [Boolean, Array],
@@ -86,13 +112,55 @@ export default {
     sortResultsByDate: {
       type: Boolean,
       default: false
+    },
+    sortResultsByPrice: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
-    sortResults(dir) {
+    //
+    //
+    setSortByDate(dir) {
+      this.sortType = "date";
       this.sortDateDir = dir;
     },
+    //
+    //
+    setSortByPrice(dir) {
+      this.sortType = "price";
+      this.sortPriceDir = dir;
+    },
+    //
+    //
     sortItems() {
+      switch (this.sortType) {
+        case "price":
+          return this.sortItemsByPrice();
+          break;
+        case "date":
+          return this.sortItemsByDate();
+          break;
+      }
+    },
+    //
+    //
+    sortItemsByPrice() {
+      const items = this.items.sort((a, b) => {
+        switch (this.sortPriceDir) {
+          case "DESC":
+            return b.price - a.price;
+            break;
+          case "ASC":
+            return a.price - b.price;
+            break;
+        }
+      });
+      return items;
+    },
+    //
+    //
+    sortItemsByDate() {
       const items = this.items.sort((a, b) => {
         switch (this.sortDateDir) {
           case "DESC":
