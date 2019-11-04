@@ -2,6 +2,12 @@ const queryString = require("query-string");
 const StockItemsBuilder = require("../../../../../util/linnworks/StockItemsBuilder");
 
 module.exports = fastify => ({
+  /**
+   * [searchInventoryHandler description]
+   * @param  {[type]}  req [description]
+   * @param  {[type]}  res [description]
+   * @return {Promise}     [description]
+   */
   searchInventoryHandler: async (req, res) => {
     const keyword = req.body.searchString;
     try {
@@ -35,6 +41,12 @@ module.exports = fastify => ({
     }
   },
 
+  /**
+   * [updateLocationOrQuantityHandler description]
+   * @param  {[type]}  req [description]
+   * @param  {[type]}  res [description]
+   * @return {Promise}     [description]
+   */
   updateLocationOrQuantityHandler: async (req, res) => {
     const {
       changeSource,
