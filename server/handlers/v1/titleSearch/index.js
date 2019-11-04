@@ -21,7 +21,7 @@ const buildAdvanced = (search, alpha) => {
       )
       GROUP BY t.title, t.titleId, t.publisher, t.yearsPublished
       ORDER BY issueCount DESC, t.title ASC
-      LIMIT 100`;
+      LIMIT 500`;
 
   const params = [search];
   return { query, params };
@@ -45,7 +45,7 @@ const buildSearch = (search, alpha) => {
       )
       GROUP BY t.title, t.titleId, t.publisher, t.yearsPublished
       ORDER BY issueCount DESC, t.title ASC
-      LIMIT 100`;
+      LIMIT 500`;
 
   const params = [search, alpha];
   return { query, params };

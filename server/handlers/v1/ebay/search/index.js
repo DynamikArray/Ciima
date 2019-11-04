@@ -7,6 +7,7 @@ module.exports = fastify => ({
 
       const params = {
         keywords,
+        categoryId: 63,
         outputSelector: ["SellerInfo", "AspectHistogram", "PictureURLLarge"],
         paginationInput: {
           entriesPerPage: 100

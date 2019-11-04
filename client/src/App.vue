@@ -4,11 +4,8 @@
       :loggedIn="isLoggedIn && user"
       :drawer="navigationDrawer"
     />
-    <DraftsDrawer v-if="isLoggedIn && user" :drawer="settingsDrawer" />
-    <AppBar
-      :toggleNavigationDrawer="toggleNavigationDrawer"
-      :toggleSettingsDrawer="toggleSettingsDrawer"
-    />
+    <UtilityDrawer />
+    <AppBar :toggleNavigationDrawer="toggleNavigationDrawer" />
     <v-content>
       <TransitionPage>
         <router-view />
@@ -21,7 +18,8 @@
 <script>
 import { mapGetters } from "vuex";
 
-import DraftsDrawer from "@/components/layout/navigation/DraftsDrawer";
+import UtilityDrawer from "@/components/layout/navigation/UtilityDrawer/UtilityDrawer";
+
 import NavigationDrawer from "@/components/layout/navigation/NavigationDrawer";
 import AppBar from "@/components/layout/navigation/AppBar";
 import TransitionPage from "@/components/layout/transition/TransitionPage";
@@ -30,15 +28,15 @@ import Footer from "@/components/layout/navigation/Footer";
 export default {
   name: "App",
   components: {
-    DraftsDrawer,
-    NavigationDrawer,
     AppBar,
+    NavigationDrawer,
+    //DraftsDrawer,
+    UtilityDrawer,
     TransitionPage,
     Footer
   },
   data: () => ({
-    navigationDrawer: true,
-    settingsDrawer: false
+    navigationDrawer: true
   }),
   computed: {
     ...mapGetters({
@@ -50,22 +48,11 @@ export default {
     //this can get moved to user settings once we get taht sorted
     this.$vuetify.theme.dark = true;
     //check if we have a token, and then get this account
-    if (this.isLoggedIn && !this.user) {
-      //we had a token so try to login in user
-      this.$store.dispatch("user/account").catch(err => {
-        this.$store.commit(
-          "user/auth_error",
-          "Your session has expired, login to continue."
-        );
-        this.$store.dispatch("user/logout");
-      });
-    }
+    if (!this.isLoggedIn) this.$store.dispatch("user/account");
   },
   methods: {
     created: function() {},
-    toggleSettingsDrawer() {
-      this.settingsDrawer = !this.settingsDrawer;
-    },
+
     toggleNavigationDrawer() {
       this.navigationDrawer = !this.navigationDrawer;
     },

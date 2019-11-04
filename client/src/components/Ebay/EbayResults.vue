@@ -1,6 +1,6 @@
 <template>
   <section>
-    <v-dialog v-model="active_loading" hide-overlay persistent width="300">
+    <v-dialog v-model="loading" hide-overlay persistent width="300">
       <v-card color="primary" dark class="pt-2">
         <v-card-text>
           <h4 class="text-center mb-2">
@@ -18,8 +18,8 @@
     <v-row>
       <v-col cols="6">
         <Listings
-          :items="active_results"
-          :loading="active_loading"
+          :items="ebayActive"
+          :loading="loading"
           title="Active Listing Results"
           endDateText="Ends:"
           listingsType="active"
@@ -27,8 +27,8 @@
       </v-col>
       <v-col cols="6">
         <Listings
-          :items="ended_results"
-          :loading="ended_loading"
+          :items="ebayEnded"
+          :loading="loading"
           title="Ended Listing Results"
           endDateText="Sold:"
           listingsType="ended"
@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 import EbaySummary from "./EbaySummary";
 import Listings from "./Results/Listings";
 
@@ -53,11 +53,13 @@ export default {
   }),
   computed: {
     ...mapState({
-      active_results: state => state.ebay.active_items,
-      active_loading: state => state.ebay.active_loading,
-      ended_results: state => state.ebay.ended_items,
-      ended_loading: state => state.ebay.ended_loading
+      loading: state => state.pricing.loading
     }),
+    ...mapGetters({
+      ebayActive: "pricing/getEbayActive",
+      ebayEnded: "pricing/getEbayEnded"
+    })
+    /*
     getActiveFilteredResults() {
       if (this.ignoreCalcShipping) {
         const filtered = this.active_results.filter(
@@ -76,6 +78,8 @@ export default {
       }
       return this.results;
     },
+    */
+    /*
     calculateSalesPrices() {
       if (this.ended_results.length === 0) return [];
       const prices = this.ended_results.map(item => {
@@ -105,8 +109,10 @@ export default {
       const avg = total / prices.length;
       return avg;
     }
+    */
   },
   methods: {
+    /*
     getShippingCost(shippingInfo) {
       const { shippingServiceCost, shippingType } = shippingInfo;
 
@@ -126,6 +132,7 @@ export default {
           break;
       }
     }
+    */
   }
 };
 </script>

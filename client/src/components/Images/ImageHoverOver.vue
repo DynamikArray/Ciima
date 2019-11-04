@@ -1,29 +1,29 @@
 <template>
-  <div>
-    <v-tooltip v-model="blnShow" color="black" :max-width="340" right>
-      <template v-slot:activator="{ on }">
-        <img
-          :key="makeFileNameKey()"
-          :src="getImageThumb()"
-          @mouseover="blnShow = true"
-          @mouseleave="blnShow = false"
-          :max-height="60"
-          contain
-        />
-      </template>
+  <v-tooltip v-model="blnShow" color="black" :max-width="340" right>
+    <template v-slot:activator="{ on }">
+      <img
+        :class="imgClass"
+        v-if="imageThumb"
+        :key="makeFileNameKey()"
+        :src="imageThumb"
+        @mouseover="blnShow = true"
+        @mouseleave="blnShow = false"
+        :height="maxHeight || 60"
+        contain
+      />
+    </template>
 
-      <v-img :src="imageFull" :max-width="340" contain>
-        <template v-slot:placeholder>
-          <v-row class="fill-height ma-0" align="center" justify="center">
-            <v-progress-circular
-              indeterminate
-              color="blue darken-1"
-            ></v-progress-circular>
-          </v-row>
-        </template>
-      </v-img>
-    </v-tooltip>
-  </div>
+    <v-img :src="imageFull" :max-width="340" :min-height="200" contain>
+      <template v-slot:placeholder>
+        <v-row class="fill-height ma-0" align="center" justify="center">
+          <v-progress-circular
+            indeterminate
+            color="blue darken-1"
+          ></v-progress-circular>
+        </v-row>
+      </template>
+    </v-img>
+  </v-tooltip>
 </template>
 
 <script>
@@ -33,13 +33,12 @@ export default {
     blnShow: false
   }),
   props: {
-    imageFull: [String],
-    imageThumb: [String]
+    imgClass: [String],
+    maxHeight: [Number],
+    imageFull: [String, Boolean],
+    imageThumb: [String, Boolean]
   },
   methods: {
-    getImageThumb() {
-      return this.imageThumb;
-    },
     makeFileNameKey() {
       const thumb = this.imageThumb;
       const path = thumb.split("/").reverse();

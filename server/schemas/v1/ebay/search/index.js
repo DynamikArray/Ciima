@@ -21,7 +21,7 @@ module.exports = {
         },
         searchType: {
           type: "string",
-          enum: ["findCompletedItems", "findItemsByKeywords"]
+          enum: ["findCompletedItems", "findItemsAdvanced"]
         }
       }
     },

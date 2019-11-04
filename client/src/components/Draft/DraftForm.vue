@@ -71,36 +71,34 @@
         </v-col>
         <v-col cols="8">
           <div>
-
-
-          <v-text-field
-            dense
-            outlined
-            label="Inventory Title"
-            hint="Title as it will appear on Ebay"
-            clearable
-            counter
-            id="inventoryTitle"
-            name="inventoryTitle"
-            v-model="inventoryTitle"
-            :rules="fieldRules.inventoryTitle"
-          >
-            <template v-slot:append-outer>
-              <v-btn
-                style="margin-top:-5px"
-                color="primary"
-                @click="toggleExtraDescriptionDetails"
-              >
-                <v-icon class="mr-1">{{ extraDescriptionIcon() }}</v-icon
-                >More
-              </v-btn>
-            </template>
-          </v-text-field>
+            <v-text-field
+              dense
+              outlined
+              label="Inventory Title"
+              hint="Title as it will appear on Ebay"
+              clearable
+              counter
+              id="inventoryTitle"
+              name="inventoryTitle"
+              v-model="inventoryTitle"
+              :rules="fieldRules.inventoryTitle"
+            >
+              <template v-slot:append-outer>
+                <v-btn
+                  style="margin-top:-5px"
+                  color="primary"
+                  @click="toggleExtraDescriptionDetails"
+                >
+                  <v-icon class="mr-1">{{ extraDescriptionIcon() }}</v-icon
+                  >More
+                </v-btn>
+              </template>
+            </v-text-field>
           </div>
 
           <div v-if="showExtra">
             <v-textarea
-            v-model="extraDescription"
+              v-model="extraDescription"
               auto-grow
               outlined
               label="Extra Description Information"
@@ -108,7 +106,6 @@
             >
             </v-textarea>
           </div>
-
         </v-col>
       </v-row>
 
@@ -329,7 +326,7 @@ export default {
     }, 500),
     defaultProductType(val) {
       if (val === "sets") this.locationCode = "EBAY-SETS-";
-      if (val === "singles") this.locationCode = "EBAY-SINGLES-";
+      if (val === "singles") this.locationCode = "SINGLES-BOX-";
     }
   },
   methods: {

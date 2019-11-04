@@ -8,7 +8,7 @@ module.exports = [
   { icon: "fa fa-plus-square", text: "New Draft", to: "draft" },
   { icon: "fa fa-list-alt", text: "View Drafts", to: "drafts" },
   { menuDivider: true },
-  { icon: "fa fa-boxes", text: "Search Inventory", to: "inventory" },
-  { menuDivider: true },
-  { icon: "fab fa-ebay", text: "Search eBay", to: "ebay" }
+  { icon: "fa fa-boxes", text: "Search Inventory", to: "inventory" }
+  //{ menuDivider: true },
+  //{ icon: "fab fa-ebay", text: "Search eBay", to: "ebay" }
 ];

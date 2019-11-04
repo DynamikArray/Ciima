@@ -14,6 +14,7 @@ import openDrafts from "@/store/drafts/openDrafts";
 import linnworks from "@/store/inventory/linnworks";
 import ebay from "@/store/ebay/search";
 import user from "@/store/user/user";
+import pricing from "@/store/pricing/pricing";
 
 export default new Vuex.Store({
   modules: {
@@ -26,7 +27,8 @@ export default new Vuex.Store({
     openDrafts,
     settings,
     titleSearch,
-    user
+    user,
+    pricing
   },
   state: {},
   mutations: {}
