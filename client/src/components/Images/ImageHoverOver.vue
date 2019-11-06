@@ -1,5 +1,5 @@
 <template>
-  <v-tooltip v-model="blnShow" color="black" :max-width="340" right>
+  <v-tooltip v-model="blnShow" color="black" :max-width="540" right>
     <template v-slot:activator="{ on }">
       <img
         :class="imgClass"
@@ -13,7 +13,7 @@
       />
     </template>
 
-    <v-img :src="imageFull" :max-width="340" :min-height="200" contain>
+    <v-img :src="imageFull" :max-width="540" :min-height="260" contain>
       <template v-slot:placeholder>
         <v-row class="fill-height ma-0" align="center" justify="center">
           <v-progress-circular

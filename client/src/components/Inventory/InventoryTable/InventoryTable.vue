@@ -4,18 +4,6 @@
       <v-card-text class="">
         <div class="d-flex justify-space-between">
           <SearchForm class="d-flex grow align-center" />
-          <div class="d-flex align-center mx-2">
-            <h4 class="mr-2">Ebay Sets Only:</h4>
-          </div>
-          <div class="d-flex align-center mx-1">
-            <v-switch
-              color="primary"
-              class="mb-5"
-              v-model="blnSetsOnly"
-              :label="blnSetsOnly ? `Yes` : `No`"
-              hide-details
-            ></v-switch>
-          </div>
         </div>
       </v-card-text>
     </v-card>
@@ -25,37 +13,67 @@
     <v-data-table
       :loading="loading"
       :headers="headers"
-      :items-per-page="200"
-      :items="getData"
+      :items-per-page="20"
+      :items="inventory"
       class="elevation-1"
     >
-      <template v-slot:item.Images="{ item }">
+      <template v-slot:item.imgThumb="{ item }">
         <ImagesHoverOver
-          :imageFull="getMainImage(item.Images, `FullSource`)"
-          :imageThumb="getMainImage(item.Images, `Source`)"
+          :imageFull="item.imageFull"
+          :imageThumb="item.imageFull"
         />
       </template>
 
-      <template v-slot:item.StockLevels="{ item }">
-        <div v-html="createStockLevels(item.StockLevels)" />
-      </template>
-
-      <template v-slot:item.StockItemId="{ item }">
-        <div v-html="createStockLocations(item.StockLevels)" />
+      <template v-slot:item.location.name="{ item }">
+        <v-edit-dialog
+          :return-value.sync="returnValue"
+          @save="save"
+          @cancel="cancel"
+          @open="open"
+          @close="close"
+        >
+          {{ item.location.name }}
+          <template v-slot:input>
+            <v-text-field
+              v-model="item.location.name"
+              :rules="[max55chars]"
+              label="Edit"
+              single-line
+              counter
+            ></v-text-field>
+          </template>
+        </v-edit-dialog>
       </template>
 
       <template v-slot:item.action="{ item }">
-        <UpdateDialog
-          v-for="(StockLevel, index) in item.StockLevels"
-          :key="index + item.StockItemId"
-          :stockLevel.sync="StockLevel"
-        />
+        <button>Action</button>
       </template>
     </v-data-table>
+
+    <v-snackbar v-model="snack" :timeout="3000" :color="snackColor">
+      {{ snackText }}
+      <v-btn text @click="snack = false">Close</v-btn>
+    </v-snackbar>
   </div>
 </template>
 
 <script>
+/*
+<template v-slot:item.Images="{ item }">
+  <ImagesHoverOver
+    :imageFull="getMainImage(item.Images, `FullSource`)"
+    :imageThumb="getMainImage(item.Images, `Source`)"
+  />
+</template>
+
+<template v-slot:item.StockLevels="{ item }">
+  <div v-html="createStockLevels(item.StockLevels)" />
+</template>
+
+<template v-slot:item.StockItemId="{ item }">
+  <div v-html="createStockLocations(item.StockLevels)" />
+</template>
+ */
 import { mapState } from "vuex";
 import { headers } from "./tableConfig.js";
 import SearchForm from "@/components/Inventory/Search/SearchForm";
@@ -71,25 +89,22 @@ export default {
   data() {
     return {
       headers,
-      blnSetsOnly: true
+      max55chars: v => v.length <= 55 || "Input too long!",
+      snack: false,
+      snackColor: "",
+      snackText: "",
+      returnValue: false
     };
   },
   computed: {
     ...mapState({
       loading: state => state.linnworks.loading,
       inventory: state => state.linnworks.items
-    }),
-    ebaySetsOnly() {
-      if (!this.inventory.length) return [];
-
-      const setsOnly = this.inventory.filter(item => {
-        return item.CategoryName == "EBAY-SETS";
-      });
-      return setsOnly;
-    },
-    getData() {
-      if (this.blnSetsOnly) return this.ebaySetsOnly;
-      return this.inventory;
+    })
+  },
+  watch: {
+    returnValue: newVal => {
+      console.log("RETURN VALUE WATHC, ", newVal);
     }
   },
   methods: {
@@ -98,6 +113,31 @@ export default {
       const mainImage = images.filter(image => image.IsMain);
       return mainImage[0][property];
     },
+    save() {
+      //this could call the update at the api level
+      //if oka then yeah
+      console.log("Dialog save");
+
+      this.snack = true;
+      this.snackColor = "success";
+      this.snackText = "Data saved";
+    },
+    cancel() {
+      console.log("Dialog cance");
+      this.snack = true;
+      this.snackColor = "error";
+      this.snackText = "Canceled";
+    },
+    open() {
+      console.log("Dialog open", this.snack);
+      this.snack = true;
+      this.snackColor = "info";
+      this.snackText = "Dialog opened";
+    },
+    close() {
+      console.log("Dialog closed");
+    }
+    /*
     convertBlnToYesNo() {
       if (this.blnSetsOnly) return "Yes";
       return "No";
@@ -120,6 +160,7 @@ export default {
       });
       return locations.join("");
     }
+    */
   }
 };
 </script>

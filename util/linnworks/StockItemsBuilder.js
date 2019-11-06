@@ -4,11 +4,15 @@
  */
 class StockItem {
   constructor(stockItemId, itemTitle, itemNumber, price) {
+    //minimal product data
     this.stockItemId = stockItemId;
     this.itemTitle = itemTitle;
     this.itemNumber = itemNumber;
     this.price = price;
-
+    //main image
+    this.imageFull = false;
+    this.imageThumb = false;
+    //location - qty
     this.location = {
       id: false,
       name: false,
@@ -26,6 +30,12 @@ class StockItem {
     this.location.multiple = multiple;
     return this;
   }
+
+  addImage(imgThumb, imgFull) {
+    this.imageThumb = imgThumb;
+    this.imageFull = imgFull;
+    return this;
+  }
 }
 
 /**
@@ -37,6 +47,12 @@ class StockItem {
 class StockItemsBuilder {
   constructor() {
     this.results = [];
+  }
+  //
+  //
+  //
+  getResults() {
+    return this.results;
   }
   //
   //
@@ -57,9 +73,7 @@ class StockItemsBuilder {
   //
   //
   formatLocations(locations) {
-    console.log(locations, "\n\n");
-
-    const qty = locations[0].Location.StockLevel;
+    const qty = locations[0].StockLevel;
     const id = locations[0].Location.StockLocationId;
     const name = locations[0].Location.BinRack;
 
@@ -71,30 +85,43 @@ class StockItemsBuilder {
   //
   //
   //
+  formatImages(images) {
+    const main = images.filter(img => img.IsMain);
+    if (main.length == 1) {
+      const imgFull = main[0].FullSource;
+      const imgThumb = main[0].Source;
+      return { imgThumb, imgFull };
+    }
+    return { imgThumb: false, imgFull: false };
+  }
+
+  //
+  //
+  //
   addResults(results) {
     results.forEach(item => {
       if (this.shouldInclude(item.CategoryName)) {
         const { StockItemId, ItemTitle, ItemNumber } = item;
         const { Price } = item.ItemChannelPrices[0];
+        //create new stockItem instance
         const stockItem = new StockItem(
           StockItemId,
           ItemTitle,
           ItemNumber,
           Price
         );
-
+        //format raw stocklevels object and make into our formt
         const { id, name, qty, multi } = this.formatLocations(item.StockLevels);
+        //add that location object to our stockItem
         stockItem.addLocation(id, name, qty, multi);
+        //add the main image
+        const { imgThumb, imgFull } = this.formatImages(item.Images);
+        stockItem.addImage(imgThumb, imgFull);
+        //include onto  results
         this.results.push(stockItem);
       }
     });
     return true;
-  }
-  //
-  //
-  //
-  getResults() {
-    return this.results;
   }
 }
 
