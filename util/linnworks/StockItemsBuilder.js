@@ -16,6 +16,7 @@ class StockItem {
     this.location = {
       id: false,
       name: false,
+      formattedName: false,
       qty: false,
       multiple: false
     };
@@ -30,9 +31,18 @@ class StockItem {
   addLocation(locationId, locationName, qty, multiple = false) {
     this.location.id = locationId;
     this.location.name = locationName;
+    this.location.formattedName = this.formatLocationName(locationName);
     this.location.qty = qty;
     this.location.multiple = multiple;
     return this;
+  }
+
+  formatLocationName(locationName) {
+    const arr = locationName.split("-");
+    const last = arr.length - 1;
+    if (arr[last].length < 2) arr[last] = `0${arr[last]}*`;
+    const formatted = arr.join("-");
+    return formatted;
   }
 
   addImage(imgThumb, imgFull) {

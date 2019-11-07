@@ -103,4 +103,7 @@ body {
 .ourToast {
   box-shadow: 2px solid #000;
 }
+.textShadow {
+  text-shadow: 1px 1px 1px #000;
+}
 </style>

@@ -1,7 +1,10 @@
 <template>
   <v-tooltip v-model="blnShow" color="black" :max-width="540" right>
     <template v-slot:activator="{ on }">
-      <div style="min-height: 60px;" class="d-flex justify-center pa-2">
+      <div
+        :style="`min-height: ${minHeight}px;`"
+        class="d-flex justify-center mx-auto pa-1"
+      >
         <div class="d-flex align-center">
           <img
             :class="imgClass"
@@ -10,7 +13,7 @@
             :src="imageThumb"
             @mouseover="blnShow = true"
             @mouseleave="blnShow = false"
-            style="max-width: 50px; max-height: 50px;"
+            :style="`max-width: ${maxWidth}px; max-height: ${maxHeight}px;`"
             contain
           />
         </div>
@@ -38,9 +41,20 @@ export default {
   }),
   props: {
     imgClass: [String],
-    maxHeight: [Number],
     imageFull: [String, Boolean],
-    imageThumb: [String, Boolean]
+    imageThumb: [String, Boolean],
+    minHeight: {
+      type: [Number],
+      default: 60
+    },
+    maxHeight: {
+      type: [Number],
+      default: 50
+    },
+    maxWidth: {
+      type: [Number],
+      default: 50
+    }
   },
   methods: {
     makeFileNameKey() {

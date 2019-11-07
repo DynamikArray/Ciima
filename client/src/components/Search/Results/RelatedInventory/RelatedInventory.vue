@@ -1,23 +1,29 @@
 <template>
   <div class="relatedInventoryWrapper">
-    <div v-if="Array.isArray(items)" class="">
-      <div class="text-left pa-1 ml-2">
-        <v-icon small class="mr-2">fa fa-boxes</v-icon>Related Inventory Items:
+    <div v-if="Array.isArray(items)" class="textShadow">
+      <div
+        class="text-left pa-1 pl-4 grey darken-2 white--text text--lighten-2"
+      >
+        <v-icon small class="mr-2">fa fa-boxes</v-icon>{{ titleMessage }}
       </div>
 
       <v-data-table
         dense
         id="relatedInventory"
-        loading="loading"
+        :loading="loading"
         :headers="headers"
-        :items-per-page="20"
+        :items-per-page="5"
         :items="items"
         class="elevation-1"
+        :footer-props="footerProps"
       >
         <template v-slot:item.imgThumb="{ item }">
           <ImagesHoverOver
             :imageFull="item.imageFull"
             :imageThumb="item.imageThumb"
+            :minHeight="35"
+            :maxHeight="30"
+            :maxWidth="30"
           />
         </template>
 
@@ -66,12 +72,25 @@ export default {
     EditFieldDialog
   },
   props: {
-    items: [Boolean, Array, Object],
-    loading: [Boolean]
+    items: [Boolean, Array],
+    loading: [Boolean],
+    searchString: [String]
   },
   data: () => ({
-    headers
+    headers,
+    footerProps: {
+      "items-per-page-options": [5, 10]
+    }
   }),
+  computed: {
+    titleMessage() {
+      const { items, searchString } = this;
+      if (items.length) {
+        return `${items.length} Similar titles containing: ${searchString}`;
+      }
+      return `Similar titles: ${searchString}`;
+    }
+  },
   methods: {
     getMainImage(images, property) {
       if (!images.length > 0) return false;

@@ -15,7 +15,7 @@
     <v-data-table
       :loading="loading"
       :headers="headers"
-      :items-per-page="20"
+      :items-per-page="15"
       :items="inventory"
       class="elevation-1"
     >
@@ -24,6 +24,10 @@
           :imageFull="item.imageFull"
           :imageThumb="item.imageThumb"
         />
+      </template>
+
+      <template v-slot:item.location.formattedName="{ item }">
+        {{ item.location.formattedName }}
       </template>
 
       <template v-slot:item.location.name="{ item }">

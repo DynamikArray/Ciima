@@ -32,6 +32,7 @@
         <RelatedInventory
           :items="inventory"
           :loading="inventory_loading"
+          :searchString="searchString"
         ></RelatedInventory>
       </div>
     </v-card-text>
@@ -46,6 +47,9 @@ import { SEARCH_TITLES_INVENTORY_CLEAR } from "@/store/mutation-types";
 import RelatedInventory from "./RelatedInventory/RelatedInventory";
 
 export default {
+  data: () => ({
+    searchString: ""
+  }),
   components: {
     RelatedInventory
   },
@@ -59,10 +63,11 @@ export default {
   },
   created() {
     if (this.title) {
-      const searchString = this.title.title;
+      this.searchString = this.title.title;
+
       this.$store.commit(`titleSearch/${SEARCH_TITLES_INVENTORY_CLEAR}`);
       this.$store.dispatch(`titleSearch/${SEARCH_TITLES_INVENTORY}`, {
-        searchString
+        searchString: this.searchString
       });
     }
   }
