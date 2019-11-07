@@ -12,14 +12,15 @@ module.exports = fastify => ({
     const keyword = req.body.searchString;
     try {
       //hold some things
-      pageNumber = 1;
-      nextPage = true;
+      let perPage = 200;
+      let pageNumber = 1;
+      let nextPage = true;
 
       //stock item builder/formatter/container
       const stockItemsBuilder = new StockItemsBuilder();
 
       while (nextPage === true) {
-        const formattedData = `keyword=${keyword}&loadCompositeParents=true&loadVariationParents=true&entriesPerPage=200&pageNumber=${pageNumber}&dataRequirements=[0,2,4,5,6,7,8]&searchTypes=[0,1,2]`;
+        const formattedData = `keyword=${keyword}&loadCompositeParents=true&loadVariationParents=true&entriesPerPage=${perPage}&pageNumber=${pageNumber}&dataRequirements=[0,2,4,5,6,7,8]&searchTypes=[0,1,2]`;
         const { result, error } = await fastify.linnworks.makeApiCall({
           method: "POST",
           url: "Stock/GetStockItemsFull",
@@ -29,7 +30,10 @@ module.exports = fastify => ({
         });
 
         if (error) nextPage = false;
-        if (result) stockItemsBuilder.addResults(result);
+        if (result) {
+          if (result.length < perPage) nextPage = false;
+          stockItemsBuilder.addResults(result);
+        }
         pageNumber++;
       }
 

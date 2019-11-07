@@ -43,6 +43,7 @@ class StockItem {
 
   addMetaApplication(application) {
     this.meta.application = application;
+    return this;
   }
 }
 
@@ -126,12 +127,13 @@ class StockItemsBuilder {
 
         //format raw stocklevels object and make into our formt
         const { id, name, qty, multi } = this.formatLocations(item.StockLevels);
-        //add that location object to our stockItem
-        stockItem.addLocation(id, name, qty, multi);
-        //add the main image
         const { imgThumb, imgFull } = this.formatImages(item.Images);
-        stockItem.addImage(imgThumb, imgFull);
-        stockItem.addMetaApplication("Linnworks");
+
+        //add that location object to our stockItem
+        stockItem
+          .addLocation(id, name, qty, multi)
+          .addImage(imgThumb, imgFull)
+          .addMetaApplication("Linnworks");
 
         //include onto  results
         this.results.push(stockItem);
