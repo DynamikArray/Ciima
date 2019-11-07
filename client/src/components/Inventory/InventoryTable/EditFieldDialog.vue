@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-edit-dialog @save="onSave()" @cancel="onCancel()" class="mx-3">
+    <v-edit-dialog @save="onSave()" @cancel="onCancel()">
       {{ fieldValue }}
       <template v-slot:input>
         <v-text-field

@@ -22,10 +22,10 @@ export const headers = [
     value: "itemTitle"
   },
   {
-    text: "Price",
+    text: "Qty",
     align: "center",
     sortable: true,
-    value: "price",
+    value: "location.qty",
     width: "80"
   },
   {
@@ -36,17 +36,10 @@ export const headers = [
     width: "200"
   },
   {
-    text: "Qty",
+    text: "Price",
     align: "center",
     sortable: true,
-    value: "location.qty",
+    value: "price",
     width: "80"
-  },
-  {
-    text: "Actions",
-    value: "action",
-    sortable: false,
-    align: "center",
-    width: "100"
   }
 ];

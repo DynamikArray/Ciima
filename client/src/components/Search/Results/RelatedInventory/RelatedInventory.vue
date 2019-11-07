@@ -6,30 +6,45 @@
       </div>
 
       <v-data-table
-        id="relatedInventory"
         dense
-        :loading="loading"
+        id="relatedInventory"
+        loading="loading"
         :headers="headers"
-        :items-per-page="5"
+        :items-per-page="20"
         :items="items"
-        class="elevation-2"
-        hide-default-header
+        class="elevation-1"
       >
-        <template v-slot:item.Images="{ item }">
+        <template v-slot:item.imgThumb="{ item }">
           <ImagesHoverOver
-            imgClass="mt-1"
-            :maxHeight="30"
-            :imageFull="getMainImage(item.Images, `FullSource`)"
-            :imageThumb="getMainImage(item.Images, `Source`)"
+            :imageFull="item.imageFull"
+            :imageThumb="item.imageThumb"
           />
         </template>
 
-        <template v-slot:item.StockLevels="{ item }">
-          <div v-html="createStockLevels(item.StockLevels)" />
+        <template v-slot:item.location.name="{ item }">
+          <EditFieldDialog
+            :key="item.stockItemId"
+            :originalValue.sync="item.location.name"
+            :itemId="item.stockItemId"
+            :locationId="item.location.id"
+            fieldName="BinRack"
+            :textfieldWidth="320"
+          ></EditFieldDialog>
         </template>
 
-        <template v-slot:item.StockItemId="{ item }">
-          <div v-html="createStockLocations(item.StockLevels)" />
+        <template v-slot:item.location.qty="{ item }">
+          <EditFieldDialog
+            :key="item.stockItemId"
+            :originalValue.sync="item.location.qty"
+            :itemId="item.stockItemId"
+            :locationId="item.location.id"
+            fieldName="StockLevel"
+            :textfieldWidth="150"
+          ></EditFieldDialog>
+        </template>
+
+        <template v-slot:item.action="{ item }">
+          <button>Action</button>
         </template>
       </v-data-table>
     </div>
@@ -43,10 +58,12 @@
 <script>
 import ImagesHoverOver from "@/components/Images/ImageHoverOver";
 import { headers } from "./tableHeaders.js";
+import EditFieldDialog from "@/components/Inventory/InventoryTable/EditFieldDialog";
 
 export default {
   components: {
-    ImagesHoverOver
+    ImagesHoverOver,
+    EditFieldDialog
   },
   props: {
     items: [Boolean, Array, Object],

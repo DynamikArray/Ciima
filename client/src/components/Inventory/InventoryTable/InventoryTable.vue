@@ -1,14 +1,16 @@
 <template>
   <div>
-    <v-card class="elevation-1">
-      <v-card-text class="">
-        <div class="d-flex justify-space-between">
-          <SearchForm class="d-flex grow align-center" />
-        </div>
-      </v-card-text>
-    </v-card>
+    <div v-if="showSearchForm">
+      <v-card class="elevation-1">
+        <v-card-text class="">
+          <div class="d-flex justify-space-between">
+            <SearchForm class="d-flex grow align-center" />
+          </div>
+        </v-card-text>
+      </v-card>
 
-    <v-divider class="my-3"></v-divider>
+      <v-divider class="my-3"></v-divider>
+    </div>
 
     <v-data-table
       :loading="loading"
@@ -57,14 +59,18 @@
 import { mapState } from "vuex";
 import { headers } from "./tableConfig.js";
 import SearchForm from "@/components/Inventory/Search/SearchForm";
-import UpdateDialog from "./UpdateDialog";
 import ImagesHoverOver from "@/components/Images/ImageHoverOver";
 import EditFieldDialog from "./EditFieldDialog";
 
 export default {
+  props: {
+    showSearchForm: {
+      type: [Boolean],
+      default: true
+    }
+  },
   components: {
     SearchForm,
-    UpdateDialog,
     ImagesHoverOver,
     EditFieldDialog
   },
