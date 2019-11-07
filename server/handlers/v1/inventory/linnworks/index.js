@@ -1,26 +1,52 @@
 const queryString = require("query-string");
+const StockItemsBuilder = require("../../../../../util/linnworks/StockItemsBuilder");
 
 module.exports = fastify => ({
+  /**
+   * [searchInventoryHandler description]
+   * @param  {[type]}  req [description]
+   * @param  {[type]}  res [description]
+   * @return {Promise}     [description]
+   */
   searchInventoryHandler: async (req, res) => {
     const keyword = req.body.searchString;
-    const formattedData = `keyword=${keyword}&loadCompositeParents=true&loadVariationParents=true&entriesPerPage=200&pageNumber=1&dataRequirements=[0,2,4,5,6,7,8]&searchTypes=[0,1,2]`;
-
     try {
-      const { result, error } = await fastify.linnworks.makeApiCall({
-        method: "POST",
-        url: "Stock/GetStockItemsFull",
-        headers:
-          "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
-        data: formattedData
-      });
+      //hold some things
+      pageNumber = 1;
+      nextPage = true;
 
-      if (result) return { result };
-      if (error) return { error };
+      //stock item builder/formatter/container
+      const stockItemsBuilder = new StockItemsBuilder();
+
+      while (nextPage === true) {
+        const formattedData = `keyword=${keyword}&loadCompositeParents=true&loadVariationParents=true&entriesPerPage=200&pageNumber=${pageNumber}&dataRequirements=[0,2,4,5,6,7,8]&searchTypes=[0,1,2]`;
+        const { result, error } = await fastify.linnworks.makeApiCall({
+          method: "POST",
+          url: "Stock/GetStockItemsFull",
+          headers:
+            "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
+          data: formattedData
+        });
+
+        if (error) nextPage = false;
+        if (result) stockItemsBuilder.addResults(result);
+        pageNumber++;
+      }
+
+      //we need to massage these into a formatted Inventory record, filtering out the
+      return { result: stockItemsBuilder.getResults(), error: false };
     } catch (error) {
+      console.log(error);
       fastify.winston.error(error);
     }
   },
 
+  /**
+   * [updateLocationOrQuantityHandler description]
+   * @param  {[type]}  req [description]
+   * @param  {[type]}  res [description]
+   * @return {Promise}     [description]
+   */
   updateLocationOrQuantityHandler: async (req, res) => {
     const {
       changeSource,

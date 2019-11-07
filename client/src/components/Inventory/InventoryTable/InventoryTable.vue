@@ -4,18 +4,6 @@
       <v-card-text class="">
         <div class="d-flex justify-space-between">
           <SearchForm class="d-flex grow align-center" />
-          <div class="d-flex align-center mx-2">
-            <h4 class="mr-2">Ebay Sets Only:</h4>
-          </div>
-          <div class="d-flex align-center mx-1">
-            <v-switch
-              color="primary"
-              class="mb-5"
-              v-model="blnSetsOnly"
-              :label="blnSetsOnly ? `Yes` : `No`"
-              hide-details
-            ></v-switch>
-          </div>
         </div>
       </v-card-text>
     </v-card>
@@ -25,31 +13,41 @@
     <v-data-table
       :loading="loading"
       :headers="headers"
-      :items-per-page="200"
-      :items="getData"
+      :items-per-page="20"
+      :items="inventory"
       class="elevation-1"
     >
-      <template v-slot:item.Images="{ item }">
+      <template v-slot:item.imgThumb="{ item }">
         <ImagesHoverOver
-          :imageFull="getMainImage(item.Images, `FullSource`)"
-          :imageThumb="getMainImage(item.Images, `Source`)"
+          :imageFull="item.imageFull"
+          :imageThumb="item.imageThumb"
         />
       </template>
 
-      <template v-slot:item.StockLevels="{ item }">
-        <div v-html="createStockLevels(item.StockLevels)" />
+      <template v-slot:item.location.name="{ item }">
+        <EditFieldDialog
+          :key="item.stockItemId"
+          :originalValue.sync="item.location.name"
+          :itemId="item.stockItemId"
+          :locationId="item.location.id"
+          fieldName="BinRack"
+          :textfieldWidth="320"
+        ></EditFieldDialog>
       </template>
 
-      <template v-slot:item.StockItemId="{ item }">
-        <div v-html="createStockLocations(item.StockLevels)" />
+      <template v-slot:item.location.qty="{ item }">
+        <EditFieldDialog
+          :key="item.stockItemId"
+          :originalValue.sync="item.location.qty"
+          :itemId="item.stockItemId"
+          :locationId="item.location.id"
+          fieldName="StockLevel"
+          :textfieldWidth="150"
+        ></EditFieldDialog>
       </template>
 
       <template v-slot:item.action="{ item }">
-        <UpdateDialog
-          v-for="(StockLevel, index) in item.StockLevels"
-          :key="index + item.StockItemId"
-          :stockLevel.sync="StockLevel"
-        />
+        <button>Action</button>
       </template>
     </v-data-table>
   </div>
@@ -61,64 +59,32 @@ import { headers } from "./tableConfig.js";
 import SearchForm from "@/components/Inventory/Search/SearchForm";
 import UpdateDialog from "./UpdateDialog";
 import ImagesHoverOver from "@/components/Images/ImageHoverOver";
+import EditFieldDialog from "./EditFieldDialog";
 
 export default {
   components: {
     SearchForm,
     UpdateDialog,
-    ImagesHoverOver
+    ImagesHoverOver,
+    EditFieldDialog
   },
   data() {
     return {
       headers,
-      blnSetsOnly: true
+      returnValue: false
     };
   },
   computed: {
     ...mapState({
       loading: state => state.linnworks.loading,
       inventory: state => state.linnworks.items
-    }),
-    ebaySetsOnly() {
-      if (!this.inventory.length) return [];
-
-      const setsOnly = this.inventory.filter(item => {
-        return item.CategoryName == "EBAY-SETS";
-      });
-      return setsOnly;
-    },
-    getData() {
-      if (this.blnSetsOnly) return this.ebaySetsOnly;
-      return this.inventory;
-    }
+    })
   },
   methods: {
     getMainImage(images, property) {
       if (!images.length > 0) return false;
       const mainImage = images.filter(image => image.IsMain);
       return mainImage[0][property];
-    },
-    convertBlnToYesNo() {
-      if (this.blnSetsOnly) return "Yes";
-      return "No";
-    },
-    createStockLevels(stockLevels) {
-      if (stockLevels.length === 0) return "-";
-      const levels = stockLevels.map(local => {
-        return `<div>
-          ${local.StockLevel}
-        </div>`;
-      });
-      return levels.join("");
-    },
-    createStockLocations(stockLevels) {
-      if (stockLevels.length === 0) return "-";
-      const locations = stockLevels.map(local => {
-        if (local.Location) {
-          return `<div> ${local.Location.BinRack} </div>`;
-        }
-      });
-      return locations.join("");
     }
   }
 };

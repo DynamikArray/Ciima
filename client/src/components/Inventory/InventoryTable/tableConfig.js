@@ -3,9 +3,10 @@ export const headers = [
     text: "Image",
     align: "center",
     sortable: false,
-    value: "Images",
+    value: "imgThumb",
     width: "60"
   },
+  /*
   {
     text: "Category",
     align: "center",
@@ -13,29 +14,39 @@ export const headers = [
     value: "CategoryName",
     width: "120"
   },
+  */
   {
     text: "Title",
     align: "left",
     sortable: true,
-    value: "ItemTitle"
+    value: "itemTitle"
+  },
+  {
+    text: "Price",
+    align: "center",
+    sortable: true,
+    value: "price",
+    width: "80"
+  },
+  {
+    text: "Bin/Rack",
+    align: "left",
+    sortable: true,
+    value: "location.name",
+    width: "200"
   },
   {
     text: "Qty",
     align: "center",
-    sortable: false,
-    value: "StockLevels",
-    width: "90"
-  },
-  {
-    text: "Location",
-    align: "center",
-    sortable: false,
-    value: "StockItemId" //some unused column to use as a seed
+    sortable: true,
+    value: "location.qty",
+    width: "80"
   },
   {
     text: "Actions",
     value: "action",
     sortable: false,
-    align: "center"
+    align: "center",
+    width: "100"
   }
 ];

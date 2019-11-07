@@ -50,22 +50,17 @@ const linnworks = {
     },
 
     async [UPDATE_INVENTORY_ITEM_LEVELS]({ dispatch, commit }, params) {
-      const { toastr } = params;
-      delete params.toastr;
-
-      const resp = await dispatch(
+      return await dispatch(
         "api/requestHandler",
         {
           method: "post",
           url: "/inventory/linnworks/update",
           params: params,
           success: `linnworks/${UPDATE_INVENTORY_RESPONSE}`,
-          loading: `linnworks/${UPDATE_INVENTORY_LOADING}`,
-          toastr
+          loading: `linnworks/${UPDATE_INVENTORY_LOADING}`
         },
         { root: true }
       );
-      return resp;
     }
   }
 };

@@ -1,9 +1,10 @@
 <template>
   <div v-if="isLoggedIn">
-    <span class="caption">
-      Last Operation:
-      {{ status }}
-    </span>
+    <v-slide-x-transition>
+      <span class="caption" :key="status.time">
+        {{ status.time | dateTime }} | {{ status.status }}
+      </span>
+    </v-slide-x-transition>
   </div>
 </template>
 

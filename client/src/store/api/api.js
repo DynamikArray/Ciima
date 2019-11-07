@@ -17,7 +17,8 @@ const api = {
     loading: false,
     useLoadingScreen: false,
     error: false,
-    status: ""
+    status: "",
+    statusTime: ""
   },
   mutations: {
     [ADD_API_CALL](state, payload) {
@@ -31,6 +32,7 @@ const api = {
     },
     [UPDATE_API_STATUS](state, payload) {
       state.status = payload;
+      state.statusTime = Date.now();
     }
   },
   getters: {
@@ -38,7 +40,7 @@ const api = {
       return state.loading;
     },
     lastStatus: state => {
-      return state.status;
+      return { status: state.status, time: state.statusTime };
     }
   },
   actions: {

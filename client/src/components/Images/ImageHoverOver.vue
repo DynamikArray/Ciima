@@ -1,19 +1,23 @@
 <template>
-  <v-tooltip v-model="blnShow" color="black" :max-width="340" right>
+  <v-tooltip v-model="blnShow" color="black" :max-width="540" right>
     <template v-slot:activator="{ on }">
-      <img
-        :class="imgClass"
-        v-if="imageThumb"
-        :key="makeFileNameKey()"
-        :src="imageThumb"
-        @mouseover="blnShow = true"
-        @mouseleave="blnShow = false"
-        :height="maxHeight || 60"
-        contain
-      />
+      <div style="min-height: 60px;" class="d-flex justify-center pa-2">
+        <div class="d-flex align-center">
+          <img
+            :class="imgClass"
+            v-if="imageThumb"
+            :key="makeFileNameKey()"
+            :src="imageThumb"
+            @mouseover="blnShow = true"
+            @mouseleave="blnShow = false"
+            style="max-width: 50px; max-height: 50px;"
+            contain
+          />
+        </div>
+      </div>
     </template>
 
-    <v-img :src="imageFull" :max-width="340" :min-height="200" contain>
+    <v-img :src="imageFull" :max-width="540" :min-height="260" contain>
       <template v-slot:placeholder>
         <v-row class="fill-height ma-0" align="center" justify="center">
           <v-progress-circular
