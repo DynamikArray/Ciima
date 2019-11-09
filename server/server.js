@@ -58,8 +58,10 @@ fastify.register(require("./routes/v1/drafts"), { prefix: "v1" });
 fastify.register(require("./routes/v1/submitDraft"), { prefix: "v1" });
 fastify.register(require("./routes/v1/user"), { prefix: "v1" });
 fastify.register(require("./routes/v1/inventory/linnworks"), { prefix: "v1" });
-fastify.register(require("./routes/v1/ebay/search"), { prefix: "v1" });
-
+fastify.register(require("./routes/v1/inventory/ebay"), { prefix: "v1" });
+//I think this is old code that got rolled into pricing
+//fastify.register(require("./routes/v1/ebay/search"), { prefix: "v1" });
+//Pricing Service
 fastify.register(require("./routes/v1/pricing"), { prefix: "v1" });
 
 //catch all route for loading client application

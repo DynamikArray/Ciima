@@ -41,6 +41,9 @@ LINNWORKS_APPLICATION_TOKEN=
 LINNWOKRS_API_URL=https://api.linnworks.net/api
 
 EBAY_APP_ID=
+EBAY_DEV_ID=
+EBAY_CERT_ID=
+EBAY_AUTH_TOKEN=
 ```
 
 ## Notes
@@ -51,5 +54,5 @@ Remove ?'s from the image urls so they match the file structer on the server.
 ### DB CHANGES
 
 ```
-ALTER TABLE `slc_drafts` ADD COLUMN `extraDescription` LONGTEXT NOT NULL AFTER `inventoryTitle`;
+ADDING inventory table???
 ```

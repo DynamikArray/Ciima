@@ -15,7 +15,7 @@
           Title Search
         </h5>
       </div>
-      <div class="d-flex grow align-center">
+      <div class="d-flex align-center w-100">
         <SelectedTitle></SelectedTitle>
       </div>
     </div>
