@@ -9,13 +9,24 @@ module.exports = fastify => ({
     return new Promise(function(resolve, reject) {
       try {
         let today = new Date();
-        const StartTimeTo = today.toISOString();
-        const StartTimeFrom = subDays(today, 45).toISOString();
+        //const StartTimeTo = today.toISOString();
+        //const StartTimeFrom = subDays(today, 30).toISOString();
+        //const EndTimeFrom = today.toISOString();
+        //const EndTimeTo = subDays(today, -30).toISOString();
+
+        const EndTimeFrom = today.toISOString();
+        const EndTimeTo = subDays(today, -1).toISOString();
 
         const params = {
           GranularityLevel: "Coarse",
-          StartTimeTo,
-          StartTimeFrom,
+          //StartTimeTo,
+          //StartTimeFrom,
+
+          EndTimeTo,
+          EndTimeFrom,
+
+          //OutputSelector: ["Country"],
+
           Pagination: {
             entriesPerPage: 10,
             pageNumber: 1
