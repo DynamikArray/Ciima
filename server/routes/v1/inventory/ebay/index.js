@@ -1,5 +1,5 @@
 const {
-  searchInventorySchema
+  loadInventorySchema
 } = require("../../../../schemas/v1/inventory/ebay");
 /**
  * Info routes endpoints
@@ -8,17 +8,17 @@ const {
  */
 module.exports = function(fastify, opts, next) {
   const {
-    searchInventoryHandler
+    loadInventoryHandler
   } = require("../../../../handlers/v1/inventory/ebay")(fastify);
 
   //Inventory Search
-  const ebaySearch = {
+  const ebayLoad = {
     preValidation: fastify.authenticate,
-    schema: searchInventorySchema,
-    handler: searchInventoryHandler
+    schema: loadInventorySchema,
+    handler: loadInventoryHandler
   };
 
   //http verbs
-  fastify.post("/inventory/ebay/search", ebaySearch);
+  fastify.post("/inventory/ebay/load", ebayLoad);
   next();
 };

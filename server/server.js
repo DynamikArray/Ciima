@@ -79,6 +79,7 @@ const start = async () => {
   }); //end catch;
 
   const msg = `Running at: ${JSON.stringify(fastify.server.address())}`;
+  console.log(msg);
   fastify.winston.info(msg);
 };
 
