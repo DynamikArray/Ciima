@@ -21,11 +21,12 @@ const fetchEbayStartedToday = async () => {
     dates: {
       StartTimeFrom: dteEnd,
       StartTimeTo: dteStart
-    }
+    },
+    hasEnded: 0
   });
 
-  logger.info(
-    `fetchEbayEndedToday() : Start:${dteStart} - End: ${dteEnd} | ${JSON.stringify(
+  logger.debug(
+    `fetchEbayStartedToday() : Start:${dteStart} - End: ${dteEnd} | ${JSON.stringify(
       loadInventoryResults
     )}`
   );
@@ -44,9 +45,11 @@ const fetchEbayEndedToday = async () => {
     dates: {
       EndTimeFrom: dteStart,
       EndTimeTo: dteEnd
-    }
+    },
+    hasEnded: 1
   });
-  logger.info(
+
+  logger.debug(
     `fetchEbayEndedToday() : Start:${dteStart} - End: ${dteEnd} | ${JSON.stringify(
       loadInventoryResults
     )}`

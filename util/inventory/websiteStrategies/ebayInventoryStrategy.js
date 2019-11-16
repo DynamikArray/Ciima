@@ -65,7 +65,7 @@ function ebayInventoryStrategy(action) {
    * @param  {[type]}  results [description]
    * @return {Promise}         [description]
    */
-  const saveInventoryPage = async results => {
+  const saveInventoryPage = async (results, hasEnded) => {
     const valuesOnly = results.map(item => {
       const newItem = new InventoryItemBuilder(item.ItemID, item.Title)
         .setImageFull(item.PictureDetails.GalleryURL)
@@ -77,6 +77,7 @@ function ebayInventoryStrategy(action) {
         .setLocation(item.SKU)
         .setBinRack(item.SKU)
         .setSourceProvider("EBAY")
+        .setHasEnded(hasEnded)
         .build();
       //send back only the values so we can UPSERT THEM
       return Object.values(newItem);
@@ -97,7 +98,7 @@ function ebayInventoryStrategy(action) {
 
     while (pageNumber <= totalPages) {
       //get our date range from payload
-      const { dates } = payload;
+      const { dates, hasEnded } = payload;
       //fetch page from inventory
       const fetchedPage = await fetchInventoryPage(dates, pageNumber);
       //from those results get properties
@@ -110,7 +111,7 @@ function ebayInventoryStrategy(action) {
       if (totalEntries > 0) {
         //save em if we do
         if (Items.length > 0) {
-          const savedResults = await saveInventoryPage(Items);
+          const savedResults = await saveInventoryPage(Items, hasEnded);
           logger.debug(
             `inventory load() : ${JSON.stringify(
               savedResults

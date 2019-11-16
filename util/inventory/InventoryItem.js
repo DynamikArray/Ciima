@@ -24,6 +24,8 @@ class InventoryItem {
     this.sourceProvider = "";
     this.startDateTime = "";
     this.endDateTime = "";
+
+    this.hasEnded = 0;
   }
 }
 
@@ -100,6 +102,11 @@ class InventoryItemBuilder {
 
   setSourceProvider(sourceProvider) {
     this.item.sourceProvider = sourceProvider;
+    return this;
+  }
+
+  setHasEnded(bit) {
+    this.item.hasEnded = bit;
     return this;
   }
 
