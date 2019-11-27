@@ -86,6 +86,27 @@ module.exports = fastify => ({
       }
     }
     return { error: "No db connection" };
+  },
+
+  //
+  //
+  //
+  readHandler: async (req, res) => {
+    console.log("read");
+  },
+
+  //
+  //
+  //Edit Draft
+  editHandler: async (req, res) => {
+    console.log("edit");
+  },
+
+  //
+  //
+  //Delete Draft
+  deleteHandler: async (req, res) => {
+    console.log("delete");
   }
 });
 

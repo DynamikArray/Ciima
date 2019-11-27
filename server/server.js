@@ -59,7 +59,6 @@ fastify.register(require("./routes/v1/submitDraft"), { prefix: "v1" });
 fastify.register(require("./routes/v1/user"), { prefix: "v1" });
 fastify.register(require("./routes/v1/inventory/linnworks"), { prefix: "v1" });
 fastify.register(require("./routes/v1/ebay/search"), { prefix: "v1" });
-
 fastify.register(require("./routes/v1/pricing"), { prefix: "v1" });
 
 //catch all route for loading client application
