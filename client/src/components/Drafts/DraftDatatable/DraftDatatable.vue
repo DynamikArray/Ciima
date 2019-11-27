@@ -113,6 +113,10 @@
             <v-chip label color="primary" @click="confirmSubmit(item.id)">
               <v-icon small>fa-upload</v-icon>
             </v-chip>
+
+            <v-chip label color="yellow" @click="editItem(item.id)">
+              <v-icon small>fa-edit</v-icon>
+            </v-chip>
           </div>
           <div v-if="item.status === 'Pending'">
             <v-chip label color="warning">
@@ -228,6 +232,11 @@ export default {
     makeNoteText(note) {
       return note;
     },
+
+    editItem(id){
+      this.$router.push({ name: 'draft.edit', params: { id} })
+    },
+
     async confirmSubmit(draftId, toast = true) {
       //add confirm
       const confirm = await this.$confirm(
