@@ -117,20 +117,40 @@
             </v-chip>
           </div>
           <div v-if="item.status === 'Error'">
-            <v-tooltip left :max-width="420" color="red">
-              <template v-slot:activator="{ on }">
-                <v-chip label color="red" v-on="on">
-                  <v-icon small>fa-exclamation-circle</v-icon>
-                </v-chip>
-              </template>
-              <div v-if="item.statusNotes">
-                <h3>Notes:</h3>
-                <h4
-                  :key="makeStatusNotesKey()"
-                  v-html="makeNoteText(item.statusNotes)"
-                ></h4>
-              </div>
-            </v-tooltip>
+            <div class="d-flex justify-center align-center mx-1">
+              <v-tooltip left :max-width="420" color="info">
+                <template v-slot:activator="{ on }">
+                  <v-chip label color="info" v-on="on">
+                    <v-icon small>fa-exclamation-circle</v-icon>
+                  </v-chip>
+                </template>
+                <div v-if="item.statusNotes">
+                  <h3>Notes:</h3>
+                  <h4
+                    :key="makeStatusNotesKey()"
+                    v-html="makeNoteText(item.statusNotes)"
+                  ></h4>
+                </div>
+              </v-tooltip>
+
+              <v-tooltip left :max-width="420" color="red">
+                <template v-slot:activator="{ on }">
+                  <v-chip
+                    v-on="on"
+                    class="mx-5"
+                    label
+                    color="red"
+                    @click="deleteItem(item.id)"
+                  >
+                    <v-icon small>fa-times-circle</v-icon>
+                  </v-chip>
+                </template>
+                <div>
+                  <h3>Delete Draft:</h3>
+                  <h4>Permenantly remove this draft from the database.</h4>
+                </div>
+              </v-tooltip>
+            </div>
           </div>
         </div>
       </template>
