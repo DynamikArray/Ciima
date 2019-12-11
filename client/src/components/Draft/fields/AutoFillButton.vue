@@ -40,8 +40,8 @@ export default {
   data: () => ({
     // TODO: get this from the util file
     ebayStoreCategories: {
-      sets: 5837309015,
-      singles: 15969436015
+      sets: "5837309015",
+      singles: "15969436015"
     }
   }),
 

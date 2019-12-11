@@ -32,7 +32,11 @@ const fieldRules = {
     v => !!v || "Grade is a required field",
     v => v.length <= 50 || "Grade must be less than 50 characters"
   ],
-  quantity: [v => !!v || "Quantity is a required field"],
+  quantity: [
+    v => !!v || "Quantity is a required field",
+    v =>
+      !!Number(v) > 0 || "Quantity must be greater than zero or is not a number"
+  ],
   price: [v => !!v || "Price is a required field"],
   series: [v => v.length <= 50 || "Series must be less than 50 characters"],
   mainCharacter: [

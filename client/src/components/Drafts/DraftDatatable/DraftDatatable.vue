@@ -1,24 +1,5 @@
 <template>
   <div>
-    <v-dialog v-model="imagePopup" max-width="420px">
-      <v-card>
-        <v-card-title class="text-center justify-space-between">
-          <h5>{{ selected.title }}</h5>
-          <h5>{{ selected.fullIssue }}</h5>
-        </v-card-title>
-        <v-card-text class="text-center pa-2">
-          <v-img :src="imageSrc" max-width="400" />
-        </v-card-text>
-        <v-divider class="my-3"></v-divider>
-        <v-card-actions class="text-center justify-space-between">
-          <v-btn color="success" @click="addIssueToDraft(selected)"
-            ><v-icon small class="mr-1">fa-plus</v-icon>Add</v-btn
-          >
-          <v-btn color="warning" @click="hideImageModal()">Cancel</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-
     <DraftsDatatableHeader
       :onSelect="fetchDraftsWithParams"
       :showAllUsers.sync="showAllUsers"
@@ -43,21 +24,10 @@
       <!--IMAGE COLUMN-->
       <template v-slot:item.main_image="{ item }">
         <div v-if="item.main_image !== 'false'">
-          <v-img
-            :src="item.main_image"
-            width="50"
-            class="ma-1"
-            @click="showImageModal(item.main_image)"
-          >
-            <template v-slot:placeholder>
-              <v-row class="fill-height ma-0" align="center" justify="center">
-                <v-progress-circular
-                  indeterminate
-                  color="blue darken-1"
-                ></v-progress-circular>
-              </v-row>
-            </template>
-          </v-img>
+          <ImagesHoverOver
+            :imageFull="item.main_image"
+            :imageThumb="item.main_image"
+          />
         </div>
         <div v-else>
           <v-icon>fa-exclamation-triangle</v-icon>
@@ -109,11 +79,33 @@
       <!--ACTION COLUMN-->
       <template v-slot:item.action="{ item }">
         <div class="d-flex justify-center align-center mx-1">
-          <div v-if="item.status === 'Open'">
-            <v-chip label color="primary" @click="confirmSubmit(item.id)">
+          <div
+            v-if="item.status === 'Open'"
+            class="d-flex justify-center align-center"
+          >
+            <v-chip
+              class="mx-5"
+              label
+              color="primary"
+              @click="confirmSubmit(item.id)"
+            >
               <v-icon small>fa-upload</v-icon>
             </v-chip>
+
+            <v-chip
+              class="mx-5"
+              label
+              color="warning"
+              @click="editItem(item.id)"
+            >
+              <v-icon small>fa-edit</v-icon>
+            </v-chip>
+
+            <v-chip class="mx-5" label color="red" @click="deleteItem(item.id)">
+              <v-icon small>fa-times-circle</v-icon>
+            </v-chip>
           </div>
+
           <div v-if="item.status === 'Pending'">
             <v-chip label color="warning">
               <v-icon small class="">fa-cog fa-spin</v-icon>
@@ -163,10 +155,12 @@ import { headers } from "./config.js";
 import { mapState } from "vuex";
 import settings from "@/util/settings.js";
 import DraftsDatatableHeader from "./DraftsDatatableHeader.vue";
+import ImagesHoverOver from "@/components/Images/ImageHoverOver";
 
 import avatar from "vue-avatar";
 
 import {
+  DELETE_DRAFT,
   OPEN_DRAFTS_FETCH,
   OPEN_DRAFTS_SUBMIT_DRAFT
 } from "@/store/action-types";
@@ -174,6 +168,7 @@ import {
 export default {
   components: {
     DraftsDatatableHeader,
+    ImagesHoverOver,
     avatar
   },
   data() {
@@ -228,6 +223,31 @@ export default {
     makeNoteText(note) {
       return note;
     },
+
+    editItem(id) {
+      this.$router.push({ name: "draft.edit", params: { id } });
+    },
+
+    async deleteItem(id) {
+      //add confirm
+      const confirm = await this.$confirm(
+        `<h3 class="text-center py-3">Delete this current draft?</h3>
+        <p>This will remove the draft. You cannot undo this operation. Are you sure you want to delete it?</p>`,
+        {
+          title: "  Delete this draft?"
+        }
+      );
+      if (confirm) this.deleteDraft(id);
+    },
+
+    async deleteDraft(draftId) {
+      await this.$store.dispatch(`deleteDraft/${DELETE_DRAFT}`, {
+        draftId
+      });
+
+      this.fetchDraftsWithParams({});
+    },
+
     async confirmSubmit(draftId, toast = true) {
       //add confirm
       const confirm = await this.$confirm(

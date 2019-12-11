@@ -58,7 +58,7 @@ const headers = [
     value: "action",
     sortable: false,
     align: "center",
-    width: "40px"
+    width: "120px"
   }
 ];
 

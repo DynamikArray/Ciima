@@ -49,6 +49,9 @@ let router = new Router({
         requiresAuth: true
       }
     },
+    //
+    //  DRAFT  create/edit
+    //
     {
       path: "/draft",
       props: true,
@@ -59,6 +62,20 @@ let router = new Router({
         requiresAuth: true
       }
     },
+    {
+      path: "/draft/:id",
+      props: true,
+      name: "draft.edit",
+      component: () =>
+        import(/*webpackChunkName: "draft"*/ "@/views/EditDraft.vue"),
+      props: true,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    //
+    //  DRAFTS
+    //
     {
       path: "/drafts",
       props: true,

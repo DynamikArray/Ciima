@@ -53,7 +53,15 @@ const api = {
       axiosInstance.interceptors.response.use(undefined, expired);
 
       //pull of payload params
-      const { method, url, params, success, loading, toastr } = payload;
+      const {
+        method,
+        url,
+        params,
+        success,
+        loading,
+        toastr,
+        asParams
+      } = payload;
 
       //handle loading indicator
       //see if we passed a callback function with the payload,
@@ -74,11 +82,9 @@ const api = {
       if (method === "post") config.data = { ...params };
       if (method === "get") config.params = { ...params };
 
-      /*  NOT YET USED OR TESTED
       //special handler to transform PUT requests querystring
       if (method === "put" && asParams) config.params = { ...params };
       if (method === "put" && !asParams) config.data = { ...params };
-      */
 
       //try the api call
       try {
