@@ -83,6 +83,9 @@ class StockItemsBuilder {
       case "EBAY-SINGLES":
         return true;
         break;
+      case "EBAY-ADULT":
+        return true;
+        break;
       default:
         return false;
         break;

@@ -79,6 +79,11 @@
                         color="primary"
                         value="singles"
                       ></v-radio>
+                      <v-radio
+                        label="Adult"
+                        color="primary"
+                        value="adult"
+                      ></v-radio>
                     </v-radio-group>
                   </div>
                 </v-list-item-content>

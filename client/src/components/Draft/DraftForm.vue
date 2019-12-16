@@ -296,6 +296,9 @@ export default {
       case "singles":
         this.locationCode = "EBAY-SINGLES-";
         break;
+      case "adult":
+        this.locationCode = "EBAY-ADULT-";
+        break;
       default:
         break;
     }
@@ -326,7 +329,8 @@ export default {
     }, 500),
     defaultProductType(val) {
       if (val === "sets") this.locationCode = "EBAY-SETS-";
-      if (val === "singles") this.locationCode = "SINGLES-BOX-";
+      if (val === "singles") this.locationCode = "EBAY-SINGLES-";
+      if (val === "adult") this.locationCode = "EBAY-ADULT-";
     }
   },
   methods: {
