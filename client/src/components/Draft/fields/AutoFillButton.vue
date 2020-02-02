@@ -137,11 +137,18 @@ export default {
     //
     autofillDraft() {
       if (!this.runDataCheck()) return false;
+
       //set 1st store cat
       this.draft.ebayStoreCategoryIdOne = this.ebayStoreCategoryIdOne;
+
+      //if we have a default for this type set it
       this.draft.ebayStoreCategoryIdOne = this.ebayStoreCategories[
         this.defaultProductType
       ];
+
+      if (this.defaultProductType === "adult") {
+        this.handleAdultDefaults();
+      }
 
       //issue Number
       this.draft.issueNumbers = this.getIssueNumbers().join(" ");
@@ -169,9 +176,25 @@ export default {
     autoFillTitleWithPublisherYear() {
       if (!this.runDataCheck()) return false;
       this.draft.inventoryTitle = this.createTitleWithOptions(true, true);
+    },
+    //
+    //
+    handleAdultDefaults() {
+      //value sent to endpoint
+      this.draft.ebaySiteCategoryId = "1604";
+      //field used as displayy
+      let field = document.getElementById("searchEbaySiteCategoryId");
+      field.disabled = true;
+
+      let label = document.querySelectorAll('[for="searchEbaySiteCategoryId"]');
+      label[0].innerText =
+        "Everything Else > Adult Only > Collectibles > Comics";
+
+      //secondary store category should be auto filled
+      this.draft.ebayStoreCategoryIdTwo = this.ebayStoreCategories[
+        this.defaultProductType
+      ];
     }
-    //
-    //
   }
 };
 </script>

@@ -32,6 +32,8 @@ const setLinnworksCategory = draftType => {
   let categoryInfo = {};
   if (draftType === "sets") categoryInfo = CategoryInfo.sets;
   if (draftType === "singles") categoryInfo = CategoryInfo.singles;
+  if (draftType === "adult") categoryInfo = CategoryInfo.adult;
+
   if (process.env.NODE_ENV === "development") categoryInfo = CategoryInfo.test;
   return categoryInfo;
 };
