@@ -1,0 +1,38 @@
+
+Name: afterBoxUpdate
+On Table: slc_location_boxes
+Event:  AFTER UPDATE
+STATEMENT
+```
+BEGIN
+	UPDATE slc_location_cards c
+	SET c.full_location = CONCAT(NEW.box,"-",c.card)
+	WHERE c.box_id = NEW.id;
+END
+```
+
+
+Name: beforeCardInsert
+On Table: slc_location_cards
+Event:  BEFORE INSERT
+STATEMENT
+```
+BEGIN
+	DECLARE boxName VARCHAR(255);
+	SELECT box b INTO boxName FROM slc_location_boxes WHERE id = NEW.box_id;
+	SET new.full_location = CONCAT(boxName,"-",NEW.card);
+END
+```
+
+
+Name: beforeCardUpdate
+On Table: slc_location_cards
+Event:  BEFORE UPDATE
+STATEMENT
+```
+BEGIN
+	DECLARE boxName VARCHAR(255);
+	SELECT box b INTO boxName FROM slc_location_boxes WHERE id = NEW.box_id;
+	SET new.full_location = CONCAT(boxName,"-",NEW.card);
+END
+```

@@ -1,5 +1,7 @@
 require("dotenv").config();
 
+const scheduler = require("./scheduler");
+
 //const { logger } = require("../util/winston/winston.js");
 const logger = require("../util/winston/winston.js")({
   hostname: "Worker"
@@ -10,7 +12,7 @@ const { linnworks } = require("../util/linnworks/linnworks.js");
 const { handleMessage } = require("./messageHandler.js")();
 
 const worker = async () => {
-  logger.info("Starting worker");
+  logger.info(`Starting worker at`);
   //connection to amqp
   await amqp.connect();
   //init linnworks connection
@@ -19,9 +21,11 @@ const worker = async () => {
   amqp.consume(handleMessage);
   // Publishing to arbitrary routing key.
   //await amqp.publish(routingKey, payload, options);
+  //
 };
 
 //start the worker
 worker();
+scheduler();
 
 module.exports = { worker };

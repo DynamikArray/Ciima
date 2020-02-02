@@ -12,6 +12,7 @@
     "axios-retry": "^3.1.2",
     "core-js": "^2.6.5",
     "lodash.debounce": "^4.0.8",
+    "pdfmake": "^0.1.63",
     "vue": "^2.6.10",
     "vue-avatar": "^2.1.8",
     "vue-currency-filter": "^3.4.3",

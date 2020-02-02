@@ -10,5 +10,9 @@ export const CategoryInfo = {
   singles: {
     CategoryId: "3048b178-b1bb-421f-8a63-5daf40506665",
     CategoryName: "EBAY-SINGLES"
+  },
+  adult: {
+    CategoryId: "e029f490-892a-464d-9642-d52fd3ead5a8",
+    CategoryName: "EBAY-ADULT"
   }
 };

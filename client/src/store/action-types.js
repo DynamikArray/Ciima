@@ -28,3 +28,17 @@ export const SEARCH_EBAY_ACTIVE = "SEARCH_EBAY_ACTIVE";
 export const SEARCH_EBAY_ENDED = "SEARCH_EBAY_ENDED";
 /* Pricing Service */
 export const PRICE_SEARCH = "PRICE_SEARCH";
+/*Locations */
+export const SEARCH_BOXES = "SEARCH_BOXES";
+export const SEARCH_BOXES_PRODUCTS = "SEARCH_BOXES_PRODUCTS";
+
+export const SEARCH_CARDS = "SEARCH_CARDS";
+export const SEARCH_CARDS_PRODUCTS = "SEARCH_CARDS_PRODUCTS";
+
+export const CREATE_BOX = "CREATE_BOX";
+export const UPDATE_BOX = "UPDATE_BOX";
+export const DELETE_BOX = "DELETE_BOX";
+export const CREATE_CARD = "CREATE_CARD";
+export const CREATE_CARDS = "CREATE_CARDS";
+export const UPDATE_CARD = "UPDATE_CARD";
+export const DELETE_CARD = "DELETE_CARD";

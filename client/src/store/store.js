@@ -20,6 +20,8 @@ import ebay from "@/store/ebay/search";
 import user from "@/store/user/user";
 import pricing from "@/store/pricing/pricing";
 
+import locations from "@/store/locations/locations";
+
 export default new Vuex.Store({
   modules: {
     api,
@@ -34,7 +36,8 @@ export default new Vuex.Store({
     settings,
     titleSearch,
     user,
-    pricing
+    pricing,
+    locations
   },
   state: {},
   mutations: {}

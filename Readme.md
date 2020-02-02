@@ -41,15 +41,19 @@ LINNWORKS_APPLICATION_TOKEN=
 LINNWOKRS_API_URL=https://api.linnworks.net/api
 
 EBAY_APP_ID=
+EBAY_DEV_ID=
+EBAY_CERT_ID=
+EBAY_AUTH_TOKEN=
 ```
 
 ## Notes
 
 Database scripts were run to normalize bad data characters against the titles table.
-Remove ?'s from the image urls so they match the file structer on the server.
+Remove ?'s from the image urls so they match the file structure on the server.
 
 ### DB CHANGES
 
 ```
-ALTER TABLE `slc_drafts` ADD COLUMN `extraDescription` LONGTEXT NOT NULL AFTER `inventoryTitle`;
+ADDING inventory table???
+
 ```

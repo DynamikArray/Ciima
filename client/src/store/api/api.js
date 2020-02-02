@@ -107,7 +107,7 @@ const api = {
               resp = `<h4>${resp}</h4><p>${data.result}</p>`;
             toastr.s(resp);
           }
-          return { result: success };
+          return { result: data.result };
         }
         //handle error from our server that we created
         if (data.error && !data.result) {
