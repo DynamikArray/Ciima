@@ -85,11 +85,21 @@ const locations = {
     getCurrentProducts: state => () => {
       const { products } = state;
 
-      const filteredItems = Array.from(
-        new Set(products.map(a => a.location))
-      ).map(location => {
-        return products.find(a => a.location === location);
-      });
+      const filteredItems = Array.from(new Set(products.map(a => a.location)))
+        .map(location => {
+          return products.find(a => {
+            if (a.location === location) {
+              return true;
+            }
+            return false;
+          });
+        })
+        .filter(item => {
+          if (item.hasEnded && item.quantitySold > 0) {
+            return false;
+          }
+          return true;
+        });
 
       return filteredItems;
     }

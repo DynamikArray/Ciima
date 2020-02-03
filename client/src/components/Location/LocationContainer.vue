@@ -97,7 +97,12 @@ export default {
       this.selectedCard = false;
     },
     products: function(val) {
-      this.productsList = val;
+      //Hanlde showing correctlly filtered product lists when data is loaded from boxes/cards aciton button
+      if (this.currentProductsOnly) {
+        this.productsList = this.productsFiltered;
+      } else {
+        this.productsList = val;
+      }
     },
     currentProductsOnly: function(val) {
       this.productsList = this.productsFiltered;

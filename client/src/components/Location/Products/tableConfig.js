@@ -68,5 +68,12 @@ export const headers = [
     sortable: true,
     value: "hasEnded",
     width: "65"
+  },
+  {
+    text: "Qty Sold",
+    align: "center",
+    sortable: true,
+    value: "quantitySold",
+    width: "85"
   }
 ];

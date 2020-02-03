@@ -6,9 +6,7 @@
           Inventory Locations
         </h5>
       </div>
-      <div class="d-flex flex-column align-self-center mr-4">
-        "Action Buttons"
-      </div>
+      <div class="d-flex flex-column align-self-center mr-4"></div>
     </div>
 
     <v-divider class="my-3"></v-divider>

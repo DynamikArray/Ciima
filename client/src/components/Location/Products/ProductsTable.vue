@@ -1,6 +1,5 @@
 <template>
   <div class="w-100">
-    <h5>Stock Items</h5>
     <v-data-table
       id="boxesTable"
       :loading="loading"
@@ -13,14 +12,22 @@
     >
       <template v-slot:top>
         <div class="d-flex justify-space-between ">
-          <div class="d-flex justify-align-center align-center grow ml-3">
+          <div class="d-flex justify-align-center align-center ml-3">
             <h2 class="text-left pt-2 w-100">
               <i class="fa fa-sitemap mr-2"></i>Products for
               {{ selectedBoxAndCard }}
             </h2>
           </div>
+
+          <div class="d-flex justify-align-center align-center ">
+            <h2 class="my-0">
+              {{ currentProductsOnly ? "Listed Report" : "History Report" }}
+            </h2>
+          </div>
+
           <div class="d-flex justify-align-center align-center mr-3">
             <v-btn
+              :disabled="currentProductsOnly ? true : false"
               class="mx-2"
               color="primary"
               small
@@ -28,7 +35,12 @@
               ><v-icon small class="mr-1">fa-shopping-cart</v-icon>Listed
             </v-btn>
 
-            <v-btn class="mx-2" color="primary" small @click="setFullHistory"
+            <v-btn
+              class="mx-2"
+              color="primary"
+              :disabled="currentProductsOnly ? false : true"
+              small
+              @click="setFullHistory"
               ><v-icon small class="mr-1">fa-history</v-icon>History
             </v-btn>
 
