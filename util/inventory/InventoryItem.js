@@ -28,6 +28,7 @@ class InventoryItem {
     this.endDateTime = "";
 
     this.hasEnded = 0;
+    this.quantitySold = 0;
   }
 }
 
@@ -111,6 +112,11 @@ class InventoryItemBuilder {
 
   setHasEnded(bit) {
     this.item.hasEnded = bit;
+    return this;
+  }
+
+  setQuantitySold(qty) {
+    this.item.quantitySold = qty;
     return this;
   }
 

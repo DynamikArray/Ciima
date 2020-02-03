@@ -14,14 +14,15 @@ const saveInventoryPageToDb = async values => {
     sourceProvider,
     startDateTime,
     endDateTime,
-    hasEnded
+    hasEnded,
+    quantitySold
   ) VALUES ? ON DUPLICATE KEY UPDATE itemId = VALUES(itemId), itemTitle = VALUES(itemTitle), itemNumber = VALUES(itemNumber), imageFull = VALUES(imageFull), imageThumb = VALUES(imageThumb), price = VALUES(price), sku = VALUES(sku),quantity = VALUES(quantity),
     location = VALUES(location),
     sourceProvider = VALUES(sourceProvider),
     startDateTime = VALUES(startDateTime),
     endDateTime = VALUES(endDateTime),
-    hasEnded = VALUES(hasEnded);`;
-
+    hasEnded = VALUES(hasEnded),
+    quantitySold = VALUES(quantitySold) ;`;
   try {
     const results = await mysqlConnPool.query(strQuery, [values]);
     return results;

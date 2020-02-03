@@ -83,6 +83,7 @@ function ebayInventoryStrategy(action) {
           //.setBinRack(item.SKU)
           .setSourceProvider("EBAY")
           .setHasEnded(hasEnded)
+          .setQuantitySold(item.SellingStatus.QuantitySold)
           .build();
         //send back only the values so we can UPSERT THEM
         return Object.values(newItem);
