@@ -180,7 +180,7 @@ export default {
       //main method handling
       var dd = {
         pageSize: {
-          width: 252,
+          width: 180,
           height: 72
         },
         pageMargins: [5, 5, 5, 5],
