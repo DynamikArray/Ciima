@@ -21,6 +21,16 @@
       :footer-props="footerProps"
       v-model="selectedItems"
     >
+      <template v-slot:top="{ pagination, options, updateOptions }">
+        <v-data-footer
+          :pagination="pagination"
+          :options="options"
+          @update:options="updateOptions"
+          items-per-page-text="$vuetify.dataTable.itemsPerPageText"
+        />
+        <v-divider class="my-1"></v-divider>
+      </template>
+
       <!--IMAGE COLUMN-->
       <template v-slot:item.main_image="{ item }">
         <div v-if="item.main_image !== 'false'">

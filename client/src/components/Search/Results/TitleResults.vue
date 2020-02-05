@@ -11,6 +11,16 @@
       :sort-desc.sync="descending"
       :footer-props="footerProps"
     >
+      <template v-slot:top="{ pagination, options, updateOptions }">
+        <v-data-footer
+          :pagination="pagination"
+          :options="options"
+          @update:options="updateOptions"
+          items-per-page-text="$vuetify.dataTable.itemsPerPageText"
+        />
+        <v-divider class="my-1"></v-divider>
+      </template>
+
       <template v-slot:item.action="{ item }">
         <v-btn color="primary" @click="selectTitle(item)"
           ><v-icon color="white">fa-search-plus</v-icon>

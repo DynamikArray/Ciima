@@ -18,8 +18,17 @@
       loading-text="Searching Database"
       :items-per-page="15"
       :footer-props="footerProps"
-      @update:page="pageChange()"
     >
+      <template v-slot:top="{ pagination, options, updateOptions }">
+        <v-data-footer
+          :pagination="pagination"
+          :options="options"
+          @update:options="updateOptions"
+          items-per-page-text="$vuetify.dataTable.itemsPerPageText"
+        />
+        <v-divider class="my-1"></v-divider>
+      </template>
+
       <template v-slot:item.imageUrl="{ item }">
         <v-img
           :src="makeImageUrl(item)"
@@ -130,7 +139,6 @@ import {
 } from "@/store/mutation-types.js";
 
 import settings from "@/util/settings.js";
-
 import IssuesModal from "./IssuesModal";
 
 export default {
@@ -215,11 +223,6 @@ export default {
     removeIssueFromDraft(item) {
       this.$store.commit(`currentDraft/${CURRENT_DRAFT_ISSUE_REMOVE}`, item);
     },
-    //
-    //
-    pageChange() {
-      this.$vuetify.goTo("#datatableWrapper");
-    },
 
     priceCheckIssue(title, issue) {
       const searchString = `${title} ${issue}`;
@@ -227,7 +230,6 @@ export default {
       this.$store.commit(`settings/${TOGGLE_UTILITY_DRAWER}`, true);
       this.$store.commit(`settings/${UTILITY_DRAWER_TAB}`, 1);
     }
-
     //
     //
   }
