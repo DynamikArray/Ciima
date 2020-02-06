@@ -16,6 +16,7 @@
           :pagination="pagination"
           :options="options"
           @update:options="updateOptions"
+          :items-per-page-options="footerProps['items-per-page-options']"
           items-per-page-text="$vuetify.dataTable.itemsPerPageText"
         />
         <v-divider class="my-1"></v-divider>

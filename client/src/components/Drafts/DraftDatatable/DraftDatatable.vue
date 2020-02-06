@@ -26,6 +26,7 @@
           :pagination="pagination"
           :options="options"
           @update:options="updateOptions"
+          :items-per-page-options="footerProps['items-per-page-options']"
           items-per-page-text="$vuetify.dataTable.itemsPerPageText"
         />
         <v-divider class="my-1"></v-divider>
@@ -211,7 +212,7 @@ export default {
       imagePopup: false,
       headers,
       footerProps: {
-        "items-per-page-options": [15, 30, 50, 100]
+        "items-per-page-options": [15, 30, 50, 100, 250, 500]
       }
     };
   },
