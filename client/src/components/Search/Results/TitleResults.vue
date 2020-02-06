@@ -48,7 +48,7 @@ export default {
       sortBy: "issuesCount",
       descending: true,
       footerProps: {
-        "items-per-page-options": [25, 50, 100, 200]
+        "items-per-page-options": [15, 30, 50, 100, 250, 500]
       },
       headers: [
         { text: "View", value: "action", sortable: false, align: "center" },

@@ -79,7 +79,7 @@ export default {
   data: () => ({
     headers,
     footerProps: {
-      "items-per-page-options": [5, 10]
+      "items-per-page-options": [5, 10, 15, 30, 50, 100, 250, 500]
     }
   }),
   computed: {

@@ -142,7 +142,7 @@ export default {
   data: () => ({
     headers,
     footerProps: {
-      "items-per-page-options": [15, 30, 50, 100]
+      "items-per-page-options": [15, 30, 50, 100, 250, 500]
     },
     currentCard: false
   }),
