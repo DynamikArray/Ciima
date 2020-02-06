@@ -326,8 +326,8 @@ export default {
     //
     //
     addDisclaimer(canvas) {
-      const fontHeight = this.gridCols * 11;
-      const disclaimerHeight = this.gridCols * 20;
+      const fontHeight = this.gridCols * 10;
+      const disclaimerHeight = this.gridCols * 35;
 
       canvas.height = canvas.height + disclaimerHeight;
 
@@ -341,7 +341,14 @@ export default {
       ctx.fillText(
         "Stock covers shown, not actual product photos.",
         canvas.width / 2,
-        canvas.height - 10
+        canvas.height - this.gridCols * 25
+      );
+
+      ctx.font = `normal bold ${fontHeight}px Verdana`;
+      ctx.fillText(
+        "We do not distinguish betweeen newsstand and direct editions.",
+        canvas.width / 2,
+        canvas.height - this.gridRows * 5
       );
     },
 
