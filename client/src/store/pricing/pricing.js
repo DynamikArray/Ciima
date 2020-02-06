@@ -37,18 +37,14 @@ const pricing = {
     getEbayActive: state => {
       return state.items.filter(item => {
         if (item.site === "ebay") {
-          const listingType = (((item || {}).meta || {}).listingDate || {})
-            .type;
-          if (listingType === "findItemsAdvanced") return item;
+          if (!item.meta.sellingStatus.blnSold) return item;
         }
       });
     },
     getEbayEnded: state => {
       return state.items.filter(item => {
         if (item.site === "ebay") {
-          const listingType = (((item || {}).meta || {}).listingDate || {})
-            .type;
-          if (listingType === "findCompletedItems") return item;
+          if (item.meta.sellingStatus.blnSold) return item;
         }
       });
     },

@@ -41,6 +41,16 @@ function ebayWebsiteStrategy(searchType) {
     const { endTime } = listingInfo;
     const { shippingServiceCost, shippingType } = shippingInfo;
 
+    //handle if sold record
+    const sellingState = sellingStatus.sellingState;
+    let blnSold = false;
+    let bidCount = 0;
+
+    if (sellingState == "EndedWithSales") {
+      bidCount = sellingStatus.bidCount;
+      blnSold = true;
+    }
+
     //make a price quote
     let priceQuote = new QuoteBuilder(title, price)
       .setSite("ebay")
@@ -48,7 +58,8 @@ function ebayWebsiteStrategy(searchType) {
       .setImage(pictureURLLarge)
       .setThumbnail(galleryURL)
       .setMetaSellersInfo(sellerUserName, feedbackScore, topRatedSeller)
-      .setMetaListingDate(searchType, endTime);
+      .setMetaListingDate(searchType, endTime)
+      .setMetaSellingStatus(blnSold, bidCount);
 
     //check if we shoudl add shipping
     if (shippingServiceCost)

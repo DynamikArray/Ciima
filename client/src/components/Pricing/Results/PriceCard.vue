@@ -16,8 +16,20 @@
             class="py-1 grey--text text--lighten-2"
             style="text-shadow: 1px 1px 1px #000;"
           >
-            <div class="caption" v-if="listingType">
-              {{ endDateText }} {{ item.meta.listingDate.value | date }}
+            <div
+              class="caption d-flex justify-content-start align-center"
+              v-if="listingType"
+            >
+              <div class="d-flex justify-center">
+                {{ endDateText }} {{ item.meta.listingDate.value | date }}
+              </div>
+              <div
+                class="d-flex justify-center ml-1"
+                v-if="item.meta.sellingStatus.bidCount > 0"
+              >
+                with
+                {{ item.meta.sellingStatus.bidCount || 0 }} Bids
+              </div>
             </div>
 
             <h3 class="my-2">

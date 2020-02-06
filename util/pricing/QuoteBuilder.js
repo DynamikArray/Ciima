@@ -10,7 +10,8 @@ class Quote {
     this.meta = {
       sellersInfo: false,
       listingDate: false,
-      shippingInfo: false
+      shippingInfo: false,
+      sellingStatus: false
     };
   }
 }
@@ -45,6 +46,13 @@ class QuoteBuilder {
     this.quote.meta.sellersInfo.name = name;
     this.quote.meta.sellersInfo.score = score;
     this.quote.meta.sellersInfo.topRated = topRated;
+    return this;
+  }
+
+  setMetaSellingStatus(blnSold, bidCount) {
+    this.quote.meta.sellingStatus = {};
+    this.quote.meta.sellingStatus.blnSold = blnSold;
+    this.quote.meta.sellingStatus.bidCount = bidCount;
     return this;
   }
 
