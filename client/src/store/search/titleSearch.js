@@ -5,7 +5,8 @@ Vue.use(Vuex);
 import {
   SEARCH_TITLES,
   SEARCH_TITLES_RESULTS_CLEAR,
-  SEARCH_TITLES_INVENTORY
+  SEARCH_TITLES_INVENTORY,
+  SEARCH_UPC
 } from "@/store/action-types";
 import {
   SEARCH_TITLES_SELECTED_SET,
@@ -14,7 +15,11 @@ import {
   SEARCH_TITLES_RESULTS_LOADING,
   SEARCH_TITLES_INVENTORY_SET,
   SEARCH_TITLES_INVENTORY_CLEAR,
-  SEARCH_TITLES_INVENTORY_LOADING
+  SEARCH_TITLES_INVENTORY_LOADING,
+  SEARCH_UPC_RESULTS_SET,
+  SEARCH_UPC_RESULTS_LOADING,
+  CURRENT_DRAFT_TITLE_ADD,
+  CURRENT_DRAFT_ISSUE_ADD
 } from "@/store/mutation-types";
 
 const titleSearch = {
@@ -52,6 +57,12 @@ const titleSearch = {
     },
     [SEARCH_TITLES_RESULTS_LOADING](state, data) {
       state.loading = data.loading;
+    },
+    [SEARCH_UPC_RESULTS_SET](state, data) {
+      /*dont do anything here*/
+    },
+    [SEARCH_UPC_RESULTS_LOADING](state, data) {
+      state.loading = data.loading;
     }
   },
 
@@ -82,6 +93,34 @@ const titleSearch = {
         { root: true }
       );
       return resp;
+    },
+
+    async [SEARCH_UPC]({ dispatch, commit }, params) {
+      const resp = await dispatch(
+        "api/requestHandler",
+        {
+          method: "get",
+          url: "/upcSearch",
+          params: params,
+          success: `titleSearch/${SEARCH_UPC_RESULTS_SET}`,
+          loading: `titleSearch/${SEARCH_UPC_RESULTS_LOADING}`
+        },
+        { root: true }
+      );
+
+      if (resp && resp.result) {
+        const item = resp.result.title;
+        const issue = resp.result.issue;
+
+        commit(SEARCH_TITLES_SELECTED_SET, { item });
+
+        commit(`currentDraft/${CURRENT_DRAFT_TITLE_ADD}`, item, { root: true });
+
+        commit(`currentDraft/${CURRENT_DRAFT_ISSUE_ADD}`, issue, {
+          root: true
+        });
+        return resp;
+      }
     }
   }
 };

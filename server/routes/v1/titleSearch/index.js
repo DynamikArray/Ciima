@@ -9,10 +9,17 @@ module.exports = function(fastify, opts, next) {
 
   const titleSearch = {
     preValidation: fastify.authenticate,
-    schema: schema,
+    schema: schema.titleSearch,
     handler: handler.titleSearch
   };
-
   fastify.get("/titleSearch", titleSearch);
+
+  const upcSearch = {
+    preValidation: fastify.authenticate,
+    schema: schema.upcSearch,
+    handler: handler.upcSearch
+  };
+  fastify.get("/upcSearch", upcSearch);
+
   next();
 };
