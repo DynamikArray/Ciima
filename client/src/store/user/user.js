@@ -7,21 +7,6 @@ import router from "@/router/router";
 
 import { UPDATE_API_STATUS } from "@/store/mutation-types";
 
-/*
-const handleResponse = (commit, resolve, resp) => {
-  const { id, username, email, token } = resp.data;
-  if (token) {
-    localStorage.setItem("token", token);
-    axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-  }
-  commit("auth_success", { id, username, email, token });
-  commit(`api/${UPDATE_API_STATUS}`, `Logged in user ${username}`, {
-    root: true
-  });
-  resolve(resp);
-};
-*/
-
 const user = {
   namespaced: true,
   state: {
@@ -65,6 +50,36 @@ const user = {
     }
   },
   actions: {
+    loginCheck({ commit }, options) {
+      const { user, token } = this.state;
+      return new Promise(async (resolve, reject) => {
+        if (this.state.user) resolve(true);
+
+        //No user but do we have token
+        const token = localStorage.getItem("token");
+        if (token) {
+          //do we have a token?
+          const userResp = await axiosInstance({
+            ...axiosInstance.defaults,
+            url: "/user/account",
+            method: "POST",
+            headers: { Authorization: `Bearer ${token}` }
+          });
+
+          if (userResp.data) {
+            const { id, username, email } = userResp.data;
+            commit("auth_success", { id, username, email });
+            commit(`api/${UPDATE_API_STATUS}`, `Logged in user ${username}`, {
+              root: true
+            });
+            resolve();
+          }
+        }
+        //if we get here, reject it
+        reject();
+      });
+    },
+
     //
     //
     //
@@ -182,7 +197,8 @@ const user = {
         commit("logout");
         localStorage.removeItem("token");
         delete axiosInstance.defaults.headers.common["Authorization"];
-        this.$router.push("/login").catch(err => {
+
+        router.push("/login").catch(err => {
           if (!err.name === "NavigationDuplicated") console.log(err);
         });
         resolve();

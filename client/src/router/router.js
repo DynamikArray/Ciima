@@ -12,7 +12,10 @@ let router = new Router({
       path: "/",
       name: "homepage",
       component: () =>
-        import(/*webpackChunkName: "homepage" */ "@/views/Homepage.vue")
+        import(/*webpackChunkName: "homepage" */ "@/views/Homepage.vue"),
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: "/login",
@@ -130,12 +133,17 @@ let router = new Router({
 router.beforeEach((to, from, next) => {
   //Requires Authentication
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (store.getters["user/isLoggedIn"]) {
-      next();
-      return;
-    }
-    next("/login");
+    store
+      .dispatch("user/loginCheck", false)
+      .then(resp => {
+        if (resp) next(); //proceed
+        if (!resp) next("/login"); //fail to login
+      })
+      .catch(err => {
+        next("/login"); //fail to login
+      });
   } else {
+    //NO AUTH REQUIRED
     next();
   }
 });
