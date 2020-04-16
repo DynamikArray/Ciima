@@ -10,7 +10,7 @@ const config = {
     name: QUEUE_NAME
   },
   // Set the QOS/prefetch (defaults to 1)
-  prefetch: 100
+  prefetch: 10
 };
 
 const amqp = new AMQP(config);
