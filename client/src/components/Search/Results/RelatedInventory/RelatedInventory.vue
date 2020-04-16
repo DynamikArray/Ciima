@@ -28,25 +28,49 @@
         </template>
 
         <template v-slot:item.location.name="{ item }">
-          <EditFieldDialog
-            :key="item.stockItemId"
-            :originalValue.sync="item.location.name"
-            :itemId="item.stockItemId"
-            :locationId="item.location.id"
-            fieldName="BinRack"
-            :textfieldWidth="320"
-          ></EditFieldDialog>
+          <v-edit-dialog
+            :return-value.sync="item.location.name"
+            large
+            persistent
+            @save="saveChanges('BinRack', 'location.name', item)"
+          >
+            <div>{{ item.location.name }}</div>
+            <template v-slot:input>
+              <div class="mt-4 title">Update Bin Rack</div>
+            </template>
+            <template v-slot:input>
+              <v-text-field
+                v-model="item.location.name"
+                label="Edit"
+                single-line
+                counter
+                autofocus
+              ></v-text-field>
+            </template>
+          </v-edit-dialog>
         </template>
 
         <template v-slot:item.location.qty="{ item }">
-          <EditFieldDialog
-            :key="item.stockItemId"
-            :originalValue.sync="item.location.qty"
-            :itemId="item.stockItemId"
-            :locationId="item.location.id"
-            fieldName="StockLevel"
-            :textfieldWidth="150"
-          ></EditFieldDialog>
+          <v-edit-dialog
+            :return-value.sync="item.location.qty"
+            large
+            persistent
+            @save="saveChanges('StockLevel', 'location.qty', item)"
+          >
+            <div>{{ item.location.qty }}</div>
+            <template v-slot:input>
+              <div class="mt-4 title">Update Qty</div>
+            </template>
+            <template v-slot:input>
+              <v-text-field
+                v-model="item.location.qty"
+                label="Edit"
+                single-line
+                counter
+                autofocus
+              ></v-text-field>
+            </template>
+          </v-edit-dialog>
         </template>
 
         <template v-slot:item.action="{ item }">
@@ -64,12 +88,13 @@
 <script>
 import ImagesHoverOver from "@/components/Images/ImageHoverOver";
 import { headers } from "./tableHeaders.js";
-import EditFieldDialog from "@/components/Inventory/InventoryTable/EditFieldDialog";
+
+import { UPDATE_INVENTORY_ITEM_LEVELS } from "@/store/action-types.js";
+import { UPDATE_API_STATUS } from "@/store/mutation-types.js";
 
 export default {
   components: {
-    ImagesHoverOver,
-    EditFieldDialog
+    ImagesHoverOver
   },
   props: {
     items: [Boolean, Array],
@@ -92,6 +117,75 @@ export default {
     }
   },
   methods: {
+    getFieldEnum(field) {
+      switch (field) {
+        case "BinRack":
+          return 13;
+          break;
+        case "StockLevel":
+          return 10;
+      }
+    },
+    saveChanges(fieldName, fieldValueProp, item) {
+      function getDescendantProp(obj, desc) {
+        var arr = desc.split(".");
+        while (arr.length && (obj = obj[arr.shift()]));
+        return obj;
+      }
+
+      const fieldValue = getDescendantProp(item, fieldValueProp);
+
+      const params = {
+        inventoryItemId: item.stockItemId,
+        fieldName: this.getFieldEnum(fieldName),
+        fieldValue: fieldValue,
+        locationId: item.location.id,
+        changeSource: fieldValue
+      };
+
+      this.$store
+        .dispatch(`linnworks/${UPDATE_INVENTORY_ITEM_LEVELS}`, params)
+        .then(resp => {
+          const { result } = resp;
+          if (result) this.fieldSaved({ name: fieldName, value: fieldValue });
+          if (!result)
+            this.fieldNotSaved({
+              name: fieldName,
+              value: fieldValue
+            });
+        })
+        .catch(err => {
+          this.fieldNotSaved({ name: fieldName, value: fieldValue });
+        });
+    },
+
+    fieldSaved({ name, value }) {
+      //update our status bar
+      this.$store.commit(
+        `api/${UPDATE_API_STATUS}`,
+        `Saved ${name} value of ${value}`,
+        { root: true }
+      );
+      //handle snackbar
+      this.$toastr.s(`Saved ${name} value of <br/><b>${value}</b>!`);
+    },
+    fieldNotSaved({ name, value }) {
+      //MAYBE REFRESH
+      //reset our local values with original
+      //this.fieldValue = this.originalValue;
+
+      //update our status bar
+      this.$store.commit(
+        `api/${UPDATE_API_STATUS}`,
+        `Error trying to save ${name} with value of ${value}`,
+        { root: true }
+      );
+      this.$toastr.e(
+        `Error trying to save ${name} value of <br/><b>${value}</b>!`
+      );
+    }
+
+    /*
     getMainImage(images, property) {
       if (!images.length > 0) return false;
       const mainImage = images.filter(image => image.IsMain);
@@ -114,7 +208,8 @@ export default {
         }
       });
       return locations.join("");
-    }
+    },
+    */
   }
 };
 </script>

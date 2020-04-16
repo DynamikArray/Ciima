@@ -124,7 +124,10 @@ const api = {
         }
       } catch (error) {
         //see if this an error we handled on our server
-        const { data } = error.response;
+        let data = false;
+        if (error.response && error.response.data) {
+          data = error.response.data;
+        }
 
         //TODO ALERT THIS BETTER DOES  TOAST WORK
         let resp = `An Error Occured!`;

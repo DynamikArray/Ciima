@@ -1,10 +1,11 @@
 <template>
   <v-form v-model="validLinnworksSearch" @submit.prevent="searchLinnworks">
     <v-text-field
+      ref="searchString"
       autofocus
       hide-details
       persistent-hint
-      v-model="searchString"
+      :value="searchString"
       label="Search Linnworks Inventory"
       prepend-icon="fa-search"
       @input="searchLinnworks"
@@ -19,17 +20,21 @@ import { SEARCH_INVENTORY } from "@/store/action-types";
 import { UPDATE_API_STATUS } from "@/store/mutation-types";
 
 export default {
+  props: {
+    searchString: [String]
+  },
   data() {
     return {
-      searchString: "",
       validLinnworksSearch: false
     };
   },
   methods: {
     searchLinnworks: debounce(async function(event) {
-      const { searchString } = this;
+      const searchString = this.$refs.searchString.lazyValue;
       if (event.type === "submit") {
         if (!searchString.length == 0) {
+          this.$emit("update:searchString", searchString);
+
           //greater than 3 so search
           const { error, result } = await this.$store.dispatch(
             `linnworks/${SEARCH_INVENTORY}`,
