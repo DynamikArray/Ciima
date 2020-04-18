@@ -4,7 +4,7 @@
       class="d-flex justify-end align-center grow"
       v-if="isLoggedIn && userName"
     >
-      <div class="d-flex align-center">
+      <div class="d-flex align-center" v-if="!isLots">
         <v-btn
           text
           ripple
@@ -69,21 +69,31 @@
                       :value="defaultProductType"
                       @change="changeDefaultProductType"
                     >
-                      <v-radio
-                        label="Sets"
-                        color="primary"
-                        value="sets"
-                      ></v-radio>
-                      <v-radio
-                        label="Singles"
-                        color="primary"
-                        value="singles"
-                      ></v-radio>
-                      <v-radio
-                        label="Adult"
-                        color="primary"
-                        value="adult"
-                      ></v-radio>
+                      <div class="d-flex justify-space-around align-center">
+                        <div class="d-flex justify-start align-center">
+                          <v-radio
+                            label="Sets"
+                            color="primary"
+                            value="sets"
+                          ></v-radio>
+                          <v-radio
+                            label="Singles"
+                            color="primary"
+                            value="singles"
+                          ></v-radio>
+                          <v-radio
+                            label="Adult"
+                            color="primary"
+                            value="adult"
+                          ></v-radio>
+                          <v-radio
+                            label="Lots"
+                            color="primary"
+                            value="lots"
+                          ></v-radio>
+                        </div>
+                        <div class="d-flex justify-start align-center"></div>
+                      </div>
                     </v-radio-group>
                   </div>
                 </v-list-item-content>
@@ -137,6 +147,8 @@
                 </v-list-item-content>
               </v-list-item>
 
+              <v-divider></v-divider>
+
               <v-card-actions>
                 <div class="d-flex justify-end grow">
                   <v-btn @click="closeSettingsMenu" color="success"
@@ -188,6 +200,10 @@ export default {
       get() {
         return this.$store.state.settings.utilityDrawerWidth;
       }
+    },
+    isLots() {
+      if (this.defaultProductType === "lots") return true;
+      return false;
     }
   },
 
@@ -209,7 +225,8 @@ export default {
       this.$store.commit(`settings/${SET_DEFAULT_PRODUCT_TYPE}`, value);
       this.$toastr.defaultTimeout = 1000;
       this.$toastr.s("Setting updated!");
-      this.$toastr.defaultTimeout = 2500;
+      this.$toastr.defaultTimeout = 1500;
+      this.closeSettingsMenu();
     },
     async logoutUser() {
       const confirm = await this.$confirm(

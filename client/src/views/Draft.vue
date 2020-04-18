@@ -1,19 +1,51 @@
 <template>
-  <v-container fluid>
-    <h1 class="display-1">Draft Details</h1>
+  <section style="min-height:100%; height: 100%">
+    <v-container
+      fluid
+      style="min-height:100%; height: 100%"
+      v-if="defaultProductType !== 'lots'"
+    >
+      <v-row>
+        <v-col>
+          <div class="d-flex justify-start align-center">
+            <div class="d-flex align-baseline">
+              <h2 class="display-1 mr-1">
+                {{ defaultProductType | capitalizeFirst }}
+              </h2>
+              <h2 class="">- Draft Form :</h2>
+            </div>
+          </div>
+        </v-col>
+      </v-row>
+      <v-divider></v-divider>
+      <SetDraftForm v-if="defaultProductType !== 'lots'"></SetDraftForm>
+    </v-container>
 
-    <v-divider></v-divider>
-
-    <DraftForm></DraftForm>
-  </v-container>
+    <v-container
+      fluid
+      style="min-height:100%; height: 100%"
+      v-if="defaultProductType == 'lots'"
+    >
+      <LotDraftForm v-if="defaultProductType == 'lots'"></LotDraftForm>
+    </v-container>
+  </section>
 </template>
 
 <script>
-import DraftForm from "@/components/Draft/DraftForm";
+import { mapState } from "vuex";
+
+import SetDraftForm from "@/components/Draft/DraftForm";
+import LotDraftForm from "@/components/Draft/Lot/LotDraftForm";
 
 export default {
   components: {
-    DraftForm
+    SetDraftForm,
+    LotDraftForm
+  },
+  computed: {
+    ...mapState({
+      defaultProductType: state => state.settings.defaultProductType
+    })
   }
 };
 </script>

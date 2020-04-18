@@ -1,5 +1,6 @@
 <template>
   <v-navigation-drawer
+    ref="mainNavigationDrawer"
     :miniVariant="compDrawer"
     mini-variant-width="50"
     app

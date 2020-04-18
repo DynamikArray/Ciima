@@ -83,8 +83,13 @@ const addInventoryImages = async (StockItemId, ItemNumber, draft) => {
     const results = [];
     for (let img of otherImages) {
       const cleanedPath = cleanImagePath(img.imageUrl);
-      //format image string
-      const ImageUrl = encodeURI(`https://searchlightcomics.com${cleanedPath}`);
+
+      //// HACK: for dealing with our images vs cloudinarys or full urls
+      let ImageUrl = encodeURI(cleanedPath);
+      if (cleanedPath.startsWith("/zCustomApps/")) {
+        ImageUrl = encodeURI(`https://searchlightcomics.com${cleanedPath}`);
+      }
+
       const isMain = false;
       const { result, error } = await addImage(draft.id, {
         StockItemId,

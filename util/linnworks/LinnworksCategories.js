@@ -14,5 +14,9 @@ export const CategoryInfo = {
   adult: {
     CategoryId: "e029f490-892a-464d-9642-d52fd3ead5a8",
     CategoryName: "EBAY-ADULT"
+  },
+  lots: {
+    CategoryId: "f4d390ed-da08-4c9f-abcb-e0d0e9283be6",
+    CategoryName: "EBAY-LOTS"
   }
 };

@@ -5,27 +5,29 @@
         <StatusBar />
       </div>
 
-      <div class="d-flex align-center">
-        <span class="mx-1">Brian Ridsdale</span>
-        <span class="mx-1">&copy; {{ currentYear }}</span>
-      </div>
+      <div class="d-none d-md-flex">
+        <div class="d-flex align-center">
+          <span class="mx-1">Brian Ridsdale</span>
+          <span class="mx-1">&copy; {{ currentYear }}</span>
+        </div>
 
-      <div class="d-flex justify-center ml-4 mx-2">
-        <v-btn small text icon href="/docs" target="_blank">
-          <v-icon>fa-server</v-icon>
-        </v-btn>
-      </div>
+        <div class="d-flex justify-center ml-4 mx-2">
+          <v-btn small text icon href="/docs" target="_blank">
+            <v-icon>fa-server</v-icon>
+          </v-btn>
+        </div>
 
-      <div class="d-flex justify-center mx-2">
-        <v-btn
-          small
-          text
-          icon
-          href="https://github.com/DynamikArray/Ciima/issues"
-          target="_blank"
-        >
-          <v-icon>fab fa-github</v-icon>
-        </v-btn>
+        <div class="d-flex justify-center mx-2">
+          <v-btn
+            small
+            text
+            icon
+            href="https://github.com/DynamikArray/Ciima/issues"
+            target="_blank"
+          >
+            <v-icon>fab fa-github</v-icon>
+          </v-btn>
+        </div>
       </div>
     </div>
   </v-footer>

@@ -26,6 +26,12 @@ const worker = async () => {
 
 //start the worker
 worker();
-scheduler();
+
+//
+//RIGHT NOW ONLY RUN THE SCHEDULER IN PROD
+//
+if (process.env.NODE_ENV === "production") {
+  scheduler();
+}
 
 module.exports = { worker };

@@ -11,10 +11,11 @@ module.exports = {
     querystring: {
       status: { type: "string" },
       all: { type: "number" }
-    },
+    }
 
     //TODO MAKE PROPER RESPONSE
 
+    /*
     response: {
       200: {
         description: "Succesful response",
@@ -67,6 +68,6 @@ module.exports = {
           }
         }
       }
-    }
+    }*/
   }
 };

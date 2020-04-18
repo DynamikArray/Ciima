@@ -11,6 +11,9 @@ Vue.prototype.$http = axiosInstance;
 import { createDateFilter } from "vue-date-fns";
 Vue.filter("date", createDateFilter("MMM DD, YYYY"));
 Vue.filter("dateTime", createDateFilter("MMM DD, YYYY hh:mm a"));
+Vue.filter("capitalizeFirst", val => {
+  return val.charAt(0).toUpperCase() + val.slice(1);
+});
 
 //for handling currencys
 import VueCurrencyFilter from "vue-currency-filter";

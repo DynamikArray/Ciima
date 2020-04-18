@@ -1,5 +1,5 @@
-const ebay = require("ebay-api");
-const axios = require("axios");
+const ebay = require("../../ebayAPI");
+//const axios = require("axios");
 const QuoteBuilder = require("../QuoteBuilder.js");
 
 //include logger

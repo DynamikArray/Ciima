@@ -1,6 +1,5 @@
-/**
- * @param {FastifyObject} request
- */
+//Pull In our Query Helpers
+const { buildSelectQueries, buildSelectQueriesParams } = require("./helper");
 
 /**
  * [exports description]
@@ -10,35 +9,39 @@
 module.exports = fastify => ({
   readHandler: async (req, res) => {
     let { status, all } = req.query;
-    if (!status) status = "Open"; //default to open if no param
+    if (!status) status = "open"; //default to open if no param
 
-    //users record by status
-    let query = `SELECT
-        d.*,
-        u.username as ownerName
-      FROM slc_drafts d
-      LEFT JOIN slc_users u ON d.ownerId = u.id
-      WHERE (status LIKE CONCAT("%",?,"%") AND (d.ownerId = ${req.user.id}))
-      ORDER BY d.id DESC `;
+    const page = Number(req.query.page) || 1;
+    const pageLimit = Number(req.query.limit) || 5; //Limit to 500 by default, and let client handle filtering
 
-    if (all) {
-      //all records by status
-      query = `SELECT
-          d.*,
-          u.username as ownerName
-        FROM slc_drafts d
-        LEFT JOIN slc_users u ON d.ownerId = u.id
-        WHERE status LIKE CONCAT("%",?,"%")
-        ORDER BY d.id DESC `;
-    }
+    const { selectQuery, totalQuery } = buildSelectQueries();
+    const { selectParams, totalParams } = buildSelectQueriesParams(
+      page - 1,
+      pageLimit,
+      status
+    );
 
     const connection = await fastify.mysql.getConnection();
     if (connection) {
-      const [rows, fields] = await connection.query(query, [status]);
-      connection.release();
-      return { result: rows }; //result.rows;
-    }
+      try {
+        const [rows, fields] = await connection.query(
+          selectQuery,
+          selectParams
+        );
+        const [totalRows] = await connection.query(totalQuery, totalParams);
 
-    return { error: "No Db Connection" };
+        //PAGING totals
+        const rowsTotal = totalRows[0].rowCount;
+        connection.release();
+
+        const pageCount = Math.ceil(rowsTotal / pageLimit);
+
+        return { result: { page, pageCount, pageLimit, rowsTotal, rows } };
+      } catch (error) {
+        fastify.winston.error(error);
+        res.send(error);
+      }
+    }
+    return { error: "No db connection" };
   }
 });

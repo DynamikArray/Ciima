@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <NavigationDrawer
+      ref="navigationDrawerWrapper"
       :loggedIn="isLoggedIn && user"
       :drawer="navigationDrawer"
     />
@@ -52,7 +53,21 @@ export default {
     created: function() {},
 
     toggleNavigationDrawer() {
-      this.navigationDrawer = !this.navigationDrawer;
+      const navBar = this.$refs.navigationDrawerWrapper.$refs
+        .mainNavigationDrawer;
+
+      if (navBar.miniVariant) {
+        const isActive = this.$refs.navigationDrawerWrapper.$refs
+          .mainNavigationDrawer.isActive;
+
+        if (isActive) {
+          this.navigationDrawer = !this.navigationDrawer;
+        } else {
+          this.$refs.navigationDrawerWrapper.$refs.mainNavigationDrawer.isActive = !isActive;
+        }
+      } else {
+        this.navigationDrawer = !this.navigationDrawer;
+      }
     },
 
     /*HANDLE SIZING OF THE WINDOW TRANSITION*/

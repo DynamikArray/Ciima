@@ -1,7 +1,7 @@
 module.exports = {
   pricingSchema: {
     description: "Search for a products price.",
-    tags: ["pricing"],
+    tags: ["Pricing", "Utility"],
     summary:
       "Search for a products price using a keyword string and a choosen provider",
 

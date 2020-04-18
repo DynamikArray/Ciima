@@ -18,7 +18,7 @@ const settings = {
     utilityDrawer: false,
     utilityDrawerWidth: 60,
     utilityDrawerTab: 0,
-    defaultProductType: "sets" //sets, singles
+    defaultProductType: "sets" //lots, sets, singles
   },
   mutations: {
     [UTILITY_DRAWER_TAB](state, tab) {

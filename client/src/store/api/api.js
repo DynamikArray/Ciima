@@ -54,6 +54,7 @@ const api = {
 
       //pull of payload params
       const {
+        headers,
         method,
         url,
         params,
@@ -76,7 +77,7 @@ const api = {
         commit(loading, { loading: true, items: false }, { root: true });
 
       //config requests
-      let config = { method, url: `${url}`, success };
+      let config = { headers, method, url: `${url}`, success };
 
       //set params for request
       if (method === "post") config.data = { ...params };
@@ -100,7 +101,7 @@ const api = {
 
         //hande results of api call data.result
         if (data.result && !data.error) {
-          commit(success, data.result, { root: true });
+          if (success) commit(success, data.result, { root: true });
           if (toastr) {
             let resp = `Success!`;
             if (typeof data.result === "string")
@@ -111,7 +112,7 @@ const api = {
         }
         //handle error from our server that we created
         if (data.error && !data.result) {
-          commit(success, { error: data.error }, { root: true });
+          if (success) commit(success, { error: data.error }, { root: true });
 
           //TODO ALERT THIS BETTER DOES  TOAST WORK
           let resp = `An Error Occured!`;
@@ -129,18 +130,19 @@ const api = {
           data = error.response.data;
         }
 
+        if (!data) data = error.message;
         //TODO ALERT THIS BETTER DOES  TOAST WORK
         let resp = `An Error Occured!`;
         if (toastr) {
           if (data) {
-            resp = `<h4>${data.error}</h4><p>${data.message}</p>`;
+            resp = `<h4>${data.error || `Error`}</h4><p>${data.message ||
+              data}</p>`;
           } else {
             resp = `<h4>${resp}</h4><p>${error}</p>`;
           }
           toastr.e(resp);
         }
-
-        throw new Error(data.message);
+        throw new Error(data.message || data);
       } finally {
         commit(`${REMOVE_API_CALL}`);
         if (loading) commit(loading, { loading: false }, { root: true });

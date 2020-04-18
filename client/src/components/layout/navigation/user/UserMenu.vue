@@ -29,7 +29,7 @@
           <template v-slot:activator="{ on }">
             <v-btn text v-on="on">
               <avatar :username="userName" :size="30" class="mr-1"></avatar>
-              <div class="" style="max-width:80px;">
+              <div class="" style="max-width:130px;">
                 <div class="text-truncate">
                   {{ userName }}
                 </div>

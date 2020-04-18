@@ -1,7 +1,7 @@
 module.exports = {
   searchInventorySchema: {
     description: "Search Linnworks Inventory by the 3 main attributes",
-    tags: ["inventory"],
+    tags: ["Inventory"],
     summary: "Search through linnworks inventory using A, B, C",
     security: [
       {
@@ -36,7 +36,7 @@ module.exports = {
 
   updateLocationOrQuantitySchema: {
     description: "Updates an Inventory items location or quantity values",
-    tags: ["inventory"],
+    tags: ["Inventory"],
     summary:
       "Update location and or quantity of Inventory items values in Linnworks",
     security: [

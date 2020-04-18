@@ -1,12 +1,18 @@
 <template>
-  <v-tooltip v-model="blnShow" color="black" :max-width="540" right>
+  <v-tooltip
+    v-model="blnShow"
+    color="black"
+    :max-width="540"
+    right
+    style="height:500px"
+  >
     <template v-slot:activator="{ on }">
       <div
         :style="`min-height: ${minHeight}px;`"
         class="d-flex justify-center mx-auto pa-1"
       >
         <div class="d-flex align-center">
-          <img
+          <v-img
             :class="imgClass"
             v-if="imageThumb"
             :key="makeFileNameKey()"

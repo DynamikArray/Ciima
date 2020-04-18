@@ -1,7 +1,7 @@
 module.exports = {
   loadInventorySchema: {
     description: "Search EABY TESTING",
-    tags: ["inventory"],
+    tags: ["Utility"],
     summary: "LOAD ",
     security: [
       {

@@ -1,5 +1,6 @@
 <template>
   <v-navigation-drawer
+    v-if="defaultProductType !== 'lots'"
     v-model="drawer"
     app
     clipped
@@ -23,6 +24,7 @@ export default {
   },
   computed: {
     ...mapState({
+      defaultProductType: state => state.settings.defaultProductType,
       width: state => state.settings.utilityDrawerWidth
     }),
     drawer: {

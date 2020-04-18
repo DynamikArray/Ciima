@@ -53,9 +53,13 @@ fastify.register(require("./routes/v1/titleSearch"), { prefix: "v1" });
 fastify.register(require("./routes/v1/issueSearch"), { prefix: "v1" });
 fastify.register(require("./routes/v1/ebayCategories"), { prefix: "v1" });
 fastify.register(require("./routes/v1/imageFetch"), { prefix: "v1" });
+
 fastify.register(require("./routes/v1/draft"), { prefix: "v1" });
+fastify.register(require("./routes/v1/draft/lots"), { prefix: "v1" });
+
 fastify.register(require("./routes/v1/drafts"), { prefix: "v1" });
 fastify.register(require("./routes/v1/submitDraft"), { prefix: "v1" });
+
 fastify.register(require("./routes/v1/user"), { prefix: "v1" });
 fastify.register(require("./routes/v1/inventory/linnworks"), { prefix: "v1" });
 fastify.register(require("./routes/v1/inventory/ebay"), { prefix: "v1" });

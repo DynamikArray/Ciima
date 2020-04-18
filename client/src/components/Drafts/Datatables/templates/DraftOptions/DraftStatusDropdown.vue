@@ -1,10 +1,11 @@
 <template>
-  <div class="d-flex justify-start mb-2">
-    <div class="d-flex align-center">
+  <div class="d-flex justify-end mb-2">
+    <div class="d-flex align-center justify-end">
       <h4 class="mx-0 mr-2">Status:</h4>
     </div>
-    <div class="d-flex align-center">
+    <div class="d-flex align-center justify-end">
       <v-select
+        style="width:160px"
         solo
         hide-details
         dense
@@ -20,7 +21,7 @@
 <script>
 export default {
   props: {
-    onSelect: [Function]
+    getData: [Function]
   },
 
   data() {
@@ -49,7 +50,7 @@ export default {
 
   methods: {
     handleSelect(val) {
-      this.onSelect({ status: val });
+      this.getData({ status: val });
     }
   }
 };

@@ -15,6 +15,8 @@ import openDrafts from "@/store/drafts/openDrafts";
 import editDraft from "@/store/drafts/editDraft";
 import deleteDraft from "@/store/drafts/deleteDraft";
 
+import lots from "@/store/lots/lots";
+
 import linnworks from "@/store/inventory/linnworks";
 import ebay from "@/store/ebay/search";
 import user from "@/store/user/user";
@@ -37,7 +39,8 @@ export default new Vuex.Store({
     titleSearch,
     user,
     pricing,
-    locations
+    locations,
+    lots
   },
   state: {},
   mutations: {}

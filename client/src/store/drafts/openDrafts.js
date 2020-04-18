@@ -17,11 +17,19 @@ const openDrafts = {
   state: {
     items: [],
     loading: false,
-    lastItemListed: false
+    lastItemListed: false,
+    page: 1,
+    pageCount: 0,
+    pageLimit: 10,
+    rowsTotal: 0
   },
   mutations: {
     [OPEN_DRAFTS_RESULTS](state, data) {
-      state.items = data;
+      state.items = data.rows;
+      state.rowsTotal = data.rowsTotal;
+      state.pageLimit = data.pageLimit;
+      state.pageCount = data.pageCount;
+      state.page = data.page;
     },
 
     //TBD how this hsould work
