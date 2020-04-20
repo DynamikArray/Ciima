@@ -50,19 +50,23 @@
         </v-col>
         <v-col cols="12" sm="4" md="3">
           <div class="d-flex justify-end align-center">
-            <v-select
+            <v-combobox
               ref="publishersList"
               id="publisher"
               name="publisher"
               label="Publisher"
-              hint="Select Publisher from list"
+              hint="Select Publisher from list "
               v-model="publisher"
               :items="publishersList"
+              multiple
               outlined
               dense
+              chips
+              small-chips
+              deletable-chips
               @change="handlePublisherChange"
               :rules="fieldRules.publisher"
-            ></v-select>
+            ></v-combobox>
           </div>
         </v-col>
         <v-col cols="12" sm="5" md="6">
