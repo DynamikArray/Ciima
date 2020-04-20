@@ -371,7 +371,7 @@ export default {
         "Preparing images for upload to remote server."
       );
 
-      var unsignedUploadPreset = "ciima_unsigned";
+      var unsignedUploadPreset = "ciima_lot_photos";
       var cloudName = "ciima"; //FPVLink rebrand
       var url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload/`;
       const imagesLength = this.images.length;
@@ -382,7 +382,7 @@ export default {
         fd.append("file", img);
         fd.append("upload_preset", unsignedUploadPreset);
         fd.append("tags", "browser_upload"); // Optional - add tag for image admin in Cloudinary
-        fd.append("folder", "productPhotos");
+        fd.append("folder", "lotPhotos");
 
         try {
           this.updateLoadingStatus(
