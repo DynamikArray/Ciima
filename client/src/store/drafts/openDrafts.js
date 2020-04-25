@@ -25,7 +25,7 @@ const openDrafts = {
   },
   mutations: {
     [OPEN_DRAFTS_RESULTS](state, data) {
-      state.items = data.rows;
+      state.items = [...data.rows];
       state.rowsTotal = data.rowsTotal;
       state.pageLimit = data.pageLimit;
       state.pageCount = data.pageCount;

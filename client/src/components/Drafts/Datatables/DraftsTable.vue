@@ -7,7 +7,7 @@
       item-name="id"
       :loading="loading"
       loading-text="Loading..."
-      :items-per-page="15"
+      :items-per-page="limit"
       show-select
       @input="itemSelected"
       hide-default-footer
@@ -87,6 +87,7 @@ import { DELETE_DRAFT, OPEN_DRAFTS_SUBMIT_DRAFT } from "@/store/action-types";
 
 export default {
   props: {
+    limit: [Number],
     isMobile: [Boolean],
     headers: [Array],
     status: [String],

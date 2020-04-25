@@ -22,6 +22,7 @@
       <v-divider class="my-1"></v-divider>
 
       <DraftsTable
+        :limit="limit"
         :isMobile="isMobile"
         :headers="rowHeaders"
         :status="status"
