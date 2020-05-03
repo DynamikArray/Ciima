@@ -245,7 +245,10 @@ export default {
       if (val <= 14) this.price = 19.99;
       if (val > 14 && val < 20) this.price = 24.99;
       if (val >= 20 && val < 30) this.price = 29.99;
-      if (val >= 30) this.price = 39.99;
+      if (val >= 30 && val < 40) this.price = 39.99;
+      if (val >= 40 && val < 50) this.price = 49.99;
+      if (val >= 50 && val < 60) this.price = 59.99;
+      if (val >= 60) this.price = val * 1.25;
       this.updateTitleWithFormValues();
     }
   },
