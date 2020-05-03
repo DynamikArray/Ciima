@@ -43,10 +43,14 @@ const fieldRules = {
 
 const formatTitleFromDraft = draft => {
   const titleString = [];
-  if (draft.issuesCount) titleString.push(draft.issuesCount);
-  titleString.push("Comic Book Lot");
+
   if (draft.characters) titleString.push(draft.characters.join(" "));
+
   if (draft.publisher) titleString.push(draft.publisher);
+
+  if (draft.issuesCount) titleString.push(draft.issuesCount);
+
+  titleString.push("Comic Book Lot");
 
   //Start doing length checks and removing words that we dont want??
   titleString.push("Comics");
