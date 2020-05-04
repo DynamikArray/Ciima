@@ -7,15 +7,49 @@ const logger = require("../../winston/winston.js")({ hostname: "Server" });
  * @param  {[type]}  searchString [description]
  * @return {Promise}              [description]
  */
-const titleChecker = async searchString => {
-  //this will handle both linnworks and ebay in the future
-  //for now just ebay
-  //
-  //
-  //
+const titleChecker = async (searchString, fastify) => {
+  const draftCheck = await checkTitleInDrafts(searchString, fastify);
+  //there is a draft duplicate send response back
+  if (draftCheck.result.failed == true) return draftCheck;
+  //check and return ebay title check
   return await checkTitleOnEbay(searchString);
-  //return { result: { passed: false, failed: true } };
-  //return { result: { passed: true, failed: false } };
+};
+
+/**
+ * checkTitleInDrafts checks against the drafts table for duplicate open drafts
+ * @param  {string}  searchString title to check for
+ * @param  {fastify}  fastify     fastify object for mysql
+ * @return {Promise}              promise
+ */
+const checkTitleInDrafts = async (searchString, fastify) => {
+  logger.debug(`Checking Title in Drafts for ${searchString}`);
+  try {
+    //build query
+    const query =
+      "SELECT * FROM slc_drafts WHERE inventoryTitle = ? AND STATUS = 'open' ";
+
+    const connection = await fastify.mysql.getConnection();
+    if (connection) {
+      try {
+        const [rows, fields] = await connection.query(query, searchString);
+        connection.release();
+
+        //if title found
+        if (rows.length > 0)
+          return { result: { passed: false, failed: true, items: rows[0] } };
+
+        //no title found
+        return { result: { passed: true, failed: false, items: false } };
+      } catch (error) {
+        logger.error(error);
+        res.send(error);
+      }
+    }
+    return { error: "No db connection" };
+  } catch (error) {
+    logger.error(error);
+    return { error };
+  }
 };
 
 const checkTitleOnEbay = async searchString => {

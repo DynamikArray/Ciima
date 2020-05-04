@@ -71,7 +71,7 @@ module.exports = fastify => ({
    */
   checkTitleHandler: async (req, res) => {
     const { title } = req.body;
-    const { result, error } = await titleChecker(title);
+    const { result, error } = await titleChecker(title, fastify);
 
     if (result && !error) return { result };
     if (error && !result) res.send(error);

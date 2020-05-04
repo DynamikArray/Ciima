@@ -345,7 +345,8 @@ export default {
       document.body.style.cursor = "progress";
       try {
         if (this.validateForm()) {
-          //Check the Ebay Title???
+          //Make sure not a duplicate draft
+          //Check the Ebay AND DRAFT Title???
           const titleCheck = await this.checkEbayTitle();
           if (titleCheck) {
             const uploadCheck = await this.handleImageUploading();
@@ -354,12 +355,10 @@ export default {
               if (saved) return true;
             }
           }
-
           return false;
         }
       } catch (e) {
         return false;
-        console.log(e.message);
         this.$toastr.e(`Error Uploading File : ${e.message}`);
       } finally {
         document.body.style.cursor = "default";

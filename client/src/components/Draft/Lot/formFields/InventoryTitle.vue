@@ -58,12 +58,18 @@
               max-width="115"
               class="mx-auto my-1"
             />
+
             <v-btn
+              v-if="errorURL"
               class="btn btn-small btn-info mt-1"
               :href="errorURL"
               target="_blank"
               >View Item On Ebay</v-btn
             >
+
+            <div v-if="!errorURL">
+              <h2>In Open Drafts</h2>
+            </div>
           </div>
         </v-alert>
       </div>
@@ -106,8 +112,13 @@ export default {
     errorStartTime() {
       if (this.titleCheckErrorDetail && this.titleCheckErrorDetail.item) {
         const { item } = this.titleCheckErrorDetail;
-        return item.listingInfo.startTime;
+        //ebay starttime
+        if (item.listingInfo.startTime) return item.listingInfo.startTime;
       }
+
+      if (this.titleCheckErrorDetail.createdDate)
+        return this.titleCheckErrorDetail.createdDate;
+
       return false;
     },
     errorItemId() {
@@ -115,13 +126,21 @@ export default {
         const { item } = this.titleCheckErrorDetail;
         return item.itemId;
       }
+
+      if (this.titleCheckErrorDetail.locationCode)
+        return this.titleCheckErrorDetail.locationCode;
+
       return false;
     },
     errorImage() {
       if (this.titleCheckErrorDetail && this.titleCheckErrorDetail.item) {
         const { item } = this.titleCheckErrorDetail;
-        return item.galleryURL;
+        if (item.galleryURL) return item.galleryURL;
       }
+
+      if (this.titleCheckErrorDetail.main_image)
+        return this.titleCheckErrorDetail.main_image;
+
       return false;
     }
   },
