@@ -3,7 +3,7 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 import {
-  //TOGGLE_DRAFT_DRAWER, //// TODO:  DEPREcATE
+  INIT_SETTINGS,
   TOGGLE_UTILITY_DRAWER,
   SET_DEFAULT_PRODUCT_TYPE,
   UTILITY_DRAWER_WIDTH,
@@ -21,6 +21,17 @@ const settings = {
     defaultProductType: "sets" //lots, sets, singles
   },
   mutations: {
+    [INIT_SETTINGS](state, tab) {
+      const rawSettings = localStorage.getItem("settings");
+      //do our local store settings lookup
+      if (rawSettings) {
+        const settings = JSON.parse(rawSettings);
+
+        //defaultProductType
+        if (settings.defaultProductType)
+          state.defaultProductType = settings.defaultProductType;
+      }
+    },
     [UTILITY_DRAWER_TAB](state, tab) {
       state.utilityDrawerTab = tab;
     },
@@ -32,6 +43,7 @@ const settings = {
     },
     [SET_DEFAULT_PRODUCT_TYPE](state, productType) {
       state.defaultProductType = productType;
+      localStorage.setItem("settings", JSON.stringify(state));
     }
   },
   actions: {}

@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import { INIT_SETTINGS } from "@/store/mutation-types";
 import { mapGetters } from "vuex";
 
 import UtilityDrawer from "@/components/layout/navigation/UtilityDrawer/UtilityDrawer";
@@ -44,6 +45,9 @@ export default {
       isLoggedIn: "user/isLoggedIn",
       user: "user/user"
     })
+  },
+  beforeCreate() {
+    this.$store.commit(`settings/${INIT_SETTINGS}`);
   },
   created() {
     //this can get moved to user settings once we get taht sorted
