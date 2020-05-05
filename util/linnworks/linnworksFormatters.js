@@ -6,6 +6,8 @@
 };
 */
 
+const uuidv1 = require("uuid/v1");
+
 const CategoryInfo = {
   test: {
     CategoryId: "85e5eecb-de9b-451f-9481-b660d79ca7d0",
@@ -110,6 +112,8 @@ module.exports = logger => ({
    * @return {[type]} [description]
    */
   itemInventoryPrices: (StockItemId, ItemNumber, draft) => {
+    const pkRowId = uuidv1();
+
     const props = [
       {
         IsAdded: true,
@@ -117,7 +121,8 @@ module.exports = logger => ({
         Source: "EBAY",
         SubSource: "EBAY1_US",
         Price: draft.price,
-        Tag: "Start"
+        Tag: "Start",
+        pkRowId: pkRowId
       }
     ];
 
