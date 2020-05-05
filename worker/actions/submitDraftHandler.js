@@ -172,6 +172,31 @@ const addExtendedProperties = async (StockItemId, ItemNumber, draft) => {
   //for each one of these draft properties we have to add an extended property
 };
 
+const addInventoryPrices = async (StockItemId, ItemNumber, draft) => {
+  //add listingDescriptions for auctions aka LOTS
+  if (draft.draftType.toUpperCase() == "LOTS") {
+    logger.debug("Adding Inventory Prices for Lot Item.");
+
+    const { itemInventoryPrices } = linnworks.formatters;
+
+    //setup params for call
+    const inventoryPrice = itemInventoryPrices(StockItemId, ItemNumber, draft);
+
+    //make api call
+    //CreateInventoryItemExtendedProperties
+    const { result, error } = await linnworks.makeApiCall({
+      method: "POST",
+      url: "Inventory/CreateInventoryItemPrices",
+      headers: "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
+      data: inventoryPrice
+    });
+
+    if (result) return { pricesResult: result };
+    if (error) return { pricesError: error };
+  }
+  return { pricesResult: true };
+};
+
 const updateInventoryLocation = async (StockItemId, location) => {
   const inventoryItemLocation = [
     {
@@ -245,6 +270,16 @@ const submitDraftHandler = async (message, callback) => {
         // extended Properties didnt Save
         if (!extPropsResult && extPropsError)
           handleStatusUpdate(draft.id, extPropsError, ERROR);
+
+        //inventoryPrices
+        const { pricesResult, pricesError } = await addInventoryPrices(
+          StockItemId,
+          ItemNumber,
+          draft
+        );
+        // extended Properties didnt Save
+        if (!pricesResult && pricesError)
+          handleStatusUpdate(draft.id, pricesError, ERROR);
 
         //
         //Update Inventory Location

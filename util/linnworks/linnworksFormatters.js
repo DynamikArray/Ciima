@@ -103,5 +103,24 @@ module.exports = logger => ({
     });
 
     return `inventoryItemExtendedProperties=${JSON.stringify(props)}`;
+  },
+
+  /**
+   * [itemInventoryPrices description]
+   * @return {[type]} [description]
+   */
+  itemInventoryPrices: (StockItemId, ItemNumber, draft) => {
+    const props = [
+      {
+        IsAdded: true,
+        StockItemId: StockItemId,
+        Source: "EBAY",
+        SubSource: "EBAY1_US",
+        Price: draft.price,
+        Tag: "Start"
+      }
+    ];
+
+    return `inventoryItemPrices=${JSON.stringify(props)}`;
   }
 });
