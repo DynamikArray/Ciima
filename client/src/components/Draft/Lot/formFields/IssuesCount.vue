@@ -2,7 +2,6 @@
   <div class="d-flex justify-start align-center">
     <v-text-field
       dense
-      autofocus
       :value="value"
       id="issuesCount"
       @input="handleInputIssuesCount"

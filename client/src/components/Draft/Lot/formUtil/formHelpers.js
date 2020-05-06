@@ -30,6 +30,15 @@ const fieldRules = {
   ],
   locationCode: [
     v => !!v || "Location code is a required field",
+    v => {
+      if (!v.startsWith("EBAY-LOTS-"))
+        return "Location code must start with EBAY-LOTS-";
+      return false;
+    },
+    v => {
+      if (v == "EBAY-LOTS-") return "You must enter a Location code";
+      return false;
+    },
     v => v.length <= 50 || "Location Code must be less than 50 characters"
   ],
   issuesCount: [
@@ -59,7 +68,13 @@ const formatTitleFromDraft = draft => {
   titleString.push("Run");
   titleString.push("Box");
 
-  return titleString.join(" ");
+  return toTitleCase(titleString.join(" "));
+};
+
+const toTitleCase = str => {
+  return str.replace(/\w\S*/g, function(txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
 };
 
 module.exports = { fieldNames, fieldRules, formatTitleFromDraft };

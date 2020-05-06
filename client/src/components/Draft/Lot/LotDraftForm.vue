@@ -6,20 +6,40 @@
       lazy-validation
       class="pa-3"
     >
-      <!--Lot Draft Form Title -->
       <div class="d-flex justify-center align-center w-100">
-        <InventoryTitle
-          :value.sync="inventoryTitle"
-          :titleCheckError="blnDuplicateTitleCheckError"
-          :titleCheckErrorDetail="blnDuplicateTitleCheckListings"
-          :rules="fieldRules.inventoryTitle"
-          :updateData="updateValueFromChildComponents"
-        />
+        <div class="align-center justify-start">
+          <h4 class="mr-2">Step 1:</h4>
+        </div>
+        <v-text-field
+          autofocus
+          ref="locationCode"
+          dense
+          v-model="locationCode"
+          id="locationCode"
+          @input="handleInputLocationCode"
+          @focus="handleFocusLocationCode"
+          name="locationCode"
+          outlined
+          label="Location"
+          hint="Location code for the item"
+          :rules="fieldRules.locationCode"
+          counter
+        ></v-text-field>
       </div>
+
+      <v-divider class="my-2" />
+      <div class="align-center justify-start">
+        <h4 class="mr-2">Step 2:</h4>
+      </div>
+      <ImageCropper :imageToCrop="imageToCrop" />
+      <LotDraftImages :imageToCrop="imageToCrop" class="my-1" />
       <v-divider class="my-1" />
 
       <!--MAIN Form Section -->
       <v-row>
+        <v-col cols="12" class="text-left my-0 py-0">
+          <h4 class="mr-2">Step 3:</h4>
+        </v-col>
         <v-col cols="12" sm="3" md="3" class="text-center">
           <IssuesCount
             :value.sync="issuesCount"
@@ -69,25 +89,7 @@
             ></v-combobox>
           </div>
         </v-col>
-        <v-col cols="12" sm="5" md="6">
-          <div class="d-flex justify-center align-center">
-            <v-text-field
-              ref="locationCode"
-              dense
-              v-model="locationCode"
-              id="locationCode"
-              @input="handleInputLocationCode"
-              @focus="handleFocusLocationCode"
-              name="locationCode"
-              outlined
-              label="Location"
-              hint="Location code for the item"
-              :rules="fieldRules.locationCode"
-              counter
-            ></v-text-field>
-          </div>
-        </v-col>
-        <v-col cols="12" sm="4" md="3">
+        <v-col cols="12" sm="6" md="6">
           <div class="d-flex justify-center align-center">
             <v-text-field
               dense
@@ -102,7 +104,7 @@
             ></v-text-field>
           </div>
         </v-col>
-        <v-col cols="12" sm="3" md="3">
+        <v-col cols="12" sm="6" md="6">
           <div class="d-flex justify-center align-center">
             <v-btn color="grey darken-1" @click="toggleExtraFields">
               Extra Info<v-icon class="ml-2">{{
@@ -128,10 +130,21 @@
       </v-row>
 
       <v-divider class="my-2" />
-      <ImageCropper :imageToCrop="imageToCrop" />
-      <v-divider class="my-2" />
-      <LotDraftImages :imageToCrop="imageToCrop" />
-      <v-divider class="my-2" />
+
+      <!--Lot Draft Form Title -->
+      <div class="align-center justify-start">
+        <h4 class="mr-2 mb-1">Generated Ebay Title</h4>
+      </div>
+      <div class="d-flex justify-center align-center w-100">
+        <InventoryTitle
+          :value.sync="inventoryTitle"
+          :titleCheckError="blnDuplicateTitleCheckError"
+          :titleCheckErrorDetail="blnDuplicateTitleCheckListings"
+          :rules="fieldRules.inventoryTitle"
+          :updateData="updateValueFromChildComponents"
+        />
+      </div>
+      <v-divider class="my-1" />
 
       <div class="d-flex justify-center align-center mt-5 mb-10">
         <v-btn color="red" @click.prevent="clearDraft" class="mx-10">

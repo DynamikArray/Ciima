@@ -4,7 +4,7 @@ SELECT p.name FROM gcd_publisher p WHERE country_id = 225 AND issue_count > 1000
 */
 
 const publishersList = [
-  "Acclaim / Valiant",
+  "Acclaim",
   "Antarctic Press",
   "Archie",
   "Avatar Press",
@@ -14,13 +14,14 @@ const publishersList = [
   "Dark Horse",
   "DC",
   "Dell",
-  "Dynamite Entertainment",
+  "Dynamite",
   "EC",
   "Fantagraphics",
   "Fawcett",
   "Harvey",
   "IDW",
   "Image",
+  "Independent",
   "Kodansha USA",
   "Malibu",
   "Marvel",
@@ -30,11 +31,11 @@ const publishersList = [
   "Seven Seas Entertainment",
   "Slave Labor",
   "Tokyopop",
-  "Valiant Entertainment",
+  "Valiant",
   "Viz",
   "Western",
   "Yen Press",
-  "Zenescope Entertainment"
+  "Zenescope"
 ];
 
 module.exports = publishersList;

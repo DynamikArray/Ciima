@@ -423,7 +423,6 @@ const charactersList = [
   "Superman",
   "Superman and Batman",
   "Superman; Batman",
-  "Supermann",
   "Suske en Wiske",
   "Suus & Sas",
   "Suzie",

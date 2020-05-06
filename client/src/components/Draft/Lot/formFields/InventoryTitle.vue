@@ -83,7 +83,7 @@
           ><v-icon small>fa fa-edit</v-icon></v-btn
         >
       </div>
-      <div class="d-flex overline mx-0 my-0">Edit Title</div>
+      <div class="d-flex overline mx-0 mt-0 mb-3">Edit Title</div>
     </div>
   </div>
 </template>
