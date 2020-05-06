@@ -59,6 +59,13 @@ module.exports = logger => ({
 
     const categoryInfo = setLinnworksCategory(draft.draftType);
 
+    //Handle pricing for Auctions vs Buy it Nows
+    let draftPrice = draft.price;
+    if (draft.draftType.toUpperCase() == "LOTS") {
+      //Price gets set in InventoryPrices section
+      draftPrice = 0.0;
+    }
+
     const inventoryItem = {
       MetaData: "Added through Ciima: " + today,
       StockItemId: draft.stockItemId,
@@ -66,7 +73,7 @@ module.exports = logger => ({
       ItemTitle: encodeURIComponent(draft.inventoryTitle),
       Quantity: draft.quantity,
       BarcodeNumber: draft.upc,
-      RetailPrice: draft.price,
+      RetailPrice: draftPrice,
       CategoryId: categoryInfo.CategoryId,
       CategoryName: categoryInfo.CategoryName
     };
