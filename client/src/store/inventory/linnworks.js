@@ -11,7 +11,8 @@ import {
 } from "@/store/mutation-types";
 import {
   SEARCH_INVENTORY,
-  UPDATE_INVENTORY_ITEM_LEVELS
+  UPDATE_INVENTORY_ITEM_LEVELS,
+  UPDATE_ITEM_FIELDS
 } from "@/store/action-types";
 
 const linnworks = {
@@ -54,7 +55,21 @@ const linnworks = {
         "api/requestHandler",
         {
           method: "post",
-          url: "/inventory/linnworks/update",
+          url: "/inventory/linnworks/updateLocationField",
+          params: params,
+          success: `linnworks/${UPDATE_INVENTORY_RESPONSE}`,
+          loading: `linnworks/${UPDATE_INVENTORY_LOADING}`
+        },
+        { root: true }
+      );
+    },
+
+    async [UPDATE_ITEM_FIELDS]({ dispatch, commit }, params) {
+      return await dispatch(
+        "api/requestHandler",
+        {
+          method: "post",
+          url: "/inventory/linnworks/updateItemField",
           params: params,
           success: `linnworks/${UPDATE_INVENTORY_RESPONSE}`,
           loading: `linnworks/${UPDATE_INVENTORY_LOADING}`

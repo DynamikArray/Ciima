@@ -73,6 +73,29 @@
           </v-edit-dialog>
         </template>
 
+        <template v-slot:item.price="{ item }">
+          <v-edit-dialog
+            :return-value.sync="item.price"
+            large
+            persistent
+            @save="saveChanges('Price', 'price', item)"
+          >
+            <div>{{ item.price }}</div>
+            <template v-slot:input>
+              <div class="mt-4 title">Update Price</div>
+            </template>
+            <template v-slot:input>
+              <v-text-field
+                v-model="item.price"
+                label="Edit"
+                single-line
+                counter
+                autofocus
+              ></v-text-field>
+            </template>
+          </v-edit-dialog>
+        </template>
+
         <template v-slot:item.action="{ item }">
           <button>Action</button>
         </template>
@@ -89,7 +112,10 @@
 import ImagesHoverOver from "@/components/Images/ImageHoverOver";
 import { headers } from "./tableHeaders.js";
 
-import { UPDATE_INVENTORY_ITEM_LEVELS } from "@/store/action-types.js";
+import {
+  UPDATE_INVENTORY_ITEM_LEVELS,
+  UPDATE_ITEM_FIELDS
+} from "@/store/action-types.js";
 import { UPDATE_API_STATUS } from "@/store/mutation-types.js";
 
 export default {
@@ -117,6 +143,11 @@ export default {
     }
   },
   methods: {
+    getDescendantProp(obj, desc) {
+      var arr = desc.split(".");
+      while (arr.length && (obj = obj[arr.shift()]));
+      return obj;
+    },
     getFieldEnum(field) {
       switch (field) {
         case "BinRack":
@@ -124,17 +155,26 @@ export default {
           break;
         case "StockLevel":
           return 10;
+          break;
+        case "Price":
+          return 3;
+          break;
       }
     },
     saveChanges(fieldName, fieldValueProp, item) {
-      function getDescendantProp(obj, desc) {
-        var arr = desc.split(".");
-        while (arr.length && (obj = obj[arr.shift()]));
-        return obj;
+      switch (fieldName) {
+        case "BinRack":
+          this.saveLocationField(fieldName, fieldValueProp, item);
+          break;
+        case "StockLevel":
+          this.saveLocationField(fieldName, fieldValueProp, item);
+          break;
+        default:
+          this.saveItemField(fieldName, fieldValueProp, item);
       }
-
-      const fieldValue = getDescendantProp(item, fieldValueProp);
-
+    },
+    saveLocationField(fieldName, fieldValueProp, item) {
+      const fieldValue = this.getDescendantProp(item, fieldValueProp);
       const params = {
         inventoryItemId: item.stockItemId,
         fieldName: this.getFieldEnum(fieldName),
@@ -158,7 +198,29 @@ export default {
           this.fieldNotSaved({ name: fieldName, value: fieldValue });
         });
     },
+    saveItemField(fieldName, fieldValueProp, item) {
+      const fieldValue = this.getDescendantProp(item, fieldValueProp);
+      const params = {
+        inventoryItemId: item.stockItemId,
+        fieldName: this.getFieldEnum(fieldName),
+        fieldValue: fieldValue
+      };
 
+      this.$store
+        .dispatch(`linnworks/${UPDATE_ITEM_FIELDS}`, params)
+        .then(resp => {
+          const { result } = resp;
+          if (result) this.fieldSaved({ name: fieldName, value: fieldValue });
+          if (!result)
+            this.fieldNotSaved({
+              name: fieldName,
+              value: fieldValue
+            });
+        })
+        .catch(err => {
+          this.fieldNotSaved({ name: fieldName, value: fieldValue });
+        });
+    },
     fieldSaved({ name, value }) {
       //update our status bar
       this.$store.commit(
@@ -184,32 +246,6 @@ export default {
         `Error trying to save ${name} value of <br/><b>${value}</b>!`
       );
     }
-
-    /*
-    getMainImage(images, property) {
-      if (!images.length > 0) return false;
-      const mainImage = images.filter(image => image.IsMain);
-      return mainImage[0][property];
-    },
-    createStockLevels(stockLevels) {
-      if (stockLevels.length === 0) return "-";
-      const levels = stockLevels.map(local => {
-        return `<div>
-          ${local.StockLevel}
-        </div>`;
-      });
-      return levels.join("");
-    },
-    createStockLocations(stockLevels) {
-      if (stockLevels.length === 0) return "-";
-      const locations = stockLevels.map(local => {
-        if (local.Location) {
-          return `<div> ${local.Location.BinRack} </div>`;
-        }
-      });
-      return locations.join("");
-    },
-    */
   }
 };
 </script>

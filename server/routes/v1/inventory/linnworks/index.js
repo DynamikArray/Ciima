@@ -1,6 +1,7 @@
 const {
   searchInventorySchema,
-  updateLocationOrQuantitySchema
+  updateLocationOrQuantitySchema,
+  updateInventoryItemFieldSchema
 } = require("../../../../schemas/v1/inventory/linnworks");
 /**
  * Info routes endpoints
@@ -10,7 +11,8 @@ const {
 module.exports = function(fastify, opts, next) {
   const {
     searchInventoryHandler,
-    updateLocationOrQuantityHandler
+    updateLocationOrQuantityHandler,
+    updateItemFieldHandler
   } = require("../../../../handlers/v1/inventory/linnworks")(fastify);
 
   //Inventory Search
@@ -19,6 +21,8 @@ module.exports = function(fastify, opts, next) {
     schema: searchInventorySchema,
     handler: searchInventoryHandler
   };
+  //http verbs
+  fastify.post("/inventory/linnworks/search", linnworksSearch);
 
   //location/quantity update
   const linnworksUpdateLocationOrQuantity = {
@@ -27,12 +31,22 @@ module.exports = function(fastify, opts, next) {
     handler: updateLocationOrQuantityHandler
   };
 
-  //http verbs
-  fastify.post("/inventory/linnworks/search", linnworksSearch);
-
   fastify.post(
-    "/inventory/linnworks/update",
+    "/inventory/linnworks/updateLocationField",
     linnworksUpdateLocationOrQuantity
   );
+
+  //Retail Price / Title fields NON Location BASED updates
+  const linnworksUpdateItemField = {
+    preValidation: fastify.authenticate,
+    schema: updateInventoryItemFieldSchema,
+    handler: updateItemFieldHandler
+  };
+
+  fastify.post(
+    "/inventory/linnworks/updateItemField",
+    linnworksUpdateItemField
+  );
+
   next();
 };

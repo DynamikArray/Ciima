@@ -64,5 +64,31 @@ module.exports = {
         }
       }
     }
+  },
+
+  updateInventoryItemFieldSchema: {
+    description: "Updates an Inventory items location or quantity values",
+    tags: ["Inventory"],
+    summary:
+      "Update non Location Fields of Inventory items values in Linnworks ",
+    security: [
+      {
+        token: []
+      }
+    ],
+    body: {
+      type: "object",
+      properties: {
+        inventoryItemId: {
+          type: "string"
+        },
+        fieldName: {
+          type: "number"
+        },
+        fieldValue: {
+          type: "string"
+        }
+      }
+    }
   }
 };
