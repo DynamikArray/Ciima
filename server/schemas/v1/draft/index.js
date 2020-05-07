@@ -51,6 +51,7 @@ module.exports = {
         id: { type: "number" }
       }
     },
+
     //draft item response
     response: {
       200: {
@@ -178,6 +179,30 @@ module.exports = {
           }
         }
       }
+    }
+  },
+
+  updateSchema: {
+    description: "Update a specifi open drafts on the server",
+    tags: ["Draft"],
+    summary: "Update an open draft and return its updated values?",
+    security: [
+      {
+        token: []
+      }
+    ],
+
+    //router parameters
+    params: {
+      type: "object",
+      properties: {
+        id: { type: "string" }
+      }
+    },
+
+    body: {
+      fieldName: { type: "string" },
+      fieldValue: { type: "number" }
     }
   }
 };

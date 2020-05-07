@@ -192,5 +192,24 @@ module.exports = fastify => ({
       }
     }
     return { error: "No db connection" };
+  },
+
+  updateHandler: async (req, res) => {
+    const { id } = req.params;
+    const params = [req.body.fieldName, req.body.fieldValue, id];
+
+    const query = `UPDATE slc_drafts SET ?? = ? WHERE id=?`;
+    const connection = await fastify.mysql.getConnection();
+    if (connection) {
+      try {
+        const [rows, fields] = await connection.query(query, params);
+        connection.release();
+        return { result: rows };
+      } catch (error) {
+        fastify.winston.error(error);
+        res.send(error);
+      }
+    }
+    return { error: "No db connection" };
   }
 });

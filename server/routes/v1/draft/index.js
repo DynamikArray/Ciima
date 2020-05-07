@@ -2,7 +2,8 @@ const {
   createSchema,
   readSchema,
   editSchema,
-  deleteSchema
+  deleteSchema,
+  updateSchema
 } = require("../../../schemas/v1/draft");
 
 /**
@@ -16,7 +17,8 @@ module.exports = function(fastify, opts, next) {
     createHandler,
     readHandler,
     editHandler,
-    deleteHandler
+    deleteHandler,
+    updateHandler
   } = require("../../../handlers/v1/draft")(fastify);
 
   //Create
@@ -50,6 +52,14 @@ module.exports = function(fastify, opts, next) {
     handler: deleteHandler
   };
   fastify.delete("/draft/:id", deleteDraft);
+
+  //updateDraft --inline editing single field
+  const updateDraft = {
+    preValidation: fastify.authenticate,
+    schema: updateSchema,
+    handler: updateHandler
+  };
+  fastify.put("/draft/:id/updateField", updateDraft);
 
   next();
 };

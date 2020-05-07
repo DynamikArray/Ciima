@@ -91,7 +91,9 @@ export default {
     editItem(id) {
       switch (this.item.draftType) {
         case "lots":
-          this.$toastr.e("TELL BRI TO CREATE THE EDIT PAGE FOR LOT DRAFTS");
+          this.$toastr.s(
+            "You can inline Edit the Price and Location values by clicking on them"
+          );
           break;
         default:
           this.$router.push({ name: "draft.edit", params: { id } });

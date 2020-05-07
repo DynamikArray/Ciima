@@ -18,6 +18,12 @@
           </div>
 
           <div class="d-flex align-center">
+            <Price
+              minWidth="10px"
+              alignValue="justify-start"
+              :label="true"
+              :item="item"
+            ></Price>
             <IssueNumbers :label="true" :item="item"></IssueNumbers>
           </div>
         </div>
@@ -29,6 +35,7 @@
 <script>
 import LotInventoryTitleMobile from "./LotInventoryTitleMobile";
 import IssueNumbers from "../IssueNumbers";
+import Price from "../Price";
 
 export default {
   props: {
@@ -36,6 +43,7 @@ export default {
     item: [Object]
   },
   components: {
+    Price,
     LotInventoryTitleMobile,
     IssueNumbers
   }

@@ -4,7 +4,8 @@ Vue.use(Vuex);
 
 import {
   OPEN_DRAFTS_FETCH,
-  OPEN_DRAFTS_SUBMIT_DRAFT
+  OPEN_DRAFTS_SUBMIT_DRAFT,
+  OPEN_DRAFTS_UPDATE_DRAFT
 } from "@/store/action-types";
 import {
   OPEN_DRAFTS_LISTED,
@@ -72,6 +73,21 @@ const openDrafts = {
         },
         { root: true }
       );
+    },
+    async [OPEN_DRAFTS_UPDATE_DRAFT]({ dispatch, commit }, params) {
+      const resp = await dispatch(
+        "api/requestHandler",
+        {
+          method: "put",
+          url: `/draft/${params.id}/updateField`,
+          params: params,
+          success: false,
+          loading: `openDrafts/${OPEN_DRAFTS_LOADING}`
+        },
+        { root: true }
+      );
+
+      if (resp) return resp;
     }
   }
 };
