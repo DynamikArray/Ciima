@@ -1,7 +1,7 @@
 <template>
   <v-tooltip
     v-model="blnShow"
-    color="black"
+    color="rgba(0, 0, 0)"
     :max-width="540"
     right
     style="height:500px"

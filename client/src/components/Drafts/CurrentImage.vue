@@ -86,7 +86,7 @@ export default {
       const fileNameArray = fullUrl.split(`/${productPath}/`);
       const fileName = fileNameArray[1];
 
-      const src = `${basePath}/f_auto/${productPath}/${fileName}`;
+      const src = `${basePath}/f_auto,fl_lossy,q_auto/${productPath}/${fileName}`;
       return src;
     }
   },

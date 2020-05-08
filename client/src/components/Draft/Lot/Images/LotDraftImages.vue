@@ -22,7 +22,7 @@
         >
           <div class="d-flex flex-column align-center">
             <img
-              :src="image.src"
+              :src="optimizedImageUrl(image.src)"
               height="90"
               max-width="140"
               contain
@@ -83,6 +83,19 @@ export default {
   },
 
   methods: {
+    optimizedImageUrl(imageUrl) {
+      const basePath = "https://res.cloudinary.com/ciima/image/upload";
+
+      if (imageUrl.startsWith(basePath)) {
+        const productPath = "lotPhotos";
+        const fileNameArray = imageUrl.split(`/${productPath}/`);
+        const fileName = fileNameArray[1];
+        const src = `${basePath}/f_auto,fl_lossy,q_auto/${productPath}/${fileName}`;
+        return src;
+      }
+
+      return imageUrl;
+    },
     deleteImage(index) {
       const newImages = this.images;
       newImages.splice(index, 1);
