@@ -283,7 +283,10 @@ export default {
     //
     //
     handleInputLocationCode(val) {
-      this.locationCode = val.toUpperCase();
+      this.locationCode = val
+        .trim()
+        .toUpperCase()
+        .replace(" ", "-");
     },
     handleFocusLocationCode() {
       const e = document.getElementById("locationCode");

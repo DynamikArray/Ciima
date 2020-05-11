@@ -51,7 +51,7 @@ const fieldRules = {
 };
 
 const formatTitleFromDraft = draft => {
-  const terms = ["Comic Book Lot", "Comics", "Collection", "Set", "Run", "Box"];
+  const terms = ["Lot Comic Book", "Comics", "Set", "Run", "Collection", "Box"];
   const titleString = [];
   if (draft.characters) titleString.push(draft.characters.join(" "));
   if (draft.publisher) titleString.push(draft.publisher);
