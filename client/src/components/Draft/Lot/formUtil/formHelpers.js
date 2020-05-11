@@ -54,7 +54,7 @@ const formatTitleFromDraft = draft => {
   const terms = ["Lot Comic Book", "Comics", "Set", "Run", "Collection", "Box"];
   const titleString = [];
   if (draft.characters) titleString.push(draft.characters.join(" "));
-  if (draft.publisher) titleString.push(draft.publisher);
+  if (draft.publisher) titleString.push(draft.publisher.join(" "));
   if (draft.issuesCount) titleString.push(draft.issuesCount);
   titleString.push(terms.join(" "));
   return toTitleCase(shorten(titleString.join(" "), 80));
