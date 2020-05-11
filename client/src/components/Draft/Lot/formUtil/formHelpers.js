@@ -51,24 +51,20 @@ const fieldRules = {
 };
 
 const formatTitleFromDraft = draft => {
+  const terms = ["Comic Book Lot", "Comics", "Collection", "Set", "Run", "Box"];
   const titleString = [];
-
   if (draft.characters) titleString.push(draft.characters.join(" "));
-
   if (draft.publisher) titleString.push(draft.publisher);
-
   if (draft.issuesCount) titleString.push(draft.issuesCount);
+  titleString.push(terms.join(" "));
+  return toTitleCase(shorten(titleString.join(" "), 80));
+};
 
-  titleString.push("Comic Book Lot");
-
-  //Start doing length checks and removing words that we dont want??
-  titleString.push("Comics");
-  titleString.push("Collection");
-  titleString.push("Set");
-  titleString.push("Run");
-  titleString.push("Box");
-
-  return toTitleCase(titleString.join(" "));
+// Shorten a string to less than maxLen characters without truncating words.
+// thanks stackoverflow
+const shorten = (str, maxLen, separator = " ") => {
+  if (str.length <= maxLen) return str;
+  return str.substr(0, str.lastIndexOf(separator, maxLen));
 };
 
 const toTitleCase = str => {

@@ -1,7 +1,8 @@
 <template>
   <div class="inventoryTitleWrapper w-100 d-flex justify-start align-center">
     <div class="w-100">
-      <v-text-field
+      <v-textarea
+        rows="2"
         dense
         :value="value"
         id="inventoryTitle"
@@ -15,7 +16,7 @@
         @input="handleUserInput"
         @update:error="updateError"
         @blur="blurInventoryTitle"
-      ></v-text-field>
+      ></v-textarea>
 
       <div
         class="d-flex justify-center align-center mt-2"
@@ -113,7 +114,9 @@ export default {
       if (this.titleCheckErrorDetail && this.titleCheckErrorDetail.item) {
         const { item } = this.titleCheckErrorDetail;
         //ebay starttime
-        if (item.listingInfo.startTime) return item.listingInfo.startTime;
+        if (item.listingInfo) {
+          if (item.listingInfo.startTime) return item.listingInfo.startTime;
+        }
       }
 
       if (this.titleCheckErrorDetail.createdDate)
@@ -141,7 +144,7 @@ export default {
       if (this.titleCheckErrorDetail.main_image)
         return this.titleCheckErrorDetail.main_image;
 
-      return false;
+      return "";
     }
   },
   methods: {

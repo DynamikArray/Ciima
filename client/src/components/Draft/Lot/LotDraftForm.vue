@@ -133,7 +133,12 @@
 
       <!--Lot Draft Form Title -->
       <div class="align-center justify-start">
-        <h4 class="mr-2 mb-1">Generated Ebay Title</h4>
+        <h4 class="mr-2 mb-1">
+          Generated Ebay Title
+          <span class="overline italic ml-1">
+            (Character Publisher Issuecount Extra Comic Terms)</span
+          >
+        </h4>
       </div>
       <div class="d-flex justify-center align-center w-100">
         <InventoryTitle
