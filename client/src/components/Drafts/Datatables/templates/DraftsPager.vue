@@ -1,5 +1,5 @@
 <template>
-  <div :class="`d-flex justify-${align} align-center w-100 mt-2`">
+  <div :class="`d-flex justify-${align} align-center mt-2`">
     <div class="d-flex flex-column justify-space-around align-center mx-3">
       <div class="d-flex justify-end align-center">
         <h5>{{ createPagerString }}</h5>

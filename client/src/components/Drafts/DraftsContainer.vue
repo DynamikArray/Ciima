@@ -8,6 +8,13 @@
 
       <v-divider class="my-1"></v-divider>
 
+      <DraftsFilters
+        :draftType.sync="draftType"
+        :searchString.sync="searchString"
+        :loading="loading"
+        :getData="fetchDraftsWithParams"
+      ></DraftsFilters>
+
       <DraftsPager
         key="topPager"
         align="end"
@@ -56,6 +63,7 @@ import { headers } from "@/components/Drafts/Datatables/settings/config.js";
 import DraftsTable from "@/components/Drafts/Datatables/DraftsTable";
 import DraftsOptions from "@/components/Drafts/Datatables/templates/DraftOptions/DraftOptions";
 import DraftsPager from "@/components/Drafts/Datatables/templates/DraftsPager";
+import DraftsFilters from "@/components/Drafts/Datatables/templates/DraftFilters/DraftsFilters";
 
 export default {
   props: {
@@ -64,12 +72,14 @@ export default {
   components: {
     DraftsTable,
     DraftsOptions,
-    DraftsPager
+    DraftsPager,
+    DraftsFilters
   },
   data: () => ({
-    showAllUsers: true,
     status: "open",
     limit: 15,
+    draftType: "",
+    searchString: "",
     headers: headers,
     mobileHeaders: ["inventoryTitle"]
   }),
@@ -101,9 +111,10 @@ export default {
     fetchDraftsWithParams(params = {}) {
       //defaults,
       const _params = {
-        all: +this.showAllUsers,
         status: this.status,
         limit: this.limit,
+        draftType: this.draftType,
+        searchString: this.searchString,
         ...params
       };
 

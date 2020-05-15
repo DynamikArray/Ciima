@@ -8,8 +8,10 @@ const { buildSelectQueries, buildSelectQueriesParams } = require("./helper");
  */
 module.exports = fastify => ({
   readHandler: async (req, res) => {
-    let { status, all } = req.query;
+    let { status, all, draftType, searchString } = req.query;
     if (!status) status = "open"; //default to open if no param
+    if (!draftType) draftType = "";
+    if (!searchString) searchString = "";
 
     const page = Number(req.query.page) || 1;
     const pageLimit = Number(req.query.limit) || 5; //Limit to 500 by default, and let client handle filtering
@@ -18,7 +20,9 @@ module.exports = fastify => ({
     const { selectParams, totalParams } = buildSelectQueriesParams(
       page - 1,
       pageLimit,
-      status
+      status,
+      draftType,
+      searchString
     );
 
     const connection = await fastify.mysql.getConnection();
