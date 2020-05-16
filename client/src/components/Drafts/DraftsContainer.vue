@@ -1,19 +1,16 @@
 <template>
   <v-row>
     <v-col class="py-0">
-      <DraftsOptions
-        :status.sync="status"
-        :getData="fetchDraftsWithParams"
-      ></DraftsOptions>
-
-      <v-divider class="my-1"></v-divider>
-
       <DraftsFilters
+        align="end"
+        :draftStatus.sync="draftStatus"
         :draftType.sync="draftType"
         :searchString.sync="searchString"
         :loading="loading"
         :getData="fetchDraftsWithParams"
       ></DraftsFilters>
+
+      <v-divider class="my-1"></v-divider>
 
       <DraftsPager
         key="topPager"
@@ -32,7 +29,7 @@
         :limit="limit"
         :isMobile="isMobile"
         :headers="rowHeaders"
-        :status="status"
+        :status="draftStatus"
         :drafts="drafts"
         :loading="loading"
         :getData="fetchDraftsWithParams"
@@ -61,7 +58,6 @@ import { OPEN_DRAFTS_FETCH } from "@/store/action-types";
 import { headers } from "@/components/Drafts/Datatables/settings/config.js";
 
 import DraftsTable from "@/components/Drafts/Datatables/DraftsTable";
-import DraftsOptions from "@/components/Drafts/Datatables/templates/DraftOptions/DraftOptions";
 import DraftsPager from "@/components/Drafts/Datatables/templates/DraftsPager";
 import DraftsFilters from "@/components/Drafts/Datatables/templates/DraftFilters/DraftsFilters";
 
@@ -71,12 +67,11 @@ export default {
   },
   components: {
     DraftsTable,
-    DraftsOptions,
     DraftsPager,
     DraftsFilters
   },
   data: () => ({
-    status: "open",
+    draftStatus: "open",
     limit: 15,
     draftType: "",
     searchString: "",
@@ -111,7 +106,7 @@ export default {
     fetchDraftsWithParams(params = {}) {
       //defaults,
       const _params = {
-        status: this.status,
+        status: this.draftStatus,
         limit: this.limit,
         draftType: this.draftType,
         searchString: this.searchString,

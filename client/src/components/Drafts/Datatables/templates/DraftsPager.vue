@@ -1,11 +1,14 @@
 <template>
   <div :class="`d-flex justify-${align} align-center mt-2`">
-    <div class="d-flex flex-column justify-space-around align-center mx-3">
+    <div class="d-flex flex-column justify-space-around align-center">
       <div class="d-flex justify-end align-center">
         <h5>{{ createPagerString }}</h5>
       </div>
 
-      <div class="d-flex justify-end align-center" style="max-width:600px">
+      <div
+        class="d-flex justify-end align-center"
+        style="max-width:600px; margin-left:-10px"
+      >
         <v-pagination
           :key="Date.now()"
           style="max-width:590px"

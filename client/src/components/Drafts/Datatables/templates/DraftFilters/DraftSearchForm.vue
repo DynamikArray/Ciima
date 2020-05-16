@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex align-start flex-column mb-2 mr-10" style="width:400px">
+  <div class="d-flex align-start flex-column mb-2">
     <div class="d-flex align-center justify-start">
       <h5 class="mt-0 mr-2 mb-1">Search Draft Titles:</h5>
     </div>

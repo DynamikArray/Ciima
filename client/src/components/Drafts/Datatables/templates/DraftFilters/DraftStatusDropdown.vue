@@ -1,8 +1,9 @@
 <template>
-  <div class="d-flex justify-end mb-2">
+  <div class="d-flex align-center flex-column mb-2">
     <div class="d-flex align-center justify-end">
-      <h4 class="mx-0 mr-2">Status:</h4>
+      <h5 class="mt-0 mr-2 mb-1">Status:</h5>
     </div>
+
     <div class="d-flex align-center justify-end">
       <v-select
         style="width:160px"
@@ -21,6 +22,10 @@
 <script>
 export default {
   props: {
+    draftStatus: {
+      type: [String],
+      default: "open"
+    },
     getData: [Function]
   },
 
@@ -49,8 +54,9 @@ export default {
   },
 
   methods: {
-    handleSelect(val) {
-      this.getData({ status: val });
+    handleSelect(draftStatus) {
+      this.$parent.$emit("update:draftStatus", draftStatus);
+      this.getData({ status: draftStatus });
     }
   }
 };
