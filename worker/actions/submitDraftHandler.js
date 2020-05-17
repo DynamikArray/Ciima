@@ -2,16 +2,22 @@ const logger = require("../../util/winston/winston.js")({
   hostname: "Worker"
 });
 
+const {
+  updateStatus
+} = require("../../util/linnworks/helpers/updateStatus.js")(logger);
+
 const { amqp } = require("../../util/amqp/amqpConn.js");
 const { linnworks } = require("../../util/linnworks/linnworks.js");
 const draftHelper = require("../../util/ciima/draftHelper.js");
 
 const cleanImagePath = require("../../util/linnworks/helpers/cleanImagePath.js");
-const handleStatusUpdate = require("../../util/linnworks/helpers/handleStatusUpdate.js");
+
 const addInventoryItem = require("../../util/linnworks/helpers/addInventoryItem.js");
 const addImage = require("../../util/linnworks/helpers/addImage.js");
 const addExtendedProperties = require("../../util/linnworks/helpers/addExtendedProperties.js");
-const addInventoryPrices = require("../../util/linnworks/helpers/addInventoryPrices.js");
+const {
+  addInventoryPrices
+} = require("../../util/linnworks/helpers/addInventoryPrices.js")(logger);
 const updateInventoryLocation = require("../../util/linnworks/helpers/updateInventoryLocation.js");
 const addInventoryImages = require("../../util/linnworks/helpers/addInventoryImages.js");
 
@@ -69,7 +75,7 @@ const submitDraftHandler = async (message, callback) => {
         );
         // extended Properties didnt Save
         if (!extPropsResult && extPropsError)
-          handleStatusUpdate(draft.id, extPropsError, ERROR);
+          updateStatus(draft.id, extPropsError, ERROR);
 
         //inventoryPrices
         const { pricesResult, pricesError } = await addInventoryPrices(
@@ -79,7 +85,7 @@ const submitDraftHandler = async (message, callback) => {
         );
         // extended Properties didnt Save
         if (!pricesResult && pricesError)
-          handleStatusUpdate(draft.id, pricesError, ERROR);
+          updateStatus(draft.id, pricesError, ERROR);
 
         //
         //Update Inventory Location
@@ -88,13 +94,10 @@ const submitDraftHandler = async (message, callback) => {
           draft.locationCode
         );
         // Inventory Location didnt Save
-        if (!invResult && invError)
-          handleStatusUpdate(draft.id, invError, ERROR);
+        if (!invResult && invError) updateStatus(draft.id, invError, ERROR);
 
-        //
         //See if we have other images to send
         if (draft.other_images.length > 0) {
-          //  Add Other Images
           const { imagesResult, imagesError } = await addInventoryImages(
             StockItemId,
             ItemNumber,
@@ -104,27 +107,21 @@ const submitDraftHandler = async (message, callback) => {
           if (!imagesResult && imagesError) hasErrors.push(imagesError);
         } //end other_image > 0
 
-        //
         //Error check for any errors and log them
         if (hasErrors.length > 0) {
-          handleStatusUpdate(draft.id, hasErrors, ERROR);
+          updateStatus(draft.id, hasErrors, ERROR);
         } else {
-          handleStatusUpdate(draft.id, "Draft Submitted!", SUBMITTED);
+          updateStatus(draft.id, "Draft Submitted!", SUBMITTED);
         }
       }
 
-      //
       //error inserting main inventory item
-      if (!result && error) {
-        handleStatusUpdate(draft.id, error, ERROR);
-      }
+      if (!result && error) updateStatus(draft.id, error, ERROR);
     }
 
-    if (!statusUpdated) {
-      logger.debug("Unable to update draft status");
-    }
+    if (!statusUpdated) logger.debug("Unable to update draft status");
   } catch (err) {
-    handleStatusUpdate(draft.id, err, ERROR);
+    updateStatus(draft.id, err, ERROR);
   } finally {
     //handle amqp NACK'ing
     callback(null, false);

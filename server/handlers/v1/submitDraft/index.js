@@ -17,10 +17,10 @@ module.exports = fastify => ({
       //query
       const query = `SELECT * FROM slc_drafts WHERE id = ?`;
       const [rows, fields] = await connection.query(query, [id]);
-      connection.release(); //dont forget to release ;)
 
       //Handle no results
       if (rows.length == 0) {
+        connection.release(); //dont forget to release ;)
         //no results
         fastify.winston.warn(`No draft with matching id of ${id} found`);
         return { result: `No draft with matching id of ${id} found` };
@@ -36,6 +36,8 @@ module.exports = fastify => ({
 
         //call our helper handles sending and repsonse
         const result = await amqp.sendMessage(payload);
+        fastify.winston.debug(JSON.stringify(result));
+        connection.release(); //dont forget to release ;)
         return result;
       }
     }

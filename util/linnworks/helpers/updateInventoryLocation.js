@@ -23,7 +23,7 @@ const updateInventoryLocation = async (StockItemId, location) => {
     //CreateInventoryItemExtendedProperties
     const { result, error } = await linnworks.makeApiCall({
       method: "POST",
-      url: "Inventory/UpdateItemLocations ",
+      url: "Inventory/UpdateItemLocations",
       headers: "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
       data: formattedLocation
     });

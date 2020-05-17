@@ -1,5 +1,5 @@
 const { linnworks } = require("../linnworks.js");
-const handleStatusUpdate = require("./handleStatusUpdate.js");
+const { updateStatus } = require("./updateStatus.js");
 
 const { PENDING, SUBMITTED, ERROR } = require("../../ciima/draftStatusCode.js");
 
@@ -24,7 +24,7 @@ const addImage = async (draftId, imageProps) => {
     if (result) return { result };
     if (error) return { error };
   } catch (error) {
-    handleStatusUpdate(draftId, error, ERROR);
+    updateStatus(draftId, error, ERROR);
   }
 };
 

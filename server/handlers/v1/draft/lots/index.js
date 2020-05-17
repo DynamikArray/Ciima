@@ -1,7 +1,7 @@
 const uuidv1 = require("uuid/v1");
 const { titleChecker } = require("../../../../../util/ciima/titleChecker");
 
-const EBAY_OTHER_MODER_SUPERHEROS = 155290;
+const EBAY_OTHER_MODERN_SUPERHEROS = 155290;
 const STORE_OTHER = 1;
 const STORE_LOTS = 6583322015;
 
@@ -19,7 +19,7 @@ module.exports = fastify => ({
 
     const images = req.body.images;
 
-    const main_image = req.body.images.pop();
+    const main_image = req.body.images.shift();
     const other_images = images.map(img => {
       const url = img.src.replace("'", "\u2019");
       return {
@@ -42,7 +42,7 @@ module.exports = fastify => ({
       extraDescription: req.body.extraDescription || "",
       main_image: main_image.src,
       other_images: JSON.stringify(other_images),
-      ebaySiteCategoryId: EBAY_OTHER_MODER_SUPERHEROS,
+      ebaySiteCategoryId: EBAY_OTHER_MODERN_SUPERHEROS,
       ebayStoreCategoryIdOne: STORE_OTHER,
       ebayStoreCategoryIdTwo: STORE_LOTS
     };
