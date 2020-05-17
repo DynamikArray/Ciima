@@ -6,221 +6,20 @@ const { amqp } = require("../../util/amqp/amqpConn.js");
 const { linnworks } = require("../../util/linnworks/linnworks.js");
 const draftHelper = require("../../util/ciima/draftHelper.js");
 
+const cleanImagePath = require("../../util/linnworks/helpers/cleanImagePath.js");
+const handleStatusUpdate = require("../../util/linnworks/helpers/handleStatusUpdate.js");
+const addInventoryItem = require("../../util/linnworks/helpers/addInventoryItem.js");
+const addImage = require("../../util/linnworks/helpers/addImage.js");
+const addExtendedProperties = require("../../util/linnworks/helpers/addExtendedProperties.js");
+const addInventoryPrices = require("../../util/linnworks/helpers/addInventoryPrices.js");
+const updateInventoryLocation = require("../../util/linnworks/helpers/updateInventoryLocation.js");
+const addInventoryImages = require("../../util/linnworks/helpers/addInventoryImages.js");
+
 const {
   PENDING,
   SUBMITTED,
   ERROR
 } = require("../../util/ciima/draftStatusCode.js");
-
-const locationInfo = {
-  StockLocationId: "00000000-0000-0000-0000-000000000000",
-  LocationName: "Default"
-};
-
-/**
- * [handleStatusUpdate description]
- * @param  {number}  draftId       the draftId to be logged in the db
- * @param  {string/object}  msg
- * @param  {string}  [level=ERROR] error level
- * @return {Promise}               [description]
- */
-const handleStatusUpdate = async (draftId, msg, level = ERROR) => {
-  const jsonMsg = JSON.stringify(msg);
-  await draftHelper.updateDraftStatus(draftId, level, jsonMsg);
-  if (jsonMsg) {
-    if (level === ERROR) logger.error(jsonMsg);
-    logger.debug(jsonMsg);
-  }
-};
-
-/**
- * cleanImagePath - removes the special charachters from the url names so the json
- * can be passed into mysql or to linnworks or used in url paths
- * @param  {string} imageUrl the imageUrl from our database
- * @return {string}          [description]
- */
-const cleanImagePath = imageUrl => {
-  const str = imageUrl.replace("’", "'");
-  return str;
-};
-
-/**
- * [addImage description]
- * @param  {[type]}  imageProps [description]
- * @return {Promise}            [description]
- */
-const addImage = async (draftId, imageProps) => {
-  //encode the imageUrl
-  imageProps.ImageUrl = encodeURIComponent(imageProps.ImageUrl);
-  const formattedData = `request=${JSON.stringify(imageProps)}`;
-
-  try {
-    const { result, error } = await linnworks.makeApiCall({
-      method: "POST",
-      url: "Inventory/AddImageToInventoryItem",
-      headers: "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
-      data: formattedData
-    });
-
-    if (result) return { result };
-    if (error) return { error };
-  } catch (error) {
-    handleStatusUpdate(draftId, error, ERROR);
-  }
-};
-
-/**
- * [addInventoryImages description]
- * @param  {[type]}  StockItemId [description]
- * @param  {[type]}  ItemNumber  [description]
- * @param  {[type]}  draft       [description]
- * @return {Promise}             [description]
- */
-const addInventoryImages = async (StockItemId, ItemNumber, draft) => {
-  //handle submitting the inventory images
-  const otherImages = draft.other_images;
-  if (otherImages.length > 0) {
-    const results = [];
-    for (let img of otherImages) {
-      const cleanedPath = cleanImagePath(img.imageUrl);
-
-      //// HACK: for dealing with our images vs cloudinarys or full urls
-      let ImageUrl = encodeURI(cleanedPath);
-      if (cleanedPath.startsWith("/zCustomApps/")) {
-        ImageUrl = encodeURI(`https://searchlightcomics.com${cleanedPath}`);
-      }
-
-      const isMain = false;
-      const { result, error } = await addImage(draft.id, {
-        StockItemId,
-        ItemNumber,
-        ImageUrl,
-        isMain
-      });
-      if (result) results.push({ result: true });
-      if (error) results.push({ error });
-    }
-
-    var hasError =
-      results.filter(function(o) {
-        return o.hasOwnProperty("error");
-      }).length > 0;
-
-    if (hasError) {
-      return { imagesError: results };
-    } else {
-      return { imagesResult: true };
-    }
-  }
-  return { imagesError: "No Other Images to add to this listing." };
-};
-
-/**
- * [addInventoryItem description]
- * @param  {[type]}  draft [description]
- * @return {Promise}       [description]
- */
-const addInventoryItem = async draft => {
-  //start submitting the draft
-  const { newInventoryItem, formattedInventoryItem } = linnworks.formatters;
-  const itemData = newInventoryItem(draft);
-  const formattedData = formattedInventoryItem(itemData);
-  //AddInventoryItem
-  const { result, error } = await linnworks.makeApiCall({
-    method: "POST",
-    url: "Inventory/AddInventoryItem",
-    headers: "Content-Type: plain/text",
-    data: formattedData
-  });
-
-  if (result) {
-    const result = {
-      fkStockItemId: itemData.StockItemId,
-      ItemNumber: itemData.ItemNumber
-    };
-    return { result };
-  }
-
-  if (error) return { error };
-};
-
-/**
- * [addExtendedProperties description]
- * @param  {[type]}  StockItemId [description]
- * @param  {[type]}  ItemNumber  [description]
- * @param  {[type]}  draft       [description]
- * @return {Promise}             [description]
- */
-const addExtendedProperties = async (StockItemId, ItemNumber, draft) => {
-  const { itemExtendedProperties } = linnworks.formatters;
-  const extendedProperties = itemExtendedProperties(
-    StockItemId,
-    ItemNumber,
-    draft
-  );
-
-  //CreateInventoryItemExtendedProperties
-  const { result, error } = await linnworks.makeApiCall({
-    method: "POST",
-    url: "Inventory/CreateInventoryItemExtendedProperties",
-    headers: "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
-    data: extendedProperties
-  });
-
-  if (result) return { extPropsResult: result };
-  if (error) return { extPropsError: error };
-  //for each one of these draft properties we have to add an extended property
-};
-
-const addInventoryPrices = async (StockItemId, ItemNumber, draft) => {
-  //add listingDescriptions for auctions aka LOTS
-  if (draft.draftType.toUpperCase() == "LOTS") {
-    logger.debug("Adding Inventory Prices for Lot Item.");
-
-    const { itemInventoryPrices } = linnworks.formatters;
-
-    //setup params for call
-    const inventoryPrice = itemInventoryPrices(StockItemId, ItemNumber, draft);
-
-    //make api call
-    //CreateInventoryItemExtendedProperties
-    const { result, error } = await linnworks.makeApiCall({
-      method: "POST",
-      url: "Inventory/CreateInventoryItemPrices",
-      headers: "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
-      data: inventoryPrice
-    });
-
-    if (result) return { pricesResult: result };
-    if (error) return { pricesError: error };
-  }
-  return { pricesResult: true };
-};
-
-const updateInventoryLocation = async (StockItemId, location) => {
-  const inventoryItemLocation = [
-    {
-      StockLocationId: locationInfo.StockLocationId,
-      LocationName: locationInfo.LocationName,
-      BinRack: location,
-      StockItemId
-    }
-  ];
-  const formattedLocation = `itemLocations=${JSON.stringify(
-    inventoryItemLocation
-  )}`;
-
-  //CreateInventoryItemExtendedProperties
-  const { result, error } = await linnworks.makeApiCall({
-    method: "POST",
-    url: "Inventory/UpdateItemLocations ",
-    headers: "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
-    data: formattedLocation
-  });
-
-  if (result && !error) return { invResult: true };
-  if (error && !result) return { invError: error };
-};
 
 /**
  * [submitDraftHandler description]
@@ -239,6 +38,7 @@ const submitDraftHandler = async (message, callback) => {
       draft.id,
       PENDING
     );
+
     //
     if (statusUpdated) {
       const { result, error } = await addInventoryItem(draft);
