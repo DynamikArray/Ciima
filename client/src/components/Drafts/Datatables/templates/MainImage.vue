@@ -30,6 +30,10 @@ export default {
   },
   computed: {
     getMainImageFull() {
+      if (this.item.main_image.indexOf("upload/") === -1) {
+        return this.item.main_image;
+      }
+
       const urlPieces = this.item.main_image.split("upload/");
       const transformation = "upload/w_500,h_600,c_fit,f_auto,fl_lossy,q_auto/";
       urlPieces.splice(1, 0, transformation).join("");
@@ -37,6 +41,15 @@ export default {
       return finalUrl;
     },
     getMainImageThumb() {
+      if (this.item.main_image.indexOf("upload/") === -1) {
+        const urlPieces = this.item.main_image.split("/");
+        const thumbNail = `https://${urlPieces[2]}/${urlPieces[3]}/${
+          urlPieces[4]
+        }/tumbnail_${urlPieces[5]}`;
+        console.log(thumbNail);
+        return thumbNail;
+      }
+
       const urlPieces = this.item.main_image.split("upload/");
       const transformation = "upload/w_160,h_100,c_fit,f_auto,fl_lossy,q_auto/";
       urlPieces.splice(1, 0, transformation).join("");

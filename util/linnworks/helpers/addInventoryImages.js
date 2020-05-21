@@ -23,14 +23,14 @@ const addInventoryImages = async (StockItemId, ItemNumber, draft) => {
       }
 
       const isMain = false;
-      const { result, error } = await addImage(draft.id, {
+      const { imageResult, imageError } = await addImage(draft.id, {
         StockItemId,
         ItemNumber,
         ImageUrl,
         isMain
       });
-      if (result) results.push({ result: true });
-      if (error) results.push({ error });
+      if (imageResult) results.push({ imageUrl: imageResult.ImageUrl });
+      if (imageError) results.push({ error: imageError });
     }
 
     var hasError =
@@ -41,7 +41,7 @@ const addInventoryImages = async (StockItemId, ItemNumber, draft) => {
     if (hasError) {
       return { imagesError: results };
     } else {
-      return { imagesResult: true };
+      return { imagesResult: results };
     }
   }
   return { imagesError: "No Other Images to add to this listing." };

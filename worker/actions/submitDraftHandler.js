@@ -22,6 +22,11 @@ const updateInventoryLocation = require("../../util/linnworks/helpers/updateInve
 const addInventoryImages = require("../../util/linnworks/helpers/addInventoryImages.js");
 
 const {
+  updateMainImage,
+  updateOtherImages
+} = require("../../util/linnworks/helpers/updateImages.js");
+
+const {
   PENDING,
   SUBMITTED,
   ERROR
@@ -57,16 +62,17 @@ const submitDraftHandler = async (message, callback) => {
 
         //
         //  Main Image
-        const addImageResp = await addImage(draft.id, {
+        const { imageResult, imageError } = await addImage(draft.id, {
           StockItemId,
           ItemNumber,
           ImageUrl: draft.main_image,
           isMain: true
         });
-        //  Main Image Didnt Save
-        if (addImageResp.error) hasErrors.push(addImageResp.error);
 
-        //
+        if (imageResult) await updateMainImage(draft.id, imageResult.ImageUrl);
+        //  Main Image Didnt Save
+        if (imageError) hasErrors.push(imageError);
+
         //Add extended properties
         const { extPropsResult, extPropsError } = await addExtendedProperties(
           StockItemId,
@@ -103,8 +109,8 @@ const submitDraftHandler = async (message, callback) => {
             ItemNumber,
             draft
           );
-          //IMAGES DIDNT SAVE
-          if (!imagesResult && imagesError) hasErrors.push(imagesError);
+          if (imagesResult) await updateOtherImages(draft.id, imagesResult);
+          if (imagesError) hasErrors.push(imagesError);
         } //end other_image > 0
 
         //Error check for any errors and log them

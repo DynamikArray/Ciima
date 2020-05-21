@@ -21,8 +21,8 @@ const addImage = async (draftId, imageProps) => {
       data: formattedData
     });
 
-    if (result) return { result };
-    if (error) return { error };
+    if (result) return { imageResult: result };
+    if (error) return { imageError: error };
   } catch (error) {
     updateStatus(draftId, error, ERROR);
   }

@@ -62,6 +62,17 @@ const extendedProperties = [
     name: "Ebay Store Category 2",
     field: "ebayStoreCategoryIdTwo",
     default: ""
+  },
+  /* -- These lastPrice and lastPriced are used by our repricer */
+  {
+    name: "LastPrice",
+    field: "lastPrice",
+    default: ""
+  },
+  {
+    name: "LastPriced",
+    field: "lastPriced",
+    default: ""
   }
 ];
 
