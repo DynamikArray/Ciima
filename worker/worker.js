@@ -2,35 +2,48 @@ require("dotenv").config();
 
 const scheduler = require("./scheduler");
 
-//const { logger } = require("../util/winston/winston.js");
 const logger = require("../util/winston/winston.js")({
   hostname: "Worker"
 });
 
-const { amqp } = require("../util/amqp/amqpConn.js");
+const amqpWrapper = require("../util/amqp/amqpLib.js");
+
 const { linnworks } = require("../util/linnworks/linnworks.js");
-const { handleMessage } = require("./messageHandler.js")();
+const { messageHandler } = require("./messageHandler.js");
 
 const worker = async () => {
-  logger.info(`Starting worker at`);
-  //connection to amqp
-  await amqp.connect();
   //init linnworks connection
   await linnworks.initiliaze(logger);
-  // Start consuming:
-  amqp.consume(handleMessage);
-  // Publishing to arbitrary routing key.
-  //await amqp.publish(routingKey, payload, options);
-  //
+  logger.info(`Starting worker at`);
+  // Consumer
+  amqpWrapper.CONNECTION.then(function(conn) {
+    return conn.createChannel();
+  })
+    .then(function(ch) {
+      return ch.assertQueue(amqpWrapper.QUEUE_NAME).then(function(ok) {
+        return ch.consume(amqpWrapper.QUEUE_NAME, async function(msg) {
+          if (msg !== null) {
+            const payload = JSON.parse(msg.content);
+            if (payload) {
+              await messageHandler(payload);
+            }
+            ch.ack(msg);
+          }
+        });
+      });
+    })
+    .catch(err => {
+      logger.error("CAUGHT in our amqp Connection ".err);
+    });
 };
 
 //start the worker
 worker();
-
-//
 //RIGHT NOW ONLY RUN THE SCHEDULER IN PROD
-//
-if (process.env.NODE_ENV === "production") {
+if (
+  process.env.NODE_ENV === "production" ||
+  process.env.NODE_ENV === "development"
+) {
   scheduler();
 }
 

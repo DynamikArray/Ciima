@@ -6,7 +6,6 @@ const {
   updateStatus
 } = require("../../util/linnworks/helpers/updateStatus.js")(logger);
 
-const { amqp } = require("../../util/amqp/amqpConn.js");
 const { linnworks } = require("../../util/linnworks/linnworks.js");
 const draftHelper = require("../../util/ciima/draftHelper.js");
 
@@ -130,7 +129,7 @@ const submitDraftHandler = async (message, callback) => {
     updateStatus(draft.id, err, ERROR);
   } finally {
     //handle amqp NACK'ing
-    callback(null, false);
+    return;
   }
 }; //end messageHandler
 

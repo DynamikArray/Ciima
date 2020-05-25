@@ -7,7 +7,7 @@
     "dev": "concurrently \" nodemon server/server.js \" \"cd client && npm run serve \" ",
     "start:server": "nodemon server/server.js",
     "start:worker": "nodemon worker/worker.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --recursive",
     "heroku-postbuild": "cd client;  npm install --dev ; npm run build",
     "start": "node server/server.js"
   },
@@ -40,6 +40,8 @@
     "winston": "^3.2.1"
   },
   "devDependencies": {
-    "concurrently": "^4.1.2"
+    "chai": "^4.2.0",
+    "concurrently": "^4.1.2",
+    "mocha": "^7.2.0"
   }
 }

@@ -5,7 +5,9 @@ const logger = require("../../winston/winston.js")({
   hostname: "Utility"
 });
 
-const { locationsSql } = require("../../linnworks/LocationQueries");
+const {
+  locationsSql
+} = require("../../linnworks/queries/inventory/LocationQueries");
 const {
   updateInventoryLocationsInDb
 } = require("../updateInventoryLocationsInDb");
