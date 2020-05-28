@@ -2,6 +2,10 @@ const logger = require("../../util/winston/winston.js")({
   hostname: "Worker"
 });
 
+const { CREATE_ITEM } = require("../../util/auditLog/logActionTypes");
+const { LINNWORKS } = require("../../util/auditLog/logResourceTypes");
+const auditLogger = require("../../util/auditLog/auditLoggerWorker");
+
 const {
   updateStatus
 } = require("../../util/linnworks/helpers/updateStatus.js")(logger);
@@ -117,11 +121,22 @@ const submitDraftHandler = async (message, callback) => {
           updateStatus(draft.id, hasErrors, ERROR);
         } else {
           updateStatus(draft.id, "Draft Submitted!", SUBMITTED);
+          await auditLogger.log(
+            CREATE_ITEM,
+            -1,
+            draft.id,
+            "LINNWORKS",
+            JSON.stringify({
+              successResult: "Item created from resource id"
+            })
+          );
         }
       }
 
       //error inserting main inventory item
-      if (!result && error) updateStatus(draft.id, error, ERROR);
+      if (!result && error) {
+        updateStatus(draft.id, error, ERROR);
+      }
     }
 
     if (!statusUpdated) logger.debug("Unable to update draft status");

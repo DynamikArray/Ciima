@@ -9,21 +9,21 @@ module.exports = {
         type: "object",
         properties: {
           api: {
-            type: "boolean"
+            type: "boolean",
           },
           linnworks: {
             type: "object",
             properties: {
               server: {
-                type: "string"
+                type: "string",
               },
               token: {
-                type: "string"
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+                type: "string",
+              },
+            },
+          },
+        },
+      },
+    },
+  },
 };

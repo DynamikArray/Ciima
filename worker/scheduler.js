@@ -32,12 +32,12 @@ const scheduler = () => {
   //reprice items no last price
   const withNoLastPriceRule = new schedule.RecurrenceRule();
   withNoLastPriceRule.minute = [40];
-  schedule.scheduleJob(withNoLastPriceRule, repriceLotsWithNoLastPrice);
+  //schedule.scheduleJob(withNoLastPriceRule, repriceLotsWithNoLastPrice);
 
   //reprice items with last price
   const withLastPriceRule = new schedule.RecurrenceRule();
   withLastPriceRule.minute = [40];
-  schedule.scheduleJob(withLastPriceRule, repriceLotsWithLastPrice);
+  //schedule.scheduleJob(withLastPriceRule, repriceLotsWithLastPrice);
 };
 
 module.exports = scheduler;

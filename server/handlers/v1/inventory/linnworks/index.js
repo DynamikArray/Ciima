@@ -1,6 +1,12 @@
 const queryString = require("query-string");
 const StockItemsBuilder = require("../../../../../util/linnworks/StockItemsBuilder");
 
+const {
+  UPDATE_ITEM_FIELD,
+  UPDATE_LOCATION_FIELD
+} = require("../../../../../util/auditLog/logActionTypes");
+const { LINNWORKS } = require("../../../../../util/auditLog/logResourceTypes");
+
 module.exports = fastify => ({
   /**
    * [searchInventoryHandler description]
@@ -70,11 +76,18 @@ module.exports = fastify => ({
           "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
         data: formattedData
       });
-
       if (result) return { result };
       if (error) return { error };
     } catch (error) {
       fastify.winston.error(error);
+    } finally {
+      fastify.auditLogger.log(
+        UPDATE_LOCATION_FIELD,
+        req.user.id,
+        inventoryItemId,
+        LINNWORKS,
+        JSON.stringify({ fieldName, fieldValue })
+      );
     }
   },
 
@@ -102,6 +115,14 @@ module.exports = fastify => ({
       if (error) return { error };
     } catch (error) {
       fastify.winston.error(error);
+    } finally {
+      fastify.auditLogger.log(
+        UPDATE_ITEM_FIELD,
+        req.user.id,
+        inventoryItemId,
+        LINNWORKS,
+        JSON.stringify({ fieldName, fieldValue })
+      );
     }
   }
 });

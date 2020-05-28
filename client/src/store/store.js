@@ -24,6 +24,8 @@ import pricing from "@/store/pricing/pricing";
 
 import locations from "@/store/locations/locations";
 
+import auditLog from "@/store/auditLog/auditLog";
+
 export default new Vuex.Store({
   modules: {
     api,
@@ -40,7 +42,8 @@ export default new Vuex.Store({
     user,
     pricing,
     locations,
-    lots
+    lots,
+    auditLog
   },
   state: {},
   mutations: {}

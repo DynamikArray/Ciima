@@ -119,6 +119,15 @@ let router = new Router({
       }
     },
     {
+      path: "/audit",
+      props: true,
+      name: "audit",
+      component: () => import(/*webpackChunkName: "ebay"*/ "@/views/Audit.vue"),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
       path: "*",
       props: true,
       name: "404",

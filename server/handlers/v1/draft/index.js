@@ -1,5 +1,13 @@
 const uuidv1 = require("uuid/v1");
 
+const { DRAFT } = require("../../../../util/auditLog/logResourceTypes");
+const {
+  CREATE_DRAFT,
+  UPDATE_DRAFT,
+  UPDATE_DRAFT_FIELD,
+  DELETE_DRAFT
+} = require("../../../../util/auditLog/logActionTypes");
+
 /**
  * Keep Alive handler
  *
@@ -34,6 +42,7 @@ module.exports = fastify => ({
       other_images
     } = req.body;
 
+    // TODO: bring into the listing process of the worker, so resubmits are easier
     //create the UUID and ItemNumber for the items inclusion on linnworks
     const stockItemId = uuidv1();
     const itemNumber = Date.now().toString(); //aka SKU
@@ -76,13 +85,25 @@ module.exports = fastify => ({
 
     const connection = await fastify.mysql.getConnection();
     if (connection) {
+      let successResult,
+        errorResult = false;
       try {
         const [rows, fields] = await connection.query(query, draft);
         connection.release();
+        successResult = rows;
         return { result: rows };
       } catch (error) {
+        errorResult = error;
         fastify.winston.error(error);
         res.send(error);
+      } finally {
+        fastify.auditLogger.log(
+          CREATE_DRAFT,
+          req.user.id,
+          successResult.insertId || 0,
+          DRAFT,
+          JSON.stringify({ successResult, errorResult })
+        );
       }
     }
     return { error: "No db connection" };
@@ -169,6 +190,14 @@ module.exports = fastify => ({
       } catch (error) {
         fastify.winston.error(error);
         res.send(error);
+      } finally {
+        fastify.auditLogger.log(
+          UPDATE_DRAFT,
+          req.user.id,
+          id,
+          DRAFT,
+          JSON.stringify(draft)
+        );
       }
     }
     return { error: "No db connection" };
@@ -189,6 +218,14 @@ module.exports = fastify => ({
       } catch (error) {
         fastify.winston.error(error);
         res.send(error);
+      } finally {
+        fastify.auditLogger.log(
+          DELETE_DRAFT,
+          req.user.id,
+          id,
+          DRAFT,
+          JSON.stringify(query)
+        );
       }
     }
     return { error: "No db connection" };
@@ -199,7 +236,9 @@ module.exports = fastify => ({
     const params = [req.body.fieldName, req.body.fieldValue, id];
 
     const query = `UPDATE slc_drafts SET ?? = ? WHERE id=?`;
+
     const connection = await fastify.mysql.getConnection();
+
     if (connection) {
       try {
         const [rows, fields] = await connection.query(query, params);
@@ -208,6 +247,14 @@ module.exports = fastify => ({
       } catch (error) {
         fastify.winston.error(error);
         res.send(error);
+      } finally {
+        fastify.auditLogger.log(
+          UPDATE_DRAFT_FIELD,
+          req.user.id,
+          params[2],
+          DRAFT,
+          JSON.stringify({ fieldName: params[0], fieldValue: params[1] })
+        );
       }
     }
     return { error: "No db connection" };

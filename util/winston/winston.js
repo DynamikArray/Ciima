@@ -15,7 +15,7 @@ module.exports = opts => {
     env: process.env.NODE_ENV,
     level: "debug", // Default to debug, maximum level of log, doc: https://github.com/winstonjs/winston#logging-levels
     index_meta: true, // Defaults to false, when true ensures meta object will be searchable
-    handleExceptions: true // Only add this line in order to track exceptions
+    handleExceptions: false // Only add this line in order to track exceptions
   };
 
   //add our new instance

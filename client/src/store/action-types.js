@@ -49,3 +49,6 @@ export const DELETE_CARD = "DELETE_CARD";
 
 export const CURRENT_LOT_DRAFT_SAVE = "CURRENT_LOT_DRAFT_SAVE";
 export const LOTS_DRAFT_TITLE_CHECK = "LOTS_DRAFT_TITLE_CHECK";
+
+/*Audit Log*/
+export const AUDIT_LOG_FETCH = "AUDIT_LOG_FETCH";
