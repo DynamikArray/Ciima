@@ -6,7 +6,7 @@
  * @param  Number price price of item
  * @return Number       New price or false
  */
-const repriceItemStrategy = price => {
+const repriceItemStrategy = (price) => {
   if (isNaN(price)) return false;
   let newPrice = false;
   if (price > 14.99) {
@@ -14,7 +14,7 @@ const repriceItemStrategy = price => {
     if (newPrice >= 14.99) return newPrice;
     if (newPrice <= 14.99) return 14.99;
   }
-  return newPrice;
+  return false;
 };
 
 module.exports = { repriceItemStrategy };

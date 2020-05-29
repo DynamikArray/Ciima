@@ -1,5 +1,5 @@
 const logger = require("../../util/winston/winston.js")({
-  hostname: "Worker"
+  hostname: "Worker",
 });
 
 const { CREATE_ITEM } = require("../../util/auditLog/logActionTypes");
@@ -7,7 +7,7 @@ const { LINNWORKS } = require("../../util/auditLog/logResourceTypes");
 const auditLogger = require("../../util/auditLog/auditLoggerWorker");
 
 const {
-  updateStatus
+  updateStatus,
 } = require("../../util/linnworks/helpers/updateStatus.js")(logger);
 
 const { linnworks } = require("../../util/linnworks/linnworks.js");
@@ -19,20 +19,20 @@ const addInventoryItem = require("../../util/linnworks/helpers/addInventoryItem.
 const addImage = require("../../util/linnworks/helpers/addImage.js");
 const addExtendedProperties = require("../../util/linnworks/helpers/addExtendedProperties.js");
 const {
-  addInventoryPrices
+  addInventoryPrices,
 } = require("../../util/linnworks/helpers/addInventoryPrices.js")(logger);
 const updateInventoryLocation = require("../../util/linnworks/helpers/updateInventoryLocation.js");
 const addInventoryImages = require("../../util/linnworks/helpers/addInventoryImages.js");
 
 const {
   updateMainImage,
-  updateOtherImages
+  updateOtherImages,
 } = require("../../util/linnworks/helpers/updateImages.js");
 
 const {
   PENDING,
   SUBMITTED,
-  ERROR
+  ERROR,
 } = require("../../util/ciima/draftStatusCode.js");
 
 /**
@@ -69,7 +69,7 @@ const submitDraftHandler = async (message, callback) => {
           StockItemId,
           ItemNumber,
           ImageUrl: draft.main_image,
-          isMain: true
+          isMain: true,
         });
 
         if (imageResult) await updateMainImage(draft.id, imageResult.ImageUrl);
@@ -125,9 +125,9 @@ const submitDraftHandler = async (message, callback) => {
             CREATE_ITEM,
             -1,
             draft.id,
-            "LINNWORKS",
+            LINNWORKS,
             JSON.stringify({
-              successResult: "Item created from resource id"
+              successResult: "Item created from resource id",
             })
           );
         }

@@ -3,40 +3,40 @@ const schedule = require("node-schedule");
 //ebay jobs
 const {
   fetchEbayStartedToday,
-  fetchEbayEndedToday
+  fetchEbayEndedToday,
 } = require("./scheduleJobs/ebayJobs");
 //linnworks jobs
 const { fetchLinnworksInventory } = require("./scheduleJobs/linnworksJobs");
 const {
   repriceLotsWithNoLastPrice,
-  repriceLotsWithLastPrice
+  repriceLotsWithLastPrice,
 } = require("./scheduleJobs/repricer");
 
 //main schdule method
 const scheduler = () => {
   //Fetch new items listed today
   const newItemsRule = new schedule.RecurrenceRule();
-  newItemsRule.minute = [1, 30];
+  newItemsRule.minute = [30];
   // schedule.scheduleJob(newItemsRule, fetchEbayStartedToday);
 
   //Fetch new items ended today
   const endedItemsRule = new schedule.RecurrenceRule();
-  endedItemsRule.minute = [15, 45];
+  endedItemsRule.minute = [40];
   schedule.scheduleJob(endedItemsRule, fetchEbayEndedToday);
 
   //fetch linnworks items to map ids to locations
   const linnworksItemsRule = new schedule.RecurrenceRule();
-  linnworksItemsRule.minute = [5, 20, 35, 50];
+  linnworksItemsRule.minute = [35, 45];
   schedule.scheduleJob(linnworksItemsRule, fetchLinnworksInventory);
 
   //reprice items no last price
   const withNoLastPriceRule = new schedule.RecurrenceRule();
-  withNoLastPriceRule.minute = [40];
+  withNoLastPriceRule.minute = [39];
   //schedule.scheduleJob(withNoLastPriceRule, repriceLotsWithNoLastPrice);
 
   //reprice items with last price
   const withLastPriceRule = new schedule.RecurrenceRule();
-  withLastPriceRule.minute = [40];
+  withLastPriceRule.minute = [21];
   //schedule.scheduleJob(withLastPriceRule, repriceLotsWithLastPrice);
 };
 

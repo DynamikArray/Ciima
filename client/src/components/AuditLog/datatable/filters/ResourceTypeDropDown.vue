@@ -31,7 +31,8 @@ export default {
       items: [
         { text: "All Types", value: "ALL" },
         { text: "Draft", value: "DRAFT" },
-        { text: "Inventory", value: "INVENTORY" }
+        { text: "Inventory", value: "INVENTORY" },
+        { text: "Linnworks", value: "LINNWORKS" }
       ]
     };
   },

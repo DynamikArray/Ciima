@@ -1,5 +1,5 @@
 const { linnworks } = require("../linnworks.js");
-const getInventoryItemPrices = async pkStockItemID => {
+const getInventoryItemPrices = async (pkStockItemID) => {
   try {
     const inventoryItem = `inventoryItemId=${pkStockItemID}`;
     //CreateInventoryItemExtendedProperties
@@ -7,10 +7,10 @@ const getInventoryItemPrices = async pkStockItemID => {
       method: "POST",
       url: "Inventory/GetInventoryItemPrices",
       headers: "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
-      data: inventoryItem
+      data: inventoryItem,
     });
-    if (result) return { pricesResult: result };
-    if (error) return { pricesError: error };
+    if (result) return { pricesResult: result, pricesError: false };
+    if (error) return { pricesError: error, pricesResult: false };
   } catch (e) {
     linnworks.logger.error(e);
   } finally {

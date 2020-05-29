@@ -3,7 +3,7 @@ require("dotenv").config();
 const scheduler = require("./scheduler");
 
 const logger = require("../util/winston/winston.js")({
-  hostname: "Worker"
+  hostname: "Worker",
 });
 
 const amqpWrapper = require("../util/amqp/amqpLib.js");
@@ -14,14 +14,14 @@ const { messageHandler } = require("./messageHandler.js");
 const worker = async () => {
   //init linnworks connection
   await linnworks.initiliaze(logger);
-  logger.info(`Starting worker at`);
+  logger.info(`Starting worker!`);
   // Consumer
-  amqpWrapper.CONNECTION.then(function(conn) {
+  await amqpWrapper.CONNECTION.then(function (conn) {
     return conn.createChannel();
   })
-    .then(function(ch) {
-      return ch.assertQueue(amqpWrapper.QUEUE_NAME).then(function(ok) {
-        return ch.consume(amqpWrapper.QUEUE_NAME, async function(msg) {
+    .then(function (ch) {
+      return ch.assertQueue(amqpWrapper.QUEUE_NAME).then(function (ok) {
+        return ch.consume(amqpWrapper.QUEUE_NAME, async function (msg) {
           if (msg !== null) {
             const payload = JSON.parse(msg.content);
             if (payload) {
@@ -32,9 +32,11 @@ const worker = async () => {
         });
       });
     })
-    .catch(err => {
+    .catch((err) => {
       logger.error("CAUGHT in our amqp Connection ".err);
     });
+
+  logger.info(`Running worker!`);
 };
 
 //start the worker

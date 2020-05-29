@@ -48,7 +48,10 @@ export default {
   },
   data() {
     return {
-      items: [{ text: "All Users", value: "ALL" }]
+      items: [
+        { text: "All Users", value: "ALL" },
+        { text: "Ciima - System", value: "-1" }
+      ]
     };
   },
   methods: {

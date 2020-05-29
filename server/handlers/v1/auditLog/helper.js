@@ -12,7 +12,7 @@ const buildSelectQueries = () => {
         AND
         (user_id LIKE CONCAT("%",?,"%"))
       )
-      ORDER BY a.created_date DESC
+      ORDER BY a.id DESC
       LIMIT ? OFFSET ?`;
 
   let totalQuery = `
@@ -27,7 +27,7 @@ const buildSelectQueries = () => {
       AND
       (user_id LIKE CONCAT("%",?,"%"))
     )
-    ORDER BY a.created_date DESC`;
+    ORDER BY a.id DESC`;
 
   return { selectQuery, totalQuery };
 };
