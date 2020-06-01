@@ -11,7 +11,7 @@ const STORE_LOTS = 6583322015;
  * @param {FastifyRequest} request
  * @param {FastifyReply} reply
  */
-module.exports = fastify => ({
+module.exports = (fastify) => ({
   createHandler: async (req, res) => {
     //create the UUID and ItemNumber for the items inclusion on linnworks
     const stockItemId = uuidv1(); //MOVE TO SUBMIT JOB???
@@ -20,10 +20,10 @@ module.exports = fastify => ({
     const images = req.body.images;
 
     const main_image = req.body.images.shift();
-    const other_images = images.map(img => {
+    const other_images = images.map((img) => {
       const url = img.src.replace("'", "\u2019");
       return {
-        imageUrl: url
+        imageUrl: url,
       };
     });
 
@@ -36,7 +36,7 @@ module.exports = fastify => ({
       inventoryTitle: req.body.inventoryTitle,
       issueNumbers: req.body.issuesCount,
       mainCharacter: req.body.characters.join("|"),
-      publisher: req.body.publisher,
+      publisher: req.body.publisher.join("|"),
       locationCode: req.body.locationCode,
       price: req.body.price,
       extraDescription: req.body.extraDescription || "",
@@ -44,7 +44,7 @@ module.exports = fastify => ({
       other_images: JSON.stringify(other_images),
       ebaySiteCategoryId: EBAY_OTHER_MODERN_SUPERHEROS,
       ebayStoreCategoryIdOne: STORE_OTHER,
-      ebayStoreCategoryIdTwo: STORE_LOTS
+      ebayStoreCategoryIdTwo: STORE_LOTS,
     };
 
     const query = "INSERT INTO slc_drafts SET ?";
@@ -83,5 +83,5 @@ module.exports = fastify => ({
     await sleep(2000);
     return { result: { passed: false, failed: true } };
     //*/
-  }
+  },
 });
