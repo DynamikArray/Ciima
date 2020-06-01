@@ -6,7 +6,7 @@ const logger = require("../util/winston/winston.js")({
   hostname: "Worker",
 });
 
-const amqpWrapper = require("../util/amqp/amqpLib.js");
+const amqpWrapper = require("../util/amqp/amqplib.js");
 
 const { linnworks } = require("../util/linnworks/linnworks.js");
 const { messageHandler } = require("./messageHandler.js");
