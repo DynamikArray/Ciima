@@ -3,7 +3,7 @@ const { linnworks } = require("../../util/linnworks/linnworks.js");
 const getInventoryItemPrices = require("../../util/linnworks/helpers/getInventoryItemPrices");
 const handleInventoryItemPrice = require("./repricer/handleInventoryItemPrice");
 const handleExtendedProperties = require("./repricer/handleExtendedProperties");
-const adjustTemplatesInstant = require("../../util/linnworks/helpers/AdjustTemplatesInstant");
+const adjustTemplatesInstant = require("../../util/linnworks/helpers/adjustTemplatesInstant");
 
 const { REPRICE_ITEM } = require("../../util/auditLog/logActionTypes");
 const { LINNWORKS } = require("../../util/auditLog/logResourceTypes");
