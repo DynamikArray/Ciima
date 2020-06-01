@@ -17,7 +17,7 @@ const scheduler = () => {
   //Fetch new items listed today
   const newItemsRule = new schedule.RecurrenceRule();
   newItemsRule.minute = [30];
-  // schedule.scheduleJob(newItemsRule, fetchEbayStartedToday);
+  schedule.scheduleJob(newItemsRule, fetchEbayStartedToday);
 
   //Fetch new items ended today
   const endedItemsRule = new schedule.RecurrenceRule();
