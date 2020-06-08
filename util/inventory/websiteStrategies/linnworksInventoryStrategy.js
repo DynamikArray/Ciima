@@ -2,14 +2,14 @@
 const { linnworks } = require("../../linnworks/linnworks.js");
 //include logger
 const logger = require("../../winston/winston.js")({
-  hostname: "Utility"
+  hostname: "Utility",
 });
 
 const {
-  locationsSql
+  locationsSql,
 } = require("../../linnworks/queries/inventory/LocationQueries");
 const {
-  updateInventoryLocationsInDb
+  updateInventoryLocationsInDb,
 } = require("../updateInventoryLocationsInDb");
 
 //Main
@@ -27,7 +27,7 @@ function linnworksInventoryStrategy(action) {
         url: "Dashboards/ExecuteCustomScriptQuery",
         headers:
           "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
-        data
+        data,
       });
 
       if (result) return { result };
@@ -37,9 +37,9 @@ function linnworksInventoryStrategy(action) {
     }
   };
 
-  const saveInventoryPage = async results => {
+  const saveInventoryPage = async (results) => {
     logger.debug("saveInventoryPage()");
-    const valuesOnly = results.map(item => {
+    const valuesOnly = results.map((item) => {
       return Object.values(item);
     });
     const updateResult = await updateInventoryLocationsInDb(valuesOnly);
@@ -56,12 +56,16 @@ function linnworksInventoryStrategy(action) {
     while (more === true) {
       const fetchedPage = await fetchInventoryPage(pageNumber, perPage);
 
-      const { TotalResults } = fetchedPage.result;
-      //send these results off for processing and saving
-      const saved = await saveInventoryPage(fetchedPage.result.Results);
-      //
-      if (TotalResults == perPage) {
-        pageNumber++;
+      if (fetchedPage.result) {
+        const { TotalResults } = fetchedPage.result;
+        //send these results off for processing and saving
+        const saved = await saveInventoryPage(fetchedPage.result.Results);
+        //
+        if (TotalResults == perPage) {
+          pageNumber++;
+        } else {
+          more = false;
+        }
       } else {
         more = false;
       }

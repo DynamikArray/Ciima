@@ -1,15 +1,16 @@
 const {
   SUBMIT_DRAFT,
-  REPRICE_ITEM
+  REPRICE_ITEM,
 } = require("../util/amqp/queueActionsList.js");
+
 const logger = require("../util/winston/winston.js")({
-  hostname: "Worker"
+  hostname: "Worker",
 });
 
 const { submitDraftHandler } = require("./actions/submitDraftHandler.js");
 const { repriceItemHandler } = require("./actions/repriceItemHandler.js");
 
-const messageHandler = async message => {
+const messageHandler = async (message) => {
   logger.debug("Incoming message");
   //pull off the action and process out of the payload
   const { action } = message;
