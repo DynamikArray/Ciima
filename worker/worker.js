@@ -14,7 +14,9 @@ const { messageHandler } = require("./messageHandler.js");
 const worker = async () => {
   //init linnworks connection
   await linnworks.initiliaze(logger);
+
   logger.info(`Starting worker!`);
+
   // Consumer
   await amqpWrapper.CONNECTION.then(function (conn) {
     return conn.createChannel();
@@ -36,7 +38,7 @@ const worker = async () => {
       logger.error("CAUGHT in our amqp Connection ".err);
     });
 
-  logger.info(`Running worker!`);
+  //logger.info(`Running worker!`);
 };
 
 //start the worker
