@@ -1,6 +1,9 @@
 const uuidv1 = require("uuid/v1");
 const { titleChecker } = require("../../../../../util/ciima/titleChecker");
 
+const { DRAFT } = require("../../../../../util/auditLog/logResourceTypes");
+const { CREATE_DRAFT } = require("../../../../../util/auditLog/logActionTypes");
+
 const EBAY_OTHER_MODERN_SUPERHEROS = 155290;
 const STORE_OTHER = 1;
 const STORE_LOTS = 6583322015;
@@ -51,13 +54,26 @@ module.exports = (fastify) => ({
 
     const connection = await fastify.mysql.getConnection();
     if (connection) {
+      let successResult,
+        errorResult = false;
+
       try {
         const [rows, fields] = await connection.query(query, draft);
         connection.release();
+        successResult = rows;
         return { result: rows };
       } catch (error) {
+        errorResult = error;
         fastify.winston.error(error);
         res.send(error);
+      } finally {
+        fastify.auditLogger.log(
+          CREATE_DRAFT,
+          req.user.id,
+          successResult.insertId || 0,
+          DRAFT,
+          JSON.stringify({ successResult, errorResult })
+        );
       }
     }
     return { error: "No db connection" };
