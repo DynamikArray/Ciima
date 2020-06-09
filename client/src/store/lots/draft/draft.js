@@ -58,6 +58,7 @@ const draft = {
       state.price = defaultDraft.price;
       state.images = defaultDraft.images;
       state.imageToCrop = defaultDraft.imageToCrop;
+      state.extraDescription = defaultDraft.extraDescription;
     },
     [UPDATE_LOT_DRAFT_IMAGES](state, images) {
       state.images = [...images];
