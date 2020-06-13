@@ -12,6 +12,7 @@
     </div>
     <div class="d-flex justify-start align-center">
       <v-edit-dialog
+        ref="dialog"
         persistent
         large
         @save="saveChanges(item.id, 'locationCode', editValue)"
@@ -21,13 +22,15 @@
         }}</span>
 
         <template v-slot:input>
-          <v-text-field
-            v-model="editValue"
-            label="Edit"
-            single-line
-            :rules="fieldRule"
-            counter
-          ></v-text-field>
+          <v-form ref="form" v-on:submit.prevent>
+            <v-text-field
+              v-model="editValue"
+              label="Edit"
+              single-line
+              :rules="getCorrectRuleType"
+              counter
+            ></v-text-field>
+          </v-form>
         </template>
       </v-edit-dialog>
     </div>
@@ -37,7 +40,6 @@
 <script>
 import { OPEN_DRAFTS_UPDATE_DRAFT } from "@/store/action-types";
 import { UPDATE_API_STATUS } from "@/store/mutation-types";
-import { fieldRules } from "@/components/Draft/Lot/formUtil/formHelpers";
 
 export default {
   props: {
@@ -46,17 +48,51 @@ export default {
   },
   data: () => {
     return {
-      editValue: "",
-      fieldRule: fieldRules.locationCode
+      editValue: ""
     };
   },
+
   created() {
     if (this.item) {
       this.editValue = this.item.locationCode;
     }
   },
+
+  computed: {
+    getCorrectRuleType() {
+      let LOCATION_PREFIX = false;
+      if (this.item.draftType === "lots") LOCATION_PREFIX = "EBAY-LOTS-";
+      if (this.item.draftType === "sets") LOCATION_PREFIX = "EBAY-SETS-";
+      if (this.item.draftType === "singles") LOCATION_PREFIX = "EBAY-SINGLES-";
+
+      const locationCode = [
+        v => !!v || "Location code is a required field",
+        v => {
+          if (!v.startsWith(LOCATION_PREFIX))
+            return `Location code must start with ${LOCATION_PREFIX}`;
+          return false;
+        },
+        v => {
+          if (v == LOCATION_PREFIX) return "You must enter a Location code";
+          return false;
+        },
+        v => v.length <= 50 || "Location Code must be less than 50 characters"
+      ];
+
+      return locationCode;
+    }
+  },
+
   methods: {
     saveChanges(id, fieldName, fieldValue) {
+      if (!this.$refs.form.validate()) {
+        //little hack to reshow the dialog when not validated
+        setTimeout(() => {
+          this.$refs.dialog.$data.isActive = true;
+        }, 1 * 100);
+        return;
+      }
+
       this.$store
         .dispatch(`openDrafts/${OPEN_DRAFTS_UPDATE_DRAFT}`, {
           id,
