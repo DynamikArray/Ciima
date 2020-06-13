@@ -146,6 +146,12 @@ export default {
         this.defaultProductType
       ];
 
+      if (this.defaultProductType === "singles") {
+        this.draft.ebayStoreCategoryIdTwo = this.ebayStoreCategories[
+          this.defaultProductType
+        ];
+      }
+
       if (this.defaultProductType === "adult") {
         this.handleAdultDefaults();
       }
