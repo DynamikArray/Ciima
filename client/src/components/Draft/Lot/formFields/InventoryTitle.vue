@@ -12,16 +12,13 @@
         :rules="rules"
         outlined
         counter="80"
-        :disabled="blnReadOnly"
+        :disabled="!localError || blnReadOnly"
         @input="handleUserInput"
         @update:error="updateError"
         @blur="blurInventoryTitle"
       ></v-textarea>
 
-      <div
-        class="d-flex justify-center align-center mt-2"
-        v-show="localError && blnReadOnly"
-      >
+      <div class="d-flex justify-center align-center mt-2" v-show="localError">
         <v-alert
           transition="fab-transition"
           prominent
@@ -29,11 +26,11 @@
           color="red"
           dismissible
           icon="fa fa-exclamation-circle"
-          v-show="localError && blnReadOnly"
+          v-show="localError"
         >
           <h3>
-            Your title is too long. Click the Edit Title button on the right to
-            enable editing of Inventory Title!
+            Your title contains errors, please check the message below the
+            field. {{ localError }}
           </h3>
         </v-alert>
       </div>
@@ -156,6 +153,7 @@ export default {
     },
     updateError(value) {
       this.localError = value;
+      if (value) this.blnReadOnly = false;
     },
     blurInventoryTitle() {
       this.blnReadOnly = true;
@@ -164,4 +162,4 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style></style>

@@ -14,6 +14,11 @@ const fieldNames = [
 const fieldRules = {
   inventoryTitle: [
     v => !!v || "Inventory Title is a required field",
+    v => {
+      if (v.toLowerCase().includes("mystery"))
+        return "Ebay does not allow the word Mystery, please change this word";
+      return false;
+    },
     v => v.length <= 80 || "inventoryTitle must be less than 80 characters"
   ],
   characters: [
