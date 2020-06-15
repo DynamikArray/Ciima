@@ -210,6 +210,7 @@
       <v-row>
         <v-col cols="12">
           <v-autocomplete
+            autocomplete="off"
             id="searchEbaySiteCategoryId"
             dense
             outlined
