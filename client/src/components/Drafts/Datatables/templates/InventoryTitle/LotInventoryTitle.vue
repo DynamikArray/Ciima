@@ -12,9 +12,7 @@
       >
         <div class="d-flex flex-column">
           <div class="d-flex justify-start align-center w-100 my-1">
-            <span class="subtitle-1">
-              {{ item.inventoryTitle }}
-            </span>
+            <InventoryTitleEditable :item="item" />
           </div>
 
           <div class="d-flex align-center">
@@ -34,6 +32,7 @@
 
 <script>
 import LotInventoryTitleMobile from "./LotInventoryTitleMobile";
+import InventoryTitleEditable from "./InventoryTitleEditable";
 import IssueNumbers from "../IssueNumbers";
 import Price from "../Price";
 
@@ -45,6 +44,7 @@ export default {
   components: {
     Price,
     LotInventoryTitleMobile,
+    InventoryTitleEditable,
     IssueNumbers
   }
 };

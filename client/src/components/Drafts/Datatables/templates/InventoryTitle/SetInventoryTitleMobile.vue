@@ -1,9 +1,7 @@
 <template>
   <div class="d-flex flex-column justify-center align-end w-100 h-100 my-3">
     <div class="d-flex justify-start align-center w-100 my-1">
-      <span class="subtitle-1">
-        {{ item.inventoryTitle }}
-      </span>
+      <InventoryTitleEditable :item="item" />
     </div>
     <div class="d-flex justify-start align-start w-100">
       <div class="d-flex justify-start align-center">
@@ -58,6 +56,7 @@ import OwnerId from "../OwnerId";
 import Quantity from "../Quantity";
 import CreatedDate from "../CreatedDate";
 import LocationCode from "../LocationCode";
+import InventoryTitleEditable from "./InventoryTitleEditable";
 
 export default {
   props: {
@@ -65,6 +64,7 @@ export default {
     item: [Object]
   },
   components: {
+    InventoryTitleEditable,
     MainImage,
     IssueNumbers,
     Grade,

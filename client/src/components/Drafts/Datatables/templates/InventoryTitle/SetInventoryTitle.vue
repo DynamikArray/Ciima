@@ -12,9 +12,7 @@
       >
         <div class="d-flex flex-column w-100">
           <div class="d-flex justify-start align-center w-100 my-1">
-            <span class="subtitle-1">
-              {{ item.inventoryTitle }}
-            </span>
+            <InventoryTitleEditable :item="item" />
           </div>
           <div class="d-flex align-center w-100 justify-space-between">
             <div class="d-flex align-center justify-start mr-5">
@@ -45,6 +43,7 @@ import IssueNumbers from "../IssueNumbers";
 import Grade from "../Grade";
 import Price from "../Price";
 import Quantity from "../Quantity";
+import InventoryTitleEditable from "./InventoryTitleEditable";
 
 export default {
   props: {
@@ -52,6 +51,7 @@ export default {
     item: [Object]
   },
   components: {
+    InventoryTitleEditable,
     SetInventoryTitleMobile,
     IssueNumbers,
     Grade,
