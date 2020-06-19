@@ -144,7 +144,7 @@
           v-on="on"
           style="min-width:20px;"
           class="px-3 mb-1"
-          color="primary"
+          color="success"
           @click.stop="dialog = true"
           ><v-icon color="white" small class="mr-1">fa-plus-circle</v-icon>
           Card(s)

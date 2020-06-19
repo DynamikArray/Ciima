@@ -1,50 +1,48 @@
 <template>
-  <div class="d-flex flex-column justify-space-between align-self-center">
-    <div class="d-flex flex-row">
-      <div
-        class="d-flex align-self-top  justify-center mr-3"
-        style="flex-basis:50%;flex-grow:0"
-      >
-        <BoxesTable
-          :boxes="boxes"
-          :loading="boxes_loading"
-          :selectedBox.sync="selectedBox"
-        ></BoxesTable>
-      </div>
-      <div
-        class="d-flex align-self-top justify-center ml-3"
-        style="flex-basis:50%;flex-grow:0"
-      >
-        <div class="d-flex flex-column w-100">
-          <CardsTable
-            :cards="cards"
-            :loading="cards_loading"
+  <section>
+    <div class="d-flex flex-column justify-space-between align-self-center">
+      <div class="d-flex flex-row">
+        <div
+          class="d-flex align-self-top  justify-center mr-3"
+          style="flex-basis:50%;flex-grow:0"
+        >
+          <BoxesTable
+            :boxes="boxes"
+            :loading="boxes_loading"
             :selectedBox.sync="selectedBox"
-            :selectedCard.sync="selectedCard"
-          ></CardsTable>
-          <LabelMaker
-            :selectedBox="selectedBox"
-            :boxCards="cards"
-            class="mt-4"
-          ></LabelMaker>
+          ></BoxesTable>
+        </div>
+        <div
+          class="d-flex align-self-top justify-center ml-3"
+          style="flex-basis:50%;flex-grow:0"
+        >
+          <div class="d-flex flex-column w-100">
+            <CardsTable
+              :cards="cards"
+              :loading="cards_loading"
+              :selectedBox.sync="selectedBox"
+              :selectedCard.sync="selectedCard"
+            ></CardsTable>
+            <LabelMaker
+              :selectedBox="selectedBox"
+              :boxCards="cards"
+              class="mt-4"
+            ></LabelMaker>
+          </div>
         </div>
       </div>
     </div>
 
     <v-divider class="my-5"></v-divider>
 
-    <div class="d-flex flex-row">
-      <div class="d-flex align-self-center grow justify-center">
-        <ProductsTable
-          :products="productsList"
-          :loading="products_loading"
-          :selectedBox="selectedBox"
-          :selectedCard="selectedCard"
-          :currentProductsOnly.sync="currentProductsOnly"
-        ></ProductsTable>
-      </div>
-    </div>
-  </div>
+    <ProductsTable
+      :products="productsList"
+      :loading="products_loading"
+      :selectedBox="selectedBox"
+      :selectedCard="selectedCard"
+      :currentProductsOnly.sync="currentProductsOnly"
+    ></ProductsTable>
+  </section>
 </template>
 
 <script>

@@ -78,7 +78,7 @@
           v-on="on"
           style="min-width:20px;"
           class="px-3 mb-1"
-          color="primary"
+          color="success"
           @click.stop="dialog = true"
           ><v-icon color="white" small class="mr-1">fa-print</v-icon> Labels
         </v-btn>
@@ -141,33 +141,25 @@ export default {
       this.createPDF(labels);
     },
     createPDF(labels) {
-      //helper method
-      function createLabelsContent(labels) {
-        const labelCount = labels.length - 1;
-        const formattedLabels = labels.map((label, i) => {
-          const row = {};
-          row.text = label;
-          row.alignment = "center";
-          row.fontSize = 22;
-          if (labelCount !== i) row.pageBreak = "after";
-          return row;
-        });
-        return formattedLabels;
-      }
-      //
       //
       function createLabelsContentTabular(labels) {
         const labelCount = labels.length - 1;
         const formattedLabels = labels.map((label, i) => {
+          const boxFontSize = label.box.length < 30 ? 16 : 12;
+
           const row = {
             layout: "noBorders",
             table: {
-              widths: [160, 60],
+              widths: [120, 40],
               heights: [90, 90],
               body: [
                 [
-                  { text: label.box, alignment: "center", fontSize: 16 },
-                  { text: label.card, alignment: "right", fontSize: 30 }
+                  {
+                    text: `${label.box}-`,
+                    alignment: "center",
+                    fontSize: boxFontSize
+                  },
+                  { text: label.card, alignment: "center", fontSize: 26 }
                 ]
               ]
             }

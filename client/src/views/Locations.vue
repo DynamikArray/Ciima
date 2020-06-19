@@ -11,7 +11,11 @@
 
     <v-divider class="my-3"></v-divider>
 
-    <LocationContainer></LocationContainer>
+    <v-row>
+      <v-col>
+        <LocationContainer></LocationContainer>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
