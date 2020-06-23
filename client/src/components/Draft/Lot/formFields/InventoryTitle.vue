@@ -12,7 +12,7 @@
         :rules="rules"
         outlined
         counter="80"
-        :disabled="!localError || blnReadOnly"
+        :disabled="blnReadOnly"
         @input="handleUserInput"
         @update:error="updateError"
         @blur="blurInventoryTitle"
