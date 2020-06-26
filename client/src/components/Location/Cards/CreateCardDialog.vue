@@ -147,7 +147,7 @@
           color="success"
           @click.stop="dialog = true"
           ><v-icon color="white" small class="mr-1">fa-plus-circle</v-icon>
-          Card(s)
+          Add Card(s)
         </v-btn>
       </template>
       <span><i class="fa fa-info-circle mr-1"></i>Create a new Card(s) </span>

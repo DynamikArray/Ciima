@@ -25,41 +25,55 @@
             class="pa-3"
             @submit.prevent="createBox"
           >
-            <div class="">
-              <div class="d-flex justify-center align-center">
-                <div class="d-flex justify-start align-center mr-4">
-                  <h3>Box Type:</h3>
+            <div class="fieldsWrapper">
+              <div class="d-flex flex-column">
+                <div class="d-flex flex-row justify-center">
+                  <p class="mb-1">
+                    Box Type is used to help Categorize & Search locations.
+                  </p>
                 </div>
-                <div class="d-flex justify-start align-center grow">
-                  <v-select
-                    v-model="box_type"
-                    :items="box_types"
-                    name="Box Type"
-                    label="Box Type"
-                    class=""
-                    filled
-                    placeholder="Box Type"
-                    :rules="fieldRules.box_type"
-                  >
-                  </v-select>
+                <div class="d-flex justify-center align-center">
+                  <div class="d-flex justify-start align-center mr-4">
+                    <h3>Box Type:</h3>
+                  </div>
+                  <div class="d-flex justify-start align-center grow">
+                    <v-select
+                      v-model="box_type"
+                      :items="box_types"
+                      name="Box Type"
+                      label="Box Type"
+                      class=""
+                      filled
+                      placeholder="Box Type"
+                      :rules="fieldRules.box_type"
+                    >
+                    </v-select>
+                  </div>
                 </div>
               </div>
 
-              <div class="d-flex justify-center align-center">
-                <div class="d-flex justify-start align-center mr-4">
-                  <h3>Box Name:</h3>
+              <div class="d-flex flex-column">
+                <div class="d-flex flex-row justify-center">
+                  <p class="p-1 mb-1 text-center">
+                    Box Name is the full box name e.g. EBAY-SETS, EBAY-SINGLES
+                  </p>
                 </div>
-                <div class="d-flex justify-start align-center grow">
-                  <v-text-field
-                    v-model="box"
-                    name="New Box"
-                    label="New Box"
-                    class=""
-                    filled
-                    placeholder="Box"
-                    :rules="fieldRules.box"
-                  >
-                  </v-text-field>
+                <div class="d-flex justify-center align-center">
+                  <div class="d-flex justify-start align-center mr-4">
+                    <h3>Box Name:</h3>
+                  </div>
+                  <div class="d-flex justify-start align-center grow">
+                    <v-text-field
+                      v-model="box"
+                      name="New Box"
+                      label="New Box"
+                      class=""
+                      filled
+                      placeholder="FULL-BOX-NAME"
+                      :rules="fieldRules.box"
+                    >
+                    </v-text-field>
+                  </div>
                 </div>
               </div>
 
@@ -111,7 +125,8 @@
           class="px-3 mb-1"
           color="success"
           @click.stop="dialog = true"
-          ><v-icon color="white" small class="mr-1">fa-plus-circle</v-icon> Box
+          ><v-icon color="white" small class="mr-1">fa-plus-circle</v-icon>Add
+          Box
         </v-btn>
       </template>
       <span><i class="fa fa-info-circle mr-1"></i>Create a new Box </span>

@@ -184,7 +184,7 @@ export default {
   },
   created() {
     //console.log(box_types);
-    this.box_types = [...this.box_types, { text: "All", value: "" }];
+    this.box_types = [{ text: "All Box Types", value: "" }, ...this.box_types];
   },
   data: () => ({
     headers,
@@ -212,7 +212,8 @@ export default {
     //
     //
     loadBoxes() {
-      this.$store.dispatch(`locations/${SEARCH_BOXES}`);
+      this.executeSearch();
+      //this.$store.dispatch(`locations/${SEARCH_BOXES}`);
     },
     //
     //
