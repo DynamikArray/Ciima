@@ -34,12 +34,15 @@ const settings = {
     },
     [UTILITY_DRAWER_TAB](state, tab) {
       state.utilityDrawerTab = tab;
+      localStorage.setItem("settings", JSON.stringify(state));
     },
     [UTILITY_DRAWER_WIDTH](state, width) {
       state.utilityDrawerWidth = width;
+      localStorage.setItem("settings", JSON.stringify(state));
     },
     [TOGGLE_UTILITY_DRAWER](state, blnOpen) {
       state.utilityDrawer = blnOpen;
+      localStorage.setItem("settings", JSON.stringify(state));
     },
     [SET_DEFAULT_PRODUCT_TYPE](state, productType) {
       state.defaultProductType = productType;
