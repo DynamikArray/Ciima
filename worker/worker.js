@@ -35,7 +35,7 @@ const worker = async () => {
       });
     })
     .catch((err) => {
-      logger.error("CAUGHT in our amqp Connection ".err);
+      logger.error(`CAUGHT in our amqp Connection  ${JSON.stringify(err)}`);
     });
 
   //logger.info(`Running worker!`);
