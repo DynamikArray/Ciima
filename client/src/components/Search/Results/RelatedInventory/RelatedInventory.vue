@@ -5,6 +5,9 @@
         class="text-left pa-1 pl-4 grey darken-2 white--text text--lighten-2"
       >
         <v-icon small class="mr-2">fa fa-boxes</v-icon>{{ titleMessage }}
+        <span class="mx-4"
+          >Filtering For Issue # &nbsp; {{ filterString }}</span
+        >
       </div>
 
       <v-data-table
@@ -13,7 +16,7 @@
         :loading="loading"
         :headers="headers"
         :items-per-page="5"
-        :items="items"
+        :items="filteredItems"
         class="elevation-1"
         :footer-props="footerProps"
         sort-by="itemTitle"
@@ -127,7 +130,8 @@ export default {
   props: {
     items: [Boolean, Array],
     loading: [Boolean],
-    searchString: [String]
+    searchString: [String],
+    filterString: [String]
   },
   data: () => ({
     headers,
@@ -142,6 +146,11 @@ export default {
         return `${items.length} Similar titles containing: ${searchString}`;
       }
       return `Similar titles: ${searchString}`;
+    },
+    filteredItems() {
+      return this.items.filter(row =>
+        row.itemTitle.includes(this.filterString)
+      );
     }
   },
   methods: {

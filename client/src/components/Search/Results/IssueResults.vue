@@ -18,7 +18,7 @@
       loading-text="Searching Database"
       :items-per-page="15"
       :footer-props="footerProps"
-      :search="searchString"
+      :search="filterString"
     >
       <template v-slot:top="{ pagination, options, updateOptions }">
         <div class="d-flex align-baseline">
@@ -29,7 +29,8 @@
             <div class="mx-1">
               <v-text-field
                 class="pt-0"
-                v-model="searchString"
+                :value="filterString"
+                @input="updateFilter"
                 append-icon="mdi-magnify"
                 label="(e.g. 12)"
                 single-line
@@ -164,13 +165,15 @@ import settings from "@/util/settings.js";
 import IssuesModal from "./IssuesModal";
 
 export default {
+  props: {
+    filterString: [String]
+  },
   components: {
     IssuesModal
   },
   data() {
     return {
       isActive: false,
-      searchString: "",
       footerProps: {
         "items-per-page-options": [15, 30, 50, 100, 250, 500]
       },
@@ -208,6 +211,9 @@ export default {
     })
   },
   methods: {
+    updateFilter(val) {
+      this.$emit("update:filterString", val);
+    },
     makeImageUrl(item) {
       return `${settings.MEDIA_URL}${item.imageUrl}`;
     },

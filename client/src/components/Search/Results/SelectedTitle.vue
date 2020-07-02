@@ -33,6 +33,7 @@
           :items="inventory"
           :loading="inventory_loading"
           :searchString="searchString"
+          :filterString="filterString"
         ></RelatedInventory>
       </div>
     </v-card-text>
@@ -47,6 +48,9 @@ import { SEARCH_TITLES_INVENTORY_CLEAR } from "@/store/mutation-types";
 import RelatedInventory from "./RelatedInventory/RelatedInventory";
 
 export default {
+  props: {
+    filterString: [String]
+  },
   data: () => ({
     searchString: ""
   }),

@@ -16,7 +16,7 @@
         </h5>
       </div>
       <div class="d-flex align-center w-100">
-        <SelectedTitle></SelectedTitle>
+        <SelectedTitle :filterString="filterString"></SelectedTitle>
       </div>
     </div>
 
@@ -25,7 +25,7 @@
     </v-row>
     <v-row no-gutters>
       <v-col class="text-center">
-        <IssueResults></IssueResults>
+        <IssueResults :filterString.sync="filterString"></IssueResults>
       </v-col>
     </v-row>
   </v-container>
@@ -47,6 +47,11 @@ export default {
     ...mapState({
       selectedTitle: state => state.titleSearch.selected.item
     })
+  },
+  data() {
+    return {
+      filterString: ""
+    };
   },
   created() {
     //no selected title so start back at input
