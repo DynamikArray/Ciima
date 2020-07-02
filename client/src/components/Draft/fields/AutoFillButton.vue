@@ -37,6 +37,8 @@
 import { format } from "date-fns";
 import { mapState } from "vuex";
 
+import { ebayStoreCategories } from "@/util/ebay/ebayStoreCategories.js";
+
 export default {
   data: () => ({
     // TODO: get this from the util file
@@ -88,6 +90,30 @@ export default {
     getUpc() {
       const { upc } = this.issues.find(issue => issue.upc !== false);
       return upc;
+    },
+    //
+    //
+    handleEbayStoreCategory2(publisher) {
+      switch (publisher.toLowerCase()) {
+        case "dark horse":
+          this.draft.ebayStoreCategoryIdTwo = "360238015";
+          break;
+        case "marvel":
+          this.draft.ebayStoreCategoryIdTwo = "360243015";
+          break;
+        case "dc":
+          this.draft.ebayStoreCategoryIdTwo = "360242015";
+          break;
+        case "image":
+          this.draft.ebayStoreCategoryIdTwo = "360239015";
+          break;
+        default:
+          if (this.defaultProductType === "singles") {
+            this.draft.ebayStoreCategoryIdTwo = this.ebayStoreCategories[
+              this.defaultProductType
+            ];
+          }
+      }
     },
     //
     //
@@ -151,11 +177,7 @@ export default {
         this.defaultProductType
       ];
 
-      if (this.defaultProductType === "singles") {
-        this.draft.ebayStoreCategoryIdTwo = this.ebayStoreCategories[
-          this.defaultProductType
-        ];
-      }
+      this.handleEbayStoreCategory2(this.getPublisher());
 
       if (this.defaultProductType === "adult") {
         this.handleAdultDefaults();
