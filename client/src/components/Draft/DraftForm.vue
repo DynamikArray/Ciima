@@ -66,10 +66,65 @@
       <!--END ROW -->
 
       <v-row>
-        <v-col cols="4">
+        <v-col cols="12">
+          <h3>Title Actions:</h3>
+          <v-divider class="my-1"></v-divider>
+        </v-col>
+        <v-col>
+          <div class="d-flex flex-column flex-grow-1">
+            <AutoFillButton class="mb-2"></AutoFillButton>
+          </div>
+          <div class="d-flex flex-wrap flex-shrink-1">
+            <div class="d-flex flex-column flex-grow-1">
+              <div class="w-100">
+                <v-text-field
+                  dense
+                  outlined
+                  label="Inventory Title"
+                  hint="Title as it will appear on Ebay"
+                  clearable
+                  counter
+                  id="inventoryTitle"
+                  name="inventoryTitle"
+                  v-model="inventoryTitle"
+                  :rules="fieldRules.inventoryTitle"
+                >
+                  <template v-slot:append-outer>
+                    <v-btn
+                      style="margin-top:-5px"
+                      color="primary"
+                      @click="toggleExtraDescriptionDetails"
+                    >
+                      <v-icon class="mr-1">{{ extraDescriptionIcon() }}</v-icon
+                      >More
+                    </v-btn>
+                  </template>
+                </v-text-field>
+              </div>
+
+              <div class="w-100" v-if="showExtra">
+                <v-textarea
+                  v-model="extraDescription"
+                  auto-grow
+                  outlined
+                  label="Extra Description Information"
+                  hint="Will be added underneath the title in the description of the ebay listing"
+                >
+                </v-textarea>
+              </div>
+            </div>
+          </div>
+        </v-col>
+      </v-row>
+      <v-divider class="my-1"></v-divider>
+
+      <!--
+      <v-divider class="my-1"></v-divider>
+      <v-row>
+        <v-col sm="12" md="12" lg="3">
           <AutoFillButton></AutoFillButton>
         </v-col>
-        <v-col cols="8">
+        <v-col sm="12" md="12" lg="9">
           <div>
             <v-text-field
               dense
@@ -108,7 +163,7 @@
           </div>
         </v-col>
       </v-row>
-
+    -->
       <!--END ROW -->
 
       <h3>Comic Attributes:</h3>

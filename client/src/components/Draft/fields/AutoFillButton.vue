@@ -1,7 +1,11 @@
 <template>
-  <div class="d-flex flex-column grow justify-center">
-    <div class="d-flex flex-row">
-      <div class="flex flex-column justify-center">
+  <div class="d-flex flex-column justify-center flex-shrink-1">
+    <div class="d-flex flex-row flex-wrap justify-center">
+      <div class="d-flex flex-row justify-center mx-3 my-1">
+        <div class="d-flex align-center ">
+          <h3 class="mb-0 grow text-center">Add Defaults:</h3>
+        </div>
+
         <div class="d-flex mx-1 justify-center">
           <v-btn
             :loading="draft.savingDraft"
@@ -10,12 +14,12 @@
             ><v-icon class="mr-2">fa-magic</v-icon>Autofill</v-btn
           >
         </div>
-        <div class="d-flex align-center grow">
-          <h3 class="grow text-center">Set Defaults</h3>
-        </div>
       </div>
 
-      <div class="flex flex-column justify-center">
+      <div class="d-flex flex-row justify-center mx-3 align-center my-1">
+        <div class="d-flex align-center ">
+          <h3 class="mb-0 grow text-center">Enhance Title:</h3>
+        </div>
         <div class="d-flex mx-1 justify-center">
           <v-btn
             :loading="draft.savingDraft"
@@ -23,9 +27,6 @@
             @click="autoFillTitleWithPublisherYear"
             ><v-icon class="mr-2">fab fa-leanpub</v-icon>Pub&Year</v-btn
           >
-        </div>
-        <div class="d-flex align-center grow">
-          <h3 class="grow text-center">Enhance Title</h3>
         </div>
       </div>
     </div>
