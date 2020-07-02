@@ -16,6 +16,8 @@
         :items="items"
         class="elevation-1"
         :footer-props="footerProps"
+        sort-by="itemTitle"
+        :sort-desc="false"
       >
         <template v-slot:item.imgThumb="{ item }">
           <ImagesHoverOver

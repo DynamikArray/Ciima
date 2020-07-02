@@ -18,15 +18,36 @@
       loading-text="Searching Database"
       :items-per-page="15"
       :footer-props="footerProps"
+      :search="searchString"
     >
       <template v-slot:top="{ pagination, options, updateOptions }">
-        <v-data-footer
-          :pagination="pagination"
-          :options="options"
-          @update:options="updateOptions"
-          :items-per-page-options="footerProps['items-per-page-options']"
-          items-per-page-text="$vuetify.dataTable.itemsPerPageText"
-        />
+        <div class="d-flex align-baseline">
+          <div class="d-flex w-100">
+            <div class="mx-3">
+              <h4 class="mt-2">Filter By Issue Number</h4>
+            </div>
+            <div class="mx-1">
+              <v-text-field
+                class="pt-0"
+                v-model="searchString"
+                append-icon="mdi-magnify"
+                label="(e.g. 12)"
+                single-line
+                hide-details
+              ></v-text-field>
+            </div>
+          </div>
+          <div class="w-100">
+            <v-data-footer
+              :pagination="pagination"
+              :options="options"
+              @update:options="updateOptions"
+              :items-per-page-options="footerProps['items-per-page-options']"
+              items-per-page-text="$vuetify.dataTable.itemsPerPageText"
+            />
+          </div>
+        </div>
+
         <v-divider class="my-1"></v-divider>
       </template>
 
@@ -149,7 +170,7 @@ export default {
   data() {
     return {
       isActive: false,
-      search: "",
+      searchString: "",
       footerProps: {
         "items-per-page-options": [15, 30, 50, 100, 250, 500]
       },
