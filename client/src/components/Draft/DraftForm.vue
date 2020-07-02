@@ -89,7 +89,7 @@
                   v-model="inventoryTitle"
                   :rules="fieldRules.inventoryTitle"
                 >
-                  <template v-slot:append-outer>
+                  <template v-client\src:append-outer>
                     <v-btn
                       style="margin-top:-5px"
                       color="primary"
@@ -263,6 +263,60 @@
       <h3>Categories:</h3>
       <v-divider class="my-1"></v-divider>
       <v-row>
+        <v-col cols="12" v-if="!showCategoryLookup">
+          <div class="d-flex">
+            <v-text-field
+              autocomplete="off"
+              disabled
+              dense
+              v-model="ebaySiteCategoryId"
+              name="ebaySiteCategoryId"
+              outlined
+              label="Search ebay categories"
+              :rules="fieldRules.ebaySiteCategoryId"
+            >
+            </v-text-field>
+            <v-btn
+              color="primary"
+              class="mx-2"
+              @click="showCategoryLookup = true"
+            >
+              <v-icon class="mr-1">fa fa-search</v-icon>Search
+            </v-btn>
+          </div>
+        </v-col>
+        <v-col cols="12" v-if="showCategoryLookup" class="showCategoryLookup">
+          <v-autocomplete
+            autocomplete="off"
+            dense
+            outlined
+            :value="ebaySiteCategoryId"
+            v-model="ebaySiteCategoryId"
+            name="ebaySiteCategoryId"
+            :loading="loading"
+            :items="eBayCategories"
+            item-text="ebayCategoryName"
+            item-value="ebayCategoryId"
+            :search-input.sync="searchEbayCategory"
+            label="Search ebay categories"
+            hide-no-data
+            :rules="fieldRules.ebaySiteCategoryId"
+          >
+            <template v-slot:append-outer>
+              <v-btn
+                color="primary"
+                class="mx-2"
+                @click="showCategoryLookup = false"
+              >
+                <v-icon class="mr-1">fa fa-times-circle</v-icon>Cancel
+              </v-btn>
+            </template>
+          </v-autocomplete>
+        </v-col>
+      </v-row>
+
+      <!--
+      <v-row>
         <v-col cols="12">
           <v-autocomplete
             autocomplete="off"
@@ -283,6 +337,7 @@
           </v-autocomplete>
         </v-col>
       </v-row>
+      -->
 
       <!--NEXT ROW -->
       <v-row>
@@ -366,7 +421,8 @@ export default {
     searchEbayCategory: null,
     ebayStoreCategories,
     fieldRules,
-    showExtra: false
+    showExtra: false,
+    showCategoryLookup: false
   }),
   computed: {
     ...mapState({
@@ -415,5 +471,11 @@ export default {
 <style scoped>
 .col {
   padding: 3px 12px;
+}
+</style>
+
+<style>
+.showCategoryLookup .v-input__append-outer {
+  margin: 0px !important;
 }
 </style>

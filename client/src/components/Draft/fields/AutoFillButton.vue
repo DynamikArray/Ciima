@@ -79,6 +79,10 @@ export default {
       );
       return coverDate;
     },
+    getEbayCategory() {
+      const { eBayCat1 } = this.issues.find(issue => issue.eBayCat1 !== false);
+      return eBayCat1;
+    },
     //
     //
     getUpc() {
@@ -165,6 +169,8 @@ export default {
 
       //bring in upc from 1st issue
       this.draft.upc = this.getUpc();
+
+      this.draft.ebaySiteCategoryId = this.getEbayCategory();
 
       //cover date
       const coverDate = this.getCoverDate();
