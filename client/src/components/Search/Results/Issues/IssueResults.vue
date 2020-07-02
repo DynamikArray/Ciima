@@ -21,106 +21,22 @@
       :search="filterString"
     >
       <template v-slot:top="{ pagination, options, updateOptions }">
-        <div class="d-flex align-baseline">
-          <div class="d-flex w-100">
-            <div class="mx-3">
-              <h4 class="mt-2">Filter By Issue Number</h4>
-            </div>
-            <div class="mx-1">
-              <v-text-field
-                autocomplete="off"
-                class="pt-0"
-                :value="filterString"
-                @input="updateFilter"
-                append-icon="mdi-magnify"
-                label="(e.g. 12)"
-                single-line
-                hide-details
-              ></v-text-field>
-            </div>
-          </div>
-          <div class="w-100">
-            <v-data-footer
-              :pagination="pagination"
-              :options="options"
-              @update:options="updateOptions"
-              :items-per-page-options="footerProps['items-per-page-options']"
-              items-per-page-text="$vuetify.dataTable.itemsPerPageText"
-            />
-          </div>
-        </div>
-
-        <v-divider class="my-1"></v-divider>
+        <IssuesTop
+          :pagination="pagination"
+          :options="options"
+          :updateOptions="updateOptions"
+          :footerProps="footerProps"
+          :updateFilter="updateFilter"
+        />
       </template>
+      <v-divider class="my-1"></v-divider>
 
       <template v-slot:item.imageUrl="{ item }">
-        <v-img
-          :src="makeImageUrl(item)"
-          width="70"
-          height="105"
-          class="ma-1"
-          @click="showImageModal(item.rowNumber)"
-        >
-          <template v-slot:placeholder>
-            <v-row class="fill-height ma-0" align="center" justify="center">
-              <v-progress-circular
-                indeterminate
-                color="blue darken-1"
-              ></v-progress-circular>
-            </v-row>
-          </template>
-        </v-img>
+        <IssuesImageUrl :item="item" :showImageModal="showImageModal" />
       </template>
 
       <template v-slot:item.title="{ item }">
-        <div class="d-flex flex-row justify-start align-center">
-          <div class="d-flex flex-column grow flex-wrap ">
-            <div class="d-flex">
-              <h3 class="title">{{ item.title }}</h3>
-            </div>
-            <div class="d-flex">
-              <v-btn
-                small
-                color="green"
-                class="mr-2 pa-0"
-                @click="priceCheckIssue(item.title, item.fullIssue)"
-                style="min-width: 34px"
-              >
-                <v-icon small>fa-dollar-sign</v-icon>
-              </v-btn>
-
-              <v-chip
-                small
-                label
-                color="blue darken-1"
-                text-color="white"
-                class="mr-3"
-              >
-                <v-icon small class="mr-2">fa-calendar-alt</v-icon>
-                <div>
-                  {{ item.coverDate | date }}
-                </div>
-              </v-chip>
-              <v-chip
-                small
-                label
-                color="grey darken-1"
-                text-color="white"
-                class="mr-3"
-              >
-                <v-icon small class="mr-2">fa-user-edit</v-icon>
-                <div>
-                  {{ item.coverArtist }}
-                </div>
-              </v-chip>
-            </div>
-          </div>
-          <div class="d-flex mr-2">
-            <h3 class="display-2" style="font-size: 2.25em !important">
-              {{ item.fullIssue }}
-            </h3>
-          </div>
-        </div>
+        <IssuesTitle :item="item" :priceCheckIssue="priceCheckIssue" />
       </template>
 
       <template v-slot:item.action="{ item }">
@@ -164,13 +80,19 @@ import {
 
 import settings from "@/util/settings.js";
 import IssuesModal from "./IssuesModal";
+import IssuesTop from "./templates/IssuesTop";
+import IssuesTitle from "./templates/IssuesTitle";
+import IssuesImageUrl from "./templates/IssuesImageUrl";
 
 export default {
   props: {
     filterString: [String]
   },
   components: {
-    IssuesModal
+    IssuesModal,
+    IssuesTop,
+    IssuesTitle,
+    IssuesImageUrl
   },
   data() {
     return {
@@ -215,9 +137,6 @@ export default {
     updateFilter(val) {
       this.$emit("update:filterString", val);
     },
-    makeImageUrl(item) {
-      return `${settings.MEDIA_URL}${item.imageUrl}`;
-    },
     showImageModal(rowNumber) {
       this.$store.commit(
         `issueSearch/${SEARCH_ISSUES_SELECTED_ITEM}`,
@@ -259,9 +178,7 @@ export default {
       this.$store.commit(`settings/${TOGGLE_UTILITY_DRAWER}`, true);
       this.$store.commit(`settings/${UTILITY_DRAWER_TAB}`, 1);
     }
-    //
-    //
-  }
+  } //end mehtods
 };
 </script>
 

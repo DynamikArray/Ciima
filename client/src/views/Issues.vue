@@ -1,20 +1,6 @@
 <template>
   <v-container fluid>
     <div class="d-flex flex-row justify-space-between align-self-center">
-      <div class="d-flex flex-column align-self-center mr-4">
-        <v-btn
-          style="min-width:30px"
-          class="mx-auto px-3"
-          color="primary"
-          :to="'/titles'"
-        >
-          <v-icon>fa-arrow-alt-circle-left</v-icon>
-        </v-btn>
-        <h5 class="text-center mt-2">
-          Return to <br />
-          Title Search
-        </h5>
-      </div>
       <div class="d-flex align-center w-100">
         <SelectedTitle :filterString="filterString"></SelectedTitle>
       </div>
@@ -25,7 +11,10 @@
     </v-row>
     <v-row no-gutters>
       <v-col class="text-center">
-        <IssueResults :filterString.sync="filterString"></IssueResults>
+        <IssueResults
+          :upcString.sync="upcString"
+          :filterString.sync="filterString"
+        ></IssueResults>
       </v-col>
     </v-row>
   </v-container>
@@ -36,7 +25,7 @@ import { mapState } from "vuex";
 
 import { SEARCH_ISSUES } from "@/store/action-types.js";
 import SelectedTitle from "@/components/Search/Results/SelectedTitle";
-import IssueResults from "@/components/Search/Results/IssueResults";
+import IssueResults from "@/components/Search/Results/Issues/IssueResults";
 
 export default {
   components: {
@@ -50,7 +39,8 @@ export default {
   },
   data() {
     return {
-      filterString: ""
+      filterString: "",
+      upcString: false
     };
   },
   created() {

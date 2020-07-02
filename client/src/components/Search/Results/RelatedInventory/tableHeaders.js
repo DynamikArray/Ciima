@@ -4,7 +4,7 @@ export const headers = [
     align: "center",
     sortable: false,
     value: "imgThumb",
-    width: "60"
+    width: "50px"
   },
 
   {
@@ -18,20 +18,20 @@ export const headers = [
     align: "center",
     sortable: true,
     value: "location.qty",
-    width: "80"
+    width: "40px"
   },
   {
     text: "Bin/Rack",
-    align: "left",
+    align: "center",
     sortable: true,
     value: "location.name",
-    width: "200"
+    width: "80px"
   },
   {
     text: "Price",
     align: "center",
     sortable: true,
     value: "price",
-    width: "80"
+    width: "70px"
   }
 ];

@@ -1,9 +1,26 @@
 <template>
   <v-card v-if="title" class="w-100">
     <v-card-title class="px-3 pt-3 pb-0">
-      <h3><span class="title mr-2">Title:</span>{{ title.title }}</h3>
+      <div class="d-flex flex-row justify-start">
+        <div class="d-flex flex-column align-self-center mr-4">
+          <v-btn
+            small
+            style="min-width:30px"
+            class="mx-auto px-3"
+            color="primary"
+            :to="'/titles'"
+          >
+            <v-icon small>fa-arrow-alt-circle-left</v-icon>
+          </v-btn>
+        </div>
+
+        <div class="d-flex">
+          <h3><span class="title mr-2">Title:</span>{{ title.title }}</h3>
+        </div>
+      </div>
     </v-card-title>
     <v-card-text class="pb-0 px-3">
+      <v-divider class="my-1"></v-divider>
       <div class="d-flex justify-space-between">
         <div class="d-flex">
           <h3 class="title">

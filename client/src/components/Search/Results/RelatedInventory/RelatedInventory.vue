@@ -265,4 +265,9 @@ export default {
 #relatedInventory .v-data-footer__select .v-select {
   margin: 0px 0px 8px 12px !important;
 }
+
+#relatedInventory tr th,
+#relatedInventory tr td {
+  padding: 2px;
+}
 </style>

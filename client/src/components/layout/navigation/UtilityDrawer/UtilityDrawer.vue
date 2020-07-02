@@ -1,6 +1,6 @@
 <template>
   <v-navigation-drawer
-    v-if="defaultProductType !== 'lots'"
+    v-show="defaultProductType !== 'lots'"
     v-model="drawer"
     app
     clipped
