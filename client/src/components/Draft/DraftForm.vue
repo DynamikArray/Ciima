@@ -10,6 +10,7 @@
       <v-row>
         <v-col cols="5">
           <v-text-field
+            autocomplete="off"
             dense
             autofocus
             :value="locationCode"
@@ -25,6 +26,7 @@
         </v-col>
         <v-col cols="3">
           <v-text-field
+            autocomplete="off"
             dense
             :value="grade"
             @input="handleInputGrade"
@@ -39,6 +41,7 @@
 
         <v-col cols="2">
           <v-text-field
+            autocomplete="off"
             dense
             v-model="quantity"
             name="quantity"
@@ -52,6 +55,7 @@
 
         <v-col cols="2">
           <v-text-field
+            autocomplete="off"
             dense
             v-model="price"
             name="price"
@@ -78,6 +82,7 @@
             <div class="d-flex flex-column flex-grow-1">
               <div class="w-100">
                 <v-text-field
+                  autocomplete="off"
                   dense
                   outlined
                   label="Inventory Title"
@@ -171,6 +176,7 @@
       <v-row>
         <v-col cols="4">
           <v-text-field
+            autocomplete="off"
             dense
             v-model="mainCharacter"
             name="mainCharacter"
@@ -184,6 +190,7 @@
 
         <v-col cols="5">
           <v-text-field
+            autocomplete="off"
             dense
             v-model="series"
             name="series"
@@ -197,6 +204,7 @@
 
         <v-col cols="3">
           <v-text-field
+            autocomplete="off"
             dense
             v-model="upc"
             name="upc"
@@ -212,6 +220,7 @@
       <v-row>
         <v-col cols="4">
           <v-text-field
+            autocomplete="off"
             dense
             v-model="issueNumbers"
             name="issueNumbers"
@@ -224,6 +233,7 @@
         </v-col>
         <v-col cols="3">
           <v-text-field
+            autocomplete="off"
             dense
             v-model="publisher"
             name="publisher"
@@ -236,6 +246,7 @@
         </v-col>
         <v-col cols="2">
           <v-text-field
+            autocomplete="off"
             dense
             v-model="publishedYear"
             name="publishedYear"
@@ -247,6 +258,7 @@
         </v-col>
         <v-col cols="3">
           <v-text-field
+            autocomplete="off"
             dense
             v-model="publishedDate"
             name="publishedDate"

@@ -11,6 +11,7 @@
           <h4 class="mr-2">Step 1:</h4>
         </div>
         <v-text-field
+          autocomplete="off"
           autofocus
           ref="locationCode"
           dense
@@ -50,6 +51,7 @@
         <v-col cols="12" sm="5" md="6">
           <div class="d-flex justify-center align-center">
             <v-combobox
+              autocomplete="off"
               ref="charactersList"
               id="characters"
               name="characters"
@@ -71,6 +73,7 @@
         <v-col cols="12" sm="4" md="3">
           <div class="d-flex justify-end align-center">
             <v-combobox
+              autocomplete="off"
               ref="publishersList"
               id="publisher"
               name="publisher"
@@ -92,6 +95,7 @@
         <v-col cols="12" sm="6" md="6">
           <div class="d-flex justify-center align-center">
             <v-text-field
+              autocomplete="off"
               dense
               v-model="price"
               id="price"

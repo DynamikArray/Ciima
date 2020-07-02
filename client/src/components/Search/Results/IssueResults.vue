@@ -28,6 +28,7 @@
             </div>
             <div class="mx-1">
               <v-text-field
+                autocomplete="off"
                 class="pt-0"
                 :value="filterString"
                 @input="updateFilter"
