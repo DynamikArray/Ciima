@@ -74,11 +74,7 @@ export default {
     },
     alertUser(msg) {
       this.upcString = "";
-      this.$toastr.Add({
-        msg,
-        timeout: 2000,
-        type: "warning"
-      });
+      this.$toastr.w(msg);
       this.shake = true;
     }
   }

@@ -32,6 +32,8 @@ import {
 
 import { PRICE_SEARCH } from "@/store/action-types";
 
+import { titleCleaner } from "@/components/Pricing/titleCleaner";
+
 export default {
   data: () => ({
     validSearch: false
@@ -63,7 +65,7 @@ export default {
     buildTitleString() {
       let titleString = "";
       const { titles, issues } = this;
-      if (titles.length) titleString = titles[0].title;
+      if (titles.length) titleString = titleCleaner(titles[0].title);
       if (issues.length) titleString = `${titleString} ${issues[0].fullIssue}`;
       if (issues.length > 1)
         titleString = `${titleString}-${issues[issues.length - 1].fullIssue}`;
@@ -88,7 +90,6 @@ export default {
           searchString,
           searchType: "ebayActive"
         });
-
         if (this.defaultProductType === "singles") {
           this.$store.dispatch(`pricing/${PRICE_SEARCH}`, {
             searchString,

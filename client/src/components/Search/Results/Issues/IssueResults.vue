@@ -78,11 +78,15 @@ import {
   UTILITY_DRAWER_TAB
 } from "@/store/mutation-types.js";
 
+import { PRICE_SEARCH } from "@/store/action-types.js";
+
 import settings from "@/util/settings.js";
 import IssuesModal from "./IssuesModal";
 import IssuesTop from "./templates/IssuesTop";
 import IssuesTitle from "./templates/IssuesTitle";
 import IssuesImageUrl from "./templates/IssuesImageUrl";
+
+import { titleCleaner } from "@/components/Pricing/titleCleaner";
 
 export default {
   props: {
@@ -130,7 +134,8 @@ export default {
       issues: state => state.issueSearch.items,
       loading: state => state.issueSearch.loading,
       draftIssues: state => state.currentDraft.issues,
-      selectedTitle: state => state.titleSearch.selected
+      selectedTitle: state => state.titleSearch.selected,
+      defaultProductType: state => state.settings.defaultProductType
     })
   },
   methods: {
@@ -173,10 +178,31 @@ export default {
     },
 
     priceCheckIssue(title, issue) {
-      const searchString = `${title} ${issue}`;
+      const cleanedTitle = titleCleaner(title);
+      const searchString = `${cleanedTitle} ${issue}`;
+
       this.$store.commit(`pricing/${PRICE_SEARCH_STRING}`, searchString);
       this.$store.commit(`settings/${TOGGLE_UTILITY_DRAWER}`, true);
       this.$store.commit(`settings/${UTILITY_DRAWER_TAB}`, 1);
+
+      //always try to search ebay
+      this.$store.dispatch(`pricing/${PRICE_SEARCH}`, {
+        searchString,
+        searchType: "ebayEnded"
+      });
+
+      //always try to search ebay
+      this.$store.dispatch(`pricing/${PRICE_SEARCH}`, {
+        searchString,
+        searchType: "ebayActive"
+      });
+
+      if (this.defaultProductType === "singles") {
+        this.$store.dispatch(`pricing/${PRICE_SEARCH}`, {
+          searchString,
+          searchType: "myComicShop"
+        });
+      }
     }
   } //end mehtods
 };
