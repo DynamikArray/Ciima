@@ -26,10 +26,6 @@ Vue.use(VueCurrencyFilter, {
   symbolSpacing: true
 });
 
-// register the plugin on vue for Sweet Alerts
-//import VueSwal from "vue-swal";
-//Vue.use(VueSwal);
-
 // import plugin
 import VueToastr from "vue-toastr";
 // use plugin

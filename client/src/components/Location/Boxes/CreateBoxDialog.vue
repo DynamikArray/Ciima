@@ -55,7 +55,8 @@
               <div class="d-flex flex-column">
                 <div class="d-flex flex-row justify-center">
                   <p class="p-1 mb-1 text-center">
-                    Box Name is the full box name e.g. EBAY-SETS, EBAY-SINGLES
+                    Box Name is the full box name e.g. EBAY-SETS-A,
+                    EBAY-SINGLES-1
                   </p>
                 </div>
                 <div class="d-flex justify-center align-center">
@@ -65,6 +66,11 @@
                   <div class="d-flex justify-start align-center grow">
                     <v-text-field
                       v-model="box"
+                      @input="
+                        v => {
+                          box = v.toUpperCase();
+                        }
+                      "
                       name="New Box"
                       label="New Box"
                       class=""
