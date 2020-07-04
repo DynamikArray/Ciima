@@ -55,7 +55,10 @@ fastify.register(swagger, documentation);
 
 //Routes
 fastify.register(require("./routes/v1/info"), { prefix: "v1" });
+
+fastify.register(require("./routes/v1/analytics"), { prefix: "v1" });
 fastify.register(require("./routes/v1/auditLog"), { prefix: "v1" });
+
 fastify.register(require("./routes/v1/titleSearch"), { prefix: "v1" });
 fastify.register(require("./routes/v1/issueSearch"), { prefix: "v1" });
 fastify.register(require("./routes/v1/ebayCategories"), { prefix: "v1" });
