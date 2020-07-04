@@ -46,7 +46,6 @@ export default {
         const thumbNail = `https://${urlPieces[2]}/${urlPieces[3]}/${
           urlPieces[4]
         }/tumbnail_${urlPieces[5]}`;
-        console.log(thumbNail);
         return thumbNail;
       }
 

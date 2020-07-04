@@ -61,7 +61,7 @@ const openDrafts = {
       const { toastr } = params;
       if (toastr) delete params.toastr;
 
-      await dispatch(
+      return await dispatch(
         "api/requestHandler",
         {
           method: "post",

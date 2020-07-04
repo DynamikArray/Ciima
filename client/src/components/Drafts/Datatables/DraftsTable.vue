@@ -162,6 +162,20 @@ export default {
     //
     //
     async withSelected() {
+      /*
+      async function asyncForEach(array, callback) {
+        for (let index = 0; index < array.length; index++) {
+          await callback(array[index], index, array);
+        }
+      }
+
+      const listItems = async () => {
+        await asyncForEach(this.selectedItems, async item => {
+          let result = await this.submitDraft(item.id, false);
+          if (result) console.log(result);
+        });
+      };
+      */
       if (!this.selectedItems.length > 0) {
         this.$toastr.w("Nothing to submit");
         return;
@@ -175,18 +189,21 @@ export default {
       if (!confirm) return;
 
       this.submittingDrafts = true;
-      this.selectedItems.forEach(item => {
-        setTimeout(() => {
-          this.submitDraft(item.id, false);
-        }, 250);
+      const submitList = this.selectedItems.map(item => {
+        return this.submitDraft(item.id, false);
       });
-      this.submittingDrafts = false;
-
-      this.$toastr.s("All items submitted!");
-      this.selectedItems = [];
-      setTimeout(() => {
-        this.getData({});
-      }, 500);
+      Promise.all(submitList)
+        .then(values => {
+          this.$toastr.s("All items submitted!");
+        })
+        .catch(e => {
+          console.log(e);
+        })
+        .finally(() => {
+          this.submittingDrafts = false;
+          this.selectedItems = [];
+          this.getData({});
+        });
     },
     //
     //
@@ -206,10 +223,13 @@ export default {
       let toastr = false;
       if (toast) toastr = this.$toastr || false;
 
-      await this.$store.dispatch(`openDrafts/${OPEN_DRAFTS_SUBMIT_DRAFT}`, {
-        draftId,
-        toastr
-      });
+      return await this.$store.dispatch(
+        `openDrafts/${OPEN_DRAFTS_SUBMIT_DRAFT}`,
+        {
+          draftId,
+          toastr
+        }
+      );
     }
   }
 };
