@@ -21,6 +21,7 @@
 
     <div class="d-flex justify-center flex-wrap">
       <v-data-footer
+        style="border:0px"
         :pagination="pagination"
         :options="options"
         @update:options="updateOptions"
