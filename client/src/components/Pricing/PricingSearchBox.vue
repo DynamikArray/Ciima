@@ -66,9 +66,10 @@ export default {
       let titleString = "";
       const { titles, issues } = this;
       if (titles.length) titleString = titleCleaner(titles[0].title);
-      if (issues.length) titleString = `${titleString} ${issues[0].fullIssue}`;
-      if (issues.length > 1)
-        titleString = `${titleString}-${issues[issues.length - 1].fullIssue}`;
+      if (issues.length) {
+        const issueNumbers = issues.map(item => item.fullIssue).join(" ");
+        titleString = `${titleString} ${issueNumbers}`;
+      }
       this.searchString = titleString;
     },
     //

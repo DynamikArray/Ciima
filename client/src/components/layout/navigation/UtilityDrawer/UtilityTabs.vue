@@ -60,6 +60,9 @@ export default {
     CurrentDraftImages,
     PricingContainer
   },
+  created() {
+    this.tab = 1;
+  },
   computed: {
     ...mapState({
       issues: state => state.currentDraft.issues

@@ -1,5 +1,11 @@
 //The fixList should contain all the checks in order
-const fixList = [[", The ", " "], [", The", ""]];
+const fixList = [
+  [", The ", " "],
+  [", The", ""],
+  ["(", ""],
+  [")", ""],
+  ["Vol.", "Vol"]
+];
 
 //Cleans the title of the fixlist in order
 const titleCleaner = title => {
@@ -14,4 +20,12 @@ const titleCleaner = title => {
   }
 };
 
-module.exports = { titleCleaner };
+const issueCleaner = issue => {
+  try {
+    return issue;
+  } catch (e) {
+    return issue;
+  }
+};
+
+module.exports = { titleCleaner, issueCleaner };
