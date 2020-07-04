@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="w-100" style="height:100%">
     <v-data-table
       v-if="drafts"
       :headers="headers"
@@ -68,6 +68,22 @@
         </div>
       </div>
     </div>
+
+    <v-dialog v-model="submittingDrafts" hide-overlay persistent width="300">
+      <v-card color="primary" dark class="pt-2">
+        <v-card-text>
+          <h4 class="text-center mb-2">
+            <v-icon class="mr-2">fas fa-cloud-upload-alt</v-icon>
+            Submitting Drafts ...
+          </h4>
+          <v-progress-linear
+            indeterminate
+            color="white"
+            class="mt-1"
+          ></v-progress-linear>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -112,7 +128,8 @@ export default {
       selected: false,
       footerProps: {
         "items-per-page-options": [15, 30, 50, 100, 250, 500]
-      }
+      },
+      submittingDrafts: false
     };
   },
   methods: {
@@ -120,16 +137,13 @@ export default {
       this.selectedItems = items;
     },
     //
-    //
     makeStatusNotesKey() {
       return `${Date.now()}-${Math.random()}`;
     },
     //
-    //
     makeNoteText(note) {
       return note;
     },
-    //
     //
     async deleteItem(id) {
       //add confirm
@@ -140,7 +154,6 @@ export default {
       );
       if (confirm) this.deleteDraft(id);
     },
-    //
     //
     async deleteDraft(draftId) {
       await this.$store.dispatch(`deleteDraft/${DELETE_DRAFT}`, { draftId });
@@ -161,11 +174,15 @@ export default {
       );
       if (!confirm) return;
 
+      this.submittingDrafts = true;
       this.selectedItems.forEach(item => {
-        this.submitDraft(item.id, false);
+        setTimeout(() => {
+          this.submitDraft(item.id, false);
+        }, 250);
       });
-      this.$toastr.s("All items submitted!");
+      this.submittingDrafts = false;
 
+      this.$toastr.s("All items submitted!");
       this.selectedItems = [];
       setTimeout(() => {
         this.getData({});

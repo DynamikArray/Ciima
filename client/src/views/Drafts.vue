@@ -1,6 +1,10 @@
 <template>
-  <v-container fluid>
-    <DraftsContainer :isMobile="isMobile"></DraftsContainer>
+  <v-container fluid style="min-height:100%">
+    <v-row>
+      <v-col class="pt-0">
+        <DraftsContainer class="" :isMobile="isMobile"></DraftsContainer>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 

@@ -1,54 +1,52 @@
 <template>
-  <v-row>
-    <v-col class="py-0">
-      <DraftsFilters
-        align="end"
-        :draftStatus.sync="draftStatus"
-        :draftType.sync="draftType"
-        :searchString.sync="searchString"
-        :loading="loading"
-        :getData="fetchDraftsWithParams"
-      ></DraftsFilters>
+  <div class="DraftsContainer">
+    <DraftsFilters
+      align="end"
+      :draftStatus.sync="draftStatus"
+      :draftType.sync="draftType"
+      :searchString.sync="searchString"
+      :loading="loading"
+      :getData="fetchDraftsWithParams"
+    ></DraftsFilters>
 
-      <v-divider class="my-1"></v-divider>
+    <v-divider class="my-1"></v-divider>
 
-      <DraftsPager
-        key="topPager"
-        align="end"
-        :limit.sync="limit"
-        :page="page"
-        :pageCount="pageCount"
-        :pageLimit="pageLimit"
-        :rowsTotal="rowsTotal"
-        :getData="fetchDraftsWithParams"
-      ></DraftsPager>
+    <DraftsPager
+      key="topPager"
+      align="end"
+      :limit.sync="limit"
+      :page="page"
+      :pageCount="pageCount"
+      :pageLimit="pageLimit"
+      :rowsTotal="rowsTotal"
+      :getData="fetchDraftsWithParams"
+    ></DraftsPager>
 
-      <v-divider class="my-1"></v-divider>
+    <v-divider class="my-1"></v-divider>
 
-      <DraftsTable
-        :limit="limit"
-        :isMobile="isMobile"
-        :headers="rowHeaders"
-        :status="draftStatus"
-        :drafts="drafts"
-        :loading="loading"
-        :getData="fetchDraftsWithParams"
-      ></DraftsTable>
+    <DraftsTable
+      :limit="limit"
+      :isMobile="isMobile"
+      :headers="rowHeaders"
+      :status="draftStatus"
+      :drafts="drafts"
+      :loading="loading"
+      :getData="fetchDraftsWithParams"
+    ></DraftsTable>
 
-      <v-divider class="my-1"></v-divider>
+    <v-divider class="my-1"></v-divider>
 
-      <DraftsPager
-        key="bottomPager"
-        align="end"
-        :limit.sync="limit"
-        :page="page"
-        :pageCount="pageCount"
-        :pageLimit="pageLimit"
-        :rowsTotal="rowsTotal"
-        :getData="fetchDraftsWithParams"
-      ></DraftsPager>
-    </v-col>
-  </v-row>
+    <DraftsPager
+      key="bottomPager"
+      align="end"
+      :limit.sync="limit"
+      :page="page"
+      :pageCount="pageCount"
+      :pageLimit="pageLimit"
+      :rowsTotal="rowsTotal"
+      :getData="fetchDraftsWithParams"
+    ></DraftsPager>
+  </div>
 </template>
 
 <script>
