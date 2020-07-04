@@ -14,6 +14,13 @@ export const headers = [
     value: "itemTitle"
   },
   {
+    text: "Issue #(s)",
+    align: "center",
+    sortable: true,
+    value: "extendedProperties.issueNumbers",
+    width: "140px"
+  },
+  {
     text: "Qty",
     align: "center",
     sortable: true,
@@ -25,7 +32,7 @@ export const headers = [
     align: "center",
     sortable: true,
     value: "location.name",
-    width: "80px"
+    width: "100px"
   },
   {
     text: "Price",

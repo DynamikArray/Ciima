@@ -13,12 +13,11 @@
     <v-data-table
       v-else
       :headers="headers"
-      :items="issues"
+      :items="filteredItems"
       :loading="loading"
       loading-text="Searching Database"
       :items-per-page="15"
       :footer-props="footerProps"
-      :search="filterString"
     >
       <template v-slot:top="{ pagination, options, updateOptions }">
         <IssuesTop
@@ -136,7 +135,12 @@ export default {
       draftIssues: state => state.currentDraft.issues,
       selectedTitle: state => state.titleSearch.selected,
       defaultProductType: state => state.settings.defaultProductType
-    })
+    }),
+    filteredItems() {
+      return this.issues.filter(row =>
+        row.fullIssue.includes(this.filterString)
+      );
+    }
   },
   methods: {
     updateFilter(val) {

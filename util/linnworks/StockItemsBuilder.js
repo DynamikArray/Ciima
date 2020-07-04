@@ -18,11 +18,15 @@ class StockItem {
       name: false,
       formattedName: false,
       qty: false,
-      multiple: false
+      multiple: false,
+    };
+
+    this.extendedProperties = {
+      issueNumbers: false,
     };
 
     this.meta = {
-      application: false
+      application: false,
     };
   }
   //
@@ -48,6 +52,11 @@ class StockItem {
   addImage(imgThumb, imgFull) {
     this.imageThumb = imgThumb;
     this.imageFull = imgFull;
+    return this;
+  }
+
+  addIssueNumbers(issueNumbers) {
+    this.extendedProperties.issueNumbers = issueNumbers;
     return this;
   }
 
@@ -108,7 +117,7 @@ class StockItemsBuilder {
   //
   //
   formatImages(images) {
-    const main = images.filter(img => img.IsMain);
+    const main = images.filter((img) => img.IsMain);
     if (main.length == 1) {
       const imgFull = main[0].FullSource;
       const imgThumb = main[0].Source;
@@ -117,11 +126,18 @@ class StockItemsBuilder {
     return { imgThumb: false, imgFull: false };
   }
 
+  formatIssueNumbers(extendProperties) {
+    return extendProperties
+      .filter((prop) => prop.ProperyName == "Issue Number")
+      .map((prop) => prop.PropertyValue)
+      .shift();
+  }
+
   //
   //
   //
   addResults(results) {
-    results.forEach(item => {
+    results.forEach((item) => {
       if (this.shouldInclude(item.CategoryName)) {
         const { StockItemId, ItemTitle, ItemNumber } = item;
 
@@ -142,10 +158,15 @@ class StockItemsBuilder {
         const { id, name, qty, multi } = this.formatLocations(item.StockLevels);
         const { imgThumb, imgFull } = this.formatImages(item.Images);
 
+        const issueNumbers = this.formatIssueNumbers(
+          item.ItemExtendedProperties
+        );
+
         //add that location object to our stockItem
         stockItem
           .addLocation(id, name, qty, multi)
           .addImage(imgThumb, imgFull)
+          .addIssueNumbers(issueNumbers)
           .addMetaApplication("Linnworks");
 
         //include onto  results

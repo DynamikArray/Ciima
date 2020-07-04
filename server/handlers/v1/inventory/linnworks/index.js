@@ -3,11 +3,11 @@ const StockItemsBuilder = require("../../../../../util/linnworks/StockItemsBuild
 
 const {
   UPDATE_ITEM_FIELD,
-  UPDATE_LOCATION_FIELD
+  UPDATE_LOCATION_FIELD,
 } = require("../../../../../util/auditLog/logActionTypes");
 const { LINNWORKS } = require("../../../../../util/auditLog/logResourceTypes");
 
-module.exports = fastify => ({
+module.exports = (fastify) => ({
   /**
    * [searchInventoryHandler description]
    * @param  {[type]}  req [description]
@@ -32,7 +32,7 @@ module.exports = fastify => ({
           url: "Stock/GetStockItemsFull",
           headers:
             "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
-          data: formattedData
+          data: formattedData,
         });
 
         if (error) nextPage = false;
@@ -63,7 +63,7 @@ module.exports = fastify => ({
       fieldName,
       fieldValue,
       inventoryItemId,
-      locationId
+      locationId,
     } = req.body;
 
     const formattedData = `inventoryItemId=${inventoryItemId}&fieldName=${fieldName}&fieldValue=${fieldValue}&locationId=${locationId}&changeSource=${changeSource}`;
@@ -74,7 +74,7 @@ module.exports = fastify => ({
         url: "Inventory/UpdateInventoryItemLocationField",
         headers:
           "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
-        data: formattedData
+        data: formattedData,
       });
       if (result) return { result };
       if (error) return { error };
@@ -108,7 +108,7 @@ module.exports = fastify => ({
         url: "Inventory/UpdateInventoryItemField",
         headers:
           "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
-        data: formattedData
+        data: formattedData,
       });
 
       if (result) return { result };
@@ -124,5 +124,5 @@ module.exports = fastify => ({
         JSON.stringify({ fieldName, fieldValue })
       );
     }
-  }
+  },
 });

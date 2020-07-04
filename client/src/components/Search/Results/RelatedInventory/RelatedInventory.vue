@@ -143,13 +143,13 @@ export default {
     titleMessage() {
       const { items, searchString } = this;
       if (items.length) {
-        return `${items.length} Similar titles containing: ${searchString}`;
+        return `${items.length} titles containing: ${searchString}`;
       }
       return `Similar titles: ${searchString}`;
     },
     filteredItems() {
       return this.items.filter(row =>
-        row.itemTitle.includes(this.filterString)
+        row.extendedProperties.issueNumbers.includes(this.filterString)
       );
     }
   },
