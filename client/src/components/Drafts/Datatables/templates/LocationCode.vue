@@ -25,6 +25,11 @@
           <v-form ref="form" v-on:submit.prevent>
             <v-text-field
               v-model="editValue"
+              @input="
+                v => {
+                  editValue = v.toUpperCase();
+                }
+              "
               label="Edit"
               single-line
               :rules="getCorrectRuleType"

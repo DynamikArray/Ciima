@@ -46,6 +46,11 @@
             <template v-slot:input>
               <v-text-field
                 v-model="item.location.name"
+                @input="
+                  v => {
+                    item.location.name = v.toUpperCase();
+                  }
+                "
                 label="Edit"
                 single-line
                 counter
