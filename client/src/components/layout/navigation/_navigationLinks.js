@@ -11,6 +11,7 @@ module.exports = [
   { icon: "fa fa-boxes", text: "Search Inventory", to: "inventory" },
   { icon: "fa fa-cube", text: "Locations", to: "locations" },
   { menuDivider: true },
+  { icon: "fa fa-chart-bar", text: "Analytics", to: "analytics" },
   { icon: "fa fa-history", text: "Audit Log", to: "audit" }
   //{ menuDivider: true },
   //{ icon: "fab fa-ebay", text: "Search eBay", to: "ebay" }

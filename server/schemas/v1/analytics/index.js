@@ -10,8 +10,11 @@ module.exports = {
       },
     ],
     querystring: {
-      days: { type: "number" },
-      userId: { type: "number" },
+      type: "object",
+      properties: {
+        days: { type: "number" },
+        userId: { type: "string" },
+      },
     },
   },
 };

@@ -40,11 +40,11 @@ const buildAnalyticsQuery = (days, userId) => {
     queryStart +
     queryUserCondition +
     `) GROUP BY
-          DATE(l.created_date),
           u.username,
+          DATE(l.created_date),
           l.action
         ORDER BY
-          DATE(l.created_date) desc
+          DATE(l.created_date) asc
         `;
 
   const params = [days, userId];

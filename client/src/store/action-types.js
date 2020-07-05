@@ -52,3 +52,6 @@ export const LOTS_DRAFT_TITLE_CHECK = "LOTS_DRAFT_TITLE_CHECK";
 
 /*Audit Log*/
 export const AUDIT_LOG_FETCH = "AUDIT_LOG_FETCH";
+
+/* Analytics */
+export const ANALYTICS_FETCH = "ANALYTICS_FETCH";

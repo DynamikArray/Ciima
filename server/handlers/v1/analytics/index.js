@@ -6,7 +6,16 @@ module.exports = (fastify) => ({
   analyticsSearchHandler: async (req, reply) => {
     //query params
     const days = req.query.days || 30; //days of data for now
-    const userId = req.query.userId || ""; //days of data for now
+
+    //Userid Transformer
+    let userId = ""; //days of data for now
+    if (req.query.userId) {
+      if (req.query.userId == "ALL") {
+        userId = "";
+      } else {
+        userId = Number(req.query.userId);
+      }
+    }
 
     //sql creation
     const sqlOpts = buildAnalyticsQuery(days, userId);

@@ -51,7 +51,7 @@ import { AUDIT_LOG_FETCH } from "@/store/action-types";
 
 import rowHeaders from "./datatable/headers.js";
 import AuditLogFilters from "./datatable/filters/AuditLogFilters";
-import AuditLogPager from "@/components/Datatable/CustomPager";
+import AuditLogPager from "@/components/Datatable/Pager/CustomPager";
 import AuditLogDatatable from "./datatable/AuditLogDatatable";
 
 export default {
