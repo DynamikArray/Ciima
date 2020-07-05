@@ -19,6 +19,20 @@ const analytics = {
       state.items = data;
     }
   },
+  getters: {
+    newItems: state => {
+      if (state.items) {
+        return state.items.newItems || [];
+      }
+      return [];
+    },
+    existingItems: state => {
+      if (state.items) {
+        return state.items.existingItems || [];
+      }
+      return [];
+    }
+  },
   actions: {
     async [ANALYTICS_FETCH]({ dispatch, commit }, params) {
       await dispatch(

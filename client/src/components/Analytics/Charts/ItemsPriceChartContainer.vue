@@ -1,14 +1,14 @@
 <template>
-  <div class="d-flex justify-center w-100 flex-column mx-3">
-    <div class="d-flex flex-grow justify-center align-center w-100">
-      <h3 class="my-1">
-        Inputted Items Stock Value over the Last {{ days }} Days For
+  <div class="d-flex justify-center w-100 flex-column mx-3 grey darken-4 ">
+    <div class="d-flex flex-grow justify-start align-center w-100">
+      <h2 class="my-3 ml-4">
+        {{ title }} Stock Value over the Last {{ days }} Days For
         {{ userName }}
-      </h3>
+      </h2>
     </div>
     <div class="d-flex flex-grow justify-start align-center w-100">
       <BarChart
-        class="w-100 grey darken-4 pa-2"
+        class="w-100 pa-2"
         v-if="analyticsData"
         :chartData="analyticsData"
         :options="options"
@@ -28,7 +28,8 @@ export default {
   props: {
     days: [Number],
     userName: [String],
-    analyticsData: [Boolean, Object]
+    analyticsData: [Boolean, Object],
+    title: [String]
   },
   data: () => ({
     options: {

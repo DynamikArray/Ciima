@@ -1,5 +1,6 @@
 const {
-  buildAnalyticsQuery,
+  buildNewItemsQuery,
+  buildExistingItemsQuery,
 } = require("../../../../util/ciima/queries/analytics");
 
 module.exports = (fastify) => ({
@@ -18,16 +19,25 @@ module.exports = (fastify) => ({
     }
 
     //sql creation
-    const sqlOpts = buildAnalyticsQuery(days, userId);
+    const newItemsSqlOpts = buildNewItemsQuery(days, userId);
+    const existingItemsSqlOpts = buildExistingItemsQuery(days, userId);
+
     //sql execution
     const connection = await fastify.mysql.getConnection();
     if (connection) {
-      const [rows, fields] = await connection.query(
-        sqlOpts.query,
-        sqlOpts.params
+      const [newItems] = await connection.query(
+        newItemsSqlOpts.query,
+        newItemsSqlOpts.params
       );
+
+      const [existingItems] = await connection.query(
+        existingItemsSqlOpts.query,
+        existingItemsSqlOpts.params
+      );
+
       connection.release();
-      return { result: rows };
+
+      return { result: { newItems, existingItems } };
     }
     return { error: "No Connection" };
   },
