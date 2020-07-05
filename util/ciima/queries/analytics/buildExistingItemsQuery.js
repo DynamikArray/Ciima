@@ -52,7 +52,7 @@ const buildExistingItemsQuery = (days, userId) => {
     	stats.createdDate,
     	stats.username
     ORDER BY
-    	stats.createdDate	DESC
+    	stats.createdDate	Asc
     `;
 
   const params = [days, userId];
