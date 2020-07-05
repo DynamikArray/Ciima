@@ -18,8 +18,8 @@
 
     <v-divider class="my-3"></v-divider>
 
-    <v-row>
-      <v-col>
+    <v-row class="pt-0 mt-0">
+      <v-col class="pt-0 mt-0">
         <LocationContainer></LocationContainer>
       </v-col>
     </v-row>

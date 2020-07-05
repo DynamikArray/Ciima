@@ -13,14 +13,14 @@ export const headers = [
     align: "left",
     sortable: false,
     value: "loadAction",
-    width: "80"
+    width: "80px"
   },
   {
     text: "Box Type",
     align: "left",
     sortable: true,
     value: "box_type",
-    width: "120"
+    width: "120px"
   },
   {
     text: "Box",
@@ -33,20 +33,20 @@ export const headers = [
     align: "center",
     sortable: false,
     value: "notes",
-    width: "50"
+    width: "50px"
   },
   {
     text: "Created",
-    align: "center",
+    align: "right",
     sortable: true,
     value: "dateCreated",
-    width: "150"
+    width: "80px"
   },
   {
     text: "Actions",
     align: "center",
     sortable: false,
     value: "action",
-    width: "120"
+    width: "120px"
   }
 ];

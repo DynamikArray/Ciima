@@ -143,7 +143,7 @@
           :disabled="!selectedBox"
           v-on="on"
           style="min-width:20px;"
-          class="px-3 mb-1"
+          class="pr-3 mb-1"
           color="success"
           @click.stop="dialog = true"
           ><v-icon color="white" small class="mr-1">fa-plus-circle</v-icon>
@@ -300,11 +300,11 @@ export default {
           if (result.affectedRows > 0) {
             //saved
             this.$toastr.s(
-              `${totalCards} Cards were created in ${selectedBox.box}!`
+              `${totalCards} Location Cards now exist in ${selectedBox.box}!`
             );
             this.$store.commit(
               `api/${UPDATE_API_STATUS}`,
-              `${totalCards} were created in ${selectedBox.box}`
+              `${totalCards} Location Cards now exist in ${selectedBox.box}`
             );
 
             //clear first,last,Notes

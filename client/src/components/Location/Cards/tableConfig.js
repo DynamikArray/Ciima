@@ -10,17 +10,17 @@ export const headers = [
   */
   {
     text: "Select",
-    align: "left",
+    align: "center",
     sortable: false,
     value: "loadAction",
-    width: "80"
+    width: "80px"
   },
   {
     text: "Card",
     align: "left",
     sortable: true,
     value: "card",
-    width: "60"
+    width: "50px"
   },
   {
     text: "Full Location",
@@ -34,20 +34,20 @@ export const headers = [
     align: "center",
     sortable: false,
     value: "notes",
-    width: "30"
+    width: "30px"
   },
   {
     text: "Created",
     align: "right",
     sortable: true,
     value: "dateCreated",
-    width: "150"
+    width: "80px"
   },
   {
     text: "Actions",
     align: "center",
     sortable: false,
     value: "action",
-    width: "120"
+    width: "120px"
   }
 ];

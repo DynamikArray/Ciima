@@ -7,6 +7,7 @@
       :items-per-page="5"
       :items="boxes"
       class="elevation-1 px-2"
+      @click:row="selectBox"
     >
       <template v-slot:top>
         <div class="d-flex justify-space-between">
@@ -16,7 +17,7 @@
             </h2>
           </div>
           <div class="d-flex justify-align-center align-top mt-3 mr-3">
-            <CreateBoxDialog></CreateBoxDialog>
+            <CreateBoxDialog :selectedBox.sync="selectedBox"></CreateBoxDialog>
           </div>
         </div>
 
@@ -28,8 +29,9 @@
               <v-card-title class="px-0 py-0">
                 <v-form @submit.prevent="searchBoxes" class="w-100">
                   <v-text-field
+                    autocomplete="off"
                     v-model="search"
-                    label="Search Boxes"
+                    label="Search All Boxes"
                     prepend-icon="fa-search"
                     single-line
                     hide-details
@@ -40,6 +42,7 @@
                   ></v-text-field>
 
                   <v-select
+                    autocomplete="off"
                     dense
                     v-model="box_type"
                     :items="box_types"
@@ -58,15 +61,22 @@
           </div>
 
           <div class="d-flex align-center">
-            <v-btn
-              text
-              small
-              style="min-width:20px;"
-              @click="loadBoxes"
-              color="info"
-              ><v-icon small class="mr-2">fa-sync</v-icon
-              >Refresh<br />Boxes</v-btn
-            >
+            <div class="d-flex flex-column justify-center align-center">
+              <div class="justify-center align-center">
+                <v-btn
+                  style="min-width:20px;"
+                  @click="refreshBoxes"
+                  color="info"
+                  class="pa-2"
+                  ><v-icon small class="mx-2">fa-sync</v-icon>
+                </v-btn>
+              </div>
+              <div class="justify-center align-center overline">
+                <div class="text-center mt-1" style="line-height:1.2">
+                  Refresh<br />Boxes
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </template>
@@ -95,13 +105,19 @@
       </template>
 
       <template v-slot:item.box_type="{ item }">
-        <div @click="selectBox(item)" class="w-100 onHover">
+        <div
+          v-ripple="{ center: true }"
+          class="d-flex flex-column justify-center align-start w-100 h-100 onHover"
+        >
           {{ item.box_type }}
         </div>
       </template>
 
       <template v-slot:item.box="{ item }">
-        <div @click="selectBox(item)" class="w-100 onHover">
+        <div
+          v-ripple="{ center: true }"
+          class="d-flex flex-column justify-center align-start w-100 h-100 onHover"
+        >
           {{ item.box }}
         </div>
       </template>
@@ -128,7 +144,10 @@
       </template>
 
       <template v-slot:item.dateCreated="{ item }">
-        <div @click="selectBox(item)" class="w-100 onHover">
+        <div
+          v-ripple="{ center: true }"
+          class="d-flex flex-column justify-center align-start w-100 h-100 onHover"
+        >
           <span style="font-size: 85%">{{ item.dateCreated | dateTime }}</span>
         </div>
       </template>
@@ -170,7 +189,12 @@
 <script>
 import { headers } from "./tableConfig.js";
 import debounce from "lodash.debounce";
-import { SEARCH_BOXES, SEARCH_CARDS, DELETE_BOX } from "@/store/action-types";
+import {
+  SEARCH_BOXES,
+  SEARCH_CARDS,
+  DELETE_BOX,
+  SET_SELECTED_BOX
+} from "@/store/action-types";
 
 import CreateBoxDialog from "./CreateBoxDialog.vue";
 import UpdateBoxDialog from "./UpdateBoxDialog.vue";
@@ -211,19 +235,19 @@ export default {
     },
     //
     //
+    refreshBoxes() {
+      this.box_type = "";
+      this.loadBoxes();
+    },
+    //
     loadBoxes() {
       this.executeSearch();
       //this.$store.dispatch(`locations/${SEARCH_BOXES}`);
     },
     //
     //
-    searchBoxes: debounce(function(event) {
-      const action = (event || {}).type;
-      const search = this.search || "";
-
-      if (action === "submit" || search.length > 0) {
-        this.executeSearch();
-      }
+    searchBoxes: debounce(function(search) {
+      this.executeSearch();
     }, 500),
     //
     //
@@ -240,14 +264,16 @@ export default {
 
     //
     //
-    selectBox(item) {
-      this.$emit("update:selectedBox", {
+    selectBox(item, row) {
+      this.$store.dispatch(`locations/${SET_SELECTED_BOX}`, {
         box: item.box,
         id: item.id,
         box_type: item.box_type
       });
+
       this.$store.dispatch(`locations/${SEARCH_CARDS}`, {
-        box_id: item.id
+        box_id: item.id,
+        box: item.box
       });
     },
 

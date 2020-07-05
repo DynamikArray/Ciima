@@ -1,9 +1,26 @@
 <template>
   <section>
     <div class="d-flex flex-column justify-space-between align-self-center">
+      <!--
+      <div class="d-flex flex-row justify-space-around w-100 mb-1">
+        <div class="d-flex justify-start align-baseline">
+          <h3 class="mr-1">Selected Box:</h3>
+          <h1>{{ selectedBox.box }}</h1>
+        </div>
+        <div class="d-flex justify-start align-baseline">
+          <h3 class="mr-1">Selected Card:</h3>
+          <h1>
+            {{
+              selectedCard.card ? `${selectedBox.box}-${selectedCard.card}` : ""
+            }}
+          </h1>
+        </div>
+      </div>
+    -->
+
       <div class="d-flex flex-row">
         <div
-          class="d-flex align-self-top  justify-center mr-3"
+          class="d-flex align-self-top  justify-center"
           style="flex-basis:50%;flex-grow:0"
         >
           <BoxesTable
@@ -52,15 +69,22 @@ import ProductsTable from "./Products/ProductsTable";
 import LabelMaker from "./Labels/LabelMaker";
 
 import { mapState, mapGetters } from "vuex";
-import { SEARCH_BOXES, SEARCH_CARDS } from "@/store/action-types";
+import {
+  SEARCH_BOXES,
+  SEARCH_CARDS,
+  SET_SELECTED_BOX,
+  SET_SELECTED_CARD
+} from "@/store/action-types";
+
+import {
+  SELECTED_BOX_RESULT,
+  SELECTED_CARD_RESULT
+} from "@/store/mutation-types";
 
 export default {
   data: () => ({
-    selectedBox: false,
-    selectedCard: false,
     currentProductsOnly: false,
     productsList: []
-    //selectedCard: false
   }),
   components: {
     BoxesTable,
@@ -80,6 +104,22 @@ export default {
     ...mapGetters({
       getCurrentProducts: "locations/getCurrentProducts"
     }),
+    selectedBox: {
+      set(box) {
+        this.$store.commit(`locations/${SELECTED_BOX_RESULT}`, box);
+      },
+      get() {
+        return this.$store.state.locations.selectedBox;
+      }
+    },
+    selectedCard: {
+      set(card) {
+        this.$store.commit(`locations/${SELECTED_CARD_RESULT}`, card);
+      },
+      get() {
+        return this.$store.state.locations.selectedCard;
+      }
+    },
     productsFiltered() {
       if (this.currentProductsOnly) return this.getCurrentProducts();
       this.productsList = this.products;

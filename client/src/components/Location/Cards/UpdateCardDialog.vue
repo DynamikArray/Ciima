@@ -112,7 +112,7 @@
           class="px-3"
           color="warning"
           @click.stop="dialog = true"
-          ><v-icon color="white" small class="mr-1">fa-edit</v-icon>
+          ><v-icon color="white" small class="">fa-edit</v-icon>
         </v-btn>
       </template>
       <span><i class="fa fa-info-circle mr-1"></i>Edit an existing Card </span>

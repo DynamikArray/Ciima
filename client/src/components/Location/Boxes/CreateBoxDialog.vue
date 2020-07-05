@@ -38,6 +38,7 @@
                   </div>
                   <div class="d-flex justify-start align-center grow">
                     <v-select
+                      autocomplete="off"
                       v-model="box_type"
                       :items="box_types"
                       name="Box Type"
@@ -66,6 +67,7 @@
                   <div class="d-flex justify-start align-center grow">
                     <v-text-field
                       v-model="box"
+                      autocomplete="off"
                       @input="
                         v => {
                           box = v.toUpperCase();
@@ -141,10 +143,17 @@
 </template>
 
 <script>
-import { CREATE_BOX, SEARCH_BOXES } from "@/store/action-types";
+import {
+  CREATE_BOX,
+  SEARCH_BOXES,
+  SET_SELECTED_BOX
+} from "@/store/action-types";
 import { box_types } from "./box_types.js";
 
 export default {
+  props: {
+    selectedBox: { String }
+  },
   data: () => ({
     dialog: false,
     valid: true,
@@ -188,6 +197,12 @@ export default {
           this.$toastr.s("Box Saved!");
           //reset box form values
           this.resetBox();
+
+          this.$store.dispatch(`locations/${SET_SELECTED_BOX}`, {
+            box,
+            id: result.insertId
+          });
+
           //close dialog
           this.dialog = false;
           //reload boxes

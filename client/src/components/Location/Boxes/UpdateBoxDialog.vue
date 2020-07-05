@@ -51,6 +51,7 @@
                 </div>
                 <div class="d-flex justify-start align-center grow">
                   <v-text-field
+                    autocomplete="off"
                     v-model="box"
                     name="Edit Box"
                     label="Edit Box"

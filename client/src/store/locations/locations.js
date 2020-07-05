@@ -12,7 +12,12 @@ import {
   BOX_ACTION_RESULTS,
   BOX_ACTION_LOADING,
   CARD_ACTION_RESULTS,
-  CARD_ACTION_LOADING
+  CARD_ACTION_LOADING,
+  /* selected */
+  SELECTED_BOX_RESULT,
+  SELECTED_CARD_RESULT,
+  SELECTED_BOX_RESET,
+  SELECTED_CARD_RESET
 } from "@/store/mutation-types";
 
 import {
@@ -20,13 +25,19 @@ import {
   SEARCH_BOXES_PRODUCTS,
   SEARCH_CARDS,
   SEARCH_CARDS_PRODUCTS,
+  /* crud */
   CREATE_BOX,
   UPDATE_BOX,
   DELETE_BOX,
   CREATE_CARD,
   CREATE_CARDS,
   UPDATE_CARD,
-  DELETE_CARD
+  DELETE_CARD,
+  /* selected */
+  SET_SELECTED_BOX,
+  RESET_SELECTED_BOX,
+  SET_SELECTED_CARD,
+  RESET_SELECTED_CARD
 } from "@/store/action-types";
 
 const locations = {
@@ -38,8 +49,10 @@ const locations = {
     cards_loading: false,
     products: [],
     products_loading: false,
+
     selectedBox: false,
     selectedCard: false,
+
     action_loading: false,
     actionResult: false
   },
@@ -79,6 +92,18 @@ const locations = {
     },
     [SEARCH_PRODUCTS_LOADING](state, data) {
       state.products_loading = data.loading;
+    },
+    [SELECTED_BOX_RESULT](state, box) {
+      state.selectedBox = box;
+    },
+    [SELECTED_BOX_RESET](state) {
+      state.selectedBox = false;
+    },
+    [SELECTED_CARD_RESULT](state, card) {
+      state.selectedCard = card;
+    },
+    [SELECTED_CARD_RESET](state) {
+      state.selectedCard = false;
     }
   },
   getters: {
@@ -105,6 +130,20 @@ const locations = {
     }
   },
   actions: {
+    [SET_SELECTED_BOX]({ dispatch, commit }, params) {
+      commit(SELECTED_BOX_RESULT, params);
+      commit(SELECTED_CARD_RESET);
+    },
+    [RESET_SELECTED_BOX]({ commit }, params) {
+      commit(SELECTED_BOX_RESET);
+      commit(SELECTED_CARD_RESET);
+    },
+    [SET_SELECTED_CARD]({ commit }, params) {
+      commit(SELECTED_CARD_RESULT, params);
+    },
+    [RESET_SELECTED_CARD]({ commit }, params) {
+      commit(SELECTED_CARD_RESET);
+    },
     //
     //
     async [SEARCH_BOXES]({ dispatch, commit }, params) {

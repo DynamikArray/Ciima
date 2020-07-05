@@ -1,6 +1,6 @@
 const helpers = require("./helpers");
 
-module.exports = fastify => ({
+module.exports = (fastify) => ({
   //
   //  (C)reate
   //
@@ -43,7 +43,7 @@ module.exports = fastify => ({
     }
 
     const query =
-      "INSERT INTO slc_location_cards (box_id, card, notes) VALUES ?;";
+      "INSERT IGNORE INTO slc_location_cards (box_id, card, notes) VALUES ?;";
 
     const connection = await fastify.mysql.getConnection();
     if (connection) {
@@ -201,7 +201,7 @@ module.exports = fastify => ({
       try {
         const [rows, fields] = await connection.query(selectQuery, [
           card_id,
-          pageLimit
+          pageLimit,
         ]);
         const [totalRows] = await connection.query(totalQuery, [card_id]);
         let next = ([...rows].pop() || {}).id;
@@ -218,7 +218,7 @@ module.exports = fastify => ({
       }
     }
     return { error: "No db connection" };
-  }
+  },
 
   //
 });
