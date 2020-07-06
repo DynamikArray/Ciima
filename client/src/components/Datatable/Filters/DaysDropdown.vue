@@ -6,7 +6,7 @@
 
     <div class="d-flex align-center justify-end">
       <v-select
-        style="width:130px"
+        style="width:160px"
         solo
         hide-details
         dense
@@ -30,13 +30,13 @@ export default {
     return {
       items: [
         { text: "Today", value: 0 },
-        { text: "Yesterday", value: 1 },
-        { text: "Week ", value: 5 },
-        { text: "14 Days", value: 14 },
-        { text: "30 Days", value: 30 },
-        { text: "45 Days", value: 45 },
-        { text: "90 Days", value: 90 },
-        { text: "180 Days", value: 180 }
+        { text: "Last 2 Days", value: 1 },
+        { text: "This Week", value: 5 },
+        { text: "2 Weeks", value: 14 },
+        { text: "Last 30", value: 30 },
+        { text: "Last 45", value: 45 },
+        { text: "Last 90", value: 90 },
+        { text: "Last 180", value: 180 }
       ]
     };
   },

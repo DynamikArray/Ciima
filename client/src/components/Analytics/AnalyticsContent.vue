@@ -102,13 +102,19 @@ export default {
       return new Set(datesList);
     },
     formattedItemsData() {
+      console.log("groupedData", this.groupedData);
+      console.log("UniqueDatesList", this.uniqueDatesList);
+
       const groupedData = this.groupedData;
       const something = this.analyticsData.map(item => {
         const dataDate = this.$options.filters.date(item.createdDate);
+        console.log("Date pre:", item.createdDate, "Date After:", dataDate);
         groupedData[item.username][dataDate] = {
           totalItems: item.totalItems
         };
       });
+
+      console.log("groupedData After", this.groupedData);
 
       //combine everything
       const datasets = [];
