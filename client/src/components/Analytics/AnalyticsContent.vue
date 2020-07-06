@@ -252,9 +252,10 @@ export default {
         let userTotal = 0;
 
         for (const [day, items] of Object.entries(counts)) {
-          userTotal = userTotal + items.avgPrices;
+          if (items.avgPrices) userTotal = userTotal + items.avgPrices;
         }
-        const userAvg = userTotal / Object.entries(counts).length;
+
+        const userAvg = userTotal / (Object.entries(counts).length || 0);
 
         results.push({ [user]: { total: userAvg } });
       }
