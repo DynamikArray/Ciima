@@ -207,7 +207,6 @@ export default {
     UpdateBoxDialog
   },
   created() {
-    //console.log(box_types);
     this.box_types = [{ text: "All Box Types", value: "" }, ...this.box_types];
   },
   data: () => ({

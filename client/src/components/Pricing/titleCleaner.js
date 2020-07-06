@@ -15,7 +15,6 @@ const titleCleaner = title => {
     });
     return title;
   } catch (e) {
-    console.log(e);
     return title;
   }
 };

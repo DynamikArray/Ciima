@@ -230,7 +230,6 @@ export default {
       const height = Math.ceil(
         parseInt(canvas.height) / parseInt(this.gridRows)
       );
-      //console.log(canvas.width, canvas.height, width, height);
       return { height, width };
     },
     //

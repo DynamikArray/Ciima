@@ -36,9 +36,7 @@ export default {
     this.selectedColumns = this.defaultHeaders;
   },
   methods: {
-    handleColumnsChange() {
-      console.log("Handle Column Change");
-    }
+    handleColumnsChange() {}
   }
 };
 </script>
