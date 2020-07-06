@@ -71,7 +71,7 @@ import { Colors } from "./Charts/colors";
 
 export default {
   props: {
-    days: [String, Number, Boolean],
+    days: [Number, Boolean],
     userId: [String, Number, Boolean],
     userName: [String, Boolean],
     getData: [Function],

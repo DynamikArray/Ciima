@@ -6,7 +6,7 @@ const {
 module.exports = (fastify) => ({
   analyticsSearchHandler: async (req, reply) => {
     //query params
-    const days = req.query.days || 30; //days of data for now
+    const days = req.query.days || 0; //default to today only
 
     //Userid Transformer
     let userId = ""; //days of data for now

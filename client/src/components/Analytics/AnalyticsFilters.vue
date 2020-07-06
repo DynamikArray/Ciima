@@ -22,7 +22,7 @@ import DaysDropdown from "@/components/Datatable/Filters/DaysDropdown";
 import UserListDropdown from "@/components/Datatable/Filters/UserListDropdown";
 export default {
   props: {
-    days: [String, Number, Boolean],
+    days: [Number, Boolean],
     userId: [String, Number, Boolean],
     getData: [Function],
     updateParam: [Function]

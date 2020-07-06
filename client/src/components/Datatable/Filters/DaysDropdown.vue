@@ -22,17 +22,16 @@
 <script>
 export default {
   props: {
-    days: [String, Number, Boolean],
+    days: [Number, Boolean],
     getData: [Function],
     updateParam: [Function]
   },
   data() {
     return {
       items: [
-        { text: "1 Day", value: 1 },
-        { text: "3 Days", value: 3 },
-        { text: "5 Days", value: 5 },
-        { text: "7 Days", value: 7 },
+        { text: "Today", value: 0 },
+        { text: "Yesterday", value: 1 },
+        { text: "Week ", value: 5 },
         { text: "14 Days", value: 14 },
         { text: "30 Days", value: 30 },
         { text: "45 Days", value: 45 },

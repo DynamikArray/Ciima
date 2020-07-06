@@ -77,7 +77,7 @@ export default {
   data: () => ({
     userId: "ALL",
     userName: "All Users",
-    days: 7,
+    days: 0,
     buttonToggle: 0,
     showNewItems: true
   }),
