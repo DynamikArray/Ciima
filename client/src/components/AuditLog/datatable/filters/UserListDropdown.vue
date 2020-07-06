@@ -43,7 +43,6 @@ export default {
         if (result) {
           this.items = [...this.items, ...result];
         }
-        //console.log(resp);
       });
   },
   data() {

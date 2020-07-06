@@ -44,10 +44,7 @@ export default {
   },
   computed: {
     totalPrices() {
-      //console.log(this.analyticsData);
-
       const total = this.analyticsData.reduce((t, i) => {
-        //console.log(Object.values(i).shift().total);
         t = t + Object.values(i).shift().total;
         return t;
       }, 0);

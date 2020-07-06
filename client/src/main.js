@@ -17,7 +17,6 @@ Vue.filter("capitalizeFirst", val => {
 
 Vue.filter("monthDayYear", val => {
   const nDate = new Date(val);
-  console.log(nDate, val);
   const formatted = `${nDate.getMonth()}-${nDate.getDate()}-${nDate.getFullYear()} `;
   return val;
 });
