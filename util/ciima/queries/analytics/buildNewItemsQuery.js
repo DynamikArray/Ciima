@@ -7,7 +7,7 @@ const buildNewItemsQuery = (days, userId) => {
   const queryStart = `
         SELECT
           DATE_FORMAT(l.created_date, '%b %d %Y') AS createdDate,
-          u.username,
+          u.username as username,
           l.action AS auditAction,
           count(l.resource_id) AS totalItems,
           round(sum(d.price)) AS totalPrice,
@@ -40,9 +40,9 @@ const buildNewItemsQuery = (days, userId) => {
     queryStart +
     queryUserCondition +
     `) GROUP BY
-          u.username,
-          DATE(l.created_date),
-          l.action
+          username,
+          DATE_FORMAT(l.created_date, '%b %d %Y'),
+          auditAction
         ORDER BY
           DATE(l.created_date) asc
         `;

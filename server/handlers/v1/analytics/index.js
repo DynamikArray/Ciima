@@ -29,7 +29,6 @@ module.exports = (fastify) => ({
         newItemsSqlOpts.query,
         newItemsSqlOpts.params
       );
-
       const [existingItems] = await connection.query(
         existingItemsSqlOpts.query,
         existingItemsSqlOpts.params
