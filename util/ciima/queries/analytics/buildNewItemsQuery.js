@@ -6,7 +6,7 @@
 const buildNewItemsQuery = (days, userId) => {
   const queryStart = `
         SELECT
-          DATE(l.created_date) AS createdDate,
+          DATE_FORMAT(l.created_date, '%b %d %Y') AS createdDate,
           u.username,
           l.action AS auditAction,
           count(l.resource_id) AS totalItems,
