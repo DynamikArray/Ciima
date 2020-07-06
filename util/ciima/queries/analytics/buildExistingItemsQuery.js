@@ -9,7 +9,7 @@ const buildExistingItemsQuery = (days, userId) => {
     	ROUND ( SUM(stats.price) / COUNT(stats.price) ) AS avgPrice
     FROM
     	(SELECT
-    		DATE_FORMAT(l.created_date, '%b %d %Y') AS createdDate,
+    		DATE_FORMAT(l.created_date, '%b %d, %Y') AS createdDate,
     		u.username,
     		l.action AS auditAction,
     		sum(d.price) AS price

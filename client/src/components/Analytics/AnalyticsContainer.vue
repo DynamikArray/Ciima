@@ -98,7 +98,7 @@ export default {
   methods: {
     updateLocalParam(params) {
       Object.keys(params).forEach(key => {
-        if (this[key]) this[key] = params[key];
+        this[key] = params[key];
       });
     },
     async fetchAnalyticsWithParams(params = {}) {

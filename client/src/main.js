@@ -21,6 +21,15 @@ Vue.filter("monthDayYear", val => {
   return val;
 });
 
+Vue.filter("daysAsString", days => {
+  if (days === 0) return "Today";
+  if (days === 1) return "Yesterday & Today";
+  if (days === 5) return "This Week";
+  if (days === 14) return "2 Weeks";
+  if (days === 30) return "Past Month";
+  return `Last ${days} Days`;
+});
+
 //for handling currencys
 import VueCurrencyFilter from "vue-currency-filter";
 Vue.use(VueCurrencyFilter, {

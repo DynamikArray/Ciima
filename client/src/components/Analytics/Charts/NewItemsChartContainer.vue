@@ -2,7 +2,7 @@
   <div class="d-flex justify-center w-100 flex-column mx-3 grey darken-4 ">
     <div class="d-flex flex-grow justify-start align-center w-100">
       <h2 class="my-3 ml-4">
-        {{ title }} over the Last {{ days }} Days For {{ userName }}
+        {{ title }} {{ days | daysAsString }} For {{ userName }}
       </h2>
     </div>
     <div class="d-flex flex-grow justify-start align-center w-100">
@@ -25,7 +25,7 @@ export default {
     BarChart
   },
   props: {
-    days: [Number],
+    days: [String, Number],
     userName: [String],
     analyticsData: [Boolean, Object],
     title: [String]
