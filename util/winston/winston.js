@@ -23,7 +23,7 @@ module.exports = (opts) => {
 
   logger.stream = {
     write: function (message, encoding) {
-      logger.info(message);
+      console.log(message);
     },
   };
 
