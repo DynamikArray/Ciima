@@ -97,7 +97,7 @@ export default {
     },
     uniqueDatesList() {
       const datesList = this.analyticsData.map(item => {
-        return this.$options.filters.date(item.createdDate);
+        return this.$options.filters.date(new Date(item.createdDate));
       });
       return new Set(datesList);
     },
@@ -107,8 +107,8 @@ export default {
 
       const groupedData = this.groupedData;
       const something = this.analyticsData.map(item => {
-        const dataDate = this.$options.filters.date(item.createdDate);
-        console.log("Date pre:", item.createdDate, "Date After:", dataDate);
+        const dataDate = this.$options.filters.date(new Date(item.createdDate));
+        console.log("ITem Date:", item.createdDate, " Date ChangeD:", dataDate);
         groupedData[item.username][dataDate] = {
           totalItems: item.totalItems
         };
@@ -147,7 +147,7 @@ export default {
     formattedPricesData() {
       const groupedData = this.groupedData;
       const something = this.analyticsData.map(item => {
-        const dataDate = this.$options.filters.date(item.createdDate);
+        const dataDate = this.$options.filters.date(new Date(item.createdDate));
         groupedData[item.username][dataDate] = {
           totalPrices: item.totalPrice
         };
@@ -185,7 +185,7 @@ export default {
     formattedAveragesData() {
       const groupedData = this.groupedData;
       const something = this.analyticsData.map(item => {
-        const dataDate = this.$options.filters.date(item.createdDate);
+        const dataDate = this.$options.filters.date(new Date(item.createdDate));
         groupedData[item.username][dataDate] = {
           avgPrices: item.avgPrice
         };
