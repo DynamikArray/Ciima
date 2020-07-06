@@ -15,6 +15,11 @@ Vue.filter("capitalizeFirst", val => {
   return val.charAt(0).toUpperCase() + val.slice(1);
 });
 
+Vue.filter("monthDayYear", val => {
+  const nDate = new Date(val);
+  return `${nDate.getMonth()}-${nDate.getDate()}-${nDate.getFullYear()} `;
+});
+
 //for handling currencys
 import VueCurrencyFilter from "vue-currency-filter";
 Vue.use(VueCurrencyFilter, {
