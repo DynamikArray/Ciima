@@ -12,6 +12,7 @@ const publishMessage = (payload) => {
   })
     .then(function (ch) {
       return ch.assertQueue(amqpWrapper.QUEUE_NAME).then(function (ok) {
+        ch.prefetch(10);
         return ch.sendToQueue(amqpWrapper.QUEUE_NAME, Buffer.from(payload));
       });
     })
