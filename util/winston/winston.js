@@ -21,7 +21,7 @@ module.exports = (opts) => {
   };
 
   //add our new instance
-  //logger.add(new logdnaWinston({ ...options, ...opts }));
+  logger.add(new logdnaWinston({ ...options, ...opts }));
 
   logger.stream = {
     write: function (message, encoding) {

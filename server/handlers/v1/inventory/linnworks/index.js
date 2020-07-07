@@ -46,7 +46,6 @@ module.exports = (fastify) => ({
       //we need to massage these into a formatted Inventory record, filtering out the
       return { result: stockItemsBuilder.getResults(), error: false };
     } catch (error) {
-      console.log(error);
       fastify.winston.error(error);
     }
   },
