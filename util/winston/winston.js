@@ -4,7 +4,9 @@ const winston = require("winston");
 const apiKey = JSON.parse(process.env.LOGDNA_KEY);
 
 module.exports = (opts) => {
-  const logger = winston.createLogger({});
+  const logger = winston.createLogger({
+    transports: [new winston.transports.Console()],
+  });
 
   const options = {
     key: apiKey[0],
@@ -19,7 +21,7 @@ module.exports = (opts) => {
   };
 
   //add our new instance
-  logger.add(new logdnaWinston({ ...options, ...opts }));
+  //logger.add(new logdnaWinston({ ...options, ...opts }));
 
   logger.stream = {
     write: function (message, encoding) {
