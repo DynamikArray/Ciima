@@ -153,9 +153,13 @@ export default {
       return `Similar titles: ${searchString}`;
     },
     filteredItems() {
-      return this.items.filter(row =>
-        row.extendedProperties.issueNumbers.includes(this.filterString)
-      );
+      return this.items.filter(row => {
+        if (row.extendedProperties && row.extendedProperties.issueNumbers) {
+          return row.extendedProperties.issueNumbers.includes(
+            this.filterString
+          );
+        }
+      });
     }
   },
   methods: {

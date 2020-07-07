@@ -171,22 +171,28 @@ export default {
       if (this.issues.length) return this.issues.length;
     },
     calculatedDefaultImageSize() {
+      if (this.numberOfIssues == 1) {
+        return {
+          height: this.defaulImageSize.height,
+          width: this.defaulImageSize.width
+        };
+      }
       if (this.numberOfIssues <= 30) {
         return {
           height: this.defaulImageSize.height / 2,
-          width: this.defaulImageSize.height / 2
+          width: this.defaulImageSize.width / 2
         };
       }
       if (this.numberOfIssues <= 40) {
         return {
           height: this.defaulImageSize.height / 3,
-          width: this.defaulImageSize.height / 3
+          width: this.defaulImageSize.width / 3
         };
       }
       if (this.numberOfIssues <= 50) {
         return {
           height: this.defaulImageSize.height / 4,
-          width: this.defaulImageSize.height / 4
+          width: this.defaulImageSize.width / 4
         };
       }
       if (this.numberOfIssues > 50) {
@@ -405,8 +411,13 @@ export default {
     //
     //
     addDisclaimer(canvas) {
-      const fontHeight = this.gridCols * 10;
-      const disclaimerHeight = this.gridCols * 35;
+      let fontHeight = this.gridCols * 10;
+      let disclaimerHeight = this.gridCols * 35;
+
+      if (this.gridCols > 5) {
+        fontHeight = this.gridCols * 6;
+        disclaimerHeight = this.gridCols * 30;
+      }
 
       canvas.height = canvas.height + disclaimerHeight;
 
@@ -420,12 +431,12 @@ export default {
       ctx.fillText(
         "Stock covers shown, not actual product photos.",
         canvas.width / 2,
-        canvas.height - this.gridCols * 25
+        canvas.height - this.gridCols * (this.gridCols < 4 ? 35 : 20)
       );
 
-      ctx.font = `normal bold ${fontHeight}px Verdana`;
+      ctx.font = `normal bold ${fontHeight / 1.3}px Verdana`;
       ctx.fillText(
-        "We do not distinguish betweeen newsstand and direct editions.",
+        "We do not distinguish betweeen newsstand & direct editions.",
         canvas.width / 2,
         canvas.height - this.gridRows * 5
       );

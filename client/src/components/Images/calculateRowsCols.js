@@ -123,24 +123,24 @@ export const calculateRowsCols = numbIssues => {
       dims.cols = 5;
       break;
     case 31:
-      dims.rows = 7;
-      dims.cols = 5;
+      dims.rows = 6;
+      dims.cols = 6;
       break;
     case 32:
-      dims.rows = 7;
-      dims.cols = 5;
+      dims.rows = 6;
+      dims.cols = 6;
       break;
     case 33:
-      dims.rows = 7;
-      dims.cols = 5;
+      dims.rows = 6;
+      dims.cols = 6;
       break;
     case 34:
-      dims.rows = 7;
-      dims.cols = 5;
+      dims.rows = 6;
+      dims.cols = 6;
       break;
     case 35:
-      dims.rows = 7;
-      dims.cols = 5;
+      dims.rows = 6;
+      dims.cols = 6;
       break;
     case 36:
       dims.rows = 6;
