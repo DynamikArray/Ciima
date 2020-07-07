@@ -16,7 +16,7 @@ const publishMessage = (payload) => {
       });
     })
     .catch((e) => {
-      linnworks.logger.error(e);
+      //linnworks.logger.error(e);
     });
 };
 
