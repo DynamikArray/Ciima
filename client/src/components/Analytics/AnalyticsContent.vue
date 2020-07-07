@@ -179,9 +179,7 @@ export default {
     formattedAveragesData() {
       const groupedData = this.groupedData;
       const something = this.analyticsData.map(item => {
-        const dataDate = this.$options.filters.monthDayYear(
-          new Date(item.createdDate)
-        );
+        const dataDate = this.$options.filters.monthDayYear(item.createdDate);
         groupedData[item.username][dataDate] = {
           avgPrices: item.avgPrice
         };
