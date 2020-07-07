@@ -119,6 +119,7 @@ export default {
     //
     createTitleWithOptions(pub = false, year = false) {
       const issueNumbers = this.getIssueNumbers();
+
       const publisher = this.getPublisher();
       const coverDate = this.getCoverDate();
       //plceholder for values later
@@ -129,7 +130,11 @@ export default {
       //title
       title.push(this.draft.titles[0].title);
       //issue numbers
-      title.push(this.draft.issueNumbers);
+
+      if (issueNumbers.length < 15) {
+        title.push(this.draft.issueNumbers);
+      }
+
       //publisher
       if (pub) title.push(publisher);
       //year
@@ -142,7 +147,14 @@ export default {
 
       //if over 2 issues then add first and last
       if (issueNumbers.length >= 2) {
-        title.push(`${[...issueNumbers].shift()}-${[...issueNumbers].pop()}`);
+        const firstLast = `${[...issueNumbers].shift()}-${[
+          ...issueNumbers
+        ].pop()}`;
+        title.push(firstLast);
+
+        //if longer than 50 we need to truncate it
+        if (this.draft.issueNumbers.length > 50)
+          this.draft.issueNumbers = firstLast;
       }
 
       //grade

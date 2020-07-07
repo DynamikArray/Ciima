@@ -43,6 +43,32 @@
         :width="canvasWidth"
         :height="canvasHeight"
       ></canvas>
+
+      <v-divider v-if="!canvasClean" class="my-3"></v-divider>
+      <div class="d-flex justify-center align-center w-100 flex-wrap">
+        <h4 class="d-flex mx-4">DEBUG</h4>
+        <h5 class="caption d-flex mx-4">defaultPadding <br />{{ padding }}</h5>
+        <h5 class="caption d-flex mx-4 flex-grow">
+          defaultImageSize <br />
+          {{ defaulImageSize }}
+        </h5>
+        <h5 class="caption d-flex mx-4">
+          Padding: <br />
+          {{ calculatedPadding }}
+        </h5>
+        <h5 class="caption d-flex mx-4 flex-grow">
+          calculatedDefaultImageSize <br />
+          {{ calculatedDefaultImageSize }}
+        </h5>
+        <h5 class="caption d-flex mx-4">
+          # Issues: <br />
+          {{ numberOfIssues }}
+        </h5>
+        <h5 class="caption d-flex mx-4">
+          Filesize: <br />
+          {{ this.$refs && this.$refs.imageCanvas ? canvasFileSize() : "n/a" }}
+        </h5>
+      </div>
       <v-divider v-if="!canvasClean" class="my-3"></v-divider>
     </div>
 
@@ -55,6 +81,7 @@
           <v-icon class="mr-1">fa-times-circle</v-icon>Reset Image
         </v-btn>
       </div>
+
       <div class="d-flex">
         <v-btn
           :loading="savingCover"
@@ -97,14 +124,16 @@ import {
 import settings from "@/util/settings.js";
 import { calculateRowsCols } from "./calculateRowsCols.js";
 
+const CLOUDINARY_MAX_FILE_SIZE = 10485760;
 export default {
   data() {
     return {
       canvasClean: true,
       padding: 20,
+
       defaulImageSize: {
-        height: 1050 / 2,
-        width: 690 / 2
+        height: 1050,
+        width: 690
       },
 
       rowOpts: [
@@ -112,14 +141,20 @@ export default {
         { text: "2 Rows", value: 2 },
         { text: "3 Rows", value: 3 },
         { text: "4 Rows", value: 4 },
-        { text: "5 Rows", value: 5 }
+        { text: "5 Rows", value: 5 },
+        { text: "6 Rows", value: 6 },
+        { text: "7 Rows", value: 7 },
+        { text: "8 Rows", value: 8 }
       ],
       colOpts: [
         { text: "1 Column", value: 1 },
         { text: "2 Columns", value: 2 },
         { text: "3 Columns", value: 3 },
         { text: "4 Columns", value: 4 },
-        { text: "5 Columns", value: 5 }
+        { text: "5 Columns", value: 5 },
+        { text: "6 Columns", value: 6 },
+        { text: "7 Columns", value: 7 },
+        { text: "8 Columns", value: 8 }
       ],
       gridRows: 2,
       gridCols: 3,
@@ -131,7 +166,41 @@ export default {
     ...mapState({
       savingCover: state => state.currentDraft.savingCover,
       issues: state => state.currentDraft.issues
-    })
+    }),
+    numberOfIssues() {
+      if (this.issues.length) return this.issues.length;
+    },
+    calculatedDefaultImageSize() {
+      if (this.numberOfIssues <= 30) {
+        return {
+          height: this.defaulImageSize.height / 2,
+          width: this.defaulImageSize.height / 2
+        };
+      }
+      if (this.numberOfIssues <= 40) {
+        return {
+          height: this.defaulImageSize.height / 3,
+          width: this.defaulImageSize.height / 3
+        };
+      }
+      if (this.numberOfIssues <= 50) {
+        return {
+          height: this.defaulImageSize.height / 4,
+          width: this.defaulImageSize.height / 4
+        };
+      }
+      if (this.numberOfIssues > 50) {
+        return {
+          height: this.defaulImageSize.height / 5,
+          width: this.defaulImageSize.height / 5
+        };
+      }
+      return this.defaulImageSize;
+    },
+    calculatedPadding() {
+      if (this.numberOfIssues > 40) return this.padding - 10;
+      return this.padding;
+    }
   },
   created() {
     const total = this.issues.length;
@@ -145,6 +214,17 @@ export default {
     this.handleOnClickLoadImages();
   },
   methods: {
+    canvasFileSize() {
+      if (this.$refs && this.$refs.imageCanvas) {
+        const data_url = this.$refs.imageCanvas.toDataURL("image/png");
+        const head = "data:image/png;base64,";
+        const fileSize = Math.round(((data_url.length - head.length) * 3) / 4);
+        if (fileSize > CLOUDINARY_MAX_FILE_SIZE) {
+          console.log("warn user we hit to big a picture");
+        }
+        return fileSize;
+      }
+    },
     handleOnChangeCols(value) {
       this.gridCols = value;
     },
@@ -176,12 +256,12 @@ export default {
       //get canvase and context objects
       const canvas = this.$refs.imageCanvas;
 
-      let pHeight = this.defaulImageSize.height + this.padding;
+      let pHeight = this.calculatedDefaultImageSize.height + this.padding;
       //single issue padding so text fits
       if (this.issues.length == 1)
-        pHeight = this.defaulImageSize.height + this.padding + 30;
+        pHeight = this.calculatedDefaultImageSize.height + this.padding + 30;
 
-      const pWidth = this.defaulImageSize.width + this.padding;
+      const pWidth = this.calculatedDefaultImageSize.width + this.padding;
 
       const cHeight = this.gridRows * pHeight;
       const cWidth = this.gridCols * pWidth;
@@ -316,7 +396,7 @@ export default {
     drawImageGridLines(ctx, { height, width }, xPos, yPos) {
       ctx.beginPath();
       ctx.strokeStyle = "#000";
-      ctx.lineWidth = 20;
+      ctx.lineWidth = this.padding;
       ctx.rect(xPos, yPos, width, height);
       ctx.stroke();
     },
@@ -419,7 +499,7 @@ export default {
             const errorMessage = response.error.message;
 
             //// TODO: log these errors better to loggin service
-            _this.$toastr.e("Error Uploading File");
+            _this.$toastr.e(`Error Uploading File - $${errorMessage}`);
           }
         }
       };

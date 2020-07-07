@@ -37,7 +37,7 @@ export default {
   methods: {
     //? move to vuex getter ?
     getImageUrlsFromIssues(issues) {
-      if (issues.length > 0) {
+      if (issues.length > 0 && issues.length < 12) {
         const issueUrls = issues.map(issue => {
           return { imageUrl: issue.imageUrl };
         });
@@ -54,6 +54,7 @@ export default {
         const issues = draft.issues;
 
         draft.other_images = this.getImageUrlsFromIssues(issues);
+
         draft.main_image = this.draft.coverPhoto;
         draft.draftType = this.defaultProductType;
 
