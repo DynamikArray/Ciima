@@ -52,31 +52,26 @@ module.exports = (fastify) => ({
 
     const query = "INSERT INTO slc_drafts SET ?";
 
-    const connection = await fastify.mysql.getConnection();
-    if (connection) {
-      let successResult,
-        errorResult = false;
+    let successResult,
+      errorResult = false;
 
-      try {
-        const [rows, fields] = await connection.query(query, draft);
-        connection.release();
-        successResult = rows;
-        return { result: rows };
-      } catch (error) {
-        errorResult = error;
-        fastify.winston.error(error);
-        res.send(error);
-      } finally {
-        fastify.auditLogger.log(
-          CREATE_DRAFT,
-          req.user.id,
-          successResult.insertId || 0,
-          DRAFT,
-          JSON.stringify({ successResult, errorResult })
-        );
-      }
+    try {
+      const [rows, fields] = await fastify.mysql.query(query, draft);
+      successResult = rows;
+      return { result: rows };
+    } catch (error) {
+      errorResult = error;
+      fastify.winston.error(error);
+      res.send(error);
+    } finally {
+      fastify.auditLogger.log(
+        CREATE_DRAFT,
+        req.user.id,
+        successResult.insertId || 0,
+        DRAFT,
+        JSON.stringify({ successResult, errorResult })
+      );
     }
-    return { error: "No db connection" };
   },
 
   /**

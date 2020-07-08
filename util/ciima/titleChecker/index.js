@@ -28,31 +28,26 @@ const checkTitleInDrafts = async (searchString, fastify) => {
     const query =
       "SELECT * FROM slc_drafts WHERE inventoryTitle = ? AND STATUS = 'open' ";
 
-    const connection = await fastify.mysql.getConnection();
-    if (connection) {
-      try {
-        const [rows, fields] = await connection.query(query, searchString);
-        connection.release();
+    try {
+      const [rows, fields] = await fastify.mysql.query(query, searchString);
 
-        //if title found
-        if (rows.length > 0)
-          return { result: { passed: false, failed: true, items: rows[0] } };
+      //if title found
+      if (rows.length > 0)
+        return { result: { passed: false, failed: true, items: rows[0] } };
 
-        //no title found
-        return { result: { passed: true, failed: false, items: false } };
-      } catch (error) {
-        logger.error(error);
-        res.send(error);
-      }
+      //no title found
+      return { result: { passed: true, failed: false, items: false } };
+    } catch (error) {
+      logger.error(error);
+      res.send(error);
     }
-    return { error: "No db connection" };
   } catch (error) {
     logger.error(error);
     return { error };
   }
 };
 
-const checkTitleOnEbay = async searchString => {
+const checkTitleOnEbay = async (searchString) => {
   try {
     logger.debug(`Checking Title on ebay for ${searchString}`);
 
@@ -61,8 +56,8 @@ const checkTitleOnEbay = async searchString => {
       //categoryId: 63, //comics
       //outputSelector: ["SellerInfo", "AspectHistogram", "PictureURLLarge"],
       paginationInput: {
-        entriesPerPage: 10
-      }
+        entriesPerPage: 10,
+      },
       //sortOrder: "CurrentPriceHighest"
     };
 
@@ -75,7 +70,7 @@ const checkTitleOnEbay = async searchString => {
 
       if (result.paginationOutput.totalEntries > 0) {
         return {
-          result: { passed: false, failed: true, items: result.searchResult }
+          result: { passed: false, failed: true, items: result.searchResult },
         };
       }
     }
@@ -90,16 +85,16 @@ const checkTitleOnEbay = async searchString => {
  * @param  {[type]} params [description]
  * @return {[type]}        [description]
  */
-const callEbay = params => {
+const callEbay = (params) => {
   const { searchType } = this; //local instance of search type
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     ebay.xmlRequest(
       {
         serviceName: "Finding",
         opType: "findItemsByKeywords",
         appId: process.env.EBAY_APP_ID,
         params: params,
-        parser: ebay.parseResponseJson // (default)
+        parser: ebay.parseResponseJson, // (default)
       },
       (error, itemsResponse) => {
         if (error) reject(error);

@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 
-module.exports = fastify => ({
+module.exports = (fastify) => ({
   /**
    * [register description]
    * @param  {[type]}  req [description]
@@ -11,10 +11,9 @@ module.exports = fastify => ({
     fastify.winston.debug("Registration Attempt");
 
     const { email, username, password } = req.body;
-    const connection = await fastify.mysql.getConnection();
 
     //email check
-    const emailExists = await checkIfEmailExists(connection, email);
+    const emailExists = await checkIfEmailExists(fastify, email);
     if (emailExists) {
       const msg = "Email already exists";
       fastify.winston.debug(msg);
@@ -23,7 +22,7 @@ module.exports = fastify => ({
     }
 
     //username check
-    const userExists = await checkIfUsernameExists(connection, username);
+    const userExists = await checkIfUsernameExists(fastify, username);
     if (userExists) {
       const msg = "Username already exists.";
       fastify.winston.debug(msg);
@@ -40,27 +39,19 @@ module.exports = fastify => ({
 
     //try to add this user into the db
     try {
-      if (connection) {
-        const [result] = await connection.query(query, [
-          email,
-          username,
-          hashPassword
-        ]);
+      const [result] = await fastify.mysql.query(query, [
+        email,
+        username,
+        hashPassword,
+      ]);
 
-        //pull of the props we care about
-        const { affectedRows, insertId } = result;
-        if (affectedRows == 1) {
-          const user = await getUserById(connection, insertId);
-          connection.release();
-          return user;
-        }
-        //wasnt one record, release connection , send result back
-        connection.release();
-        return result;
+      //pull of the props we care about
+      const { affectedRows, insertId } = result;
+      if (affectedRows == 1) {
+        const user = await getUserById(fastify, insertId);
+        return user;
       }
-      const msg = "No DB Connection";
-      fastify.winston.error(msg);
-      return { error: msg };
+      return result;
     } catch (err) {
       //todo better error handle
       return err;
@@ -75,13 +66,12 @@ module.exports = fastify => ({
    */
   login: async (req, res) => {
     const { username, password } = req.body;
-    const connection = await fastify.mysql.getConnection();
 
     //see if username exists
-    const userExists = await checkIfUsernameExists(connection, username);
+    const userExists = await checkIfUsernameExists(fastify, username);
     if (userExists) {
       const { user } = await getUserByUsernamePassword(
-        connection,
+        fastify,
         username,
         password
       );
@@ -101,13 +91,12 @@ module.exports = fastify => ({
    * @return {Promise}     [description]
    */
   account: async (req, res) => {
-    const connection = await fastify.mysql.getConnection();
     const { id } = req.user;
-    const user = await getUserById(connection, id);
+    const user = await getUserById(fastify, id);
     if (user) {
       res.send({ ...user });
     }
-  }
+  },
 });
 
 /**
@@ -116,19 +105,16 @@ module.exports = fastify => ({
  * @param  {inter}  id          users record id
  * @return {Promise}            User if found or error:msg
  */
-const getUserById = async (connection, id) => {
+const getUserById = async (fastify, id) => {
   const query = `SELECT id, email, username FROM slc_users WHERE id = ? `;
   try {
-    if (connection) {
-      const [rows, fields] = await connection.query(query, [id]);
-      connection.release();
-      if (rows.length == 1) {
-        return rows[0]; //result.rows;
-      } else {
-        return { error: "Unable to find a matching record" };
-      }
+    const [rows, fields] = await fastify.mysql.query(query, [id]);
+
+    if (rows.length == 1) {
+      return rows[0]; //result.rows;
+    } else {
+      return { error: "Unable to find a matching record" };
     }
-    return { error: "No Db Connection" };
   } catch (err) {
     //todo better error handle
     return { error: err };
@@ -141,19 +127,16 @@ const getUserById = async (connection, id) => {
  * @param  {[type]}  email      [description]
  * @return {Promise}            [description]
  */
-const checkIfEmailExists = async (connection, email) => {
+const checkIfEmailExists = async (fastify, email) => {
   const query = `SELECT email FROM slc_users WHERE email = ? `;
   try {
-    if (connection) {
-      const [rows, fields] = await connection.query(query, [email]);
-      connection.release();
-      if (rows.length > 0) {
-        return true; //result.rows;
-      } else {
-        return false;
-      }
+    const [rows, fields] = await fastify.mysql.query(query, [email]);
+
+    if (rows.length > 0) {
+      return true; //result.rows;
+    } else {
+      return false;
     }
-    return false;
   } catch (err) {
     //todo better error handle
     return { error: err };
@@ -166,19 +149,16 @@ const checkIfEmailExists = async (connection, email) => {
  * @param  {[type]}  email      [description]
  * @return {Promise}            [description]
  */
-const checkIfUsernameExists = async (connection, username) => {
+const checkIfUsernameExists = async (fastify, username) => {
   const query = `SELECT username FROM slc_users WHERE username = ? `;
   try {
-    if (connection) {
-      const [rows, fields] = await connection.query(query, [username]);
-      connection.release();
-      if (rows.length > 0) {
-        return true; //result.rows;
-      } else {
-        return false;
-      }
+    const [rows, fields] = await fastify.mysql.query(query, [username]);
+
+    if (rows.length > 0) {
+      return true; //result.rows;
+    } else {
+      return false;
     }
-    return false;
   } catch (err) {
     //todo better error handle
     return { error: err };
@@ -192,27 +172,24 @@ const checkIfUsernameExists = async (connection, username) => {
  * @param  {[type]}  password   [description]
  * @return {Promise}            [description]
  */
-const getUserByUsernamePassword = async (connection, username, password) => {
+const getUserByUsernamePassword = async (fastify, username, password) => {
   const query = `SELECT id, username, email, password FROM slc_users WHERE username = ? `;
   try {
-    if (connection) {
-      const [rows, fields] = await connection.query(query, [username]);
-      connection.release();
-      if (rows.length > 0) {
-        const user = rows[0];
-        if (user) {
-          const validPass = await bcrypt.compare(password, user.password);
-          if (validPass) {
-            //REMOVE THE HASHED PASSWORD from the user before sending back
-            delete user.password;
-            return { user };
-          }
+    const [rows, fields] = await fastify.mysql.query(query, [username]);
+
+    if (rows.length > 0) {
+      const user = rows[0];
+      if (user) {
+        const validPass = await bcrypt.compare(password, user.password);
+        if (validPass) {
+          //REMOVE THE HASHED PASSWORD from the user before sending back
+          delete user.password;
+          return { user };
         }
-      } else {
-        return false;
       }
+    } else {
+      return false;
     }
-    return false;
   } catch (err) {
     //todo better error handle
     return { error: err };

@@ -20,26 +20,22 @@ const worker = async () => {
   // Consumer
   await amqpWrapper.CONNECTION.then(function (conn) {
     return conn.createChannel();
-  })
-    .then(function (ch) {
-      return ch.assertQueue(amqpWrapper.QUEUE_NAME).then(function (ok) {
-        ch.prefetch(10);
-        return ch.consume(amqpWrapper.QUEUE_NAME, async function (msg) {
-          if (msg !== null) {
-            const payload = JSON.parse(msg.content);
-            if (payload) {
-              await messageHandler(payload);
-            }
-            ch.ack(msg);
+  }).then(function (ch) {
+    return ch.assertQueue(amqpWrapper.QUEUE_NAME).then(function (ok) {
+      ch.prefetch(10);
+      return ch.consume(amqpWrapper.QUEUE_NAME, async function (msg) {
+        if (msg !== null) {
+          const payload = JSON.parse(msg.content);
+          if (payload) {
+            await messageHandler(payload);
           }
-        });
+          ch.ack(msg);
+        }
       });
-    })
-    .catch((err) => {
-      logger.error(`CAUGHT in our amqp Connection  ${JSON.stringify(err)}`);
     });
+  });
 
-  //logger.info(`Running worker!`);
+  logger.info(`Running worker!`);
 };
 
 //start the worker

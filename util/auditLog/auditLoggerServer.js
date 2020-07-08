@@ -13,22 +13,19 @@ const auditLogger = {
       user_id,
       resource_id,
       resource_type,
-      meta
+      meta,
     };
     const query = "INSERT INTO slc_audit_log SET ?";
-    const connection = await mysql.getConnection();
-    if (connection) {
-      try {
-        const [rows, fields] = await connection.query(query, auditItem);
-        connection.release();
-        if (rows.affectedRows == 1) return true;
-        throw "AuditLog didnt insert row correctly";
-      } catch (error) {
-        if (winston) winston.error("auditLoggerServer.log() " + error);
-        return false;
-      }
+
+    try {
+      const [rows, fields] = await fastify.mysql.query(query, auditItem);
+      if (rows.affectedRows == 1) return true;
+      throw "AuditLog didnt insert row correctly";
+    } catch (error) {
+      if (winston) winston.error("auditLoggerServer.log() " + error);
+      return false;
     }
-  }
+  },
 };
 
 module.exports = { auditLogger };

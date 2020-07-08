@@ -51,7 +51,7 @@ const buildSearch = (search, alpha) => {
   return { query, params };
 };
 
-const buildUpcTitle = search => {
+const buildUpcTitle = (search) => {
   const query = `SELECT
         COUNT(i.Title)as issueCount,
         t.Title as title,
@@ -75,7 +75,7 @@ const buildUpcTitle = search => {
   return { query, params };
 };
 
-const buildUpcIssue = search => {
+const buildUpcIssue = (search) => {
   const query = `
         SELECT
         @curRow := @curRow + 1 AS rowNumber,
@@ -107,7 +107,7 @@ const buildUpcIssue = search => {
   return { query, params };
 };
 
-module.exports = fastify => ({
+module.exports = (fastify) => ({
   titleSearch: async (req, reply) => {
     //removes all extra chars from search string
     const searchString = req.query.query;
@@ -120,16 +120,12 @@ module.exports = fastify => ({
     if (isAdvanced) sqlOpts = buildAdvanced(searchString, alphaTitle);
     if (!isAdvanced) sqlOpts = buildSearch(searchString, alphaTitle);
 
-    const connection = await fastify.mysql.getConnection();
-    if (connection) {
-      const [rows, fields] = await connection.query(
-        sqlOpts.query,
-        sqlOpts.params
-      );
-      connection.release();
-      return { result: rows };
-    }
-    return { error: "No Connection" };
+    const [rows, fields] = await fastify.mysql.query(
+      sqlOpts.query,
+      sqlOpts.params
+    );
+
+    return { result: rows };
   },
 
   upcSearch: async (req, reply) => {
@@ -139,28 +135,22 @@ module.exports = fastify => ({
       upcTitleSqlOpts = buildUpcTitle(upc);
       upcIssueeSqlOpts = buildUpcIssue(upc);
 
-      const connection = await fastify.mysql.getConnection();
-      if (connection) {
-        const [titleResults] = await connection.query(
-          upcTitleSqlOpts.query,
-          upcTitleSqlOpts.params
-        );
+      const [titleResults] = await fastify.mysql.query(
+        upcTitleSqlOpts.query,
+        upcTitleSqlOpts.params
+      );
 
-        const [issueResults] = await connection.query(
-          upcIssueeSqlOpts.query,
-          upcIssueeSqlOpts.params
-        );
-        connection.release();
+      const [issueResults] = await fastify.mysql.query(
+        upcIssueeSqlOpts.query,
+        upcIssueeSqlOpts.params
+      );
 
-        const title = titleResults[0];
-        const issue = issueResults[0];
+      const title = titleResults[0];
+      const issue = issueResults[0];
 
-        return { result: { title, issue } };
-      }
-
-      return { error: "No Connection" };
+      return { result: { title, issue } };
     } catch (e) {
       console.log(e);
     }
-  }
+  },
 });

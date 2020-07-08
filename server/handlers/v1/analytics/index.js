@@ -22,22 +22,16 @@ module.exports = (fastify) => ({
     const newItemsSqlOpts = buildNewItemsQuery(days, userId);
     const existingItemsSqlOpts = buildExistingItemsQuery(days, userId);
 
-    //sql execution
-    const connection = await fastify.mysql.getConnection();
-    if (connection) {
-      const [newItems] = await connection.query(
-        newItemsSqlOpts.query,
-        newItemsSqlOpts.params
-      );
-      const [existingItems] = await connection.query(
-        existingItemsSqlOpts.query,
-        existingItemsSqlOpts.params
-      );
+    const [newItems] = await fastify.mysql.query(
+      newItemsSqlOpts.query,
+      newItemsSqlOpts.params
+    );
 
-      connection.release();
+    const [existingItems] = await fastify.mysql.query(
+      existingItemsSqlOpts.query,
+      existingItemsSqlOpts.params
+    );
 
-      return { result: { newItems, existingItems } };
-    }
-    return { error: "No Connection" };
+    return { result: { newItems, existingItems } };
   },
 });

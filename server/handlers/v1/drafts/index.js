@@ -6,7 +6,7 @@ const { buildSelectQueries, buildSelectQueriesParams } = require("./helper");
  * @param  {FastifyObject} fastify the fastify isntance
  * @return {object}         object containing the apporiate handlers for the drafts route
  */
-module.exports = fastify => ({
+module.exports = (fastify) => ({
   readHandler: async (req, res) => {
     let { status, all, draftType, searchString } = req.query;
     if (!status) status = "open"; //default to open if no param
@@ -25,27 +25,21 @@ module.exports = fastify => ({
       searchString
     );
 
-    const connection = await fastify.mysql.getConnection();
-    if (connection) {
-      try {
-        const [rows, fields] = await connection.query(
-          selectQuery,
-          selectParams
-        );
-        const [totalRows] = await connection.query(totalQuery, totalParams);
+    try {
+      const [rows, fields] = await fastify.mysql.query(
+        selectQuery,
+        selectParams
+      );
+      const [totalRows] = await fastify.mysql.query(totalQuery, totalParams);
 
-        //PAGING totals
-        const rowsTotal = totalRows[0].rowCount;
-        connection.release();
+      //PAGING totals
+      const rowsTotal = totalRows[0].rowCount;
+      const pageCount = Math.ceil(rowsTotal / pageLimit);
 
-        const pageCount = Math.ceil(rowsTotal / pageLimit);
-
-        return { result: { page, pageCount, pageLimit, rowsTotal, rows } };
-      } catch (error) {
-        fastify.winston.error(error);
-        res.send(error);
-      }
+      return { result: { page, pageCount, pageLimit, rowsTotal, rows } };
+    } catch (error) {
+      fastify.winston.error(error);
+      res.send(error);
     }
-    return { error: "No db connection" };
-  }
+  },
 });

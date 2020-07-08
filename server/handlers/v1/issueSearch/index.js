@@ -1,4 +1,4 @@
-module.exports = fastify => ({
+module.exports = (fastify) => ({
   issueSearch: async (req, reply) => {
     const query = `
           SELECT
@@ -27,12 +27,8 @@ module.exports = fastify => ({
         WHERE i.Title = ?
         ORDER BY issueOrder`;
 
-    const connection = await fastify.mysql.getConnection();
-    if (connection) {
-      const [rows, fields] = await connection.query(query, [req.query.title]);
-      connection.release();
-      return { result: rows };
-    }
-    return { error: "No db connection" };
-  }
+    const [rows, fields] = await fastify.mysql.query(query, [req.query.title]);
+
+    return { result: rows };
+  },
 });

@@ -1,4 +1,4 @@
-module.exports = fastify => ({
+module.exports = (fastify) => ({
   ebayCategories: async (req, reply) => {
     const query = `SELECT
         id,
@@ -9,12 +9,8 @@ module.exports = fastify => ({
         WHERE (c.ebayCategoryName LIKE concat('%',?,'%') )
         ORDER BY ebayCategoryName ASC`;
 
-    const connection = await fastify.mysql.getConnection();
-    if (connection) {
-      const [rows, fields] = await connection.query(query, [req.query.q]);
-      connection.release();
-      return { result: rows };
-    }
-    return { error: "No db connection" };
-  }
+    const [rows, fields] = await fastify.mysql.query(query, [req.query.q]);
+
+    return { result: rows };
+  },
 });

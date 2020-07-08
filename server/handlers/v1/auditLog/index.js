@@ -28,28 +28,23 @@ module.exports = (fastify) => ({
       //searchString
     );
 
-    const connection = await fastify.mysql.getConnection();
-    if (connection) {
-      try {
-        const [rows, fields] = await connection.query(
-          selectQuery,
-          selectParams
-        );
-        const [totalRows] = await connection.query(totalQuery, totalParams);
+    try {
+      const [rows, fields] = await fastify.mysql.query(
+        selectQuery,
+        selectParams
+      );
+      const [totalRows] = await fastify.mysql.query(totalQuery, totalParams);
 
-        //PAGING totals
-        const rowsTotal = totalRows[0].rowCount;
-        connection.release();
+      //PAGING totals
+      const rowsTotal = totalRows[0].rowCount;
 
-        const pageCount = Math.ceil(rowsTotal / pageLimit);
+      const pageCount = Math.ceil(rowsTotal / pageLimit);
 
-        return { result: { page, pageCount, pageLimit, rowsTotal, rows } };
-      } catch (error) {
-        fastify.winston.error(error);
-        res.send(error);
-      }
+      return { result: { page, pageCount, pageLimit, rowsTotal, rows } };
+    } catch (error) {
+      fastify.winston.error(error);
+      res.send(error);
     }
-    return { error: "No db connection" };
   },
 
   /**
@@ -61,19 +56,13 @@ module.exports = (fastify) => ({
   userListHandler: async (req, res) => {
     const userListQuery =
       "SELECT u.id as value, u.username as text FROM slc_users u ORDER BY username ASC";
-
-    const connection = await fastify.mysql.getConnection();
-    if (connection) {
-      try {
-        const [rows, fields] = await connection.query(userListQuery);
-        connection.release();
-        return { result: rows };
-      } catch (error) {
-        fastify.winston.error(error);
-        res.send(error);
-      }
+    try {
+      const [rows, fields] = await fastify.mysql.query(userListQuery);
+      return { result: rows };
+    } catch (error) {
+      fastify.winston.error(error);
+      res.send(error);
     }
-    return { error: "No db connection" };
   },
 
   /**

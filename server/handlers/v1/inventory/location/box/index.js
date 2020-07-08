@@ -1,6 +1,6 @@
 const helpers = require("./helpers");
 
-module.exports = fastify => ({
+module.exports = (fastify) => ({
   //
   //  (C)reate
   //
@@ -11,19 +11,15 @@ module.exports = fastify => ({
 
     const query = "INSERT INTO slc_location_boxes SET ?";
 
-    const connection = await fastify.mysql.getConnection();
-    if (connection) {
-      try {
-        const [rows, fields] = await connection.query(query, newBox);
-        const { affectedRows, insertId } = rows;
-        connection.release();
-        return { result: { affectedRows, insertId } };
-      } catch (error) {
-        fastify.winston.error(error);
-        res.send(error);
-      }
+    try {
+      const [rows, fields] = await fastify.mysql.query(query, newBox);
+      const { affectedRows, insertId } = rows;
+
+      return { result: { affectedRows, insertId } };
+    } catch (error) {
+      fastify.winston.error(error);
+      res.send(error);
     }
-    return { error: "No db connection" };
   },
 
   //
@@ -35,21 +31,16 @@ module.exports = fastify => ({
 
     const query = "SELECT * FROM slc_location_boxes WHERE id = ?";
 
-    const connection = await fastify.mysql.getConnection();
-    if (connection) {
-      try {
-        const [rows, fields] = await connection.query(query, id);
-        if (rows.length !== 1) {
-          res.send({ error: "Record not found" });
-        }
-        connection.release();
-        return { result: rows[0] };
-      } catch (error) {
-        fastify.winston.error(error);
-        res.send(error);
+    try {
+      const [rows, fields] = await fastify.mysql.query(query, id);
+      if (rows.length !== 1) {
+        res.send({ error: "Record not found" });
       }
+      return { result: rows[0] };
+    } catch (error) {
+      fastify.winston.error(error);
+      res.send(error);
     }
-    return { error: "No db connection" };
   },
 
   //
@@ -64,18 +55,13 @@ module.exports = fastify => ({
 
     const query = `UPDATE slc_location_boxes SET ? WHERE id=${id}`;
 
-    const connection = await fastify.mysql.getConnection();
-    if (connection) {
-      try {
-        const [rows, fields] = await connection.query(query, boxData);
-        connection.release();
-        return { result: rows };
-      } catch (error) {
-        fastify.winston.error(error);
-        res.send(error);
-      }
+    try {
+      const [rows, fields] = await fastify.mysql.query(query, boxData);
+      return { result: rows };
+    } catch (error) {
+      fastify.winston.error(error);
+      res.send(error);
     }
-    return { error: "No db connection" };
   },
 
   //
@@ -85,18 +71,13 @@ module.exports = fastify => ({
     const { id } = req.params;
     const query = `DELETE FROM slc_location_boxes WHERE id=?`;
 
-    const connection = await fastify.mysql.getConnection();
-    if (connection) {
-      try {
-        const [rows, fields] = await connection.query(query, id);
-        connection.release();
-        return { result: rows };
-      } catch (error) {
-        fastify.winston.error(error);
-        res.send(error);
-      }
+    try {
+      const [rows, fields] = await fastify.mysql.query(query, id);
+      return { result: rows };
+    } catch (error) {
+      fastify.winston.error(error);
+      res.send(error);
     }
-    return { error: "No db connection" };
   },
 
   //
@@ -114,33 +95,31 @@ module.exports = fastify => ({
     const totalQuery =
       "SELECT COUNT(*) as rowCount FROM slc_location_boxes WHERE (id > 0 AND box LIKE concat('%',?,'%') AND box_type LIKE concat('%',?,'%')   ) ORDER BY id DESC";
 
-    const connection = await fastify.mysql.getConnection();
-    if (connection) {
-      try {
-        const [rows, fields] = await connection.query(selectQuery, [
-          nextPage,
-          box,
-          box_type,
-          pageLimit
-        ]);
-        const [totalRows] = await connection.query(totalQuery, [box, box_type]);
+    try {
+      const [rows, fields] = await fastify.mysql.query(selectQuery, [
+        nextPage,
+        box,
+        box_type,
+        pageLimit,
+      ]);
+      const [totalRows] = await fastify.mysql.query(totalQuery, [
+        box,
+        box_type,
+      ]);
 
-        //next Page
-        let next = ([...rows].pop() || {}).id;
-        if (rows.length < pageLimit) {
-          next = false;
-        }
-        //PAGING totals
-        const rowsTotal = totalRows[0].rowCount;
-
-        connection.release();
-        return { result: { rowsTotal, pageLimit, next, rows } };
-      } catch (error) {
-        fastify.winston.error(error);
-        res.send(error);
+      //next Page
+      let next = ([...rows].pop() || {}).id;
+      if (rows.length < pageLimit) {
+        next = false;
       }
+      //PAGING totals
+      const rowsTotal = totalRows[0].rowCount;
+
+      return { result: { rowsTotal, pageLimit, next, rows } };
+    } catch (error) {
+      fastify.winston.error(error);
+      res.send(error);
     }
-    return { error: "No db connection" };
   },
 
   //
@@ -161,28 +140,24 @@ module.exports = fastify => ({
 
     const { selectQuery, totalQuery } = helpers.buildInventoryBoxQueries();
 
-    const connection = await fastify.mysql.getConnection();
-    if (connection) {
-      try {
-        const [rows, fields] = await connection.query(selectQuery, [
-          box,
-          box_id,
-          pageLimit
-        ]);
-        const [totalRows] = await connection.query(totalQuery, [box, box_id]);
-        let next = ([...rows].pop() || {}).id;
-        if (rows.length < pageLimit) {
-          next = false;
-        }
-        //PAGING totals
-        const rowsTotal = totalRows[0].rowCount;
-        connection.release();
-        return { result: { rowsTotal, pageLimit, next, rows } };
-      } catch (error) {
-        fastify.winston.error(error);
-        res.send(error);
+    try {
+      const [rows, fields] = await fastify.mysql.query(selectQuery, [
+        box,
+        box_id,
+        pageLimit,
+      ]);
+      const [totalRows] = await fastify.mysql.query(totalQuery, [box, box_id]);
+      let next = ([...rows].pop() || {}).id;
+      if (rows.length < pageLimit) {
+        next = false;
       }
+      //PAGING totals
+      const rowsTotal = totalRows[0].rowCount;
+
+      return { result: { rowsTotal, pageLimit, next, rows } };
+    } catch (error) {
+      fastify.winston.error(error);
+      res.send(error);
     }
-    return { error: "No db connection" };
-  }
+  },
 });
