@@ -1,5 +1,9 @@
 <template>
   <div class="d-flex flex-grow justify-start align-center w-100 flex-column">
+    <div class="d-flex">
+      <h2>{{ title }}</h2>
+    </div>
+
     <div class="d-flex flex-grow justify-space-around align-center w-100">
       <TotalItems
         v-if="formattedItemsData"
@@ -101,9 +105,19 @@ export default {
       });
       return new Set(datesList);
     },
+
+    usersColorsLists() {
+      return this.analyticsData.reduce((users, item) => {
+        users[item.username] = { color: Colors.random() };
+        return users;
+      }, {});
+    },
+
+    //
     formattedItemsData() {
       const groupedData = this.groupedData;
-      const something = this.analyticsData.map(item => {
+
+      this.analyticsData.map(item => {
         const dataDate = this.$options.filters.monthDayYear(item.createdDate);
         groupedData[item.username][dataDate] = {
           totalItems: item.totalItems
@@ -140,7 +154,8 @@ export default {
 
     formattedPricesData() {
       const groupedData = this.groupedData;
-      const something = this.analyticsData.map(item => {
+
+      this.analyticsData.map(item => {
         const dataDate = this.$options.filters.monthDayYear(item.createdDate);
         groupedData[item.username][dataDate] = {
           totalPrices: item.totalPrice
@@ -178,7 +193,8 @@ export default {
 
     formattedAveragesData() {
       const groupedData = this.groupedData;
-      const something = this.analyticsData.map(item => {
+
+      this.analyticsData.map(item => {
         const dataDate = this.$options.filters.monthDayYear(item.createdDate);
         groupedData[item.username][dataDate] = {
           avgPrices: item.avgPrice

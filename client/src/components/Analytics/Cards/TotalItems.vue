@@ -4,7 +4,7 @@
       <div
         class="d-flex flex-wrap-reverse justify-sm-center justify-md-end align-baseline w-100"
       >
-        <h5 class="my-0 mx-1">Total Items</h5>
+        <h5 class="my-0 mx-1">Inventory Items</h5>
         <h3 class="order-sm-first order-md-last my-0 ml-md-auto mx-1">
           {{ totalItems }}
         </h3>

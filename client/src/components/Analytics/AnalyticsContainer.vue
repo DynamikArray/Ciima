@@ -19,8 +19,15 @@
     <v-divider class="my-1"></v-divider>
     <!--End Page Heading -->
 
-    <div class="d-flex justify-start align-center">
-      <DatasetTypeButton :isActive.sync="showNewItems" />
+    <div class="d-flex justify-space-between align-center">
+      <AnalyticsGrandTotal
+        :newItems="newItems"
+        :existingItems="existingItems"
+      />
+
+      <div class="d-flex flex-shrink-0">
+        <DatasetTypeButton :isActive.sync="showNewItems" />
+      </div>
     </div>
 
     <v-divider class="my-1"></v-divider>
@@ -67,11 +74,13 @@ import { ANALYTICS_FETCH } from "@/store/action-types";
 import AnalyticsFilters from "./AnalyticsFilters";
 import DatasetTypeButton from "./Buttons/DatasetTypeButton";
 import AnalyticsContent from "./AnalyticsContent";
+import AnalyticsGrandTotal from "./AnalyticsGrandTotal";
 
 export default {
   components: {
     AnalyticsFilters,
     DatasetTypeButton,
+    AnalyticsGrandTotal,
     AnalyticsContent
   },
   data: () => ({
