@@ -19,6 +19,15 @@
           {{ Number(stockCountValue) | currency }}
         </h1>
       </div>
+      <div class="d-flex justify-start align-center mx-4">
+        <h5 class="text-center mr-2">
+          Average Prices<br />
+          Averages Value
+        </h5>
+        <h1 class="mr-2">
+          {{ Number(stockValueAverage) | currency }}
+        </h1>
+      </div>
     </div>
   </div>
 </template>
@@ -55,6 +64,22 @@ export default {
       }, 0);
 
       return newItemValue + existingItemsValue;
+    },
+    stockValueAverage() {
+      const newItemAverage = this.newItems.reduce((t, i) => {
+        t = t + i.avgPrice || 0;
+        return t;
+      }, 0);
+
+      const existingItemAverage = this.existingItems.reduce((t, i) => {
+        t = t + i.avgPrice || 0;
+        return t;
+      }, 0);
+
+      return (
+        (newItemAverage + existingItemAverage) /
+        (this.existingItems.length + this.newItems.length)
+      );
     }
   }
 };
