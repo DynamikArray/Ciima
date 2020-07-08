@@ -99,7 +99,6 @@ const start = async () => {
   fastify.auditLogger.initiliaze(fastify.mysql, fastify.winston);
 
   const msg = `Running at: ${JSON.stringify(fastify.server.address())}`;
-  console.log(msg);
   fastify.winston.info(msg);
 };
 
