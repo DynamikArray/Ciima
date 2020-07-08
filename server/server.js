@@ -18,9 +18,9 @@ fastify.decorate("linnworks", linnworks);
 const { auditLogger } = require("../util/auditLog/auditLoggerServer.js");
 fastify.decorate("auditLogger", auditLogger);
 
-//add morgan
-fastify.use(require("morgan")("short", { stream: logger.stream }));
-//add our winston/logdna logger to fastify
+//add morgan for when heroku router dont work
+if (process.env.NODE_ENV !== "production")
+  fastify.use(require("morgan")("short", { stream: logger.stream }));
 
 //proper mysql connection string if prod
 let connectionString = process.env.MYSQL_CONN;
