@@ -18,7 +18,7 @@ const auditLogger = {
     const query = "INSERT INTO slc_audit_log SET ?";
 
     try {
-      const [rows, fields] = await fastify.mysql.query(query, auditItem);
+      const [rows, fields] = await mysql.query(query, auditItem);
       if (rows.affectedRows == 1) return true;
       throw "AuditLog didnt insert row correctly";
     } catch (error) {

@@ -22,7 +22,7 @@ const worker = async () => {
     return conn.createChannel();
   }).then(function (ch) {
     return ch.assertQueue(amqpWrapper.QUEUE_NAME).then(function (ok) {
-      ch.prefetch(10);
+      ch.prefetch(5);
       return ch.consume(amqpWrapper.QUEUE_NAME, async function (msg) {
         if (msg !== null) {
           const payload = JSON.parse(msg.content);
