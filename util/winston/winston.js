@@ -1,13 +1,13 @@
 //const logdnaWinston = require("logdna-winston");
 const winston = require("winston");
-
-const apiKey = JSON.parse(process.env.LOGDNA_KEY);
+//const apiKey = JSON.parse(process.env.LOGDNA_KEY);
 
 module.exports = (opts) => {
   const logger = winston.createLogger({
     transports: [new winston.transports.Console()],
   });
 
+  /*
   const options = {
     key: apiKey[0],
     // hostname: myHostname,
@@ -19,6 +19,7 @@ module.exports = (opts) => {
     index_meta: false, // Defaults to false, when true ensures meta object will be searchable
     handleExceptions: false, // Only add this line in order to track exceptions
   };
+  */
 
   //add our new instance
   //logger.add(new logdnaWinston({ ...options, ...opts }));
