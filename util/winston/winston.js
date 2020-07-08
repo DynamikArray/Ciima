@@ -1,4 +1,4 @@
-const logdnaWinston = require("logdna-winston");
+//const logdnaWinston = require("logdna-winston");
 const winston = require("winston");
 
 const apiKey = JSON.parse(process.env.LOGDNA_KEY);
