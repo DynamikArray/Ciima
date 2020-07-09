@@ -192,8 +192,15 @@ export default {
       const submitList = this.selectedItems.map(item => {
         return this.submitDraft(item.id, false);
       });
-      Promise.all(submitList)
-        .then(values => {
+
+      submitList
+        .reduce((promiseChain, currentTask) => {
+          return promiseChain.then(chainResults =>
+            currentTask.then(currentResult => [...chainResults, currentResult])
+          );
+        }, Promise.resolve([]))
+        .then(arrResults => {
+          console.log(arrResults);
           this.$toastr.s("All items submitted!");
         })
         .catch(e => {
