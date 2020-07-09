@@ -10,8 +10,8 @@ const buildNewItemsQuery = (days, userId) => {
           u.username as username,
           l.action AS auditAction,
           count(l.resource_id) AS totalItems,
-          round(sum(d.price)) AS totalPrice,
-          ROUND( sum(d.price) / count(l.resource_id) ) AS avgPrice
+          round(sum(d.price),2) AS totalPrice,
+          ROUND( sum(d.price) / count(l.resource_id),2 ) AS avgPrice
         FROM
           slc_audit_log l
         LEFT JOIN

@@ -45,30 +45,15 @@
       ></canvas>
 
       <v-divider v-if="!canvasClean" class="my-3"></v-divider>
-      <div class="d-flex justify-center align-center w-100 flex-wrap">
-        <h4 class="d-flex mx-4">DEBUG</h4>
-        <h5 class="caption d-flex mx-4">defaultPadding <br />{{ padding }}</h5>
-        <h5 class="caption d-flex mx-4 flex-grow">
-          defaultImageSize <br />
-          {{ defaulImageSize }}
-        </h5>
-        <h5 class="caption d-flex mx-4">
-          Padding: <br />
-          {{ calculatedPadding }}
-        </h5>
-        <h5 class="caption d-flex mx-4 flex-grow">
-          calculatedDefaultImageSize <br />
-          {{ calculatedDefaultImageSize }}
-        </h5>
-        <h5 class="caption d-flex mx-4">
-          # Issues: <br />
-          {{ numberOfIssues }}
-        </h5>
-        <h5 class="caption d-flex mx-4">
-          Filesize: <br />
-          {{ this.$refs && this.$refs.imageCanvas ? canvasFileSize() : "n/a" }}
-        </h5>
-      </div>
+
+      <ImageDebug
+        :defaultPadding="padding"
+        :defaulImageSize="defaulImageSize"
+        :calculatedPadding="calculatedPadding"
+        :calculatedDefaultImageSize="calculatedDefaultImageSize"
+        :numberOfIssues="numberOfIssues"
+      />
+
       <v-divider v-if="!canvasClean" class="my-3"></v-divider>
     </div>
 
@@ -123,9 +108,16 @@ import {
 
 import settings from "@/util/settings.js";
 import { calculateRowsCols } from "./calculateRowsCols.js";
+import ImageDebug from "./ImagesDebug";
+
+import { addDisclaimer } from "./imageHelpers";
 
 const CLOUDINARY_MAX_FILE_SIZE = 10485760;
+
 export default {
+  components: {
+    ImageDebug
+  },
   data() {
     return {
       canvasClean: true,
@@ -242,7 +234,8 @@ export default {
       const canvas = this.$refs.imageCanvas;
       this.configureCanvas();
       this.loadImagesGrid(canvas);
-      this.addDisclaimer(canvas);
+
+      addDisclaimer(canvas, this.gridCols, this.gridRows);
     },
     //
     //
@@ -342,8 +335,9 @@ export default {
     //
     //
     handleImageLoading(issue, x, y, canvas, z) {
-      const addDisclaimer = this.addDisclaimer;
       const _canvas = canvas;
+      const padding = this.padding;
+
       let ctx = canvas.getContext("2d");
 
       const calculateAspectRatioFit = this.calculateAspectRatioFit;
@@ -372,7 +366,6 @@ export default {
         drawImageGridLines(ctx, resized, xPos, yPos);
 
         //draw images
-        const padding = 20;
         const rWidth = resized.width - padding;
         const rHeight = resized.height - padding;
         ctx.drawImage(
@@ -382,9 +375,6 @@ export default {
           rWidth,
           rHeight
         );
-
-        //addDisclaimer(canvas);
-        //        _this.addDisclaimer(canvas);
       };
 
       const fullImagePath = `${settings.MEDIA_URL}${imageUrl}`;
@@ -410,37 +400,6 @@ export default {
     //
     //
     //
-    addDisclaimer(canvas) {
-      let fontHeight = this.gridCols * 10;
-      let disclaimerHeight = this.gridCols * 35;
-
-      if (this.gridCols > 5) {
-        fontHeight = this.gridCols * 6;
-        disclaimerHeight = this.gridCols * 30;
-      }
-
-      canvas.height = canvas.height + disclaimerHeight;
-
-      const ctx = canvas.getContext("2d");
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.globalCompositeOperation = "source-over";
-
-      ctx.font = `normal bold ${fontHeight}px Verdana`;
-      ctx.textAlign = "center";
-      ctx.fillStyle = "#EEE";
-      ctx.fillText(
-        "Stock covers shown, not actual product photos.",
-        canvas.width / 2,
-        canvas.height - this.gridCols * (this.gridCols < 4 ? 35 : 20)
-      );
-
-      ctx.font = `normal bold ${fontHeight / 1.3}px Verdana`;
-      ctx.fillText(
-        "We do not distinguish betweeen newsstand & direct editions.",
-        canvas.width / 2,
-        canvas.height - this.gridRows * 5
-      );
-    },
 
     //
     //
