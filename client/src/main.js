@@ -23,7 +23,7 @@ Vue.filter("monthDayYear", val => {
 
 Vue.filter("daysAsString", days => {
   if (days === 0) return "Today";
-  if (days === 1) return "Yesterday & Today";
+  if (days === 1) return "Yesterday";
   if (days === 5) return "This Week";
   if (days === 14) return "2 Weeks";
   if (days === 30) return "Past Month";
