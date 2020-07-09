@@ -24,20 +24,26 @@ const buildNewItemsQuery = (days, userId) => {
         WHERE
           (
           (l.action = 'CREATE_DRAFT')
-          AND
-          (l.created_date >= DATE_ADD(CURDATE(), INTERVAL '-?' DAY))
-      `;
+        `;
+
+  let queryDateCondition = "";
+  if (days == 1) {
+    queryDateCondition = `AND ((l.created_date >= DATE_ADD(CURDATE(), INTERVAL '-?' DAY)) AND (l.created_date <= DATE_ADD(CURDATE(), INTERVAL '-?' DAY)) ) `;
+  } else {
+    queryDateCondition = `AND (l.created_date >= DATE_ADD(CURDATE(), INTERVAL '-?' DAY)) `;
+  }
 
   let queryUserCondition = "";
   if (userId) {
     queryUserCondition = `
-          AND
-          (l.user_id LIKE CONCAT("%",'?',"%"))
-          `;
+      AND
+      (l.user_id LIKE CONCAT("%",'?',"%"))
+      `;
   }
 
   const query =
     queryStart +
+    queryDateCondition +
     queryUserCondition +
     `) GROUP BY
           username,

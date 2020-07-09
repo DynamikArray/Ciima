@@ -25,9 +25,14 @@ const buildExistingItemsQuery = (days, userId) => {
     	WHERE
     	(
     		(l.action = 'UPDATE_LOCATION_FIELD')
-    		AND
-    		(l.created_date >= DATE_ADD(CURDATE(), INTERVAL '-?' DAY))
       `;
+
+  let queryDateCondition = "";
+  if (days == 1) {
+    queryDateCondition = `AND ((l.created_date >= DATE_ADD(CURDATE(), INTERVAL '-?' DAY)) AND (l.created_date <= DATE_ADD(CURDATE(), INTERVAL '-?' DAY)) ) `;
+  } else {
+    queryDateCondition = `AND (l.created_date >= DATE_ADD(CURDATE(), INTERVAL '-?' DAY)) `;
+  }
 
   let queryUserCondition = "";
   if (userId) {
@@ -39,6 +44,7 @@ const buildExistingItemsQuery = (days, userId) => {
 
   const query =
     queryStart +
+    queryDateCondition +
     queryUserCondition +
     `)
     	GROUP BY

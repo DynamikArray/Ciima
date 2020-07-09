@@ -4,7 +4,7 @@ const addDisclaimer = (canvas, gridCols, gridRows) => {
 
   if (gridCols == 1) {
     fontHeight = 20;
-    disclaimerHeight = 40;
+    disclaimerHeight = 60;
   }
 
   if (gridCols == 2) {

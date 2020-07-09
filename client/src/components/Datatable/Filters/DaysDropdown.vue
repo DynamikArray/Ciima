@@ -30,7 +30,7 @@ export default {
     return {
       items: [
         { text: "Today", value: 0 },
-        { text: "Last 2 Days", value: 1 },
+        { text: "Yesterday", value: 1 },
         { text: "This Week", value: 5 },
         { text: "2 Weeks", value: 14 },
         { text: "Last 30", value: 30 },
