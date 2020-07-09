@@ -43,7 +43,7 @@ worker();
 //RIGHT NOW ONLY RUN THE SCHEDULER IN PROD
 if (
   process.env.NODE_ENV === "production" ||
-  process.env.NODE_ENV === "development"
+  process.env.NODE_ENV !== "development"
 ) {
   logger.info(`Starting Scheduler!`);
   scheduler();
