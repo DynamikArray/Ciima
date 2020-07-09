@@ -7,11 +7,13 @@ const { LOAD_EBAY } = require("../../util/inventory/actions");
 
 //const { logger } = require("../util/winston/winston.js");
 const logger = require("../../util/winston/winston.js")({
-  hostname: "Worker"
+  hostname: "Worker",
 });
 
 //Get stuff that started yesterday through today?
 const fetchEbayStartedToday = async () => {
+  logger.info("START fetchEbayStartedToday()");
+
   //setup todays date
   const today = new Date();
   dteStart = today.toISOString();
@@ -20,13 +22,13 @@ const fetchEbayStartedToday = async () => {
   const loadInventoryResults = await inventoryDirector(LOAD_EBAY, {
     dates: {
       StartTimeFrom: dteEnd,
-      StartTimeTo: dteStart
+      StartTimeTo: dteStart,
     },
-    hasEnded: 0
+    hasEnded: 0,
   });
 
-  logger.debug(
-    `fetchEbayStartedToday() : Start:${dteStart} - End: ${dteEnd} | ${JSON.stringify(
+  logger.info(
+    `END fetchEbayStartedToday() : Start:${dteStart} - End: ${dteEnd} | ${JSON.stringify(
       loadInventoryResults
     )}`
   );
@@ -35,6 +37,8 @@ const fetchEbayStartedToday = async () => {
 //  NOT YET WORKING???
 //Get everything that ended yesterday through today?
 const fetchEbayEndedToday = async () => {
+  logger.info("START fetchEbayEndedToday()");
+
   //setup todays date
   const today = new Date();
   dteStart = subDays(today, 1).toISOString();
@@ -44,13 +48,13 @@ const fetchEbayEndedToday = async () => {
   const loadInventoryResults = await inventoryDirector(LOAD_EBAY, {
     dates: {
       EndTimeFrom: dteStart,
-      EndTimeTo: dteEnd
+      EndTimeTo: dteEnd,
     },
-    hasEnded: 1
+    hasEnded: 1,
   });
 
-  logger.debug(
-    `fetchEbayEndedToday() : Start:${dteStart} - End: ${dteEnd} | ${JSON.stringify(
+  logger.info(
+    `END fetchEbayEndedToday() : Start:${dteStart} - End: ${dteEnd} | ${JSON.stringify(
       loadInventoryResults
     )}`
   );

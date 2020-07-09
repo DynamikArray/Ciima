@@ -17,8 +17,6 @@ function linnworksInventoryStrategy(action) {
   //
   //
   const fetchInventoryPage = async (pageNumber, perPage) => {
-    logger.debug("fetchInventoryPage()");
-
     const data = locationsSql(pageNumber, perPage);
 
     try {
@@ -33,12 +31,12 @@ function linnworksInventoryStrategy(action) {
       if (result) return { result };
       if (error) return { error };
     } catch (error) {
-      logger.debug(error);
+      logger.error(error);
     }
   };
 
   const saveInventoryPage = async (results) => {
-    logger.debug("saveInventoryPage()");
+    logger.info("saveInventoryPage()");
     const valuesOnly = results.map((item) => {
       return Object.values(item);
     });
@@ -48,6 +46,8 @@ function linnworksInventoryStrategy(action) {
   };
 
   const load = async (payload = false) => {
+    logger.info("START linnworksStrategy - load()");
+
     //we dont use payload yet
     let pageNumber = 1;
     let perPage = 500;
@@ -70,6 +70,8 @@ function linnworksInventoryStrategy(action) {
         more = false;
       }
     }
+    logger.info("END linnworksStrategy - load()");
+    return true;
   }; //end load function
 
   return { load };
