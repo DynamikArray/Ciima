@@ -2,14 +2,18 @@
   <div class="d-flex justify-center align-center">
     <div class="d-flex justify-center flex-column">
       <div class="d-flex justify-center align-center">
-        <avatar
-          v-if="item.ownerName"
-          :username="item.ownerName"
-          :size="size"
-        ></avatar>
-        <div class="text-center w-100" v-if="!item.ownerName">
-          No User
-        </div>
+        <v-tooltip top color="white">
+          <template v-slot:activator="{ on }">
+            <div v-on="on">
+              <avatar
+                v-if="item"
+                :username="item.ownerName"
+                :size="35"
+              ></avatar>
+            </div>
+          </template>
+          <span class="black--text">{{ item.ownerName }}</span>
+        </v-tooltip>
       </div>
     </div>
   </div>
