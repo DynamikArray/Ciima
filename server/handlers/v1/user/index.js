@@ -10,7 +10,7 @@ module.exports = (fastify) => ({
   register: async (req, res) => {
     fastify.winston.debug("Registration Attempt");
 
-    const { email, username, password } = req.body;
+    const { email, username, password, displayname } = req.body;
 
     //email check
     const emailExists = await checkIfEmailExists(fastify, email);
@@ -31,7 +31,7 @@ module.exports = (fastify) => ({
     }
 
     //add user by building the query
-    const query = `INSERT INTO slc_users SET email=?, username=?, password=?`;
+    const query = `INSERT INTO slc_users SET email=?, username=?, password=?, displayname=?`;
 
     //hash the plain pass into something cryptic
     const salt = await bcrypt.genSalt(10);
@@ -43,6 +43,7 @@ module.exports = (fastify) => ({
         email,
         username,
         hashPassword,
+        displayname,
       ]);
 
       //pull of the props we care about
@@ -106,7 +107,7 @@ module.exports = (fastify) => ({
  * @return {Promise}            User if found or error:msg
  */
 const getUserById = async (fastify, id) => {
-  const query = `SELECT id, email, username FROM slc_users WHERE id = ? `;
+  const query = `SELECT id, email, username, displayname FROM slc_users WHERE id = ? `;
   try {
     const [rows, fields] = await fastify.mysql.query(query, [id]);
 
@@ -173,10 +174,9 @@ const checkIfUsernameExists = async (fastify, username) => {
  * @return {Promise}            [description]
  */
 const getUserByUsernamePassword = async (fastify, username, password) => {
-  const query = `SELECT id, username, email, password FROM slc_users WHERE username = ? `;
+  const query = `SELECT id, username, password, email, displayname FROM slc_users WHERE username = ?`;
   try {
     const [rows, fields] = await fastify.mysql.query(query, [username]);
-
     if (rows.length > 0) {
       const user = rows[0];
       if (user) {

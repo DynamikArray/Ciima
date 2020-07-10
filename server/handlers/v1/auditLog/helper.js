@@ -2,7 +2,7 @@ const buildSelectQueries = () => {
   const selectQuery = `
       SELECT
         a.*,
-        u.username
+        u.displayname as username
       FROM slc_audit_log a
       LEFT JOIN slc_users u ON u.id = a.user_id
       WHERE (

@@ -11,12 +11,12 @@ module.exports = {
       type: "object",
       properties: {
         username: {
-          type: "string"
+          type: "string",
         },
         password: {
-          type: "string"
-        }
-      }
+          type: "string",
+        },
+      },
     },
 
     response: {
@@ -27,14 +27,14 @@ module.exports = {
           id: { type: "string" },
           username: { type: "string" },
           email: { type: "string" },
-          token: { type: "string" }
-        }
+          token: { type: "string" },
+        },
       },
       403: {
         description: "Forbidden Username/Password not valid.",
-        type: "string"
-      }
-    }
+        type: "string",
+      },
+    },
   },
 
   registerSchema: {
@@ -45,15 +45,18 @@ module.exports = {
       type: "object",
       properties: {
         username: {
-          type: "string"
+          type: "string",
+        },
+        displayname: {
+          type: "string",
         },
         email: {
-          type: "string"
+          type: "string",
         },
         password: {
-          type: "string"
-        }
-      }
+          type: "string",
+        },
+      },
     },
     response: {
       200: {
@@ -62,12 +65,13 @@ module.exports = {
         properties: {
           id: { type: "string" },
           username: { type: "string" },
+          displayname: { type: "string" },
           email: { type: "string" },
           created_at: { type: "string" },
-          updated_at: { type: "string" }
-        }
-      }
-    }
+          updated_at: { type: "string" },
+        },
+      },
+    },
   },
 
   accountSchema: {
@@ -76,8 +80,8 @@ module.exports = {
     summary: "Use JWT to account information",
     security: [
       {
-        token: []
-      }
+        token: [],
+      },
     ],
     response: {
       200: {
@@ -86,10 +90,11 @@ module.exports = {
         properties: {
           id: { type: "string" },
           username: { type: "string" },
+          displayname: { type: "string" },
           email: { type: "string" },
-          token: { type: "string" }
-        }
-      }
-    }
-  }
+          token: { type: "string" },
+        },
+      },
+    },
+  },
 };

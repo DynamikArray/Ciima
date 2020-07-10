@@ -12,7 +12,7 @@
         <div v-if="isLoggedIn">
           <h3>
             Welcome back
-            <span class="username">{{ userName }}.</span>
+            <span class="username">{{ displayName }}</span>
           </h3>
           <p>
             Choose of one the options below to get started.
@@ -53,7 +53,8 @@ export default {
   computed: {
     ...mapGetters({
       isLoggedIn: "user/isLoggedIn",
-      userName: "user/userName"
+      userName: "user/userName",
+      displayName: "user/displayName"
     })
   }
 };

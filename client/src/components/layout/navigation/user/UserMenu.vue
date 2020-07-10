@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex justify-end">
     <!--NOT LOGGED IN -->
-    <div class="d-flex align-center" v-if="!isLoggedIn && !userName">
+    <div class="d-flex align-center" v-if="!isLoggedIn && !displayName">
       <v-btn
         v-if="!isLoggedIn"
         text
@@ -16,7 +16,7 @@
     <!--LOGGED IN -->
     <div
       class="d-flex justify-end align-center grow"
-      v-if="isLoggedIn && userName"
+      v-if="isLoggedIn && displayName"
     >
       <div class="d-flex align-center">
         <v-menu
@@ -28,10 +28,10 @@
         >
           <template v-slot:activator="{ on }">
             <v-btn text v-on="on">
-              <avatar :username="userName" :size="30" class="mr-1"></avatar>
+              <avatar :username="displayName" :size="30" class="mr-1"></avatar>
               <div class="" style="max-width:130px;">
                 <div class="text-truncate">
-                  {{ userName }}
+                  {{ displayName }}
                 </div>
               </div>
               <v-icon class="mr-1">fa fa-caret-down</v-icon>
@@ -42,10 +42,15 @@
             <v-list>
               <v-list-item>
                 <v-list-item-avatar>
-                  <avatar :username="userName" :size="35" class="mr-1"></avatar>
+                  <avatar
+                    :username="displayName"
+                    :size="35"
+                    class="mr-1"
+                  ></avatar>
                 </v-list-item-avatar>
 
                 <v-list-item-content>
+                  <v-list-item-title>{{ displayName }}</v-list-item-title>
                   <v-list-item-title>{{ userName }}</v-list-item-title>
                   <v-list-item-subtitle>{{ userEmail }}</v-list-item-subtitle>
                 </v-list-item-content>
@@ -85,7 +90,8 @@ export default {
     ...mapGetters({
       isLoggedIn: "user/isLoggedIn",
       userName: "user/userName",
-      userEmail: "user/email"
+      userEmail: "user/email",
+      displayName: "user/displayName"
     })
   },
 
