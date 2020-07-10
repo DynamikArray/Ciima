@@ -10,7 +10,7 @@ const buildExistingItemsQuery = (days, userId) => {
     FROM
     	(SELECT
     		DATE_FORMAT(l.created_date, '%b %d, %Y') AS createdDate,
-    		u.username,
+    		u.displayname as username,
     		l.action AS auditAction,
     		sum(d.price) AS price
     	FROM
