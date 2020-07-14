@@ -27,6 +27,8 @@ import locations from "@/store/locations/locations";
 import auditLog from "@/store/auditLog/auditLog";
 import analytics from "@/store/analytics/analytics";
 
+import pricematch from "@/store/pricematch/pricematch";
+
 export default new Vuex.Store({
   modules: {
     api,
@@ -45,7 +47,8 @@ export default new Vuex.Store({
     locations,
     lots,
     auditLog,
-    analytics
+    analytics,
+    pricematch
   },
   state: {},
   mutations: {}

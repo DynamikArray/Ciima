@@ -32,7 +32,7 @@ import {
 
 import { PRICE_SEARCH } from "@/store/action-types";
 
-import { titleCleaner } from "@/components/Pricing/titleCleaner";
+import { titleCleaner } from "@/util/pricing/titleCleaner";
 
 export default {
   data: () => ({

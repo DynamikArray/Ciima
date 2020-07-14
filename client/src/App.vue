@@ -7,7 +7,7 @@
     />
     <UtilityDrawer />
     <AppBar :toggleNavigationDrawer="toggleNavigationDrawer" />
-    <v-content>
+    <v-content style="padding-bottom:45px">
       <TransitionPage>
         <router-view />
       </TransitionPage>

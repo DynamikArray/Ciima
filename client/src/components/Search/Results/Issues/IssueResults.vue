@@ -85,7 +85,7 @@ import IssuesTop from "./templates/IssuesTop";
 import IssuesTitle from "./templates/IssuesTitle";
 import IssuesImageUrl from "./templates/IssuesImageUrl";
 
-import { titleCleaner } from "@/components/Pricing/titleCleaner";
+import { titleCleaner } from "@/util/pricing/titleCleaner";
 
 export default {
   props: {

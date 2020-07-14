@@ -1,20 +1,26 @@
 <template>
-  <v-img
-    :src="makeImageUrl(item)"
-    width="70"
-    height="105"
-    class="ma-1"
-    @click="showImageModal(item.rowNumber)"
-  >
-    <template v-slot:placeholder>
-      <v-row class="fill-height ma-0" align="center" justify="center">
-        <v-progress-circular
-          indeterminate
-          color="blue darken-1"
-        ></v-progress-circular>
-      </v-row>
-    </template>
-  </v-img>
+  <div class="">
+    <v-img
+      v-if="makeImageUrl(item)"
+      :src="makeImageUrl(item)"
+      width="70"
+      height="105"
+      class="ma-1"
+      @click="showImageModal(item.rowNumber)"
+    >
+      <template v-slot:placeholder>
+        <v-row class="fill-height ma-0" align="center" justify="center">
+          <v-progress-circular
+            indeterminate
+            color="blue darken-1"
+          ></v-progress-circular>
+        </v-row>
+      </template>
+    </v-img>
+    <div v-else>
+      No Image
+    </div>
+  </div>
 </template>
 
 <script>

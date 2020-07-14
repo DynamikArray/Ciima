@@ -26,7 +26,7 @@
       </div>
     </template>
 
-    <v-img :src="imageFull" :max-width="540" :min-height="260" contain>
+    <v-img :src="imageFull" :max-width="540" :min-height="500" contain>
       <template v-slot:placeholder>
         <v-row class="fill-height ma-0" align="center" justify="center">
           <v-progress-circular

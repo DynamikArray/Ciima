@@ -1,0 +1,53 @@
+<template>
+  <div class="d-flex justify-center align-center w-100 mx-0">
+    <v-form
+      v-model="validTitleSearch"
+      @submit.prevent="handleSearchInput"
+      class="w-100 grey darken-4 textShadow px-4 pb-2"
+    >
+      <v-text-field
+        autocomplete="off"
+        autofocus
+        hide-details
+        persistent-hint
+        v-model="searchTitleString"
+        label="Search Our Titles"
+        prepend-icon="fa-search"
+        @input="handleSearchInput"
+      />
+    </v-form>
+  </div>
+</template>
+
+<script>
+import debounce from "lodash.debounce";
+import { SEARCH_OUR_TITLES } from "@/store/action-types.js";
+
+export default {
+  props: {},
+  data: () => ({
+    searchTitleString: "",
+    validTitleSearch: false
+  }),
+  methods: {
+    handleSearchInput: debounce(function(event) {
+      //search value
+      const search = this.searchTitleString;
+      //on submit or debounce after 3 chars
+      if (event.type === "submit" || search.length > 3) {
+        //when submit is prssed make sure its not empty
+        if (!search.length == 0) {
+          this.fetchTitlesByString(search);
+        }
+      }
+    }, 500),
+    fetchTitlesByString(search) {
+      this.$store.dispatch(`pricematch/${SEARCH_OUR_TITLES}`, {
+        query: search
+      });
+    }
+  }
+};
+</script>
+
+<style scoped></style>

@@ -5,12 +5,12 @@ module.exports = {
 
   security: [
     {
-      token: []
-    }
+      token: [],
+    },
   ],
 
   querystring: {
-    title: { type: "string" }
+    title: { type: "string" },
   },
 
   response: {
@@ -28,6 +28,7 @@ module.exports = {
               title: { type: "string" },
               issueNumber: { type: "number" },
               issueOrder: { type: "string" },
+              comicType: { type: "string" },
               variation: { type: "string" },
               printing: { type: "number" },
               fullIssue: { type: "string" },
@@ -45,11 +46,11 @@ module.exports = {
               eBayCat2: { type: "number" },
               issuesCount: { type: "number" },
               publisher: { type: "string" },
-              yearsPublished: { type: "string" }
-            }
-          }
-        }
-      }
-    }
-  }
+              yearsPublished: { type: "string" },
+            },
+          },
+        },
+      },
+    },
+  },
 };

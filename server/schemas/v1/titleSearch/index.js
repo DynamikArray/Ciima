@@ -8,7 +8,7 @@ module.exports = {
 
     querystring: {
       query: { type: "string" },
-      advanced: { type: "number" }
+      advanced: { type: "number" },
     },
 
     response: {
@@ -25,13 +25,14 @@ module.exports = {
                 title: { type: "string" },
                 publisher: { type: "string" },
                 yearsPublished: { type: "string" },
-                issueCount: { type: "number" }
-              }
-            }
-          }
-        }
-      }
-    }
+                issueCount: { type: "number" },
+                matched: { type: "number" },
+              },
+            },
+          },
+        },
+      },
+    },
   },
 
   upcSearch: {
@@ -43,9 +44,9 @@ module.exports = {
 
     querystring: {
       query: { type: "string" },
-      upc: { type: "number" }
+      upc: { type: "number" },
     },
 
-    response: {}
-  }
+    response: {},
+  },
 };

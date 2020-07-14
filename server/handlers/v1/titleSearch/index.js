@@ -9,7 +9,8 @@ const buildAdvanced = (search, alpha) => {
         t.Title as title,
         t.TitleId as titleId,
         t.Publisher as publisher,
-        t.YearsPublished as yearsPublished
+        t.YearsPublished as yearsPublished,
+        0 as matched
       FROM
         slc_issues i,
         slc_titles t
@@ -33,7 +34,8 @@ const buildSearch = (search, alpha) => {
         t.Title as title,
         t.TitleId as titleId,
         t.Publisher as publisher,
-        t.YearsPublished as yearsPublished
+        t.YearsPublished as yearsPublished,
+        0 as matched
       FROM
         slc_titles t,
         slc_issues i
@@ -57,7 +59,8 @@ const buildUpcTitle = (search) => {
         t.Title as title,
         t.TitleId as titleId,
         t.Publisher as publisher,
-        t.YearsPublished as yearsPublished
+        t.YearsPublished as yearsPublished,
+        'test' as matched
       FROM
         slc_titles t,
         slc_issues i

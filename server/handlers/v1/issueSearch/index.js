@@ -6,6 +6,7 @@ module.exports = (fastify) => ({
           Id as id,
           Title as title,
           IssueNum as issueNumber,
+          ComicType as comicType,
           LPAD(IssueNum, 5, "0") as issueOrder,
           Variation as variation,
           Printing as printing,

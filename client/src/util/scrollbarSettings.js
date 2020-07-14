@@ -5,7 +5,7 @@ export const scrollbarSettings = {
     verticalNativeBarPos: "right"
   },
   rail: {
-    size: "12px",
+    size: "10px",
     background: "#333",
     specifyBorderRadius: "4px",
     border: "1px solid #595959",
