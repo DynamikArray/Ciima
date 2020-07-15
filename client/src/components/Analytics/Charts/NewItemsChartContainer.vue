@@ -18,7 +18,6 @@
 
 <script>
 import BarChart from "./BarChart";
-import { Colors } from "./colors";
 
 export default {
   components: {

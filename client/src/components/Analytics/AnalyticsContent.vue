@@ -108,7 +108,8 @@ export default {
 
     usersColorsLists() {
       return this.analyticsData.reduce((users, item) => {
-        users[item.username] = { color: Colors.random() };
+        const color = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+        users[item.username] = { color };
         return users;
       }, {});
     },
@@ -140,7 +141,7 @@ export default {
         datasets.push({
           label: key,
           data: data,
-          backgroundColor: Colors.random(),
+          backgroundColor: this.usersColorsLists[key].color,
           barThickness: "flex",
           minBarLength: 5
         });
@@ -178,7 +179,7 @@ export default {
         datasets.push({
           label: key,
           data: data,
-          backgroundColor: Colors.random(),
+          backgroundColor: this.usersColorsLists[key].color,
           barThickness: "flex",
           minBarLength: 5
         });
