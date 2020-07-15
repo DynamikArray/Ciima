@@ -10,7 +10,11 @@
       <h4 class="mb-0">Match Our Titles With MyComicShop Titles</h4>
     </div>
 
-    <div class="grey darken-3 pa-4" id="pageTabsWrapper">
+    <div
+      class="grey darken-3 pa-4"
+      id="pageTabsWrapper"
+      v-resize:debounce="onResize"
+    >
       <v-tabs v-model="tab" color="info" vertical class="grey darken-4">
         <v-tab class="grey darken-4">
           <v-icon class="mx-2">fa fa-list-alt</v-icon>Titles
@@ -47,6 +51,8 @@
 </template>
 
 <script>
+import resize from "vue-resize-directive";
+
 import { mapState, mapGetters } from "vuex";
 import PriceMatchContainer from "@/components/Pricematch/PriceMatchContainer";
 import SaveTitleMatchForm from "@/components/Pricematch/SaveTitleMatchForm/SaveTitleMatchForm";
@@ -62,6 +68,9 @@ export default {
     tab: 0,
     containerHeight: 0
   }),
+  directives: {
+    resize
+  },
   mounted() {
     this.setContainerSize(true);
   },
@@ -82,15 +91,17 @@ export default {
     })
   },
   methods: {
+    onResize(val) {
+      this.setContainerSize();
+    },
     setContainerSize(blnFirst) {
       const headingHeight = document.getElementById("pageHeading").clientHeight;
       const tabsHeight = document.getElementById("pageTabsWrapper")
         .clientHeight;
       const containerHeight = document.getElementById("fullContainer")
         .clientHeight;
-      const maxHeight =
-        containerHeight - headingHeight - tabsHeight - (blnFirst ? 5 : 50);
 
+      const maxHeight = containerHeight - headingHeight - tabsHeight - 6;
       this.containerHeight = maxHeight;
 
       document
