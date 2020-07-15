@@ -21,6 +21,8 @@
 
     <div class="d-flex justify-space-between align-center">
       <AnalyticsGrandTotal
+        class="mr-auto"
+        :title="analyticsDaysAsString"
         :newItems="newItems"
         :existingItems="existingItems"
       />
@@ -71,6 +73,7 @@
 import { mapState } from "vuex";
 import { ANALYTICS_FETCH } from "@/store/action-types";
 
+import { analyticDays } from "@/components/Datatable/Filters/DaysDropdown/daysList";
 import AnalyticsFilters from "./AnalyticsFilters";
 import DatasetTypeButton from "./Buttons/DatasetTypeButton";
 import AnalyticsContent from "./AnalyticsContent";
@@ -102,6 +105,9 @@ export default {
     },
     existingItems() {
       return this.$store.getters["analytics/existingItems"];
+    },
+    analyticsDaysAsString() {
+      return analyticDays.filter(day => day.value == this.days).shift().text;
     }
   },
   methods: {

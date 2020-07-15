@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import DaysDropdown from "@/components/Datatable/Filters/DaysDropdown";
+import DaysDropdown from "@/components/Datatable/Filters/DaysDropdown/DaysDropdown";
 import UserListDropdown from "@/components/Datatable/Filters/UserListDropdown";
 export default {
   props: {

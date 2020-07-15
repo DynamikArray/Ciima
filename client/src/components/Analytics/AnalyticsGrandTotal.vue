@@ -2,6 +2,10 @@
   <div class="d-flex flex-column justify-start align-center grey darken-4 pa-2">
     <div class="d-flex justify-start align-center">
       <div class="d-flex justify-start align-center">
+        <h1 class="mr-4">{{ title }}</h1>
+      </div>
+
+      <div class="d-flex justify-start align-center">
         <h5 class="text-center mr-2">
           Total Inventory<br />
           Items Added
@@ -36,7 +40,8 @@
 export default {
   props: {
     newItems: [Boolean, Array],
-    existingItems: [Boolean, Array]
+    existingItems: [Boolean, Array],
+    title: [Boolean, String]
   },
   computed: {
     stockCountTotal() {
