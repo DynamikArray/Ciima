@@ -149,7 +149,7 @@ export default {
   watch: {
     selectedBox: function(val) {
       this.currentCard = {};
-      this.$store.dispatch(`locations/${SEARCH_BOXES_PRODUCTS}`, val);
+      if (val) this.$store.dispatch(`locations/${SEARCH_BOXES_PRODUCTS}`, val);
     },
     selectedCard: function(val) {
       this.currentCard = val;

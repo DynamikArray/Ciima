@@ -25,7 +25,12 @@
               >
                 Selected Box:
               </h4>
-              <h2 class="text-left pt-2 w-100">{{ selectedBox.box }}</h2>
+              <h2 class="text-left pt-2 w-100">
+                {{ selectedBox.box }}
+                <v-btn icon class="" @click="clearSelectedBox"
+                  ><v-icon>fa fa-times-circle</v-icon></v-btn
+                >
+              </h2>
             </div>
             <div v-else class="ml-3">
               <h2 class="pt-2">
@@ -202,7 +207,8 @@
 import {
   SEARCH_CARDS,
   DELETE_CARD,
-  SET_SELECTED_CARD
+  SET_SELECTED_CARD,
+  RESET_SELECTED_BOX
 } from "@/store/action-types.js";
 import { UPDATE_API_STATUS } from "@/store/mutation-types.js";
 
@@ -243,6 +249,10 @@ export default {
     }
   },
   methods: {
+    clearSelectedBox() {
+      this.$store.dispatch(`locations/${RESET_SELECTED_BOX}`, false);
+    },
+
     searchCards: debounce(function() {
       this.$store.dispatch(`locations/${SEARCH_CARDS}`, {
         search: this.search

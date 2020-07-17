@@ -173,6 +173,12 @@ export default {
       ]
     }
   }),
+  watch: {
+    box_type: function(newVal) {
+      const item = this.box_types.filter(item => item.value == newVal).shift();
+      this.box = item.prefix;
+    }
+  },
   methods: {
     async createBox() {
       //validate

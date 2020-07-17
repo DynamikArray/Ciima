@@ -9,6 +9,7 @@ import {
   SEARCH_CARDS_LOADING,
   SEARCH_PRODUCTS_RESULTS,
   SEARCH_PRODUCTS_LOADING,
+  SEARCH_PRODUCTS_RESULTS_RESET,
   BOX_ACTION_RESULTS,
   BOX_ACTION_LOADING,
   CARD_ACTION_RESULTS,
@@ -93,6 +94,9 @@ const locations = {
     [SEARCH_PRODUCTS_LOADING](state, data) {
       state.products_loading = data.loading;
     },
+    [SEARCH_PRODUCTS_RESULTS_RESET](state) {
+      state.products = [];
+    },
     [SELECTED_BOX_RESULT](state, box) {
       state.selectedBox = box;
     },
@@ -137,12 +141,14 @@ const locations = {
     [RESET_SELECTED_BOX]({ commit }, params) {
       commit(SELECTED_BOX_RESET);
       commit(SELECTED_CARD_RESET);
+      commit(SEARCH_PRODUCTS_RESULTS_RESET);
     },
     [SET_SELECTED_CARD]({ commit }, params) {
       commit(SELECTED_CARD_RESULT, params);
     },
     [RESET_SELECTED_CARD]({ commit }, params) {
       commit(SELECTED_CARD_RESET);
+      commit(SEARCH_PRODUCTS_RESULTS_RESET);
     },
     //
     //
