@@ -8,64 +8,96 @@
         </h1>
       </div>
       <div class="d-flex flex-grow flex-wrap mx-3">
-        <AnalyticsFilters
-          :userId="userId"
-          :days="days"
-          :getData="fetchAnalyticsWithParams"
-          :updateParam="updateLocalParam"
+        &nbsp;
+      </div>
+    </div>
+
+    <v-divider class="mt-1 mb-2"></v-divider>
+
+    <v-tabs
+      v-model="tab"
+      center-active
+      active-class="white--text"
+      id="analyticsTabs"
+    >
+      <v-tab> <v-icon left>fa fa-chart-line</v-icon>Summary</v-tab>
+      <v-tab> <v-icon left>fa fa-chart-bar</v-icon>Detailed</v-tab>
+    </v-tabs>
+
+    <v-divider class="mt-1 mb-2"></v-divider>
+
+    <v-tabs-items
+      v-model="tab"
+      class="w-100 d-flex flex-column align-stretch"
+      style="background-color:transparent"
+    >
+      <v-tab-item key="overview" class="mx-2 pb-3">
+        <!--End Page Heading -->
+        <AnalyticsGrandTotal
+          class="mx-auto my-2"
+          :title="analyticsDaysAsString"
+          :newItems="newItems"
+          :existingItems="existingItems"
         />
-      </div>
-    </div>
-    <v-divider class="my-1"></v-divider>
-    <!--End Page Heading -->
+        <v-divider class="my-1"></v-divider>
+        <!--Page Content-->
+        <WeekToWeek />
+      </v-tab-item>
 
-    <div class="d-flex justify-space-between align-center">
-      <AnalyticsGrandTotal
-        class="mr-auto"
-        :title="analyticsDaysAsString"
-        :newItems="newItems"
-        :existingItems="existingItems"
-      />
+      <v-tab-item key="breakdown" class="secondary darken-1 pt-2">
+        <div class="d-flex flex-wrap justify-space-between align-start">
+          <div class="d-flex align-end justify-center ">
+            <DatasetTypeButton :isActive.sync="showNewItems" />
+          </div>
 
-      <div class="d-flex flex-shrink-0">
-        <DatasetTypeButton :isActive.sync="showNewItems" />
-      </div>
-    </div>
+          <div class="d-flex align-center">
+            <AnalyticsFilters
+              :userId="userId"
+              :days="days"
+              :getData="fetchAnalyticsWithParams"
+              :updateParam="updateLocalParam"
+            />
+          </div>
+        </div>
+        <v-divider class="my-1"></v-divider>
 
-    <v-divider class="my-1"></v-divider>
-    <!--Page Content-->
+        <div class="d-flex flex-grow justify-start align-center">
+          <v-dialog
+            v-model="analyticsLoading"
+            hide-overlay
+            persistent
+            width="300"
+          >
+            <v-card color="primary" dark class="pt-2">
+              <v-card-text>
+                <h4 class="text-center mb-2">
+                  <v-icon class="mr-2">fas fa-calculator</v-icon>
+                  Crunching the Number ...
+                </h4>
+                <v-progress-linear
+                  indeterminate
+                  color="white"
+                  class="mt-1"
+                ></v-progress-linear>
+              </v-card-text>
+            </v-card>
+          </v-dialog>
 
-    <div class="d-flex flex-grow justify-start align-center">
-      <v-dialog v-model="analyticsLoading" hide-overlay persistent width="300">
-        <v-card color="primary" dark class="pt-2">
-          <v-card-text>
-            <h4 class="text-center mb-2">
-              <v-icon class="mr-2">fas fa-calculator</v-icon>
-              Crunching the Number ...
-            </h4>
-            <v-progress-linear
-              indeterminate
-              color="white"
-              class="mt-1"
-            ></v-progress-linear>
-          </v-card-text>
-        </v-card>
-      </v-dialog>
-
-      <AnalyticsContent
-        v-show="!analyticsLoading"
-        :userId="userId"
-        :userName="userName"
-        :days="days"
-        :getData="fetchAnalyticsWithParams"
-        :updateParam="updateLocalParam"
-        :analyticsLoading="analyticsLoading"
-        :analyticsData="showNewItems ? newItems : existingItems"
-        :title="showNewItems ? 'New Items Added' : 'Existing Items Updated'"
-      />
-    </div>
-
-    <!--Page Content-->
+          <AnalyticsContent
+            v-show="!analyticsLoading"
+            :userId="userId"
+            :userName="userName"
+            :days="days"
+            :getData="fetchAnalyticsWithParams"
+            :updateParam="updateLocalParam"
+            :analyticsLoading="analyticsLoading"
+            :analyticsData="showNewItems ? newItems : existingItems"
+            :title="showNewItems ? 'New Items Added' : 'Existing Items Updated'"
+          />
+        </div>
+        <!--Page Content-->
+      </v-tab-item>
+    </v-tabs-items>
   </div>
 </template>
 
@@ -78,20 +110,23 @@ import AnalyticsFilters from "./AnalyticsFilters";
 import DatasetTypeButton from "./Buttons/DatasetTypeButton";
 import AnalyticsContent from "./AnalyticsContent";
 import AnalyticsGrandTotal from "./AnalyticsGrandTotal";
+import WeekToWeek from "./WeekToWeek";
 
 export default {
   components: {
     AnalyticsFilters,
     DatasetTypeButton,
     AnalyticsGrandTotal,
-    AnalyticsContent
+    AnalyticsContent,
+    WeekToWeek
   },
   data: () => ({
     userId: "ALL",
     userName: "All Users",
     days: 0,
     buttonToggle: 0,
-    showNewItems: true
+    showNewItems: true,
+    tab: 0
   }),
   async created() {
     await this.fetchAnalyticsWithParams();
@@ -131,5 +166,9 @@ export default {
   }
 };
 </script>
-
+<style>
+#analyticsTabs .v-item-group.v-tabs-bar {
+  background-color: transparent;
+}
+</style>
 <style scoped></style>

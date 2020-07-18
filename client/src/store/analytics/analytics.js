@@ -31,6 +31,12 @@ const analytics = {
         return state.items.existingItems || [];
       }
       return [];
+    },
+    dailyTotals: state => {
+      if (state.items) {
+        return state.items.dailyTotals || [];
+      }
+      return [];
     }
   },
   actions: {
