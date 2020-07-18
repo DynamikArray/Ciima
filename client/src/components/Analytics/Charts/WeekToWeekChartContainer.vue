@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex align-center justify-center w-100 pt-2">
-    <div class="w-100  grey darken-4 px-3 mr-3">
-      <h3 class="text-center">New Items: Last 14 Days</h3>
+    <div class="w-100  grey darken-4 px-3 mx-3 ">
+      <h3 class="text-center mt-2">New Items: Last 14 Days</h3>
       <BarChart
         style="height:300px"
         class="w-100 pa-2"
@@ -10,14 +10,14 @@
         :options="options"
       />
     </div>
-    <div class="w-100  grey darken-4 px-3 ml-3">
-      <h3 class="text-center">Stock Value: Last 14 Days</h3>
+    <div class="w-100  grey darken-4 px-3 mx-3 ">
+      <h3 class="text-center mt-2">Stock Value: Last 14 Days</h3>
       <BarChart
         style="height:300px"
         class="w-100 pa-2"
         v-if="pricesData"
         :chartData="pricesData"
-        :options="options"
+        :options="optionsWithDollarSign"
       />
     </div>
   </div>
@@ -47,10 +47,7 @@ export default {
             stacked: true,
             ticks: {
               display: true,
-              beginAtZero: true,
-              callback: function(value, index, values) {
-                return "$" + value;
-              }
+              beginAtZero: true
             },
             gridLines: {
               display: true,
@@ -60,7 +57,23 @@ export default {
         ]
       }
     }
-  })
+  }),
+  computed: {
+    optionsWithDollarSign() {
+      const options = this.options;
+      const ticks = options.scales.yAxes[0].ticks;
+
+      const callback = function(value, index, values) {
+        return "$" + value;
+      };
+
+      if (ticks) {
+        options.scales.yAxes[0].ticks = { ...ticks, callback };
+      }
+
+      return options;
+    }
+  }
 };
 </script>
 

@@ -2,7 +2,7 @@
   <div class="d-flex flex-column justify-start align-center grey darken-4 pa-2">
     <div class="d-flex justify-start align-center">
       <div class="d-flex justify-start align-center">
-        <h1 class="mr-4">{{ title }}</h1>
+        <h1 class="ml-3 mr-4">{{ title }}</h1>
       </div>
 
       <div class="d-flex justify-start align-center">
