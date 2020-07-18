@@ -1,23 +1,25 @@
 <template>
-  <div class="d-flex align-center justify-center w-100 pt-2">
-    <div class="w-100  grey darken-4 px-3 mx-3 ">
-      <h3 class="text-center mt-2">New Items: Last 14 Days</h3>
+  <div class="d-flex flex-column align-center justify-center w-100">
+    <div class="w-100  grey darken-4 px-3 ma-3 ">
+      <h3 class="text-center mt-2">Stock Changes: Last 14 Days</h3>
       <BarChart
+        key="itemsData"
         style="height:300px"
         class="w-100 pa-2"
         v-if="itemsData"
         :chartData="itemsData"
-        :options="options"
+        :options="options()"
       />
     </div>
-    <div class="w-100  grey darken-4 px-3 mx-3 ">
+    <div class="w-100  grey darken-4 px-3 ma-3 ">
       <h3 class="text-center mt-2">Stock Value: Last 14 Days</h3>
       <BarChart
+        key="pricesData"
         style="height:300px"
         class="w-100 pa-2"
         v-if="pricesData"
         :chartData="pricesData"
-        :options="optionsWithDollarSign"
+        :options="optionsWithDollarSign()"
       />
     </div>
   </div>
@@ -34,33 +36,34 @@ export default {
     itemsData: [Boolean, Object],
     pricesData: [Boolean, Object]
   },
-  data: () => ({
-    options: {
-      legend: {
-        position: "bottom"
-      },
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        yAxes: [
-          {
-            stacked: true,
-            ticks: {
-              display: true,
-              beginAtZero: true
-            },
-            gridLines: {
-              display: true,
-              color: "#444"
+  data: () => ({}),
+  methods: {
+    options() {
+      return {
+        legend: {
+          position: "bottom"
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          yAxes: [
+            {
+              stacked: true,
+              ticks: {
+                display: true,
+                beginAtZero: true
+              },
+              gridLines: {
+                display: true,
+                color: "#444"
+              }
             }
-          }
-        ]
-      }
-    }
-  }),
-  computed: {
+          ]
+        }
+      };
+    },
     optionsWithDollarSign() {
-      const options = this.options;
+      const options = this.options();
       const ticks = options.scales.yAxes[0].ticks;
 
       const callback = function(value, index, values) {

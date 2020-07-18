@@ -1,11 +1,19 @@
 <template>
   <div class="d-flex flex-column justify-center align-center w-100">
-    <div class="d-flex justify-space-around align-center w-100">
-      <div class="d-flex justify-center align-center mx-3 grey darken-4">
-        <TodayVsYesterday :todays="todays" :yesterdays="yesterdays" />
+    <div class="d-flex justify-center align-center w-100 ">
+      <div class="d-flex justify-center align-center w-100">
+        <TodayVsYesterday
+          :todays="todays"
+          :yesterdays="yesterdays"
+          class="w-100"
+        />
       </div>
-      <div class="d-flex justify-center align-center mx-3 grey darken-4">
-        <ThisWeekVsLastWeek :thisWeeks="thisWeeks" :lastWeeks="lastWeeks" />
+      <div class="d-flex justify-center align-center w-100">
+        <ThisWeekVsLastWeek
+          :thisWeeks="thisWeeks"
+          :lastWeeks="lastWeeks"
+          class="w-100"
+        />
       </div>
     </div>
     <div class="w-100">
@@ -47,7 +55,11 @@ export default {
       return {
         labels: this.uniqueDatesList,
         datasets: [
-          this.createDailyTotalCountDataset("totalItems", "total-items")
+          this.createDailyTotalCountDataset(
+            "totalItems",
+            "Items Count",
+            "total-items"
+          )
         ]
       };
     },
@@ -57,7 +69,11 @@ export default {
       return {
         labels: this.uniqueDatesList,
         datasets: [
-          this.createDailyTotalCountDataset("totalPrice", "total-prices")
+          this.createDailyTotalCountDataset(
+            "totalPrice",
+            "Stock Value",
+            "total-prices"
+          )
         ]
       };
     },
@@ -83,14 +99,13 @@ export default {
     }
   },
   methods: {
-    createDailyTotalCountDataset(field, yAxisID) {
-      const key = "Items";
+    createDailyTotalCountDataset(field, label, yAxisID) {
       const itemCountTotals = this.dailyTotals.map(day => {
         return day[field] || 0;
       });
 
       return {
-        label: key,
+        label,
         data: itemCountTotals,
         backgroundColor: `#${Math.floor(Math.random() * 16777215).toString(
           16
