@@ -106,7 +106,10 @@ const submitDraftHandler = async (message, callback) => {
         if (!invResult && invError) updateStatus(draft.id, invError, ERROR);
 
         //See if we have other images to send
-        if (draft.other_images.length > 0) {
+        if (
+          draft.other_images.length > 0 &&
+          draft.draftType.toUpperCase() !== "SINGLES"
+        ) {
           const { imagesResult, imagesError } = await addInventoryImages(
             StockItemId,
             ItemNumber,
