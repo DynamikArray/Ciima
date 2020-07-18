@@ -1,6 +1,7 @@
 const {
   buildNewItemsQuery,
   buildExistingItemsQuery,
+  buildDailyTotalsQuery,
 } = require("../../../../util/ciima/queries/analytics");
 
 module.exports = (fastify) => ({
@@ -21,6 +22,7 @@ module.exports = (fastify) => ({
     //sql creation
     const newItemsSqlOpts = buildNewItemsQuery(days, userId);
     const existingItemsSqlOpts = buildExistingItemsQuery(days, userId);
+    const dailyTotalsSqlOpts = buildDailyTotalsQuery();
 
     const [newItems] = await fastify.mysql.query(
       newItemsSqlOpts.query,
@@ -32,6 +34,8 @@ module.exports = (fastify) => ({
       existingItemsSqlOpts.params
     );
 
-    return { result: { newItems, existingItems } };
+    const [dailyTotals] = await fastify.mysql.query(dailyTotalsSqlOpts.query);
+
+    return { result: { newItems, existingItems, dailyTotals } };
   },
 });
