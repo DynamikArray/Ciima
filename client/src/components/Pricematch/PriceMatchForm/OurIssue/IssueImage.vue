@@ -3,9 +3,7 @@
     class="ma-1"
     :key="makeImageUrl"
     :src="makeImageUrl"
-    max-height="160"
-    min-height="160"
-    max-width="120"
+    max-width="180"
     contain
   ></v-img>
 </template>

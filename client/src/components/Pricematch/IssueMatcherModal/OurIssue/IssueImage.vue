@@ -1,12 +1,12 @@
 <template>
   <v-img
-    class="ma-1"
-    :key="makeImageUrl"
     :src="makeImageUrl"
-    max-height="400"
-    min-height="400"
-    max-width="300"
+    :key="makeImageUrl"
+    max-width="240"
+    min-width="240"
     contain
+    @click="onClick(makeImageUrl)"
+    @error="handleImageError()"
   ></v-img>
 </template>
 
@@ -17,10 +17,23 @@ export default {
     item: [Boolean, Object],
     onClick: [Function]
   },
+  data: () => ({
+    error: false
+  }),
+  components: {},
   computed: {
     makeImageUrl() {
-      const { item } = this;
-      return `${settings.MEDIA_URL}${item.imageUrl}`;
+      if (!this.error) {
+        const { item } = this;
+        return `${settings.MEDIA_URL}${item.imageUrl}`;
+      }
+
+      return "/img/thumb-not-found-image.jpg";
+    }
+  },
+  methods: {
+    handleImageError() {
+      this.error = true;
     }
   }
 };

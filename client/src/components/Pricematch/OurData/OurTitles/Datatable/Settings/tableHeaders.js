@@ -1,12 +1,5 @@
 export const tableHeaders = [
   {
-    text: "Matched",
-    value: "matched",
-    sortable: false,
-    align: "center",
-    width: "70px"
-  },
-  {
     text: "Title",
     value: "title",
     sortable: true,

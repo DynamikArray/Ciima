@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex justify-start align-center w-100">
+  <div class="d-flex justify-start align-center w-100 mb-5">
     <div class="w-100" :class="titleResults.length > 0 ? 'mr-3' : 'mr-0'">
       <v-data-table
         class="w-100"

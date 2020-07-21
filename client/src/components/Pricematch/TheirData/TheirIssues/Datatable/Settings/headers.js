@@ -1,5 +1,12 @@
 export const headers = [
   {
+    text: "Match",
+    value: "action",
+    sortable: false,
+    align: "center",
+    width: "60px"
+  },
+  {
     text: "Cover",
     value: "images",
     sortable: false,
@@ -10,7 +17,8 @@ export const headers = [
     text: "#",
     value: "issueNumber",
     sortable: true,
-    align: "left"
+    align: "left",
+    width: "80px"
   },
   {
     text: "Title",
@@ -22,6 +30,7 @@ export const headers = [
     text: "Prices",
     value: "prices",
     sortable: false,
-    align: "right"
+    align: "right",
+    width: "80px"
   }
 ];

@@ -3,52 +3,50 @@
     class="d-flex flex-column justify-start align-center w-100 mx-0 my-0"
     :style="stylesObject"
   >
-    <vuescroll :ops="ops" class="ml-0 mr-0">
-      <div
-        class="HideOverflowY mb-0"
-        :class="theirIssuesResults.length > 0 ? 'mr-4' : 'mr-0'"
-      >
-        <div class="d-flex flex-row justify-start align-center w-100">
-          <TheirIssuesDatatable
-            v-if="theirIssuesResults"
-            :items="theirIssuesResults"
-            :containerHeight="rowHeight"
-            :matchType="matchType"
-          />
-        </div>
-      </div>
-    </vuescroll>
+    <CustomPager
+      name="MCSheaderPager"
+      :pagination="theirIssuesPagination"
+      class="borderBottom"
+    />
+    <div class="HideOverflowY mb-0 w-100">
+      <Datalist
+        class="mr-3"
+        v-if="theirIssuesResults"
+        :items="theirIssuesResults"
+        :theirSelectedIssueIndex="theirSelectedIssueIndex"
+      />
+    </div>
   </div>
 </template>
 
 <script>
-import vuescroll from "vuescroll";
-import { scrollbarSettings } from "@/util/scrollbarSettings";
-
-import TheirIssuesDatatable from "./Datatable/TheirIssuesDatatable";
+import CustomPager from "./Templates/CustomPager";
+import Datalist from "./Datalist/Datalist";
 
 export default {
   props: {
-    matchType: [String],
     rowHeight: [Number],
-    theirSelectedTitle: [Boolean, Object],
-    theirIssuesResults: [Boolean, Array]
+    theirSelectedIssueIndex: [Boolean, Number],
+    theirIssuesResults: [Boolean, Array],
+    theirIssuesPagination: [Boolean, Object]
   },
   components: {
-    vuescroll,
-    TheirIssuesDatatable
+    CustomPager,
+    Datalist
   },
-  data: () => ({
-    ops: scrollbarSettings
-  }),
   computed: {
     stylesObject() {
       return {
         height: `${this.rowHeight}px`
       };
     }
-  }
+  },
+  methods: {}
 };
 </script>
 
-<style scoped></style>
+<style>
+#theirIssuesScroller .__rail-is-horizontal {
+  display: none;
+}
+</style>

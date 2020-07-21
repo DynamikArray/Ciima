@@ -1,10 +1,10 @@
 <template>
   <div
-    class="d-flex align-center justify-start grey darken-4 textShadow"
-    :class="asColumn ? 'flex-column' : ''"
+    class="d-flex align-center justify-center textShadow"
+    :class="getClasses"
   >
-    <div class="mr-1 borderLeft px-2">
-      <h4>FILTER:</h4>
+    <div class="mr-1 px-2 ">
+      <h4>Our Issues Filter:</h4>
     </div>
     <div class="d-flex align-center justify-start mx-5">
       <h5 class="mr-1">
@@ -49,8 +49,24 @@ export default {
       type: [Boolean],
       default: false
     },
+    borderBottom: {
+      type: [Boolean],
+      default: true
+    },
     hideVariants: [Boolean],
     hideComicTypes: [Boolean]
+  },
+  computed: {
+    getClasses() {
+      const classNames = [];
+      if (this.asColumn) {
+        classNames.push("flex-column");
+      }
+      if (this.borderBottom) {
+        classNames.push("borderBottom");
+      }
+      return classNames.join("");
+    }
   },
   methods: {
     filterVariants(val) {
@@ -63,8 +79,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.borderRight {
-  border-right: 2px solid #616161;
-}
-</style>
+<style scoped></style>

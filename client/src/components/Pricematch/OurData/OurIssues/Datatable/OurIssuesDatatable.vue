@@ -1,5 +1,5 @@
 <template>
-  <div class="w-100 mb-10">
+  <div class="w-100 mb-5">
     <v-data-table
       id="ourIssuesDataTable"
       class="w-100"
@@ -22,7 +22,7 @@
           <td class="text-right">
             <IssueImage :item="item" :onClick="showFullSizeImage" />
           </td>
-          <td v-if="matchType == 'ISSUES'">
+          <td class="">
             <v-btn
               class="textShadow pa-0"
               style="min-width:40px;"
@@ -61,38 +61,22 @@ export default {
     IssueImage
   },
   data: () => ({
+    headers,
     previewImage: false,
     previewImageUrl: false,
     footerProps: {
       "items-per-page-options": [15, 30, 50, 100, 250]
     }
   }),
-  computed: {
-    headers() {
-      if (this.matchType == "ISSUES") {
-        const actions = {
-          text: "Match",
-          value: "action",
-          sortable: false,
-          align: "center",
-          width: "60px"
-        };
-        return [...headers, actions];
-      }
-      return headers;
-    }
-  },
   methods: {
     showFullSizeImage(image) {
       this.previewImageUrl = image;
       this.previewImage = true;
     },
     selectOurIssue(item) {
-      if (this.matchType == "ISSUES") {
-        this.$store.dispatch(`pricematch/${SET_OUR_SELECTED_ISSUE}`, item, {
-          global: true
-        });
-      }
+      this.$store.dispatch(`pricematch/${SET_OUR_SELECTED_ISSUE}`, item, {
+        global: true
+      });
     }
   }
 };

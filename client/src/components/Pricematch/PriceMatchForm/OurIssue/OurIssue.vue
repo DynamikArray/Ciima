@@ -1,8 +1,8 @@
 <template>
-  <v-slide-y-reverse-transition mode="out-in">
+  <v-slide-x-transition mode="out-in">
     <div class="d-flex justify-end align-center w-100" :key="selectedIssue.id">
-      <div class="d-flex flex-column align-end justify-start h-100 w-100">
-        <h2 class="my-0">{{ selectedIssue.title }}</h2>
+      <div class="d-flex flex-column align-end justify-center h-100 w-100">
+        <h4 class="my-0">{{ selectedIssue.title }}</h4>
         <h1 class="my-0"># {{ selectedIssue.fullIssue }}</h1>
 
         <div class="d-flex flex-row justify-end align-baseline">
@@ -30,7 +30,7 @@
         <IssueImage :item="selectedIssue"></IssueImage>
       </div>
     </div>
-  </v-slide-y-reverse-transition>
+  </v-slide-x-transition>
 </template>
 
 <script>

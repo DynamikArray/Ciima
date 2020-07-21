@@ -1,11 +1,9 @@
 <template>
   <v-img
     class="ma-1"
-    :key="item.images.thumbnail"
-    :src="item.images.thumbnail"
-    max-height="160"
-    min-height="160"
-    max-width="120"
+    :key="item.images.fullsize"
+    :src="item.images.fullsize"
+    max-width="180"
     contain
   ></v-img>
 </template>

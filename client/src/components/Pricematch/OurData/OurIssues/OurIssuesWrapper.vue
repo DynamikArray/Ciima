@@ -3,47 +3,43 @@
     class="d-flex flex-column justify-start align-center w-100 mx-0 my-0"
     :style="stylesObject"
   >
-    <vuescroll :ops="ops" class="ml-0 mr-0">
-      <div class="HideOverflowY mb-0 mr-4">
-        <div class="d-flex flex-row justify-start align-center w-100">
-          <OurIssuesDatatable
-            :items="ourIssuesResults"
-            :containerHeight="rowHeight"
-            :matchType="matchType"
-          />
-        </div>
-      </div>
-    </vuescroll>
+    <div class="HideOverflowY mb-0 w-100">
+      <Datalist
+        class="mr-3"
+        v-if="ourIssuesResults"
+        :items="ourIssuesResults"
+        :containerHeight="rowHeight"
+        :ourSelectedIssueIndex="ourSelectedIssueIndex"
+      />
+    </div>
   </div>
 </template>
 
 <script>
-import vuescroll from "vuescroll";
-import { scrollbarSettings } from "@/util/scrollbarSettings";
+import Datalist from "./Datalist/Datalist";
 
-import OurIssuesDatatable from "./Datatable/OurIssuesDatatable";
 export default {
   props: {
-    matchType: [String],
     rowHeight: [Number],
-    ourSelectedTitle: [Boolean, Object],
+    ourSelectedIssueIndex: [Boolean, Number],
     ourIssuesResults: [Boolean, Array]
   },
   components: {
-    vuescroll,
-    OurIssuesDatatable
+    Datalist
   },
-  data: () => ({
-    ops: scrollbarSettings
-  }),
   computed: {
     stylesObject() {
       return {
         height: `${this.rowHeight}px`
       };
     }
-  }
+  },
+  methods: {}
 };
 </script>
 
-<style scoped></style>
+<style>
+#ourIssuesScroller .__rail-is-horizontal {
+  display: none;
+}
+</style>

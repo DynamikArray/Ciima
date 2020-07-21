@@ -8,6 +8,7 @@
 
     <OurIssuesWrapper
       v-if="ourSelectedTitle"
+      :ourSelectedIssueIndex="ourSelectedIssueIndex"
       :ourSelectedTitle="ourSelectedTitle"
       :ourIssuesResults="ourIssuesResults"
       :loading="false"
@@ -23,6 +24,7 @@ import OurIssuesWrapper from "./OurIssues/OurIssuesWrapper";
 
 export default {
   props: {
+    ourSelectedIssueIndex: [Boolean, Number],
     ourSelectedTitle: [Boolean, Object],
     ourIssuesResults: [Boolean, Array],
     loading: [Boolean],

@@ -4,16 +4,15 @@
       v-if="!theirSelectedTitle"
       :ourSelectedTitle="ourSelectedTitle"
       :rowHeight="rowHeight"
-      :matchType="matchType"
     />
 
     <TheirIssuesWrapper
       v-if="theirSelectedTitle && theirIssuesResults"
-      :theirSelectedTitle="theirSelectedTitle"
+      :theirSelectedIssueIndex="theirSelectedIssueIndex"
       :theirIssuesResults="theirIssuesResults"
+      :theirIssuesPagination="theirIssuesPagination"
       :loading="false"
       :rowHeight="rowHeight"
-      :matchType="matchType"
     />
   </v-slide-x-reverse-transition>
 </template>
@@ -26,10 +25,11 @@ export default {
   props: {
     ourSelectedTitle: [Boolean, Object],
     theirSelectedTitle: [Boolean, Object],
+    theirSelectedIssueIndex: [Boolean, Number],
     theirIssuesResults: [Boolean, Array],
+    theirIssuesPagination: [Boolean, Object],
     loading: [Boolean],
-    rowHeight: [Number],
-    matchType: [String]
+    rowHeight: [Number]
   },
   components: {
     TheirTitlesWrapper,

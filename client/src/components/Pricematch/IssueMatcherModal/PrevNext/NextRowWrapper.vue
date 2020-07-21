@@ -1,8 +1,8 @@
 <template>
   <div class="d-flex justify-center align-center w-100">
-    <div class="d-flex w-100 align-end">
-      <div class="mx-2 my-2">
-        <v-btn small color="grey darken-3 pa-0 mr-1" style="min-width:36px"
+    <div class="d-flex justify-end w-100 ">
+      <div class="d-flex mx-2 align-self-stretch align-center mb-2">
+        <v-btn small color="grey darken-2 pa-0" style="min-width:36px"
           ><v-icon small>S</v-icon></v-btn
         >
       </div>
@@ -12,19 +12,33 @@
         :thumbnail="makeOurImageUrl(ourIssue.imageUrl)"
         :issueNumber="ourIssue.fullIssue"
       />
+      <div class="d-flex justify-center align-center w-100" v-else>
+        <h5>No results</h5>
+      </div>
     </div>
+
     <div class="d-flex justify-center align-center" style="min-width:180px">
-      <h4>NEXT ISSUES</h4>
+      <h6>
+        <v-icon small class="mr-1">fa fa-arrow-left</v-icon>Next Issues<v-icon
+          small
+          class="ml-1"
+          >fa fa-arrow-right</v-icon
+        >
+      </h6>
     </div>
-    <div class="d-flex w-100 align-end">
+
+    <div class="d-flex justify-end w-100">
       <LeftIssue
         v-if="theirIssue"
         :title="theirIssue.title"
         :thumbnail="theirIssue.images.thumbnail"
         :issueNumber="theirIssue.issueNumber"
       />
-      <div class="mx-2 my-2">
-        <v-btn small color="grey darken-3 pa-0 mr-1" style="min-width:36px"
+      <div class="d-flex justify-center align-center w-100" v-else>
+        <h5>No results</h5>
+      </div>
+      <div class="d-flex mx-2 align-self-stretch align-center mb-2">
+        <v-btn small color="grey darken-2 pa-0" style="min-width:36px"
           ><v-icon small>fa fa-arrow-down</v-icon></v-btn
         >
       </div>

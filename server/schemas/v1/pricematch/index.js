@@ -17,28 +17,7 @@ module.exports = {
         query: { type: "string" },
       },
     },
-
-    /*
-    response: {
-      200: {
-        description: "Succesful response",
-        type: "object",
-        properties: {
-          result: {
-            type: "object",
-            properties: {
-              affectedRows: {
-                type: "string"
-              },
-              insertId: {
-                type: "string"
-              }
-            }
-          }
-        }
-      }
-    }
-    */
+    /* NEEDS RESPONSES **/
   },
 
   //
@@ -58,26 +37,27 @@ module.exports = {
         TID: { type: "string" },
       },
     },
-    /*
-    response: {
-      200: {
-        description: "Succesful response",
-        type: "object",
-        properties: {
-          result: {
-            type: "object",
-            properties: {
-              affectedRows: {
-                type: "string"
-              },
-              insertId: {
-                type: "string"
-              }
-            }
-          }
-        }
-      }
-    }
-    */
+    /* NEEDS RESPONSES **/
+  },
+
+  //
+  getPageTheirIssuesSchema: {
+    description: "Search online retailers Issues using their Title id",
+    tags: ["Pricematch"],
+    summary:
+      "Search specifiec website using supplied parameters, parse and returns results in json to us",
+    security: [
+      {
+        token: [],
+      },
+    ],
+    querystring: {
+      type: "object",
+      properties: {
+        tid: { type: "string" },
+        pgi: { type: "string" },
+      },
+    },
+    /* NEEDS RESPONSES **/
   },
 };

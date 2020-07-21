@@ -3,9 +3,7 @@
     class="ma-1"
     :key="item.images.thumbnail"
     :src="item.images.fullsize"
-    max-height="400"
-    min-height="400"
-    max-width="300"
+    max-width="240"
     contain
   ></v-img>
 </template>

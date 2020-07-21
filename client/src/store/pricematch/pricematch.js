@@ -14,6 +14,7 @@ import {
   SET_THEIR_SELECTED_TITLE,
   CLEAR_THEIR_SELECTED_TITLE,
   SEARCH_THEIR_ISSUES,
+  GET_THEIR_ISSUES_PAGE,
   SET_THEIR_SELECTED_ISSUE,
   CLEAR_THEIR_SELECTED_ISSUE
 } from "@/store/action-types";
@@ -125,6 +126,9 @@ const pricematch = {
     getTheirIssuesResults: state => {
       return state.theirIssuesResults.issues;
     },
+    getTheirIssuesPagination: state => {
+      return state.theirIssuesResults.pagination;
+    },
     getTheirSelectedIssue: state => {
       return state.theirSelectedIssue;
     }
@@ -188,6 +192,19 @@ const pricematch = {
         {
           method: "get",
           url: "/pricematch/searchTheirIssues",
+          params: params,
+          success: `pricematch/${THEIR_ISSUES_SEARCH_RESULTS_SET}`,
+          loading: `pricematch/${THEIR_ISSUES_SEARCH_RESULTS_LOADING}`
+        },
+        { root: true }
+      );
+    },
+    [GET_THEIR_ISSUES_PAGE]({ dispatch, commit }, params) {
+      dispatch(
+        "api/requestHandler",
+        {
+          method: "get",
+          url: "/pricematch/getPageTheirIssues",
           params: params,
           success: `pricematch/${THEIR_ISSUES_SEARCH_RESULTS_SET}`,
           loading: `pricematch/${THEIR_ISSUES_SEARCH_RESULTS_LOADING}`

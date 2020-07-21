@@ -1,6 +1,7 @@
 const axios = require("axios");
 const cheerio = require("cheerio");
 const RETAILER_URL = "https://www.mycomicshop.com/search";
+const queryString = require("query-string");
 
 /**
  * [searchWebRetailerTitles description]
@@ -35,7 +36,29 @@ const searchWebRetailerIssues = async (TID) => {
       error: false,
     };
   } catch (e) {
+    console.log(e);
     return { result: false, error: e };
+  }
+};
+
+const getPageOfWebRetailerIssues = async (params) => {
+  try {
+    const fetched = await fetchResults(params);
+    const parsed = parseIssues(fetched);
+    const issues = parsed.map((issue, i) => {
+      return { ...issue, ...{ _dataIndex: i } };
+    });
+
+    const prevnext = parsePrevNext(fetched);
+    const pager = parsePagerPages(fetched);
+
+    return {
+      result: { issues, pagination: { prevnext, pager } },
+      error: false,
+    };
+  } catch (e) {
+    console.log(e.message);
+    return { result: false, error: e.message };
   }
 };
 
@@ -160,11 +183,67 @@ const parseIssuePrices = ($cheerio, el) => {
 
   prices.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
 
-  return [...new Set(prices)];
+  const priceGrades = prices
+    .reduce((filtered, current) => {
+      const x = filtered.find((item) => item.grade === current.grade);
+      if (!x) return filtered.concat([current]);
+      return filtered;
+    }, [])
+    .filter((prices) => !prices.grade.includes("CGC"));
+
+  return priceGrades;
 };
 
-const parsePrevNext = ($cheerio) => {};
-const parsePagerPages = ($cheerio) => {};
+const parsePrevNext = ($cheerio) => {
+  const prevNext = {
+    prev: false,
+    next: false,
+  };
+
+  $cheerio(".search-results .paginate ul").each((index, ul) => {
+    if (index == 0) {
+      $cheerio(ul).children((index, li) => {
+        if (
+          $cheerio(li).hasClass("prev") &&
+          !$cheerio(li).hasClass("disabled")
+        ) {
+          prevNext.prev = formatPagerLink($cheerio(li).find("a").attr("href"));
+        }
+        if (
+          $cheerio(li).hasClass("next") &&
+          !$cheerio(li).hasClass("disabled")
+        ) {
+          prevNext.next = formatPagerLink($cheerio(li).find("a").attr("href"));
+        }
+      });
+    }
+  });
+  return prevNext;
+};
+
+const formatPagerLink = (hrefVal) => {
+  const link = hrefVal.replace("search", "");
+  return queryString.parse(link);
+};
+
+const parsePagerPages = ($cheerio) => {
+  const pager = [];
+
+  $cheerio(".search-results .paginate ul")
+    .eq(0)
+    .find("li a")
+    .each((i, a) => {
+      pager.push({
+        text: $cheerio(a).text(),
+        params: formatPagerLink($cheerio(a).attr("href")),
+      });
+    });
+  return pager;
+};
 
 /*  EXPORT THE THINGS */
-module.exports = { searchWebRetailerTitles, searchWebRetailerIssues };
+module.exports = {
+  searchWebRetailerTitles,
+  searchWebRetailerIssues,
+  getPageOfWebRetailerIssues,
+};

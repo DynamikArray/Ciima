@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex justify-start align-center w-100">
+  <div class="d-flex justify-start align-center w-100 mb-5">
     <div class="w-100" :class="titleResults.length > 0 ? 'mr-3' : 'mr-0'">
       <v-data-table
         class="w-100 textShadow"
@@ -20,20 +20,14 @@
                 ><v-icon small class="mr-0">fa fa-plus-circle</v-icon></v-btn
               >
             </td>
-            <td class="text-right">
+            <td class="text-left" width="">
               {{ item.stock }}
             </td>
-            <td class="text-left">
+            <td class="text-left" width="">
               {{ item.title }}
             </td>
-            <td class="text-left">
+            <td class="text-right" style="width: 120px">
               {{ item.issue }}
-            </td>
-            <td class="text-left">
-              {{ item.publisher }}
-            </td>
-            <td class="text-left">
-              {{ item.year }}
             </td>
           </tr>
         </template>
@@ -49,9 +43,7 @@ import { SET_THEIR_SELECTED_TITLE } from "@/store/action-types";
 import { tableHeaders } from "./Settings/tableHeaders";
 
 export default {
-  props: {
-    matchType: [String]
-  },
+  props: {},
   components: {},
   data: () => ({
     headers: tableHeaders,

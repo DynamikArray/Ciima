@@ -4,7 +4,8 @@ const fixList = [
   [", The", ""],
   ["(", ""],
   [")", ""],
-  ["Vol.", "Vol"]
+  ["Vol.", "Vol"],
+  [":", ""]
 ];
 
 //Cleans the title of the fixlist in order

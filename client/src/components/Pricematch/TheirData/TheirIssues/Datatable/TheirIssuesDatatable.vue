@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex justify-center align-center flex-grow-1 mb-10">
+  <div class="d-flex justify-center align-center flex-grow-1 mb-5">
     <v-data-table
       id="theirIssuesDataTable"
       class="w-100"
@@ -9,10 +9,18 @@
       loading-text="Searching Database"
       :items-per-page="50"
       :footer-props="footerProps"
+      hide-default-footer
     >
+      <template v-slot:footer="{}">
+        <MCSPager
+          name="footerPager"
+          :pagination="pagination"
+          class="secondary darken-1 ma-1"
+        />
+      </template>
+
       <template v-slot:item.action="{ item }">
         <v-btn
-          v-show="matchType == 'ISSUES'"
           class="textShadow pa-0"
           style="min-width:40px;"
           @click="selectTheirIssue(item)"
@@ -29,32 +37,7 @@
       </template>
 
       <template v-slot:item.prices="{ item }">
-        <div v-if="item.prices.length > 0" class="mr-3">
-          <v-tooltip left :max-width="420" color="info">
-            <template v-slot:activator="{ on }">
-              <v-btn icon label color="white" v-on="on" class="pa-2 textShadow">
-                <v-icon class="">
-                  fa fa-comment-dollar
-                </v-icon>
-              </v-btn>
-            </template>
-            <div v-if="item.prices" class="w-100 text-center">
-              <h4>Current Prices:</h4>
-              <v-divider class="my-1"></v-divider>
-              <div
-                class="d-flex align-center justify-space-between w-100"
-                v-for="price in item.prices"
-              >
-                <div class="mr-4 ml-1">
-                  {{ price.grade }}
-                </div>
-                <div class="ml-4 mr-1">
-                  {{ price.price | currency }}
-                </div>
-              </div>
-            </div>
-          </v-tooltip>
-        </div>
+        <Prices :item="item" />
       </template>
     </v-data-table>
 
@@ -73,39 +56,29 @@ import { SET_THEIR_SELECTED_ISSUE } from "@/store/action-types";
 
 import { headers } from "./Settings/headers.js";
 import IssueImage from "./Templates/IssueImage";
+import MCSPager from "./Templates/MCSPager/MCSPager";
+import Prices from "./Templates/Prices";
 
 export default {
   props: {
-    matchType: [String],
     containerHeight: [Number],
     items: [Boolean, Array],
+    pagination: [Boolean, Object],
     loading: [Boolean]
   },
   components: {
-    IssueImage
+    IssueImage,
+    MCSPager,
+    Prices
   },
   data: () => ({
+    headers,
     previewImage: false,
     previewImageUrl: false,
     footerProps: {
       "items-per-page-options": [15, 30, 50, 100, 250]
     }
   }),
-  computed: {
-    headers() {
-      if (this.matchType == "ISSUES") {
-        const actions = {
-          text: "Match",
-          value: "action",
-          sortable: false,
-          align: "center",
-          width: "60px"
-        };
-        return [actions, ...headers];
-      }
-      return headers;
-    }
-  },
   methods: {
     showFullSizeImage(image) {
       this.previewImageUrl = image;

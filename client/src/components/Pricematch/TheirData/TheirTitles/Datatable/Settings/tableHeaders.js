@@ -14,20 +14,24 @@ export const tableHeaders = [
     text: "Stock",
     value: "stock",
     sortable: true,
-    align: "right"
+    align: "left",
+    width: "100px"
   },
   {
     text: "Title",
     value: "title",
     sortable: true,
-    align: "left"
+    align: "left",
+    width: "100%"
   },
   {
     text: "Issues",
     value: "issue",
     sortable: true,
-    align: "center"
-  },
+    align: "center",
+    width: "100px"
+  }
+  /*
   {
     text: "Publisher",
     value: "publisher",
@@ -38,6 +42,7 @@ export const tableHeaders = [
     text: "Years",
     value: "year",
     sortable: true,
-    align: "center"
-  }
+    align: "center",
+    width: "50px"
+  }*/
 ];

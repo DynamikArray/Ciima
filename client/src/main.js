@@ -67,7 +67,7 @@ Vue.use(VuetifyConfirm, {
 });
 
 //shortkey
-Vue.use(require("vue-shortkey"));
+Vue.use(require("vue-shortkey"), { prevent: ["input", "textarea"] });
 
 new Vue({
   router,

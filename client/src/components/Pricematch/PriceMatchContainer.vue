@@ -1,35 +1,51 @@
 <template>
-  <div class="d-flex flex-column" :style="getStyle">
-    <v-slide-y-reverse-transition mode="in-out">
-      <DataFilters
-        v-if="matchType == 'ISSUES'"
-        :hideVariants.sync="hideVariants"
-        :hideComicTypes.sync="hideComicTypes"
-      />
-    </v-slide-y-reverse-transition>
+  <div
+    class="d-flex flex-column align-self-stretch"
+    :style="getStyle"
+    v-shortkey.once="{
+      up: ['arrowup'],
+      down: ['arrowdown'],
+      w: ['w'],
+      s: ['s']
+    }"
+    @shortkey="issuesNavigation"
+  >
+    <div class="d-flex bottomRow">
+      <div class="w-100 borderRight">
+        <SelectedTitle
+          :blnOurs="true"
+          :selectedTitle="ourSelectedTitle"
+          class=" secondary darken"
+        />
 
-    <div
-      class="d-flex flex-grow-1 bottomRow"
-      id="bottomRowWrapper"
-      ref="bottomRowWrapper"
-    >
-      <div class="w-100 leftColumn">
+        <DataFilters
+          ref="dataFilter"
+          :hideVariants.sync="hideVariants"
+          :hideComicTypes.sync="hideComicTypes"
+        />
         <OurDataContainer
           :ourSelectedTitle="ourSelectedTitle"
-          :ourIssuesResults="ourIssuesResultsFiltered"
+          :ourIssuesResults="ourIndexedResults"
+          :ourSelectedIssueIndex="ourSelectedIssueIndex"
           :loading="false"
-          :rowHeight="containerHeight"
-          :matchType="matchType"
+          :rowHeight="calculateRowHeight"
         />
       </div>
-      <div class="w-100 rightColumn">
+      <div class="w-100 borderLeft">
+        <SelectedTitle
+          :blnTheirs="true"
+          :selectedTitle="theirSelectedTitle"
+          class="secondary darken"
+        />
+
         <TheirDataContainer
           :ourSelectedTitle="ourSelectedTitle"
           :theirSelectedTitle="theirSelectedTitle"
+          :theirSelectedIssueIndex="theirSelectedIssueIndex"
           :theirIssuesResults="theirIssuesResults"
+          :theirIssuesPagination="theirIssuesPagination"
           :loading="false"
           :rowHeight="containerHeight"
-          :matchType="matchType"
         />
       </div>
     </div>
@@ -37,18 +53,24 @@
 </template>
 
 <script>
+import {
+  SET_OUR_SELECTED_ISSUE,
+  SET_THEIR_SELECTED_ISSUE
+} from "@/store/action-types";
+
 import { mapState, mapGetters } from "vuex";
 import OurDataContainer from "./OurData/OurDataContainer";
 import TheirDataContainer from "./TheirData/TheirDataContainer";
-
 import DataFilters from "./DataFilters/DataFilters";
+
+import SelectedTitle from "./SelectedTitles/SelectedTitle";
 
 export default {
   props: {
-    tabNumber: [Number],
     containerHeight: [Number]
   },
   components: {
+    SelectedTitle,
     DataFilters,
     OurDataContainer,
     TheirDataContainer
@@ -58,27 +80,102 @@ export default {
     hideComicTypes: false
   }),
   computed: {
-    ...mapState({}),
     ...mapGetters({
       ourSelectedTitle: "pricematch/getOurSelectedTitle",
+      ourSelectedIssue: "pricematch/getOurSelectedIssue",
       theirSelectedTitle: "pricematch/getTheirSelectedTitle",
+      theirSelectedIssue: "pricematch/getTheirSelectedIssue",
       ourIssuesResults: "pricematch/getOurIssuesResults",
-      theirIssuesResults: "pricematch/getTheirIssuesResults"
+      theirIssuesResults: "pricematch/getTheirIssuesResults",
+      theirIssuesPagination: "pricematch/getTheirIssuesPagination"
     }),
+    calculateRowHeight() {
+      if (this.$refs["dataFilter"]) {
+        return this.containerHeight - this.$refs["dataFilter"].$el.clientHeight;
+      }
+      return this.containerHeight;
+    },
     getStyle() {
       return { height: `${this.containerHeight}px` };
     },
-    matchType() {
-      switch (this.tabNumber) {
-        case 0:
-          return "TITLES";
-          break;
-        case 1:
-          return "ISSUES";
-          break;
-      }
+
+    theirSelectedIssueIndex() {
+      if (this.theirSelectedIssue)
+        return this.theirSelectedIssue._dataIndex || false;
       return false;
     },
+    ourSelectedIssueIndex() {
+      if (this.ourSelectedIssue)
+        return this.ourSelectedIssue._dataIndex || false;
+      return false;
+    },
+    ourIndexedResults() {
+      return this.ourIssuesResults
+
+        .filter(issue => {
+          if (this.hideVariants) {
+            if (issue.variation !== "" || issue.variation.length > 0)
+              return false;
+          }
+
+          if (this.hideComicTypes) {
+            if (issue.comicType.length > 0) return false;
+          }
+
+          return true;
+        })
+        .map((issue, i) => {
+          return { ...issue, ...{ _dataIndex: i } };
+        });
+    },
+    ourPrevIssue() {
+      if (!this.ourSelectedIssue) return false;
+      const oSI = this.ourSelectedIssue || 0;
+      if (oSI) {
+        if (oSI._dataIndex - 1 < 0) {
+          return false;
+          //return this.ourIndexedResults[[oSI._dataIndex]];
+        }
+      }
+      return this.ourIndexedResults[oSI._dataIndex - 1];
+    },
+    theirPrevIssue() {
+      if (!this.theirSelectedIssue) return false;
+
+      const tSI = this.theirSelectedIssue || 0;
+      if (tSI) {
+        if (tSI._dataIndex - 1 < 0) {
+          return false;
+          //return this.theirIssuesResults[[tSI._dataIndex]];
+        }
+      }
+      return this.theirIssuesResults[tSI._dataIndex - 1];
+    },
+
+    ourNextIssue() {
+      if (!this.ourSelectedIssue) return false;
+      const oNI = this.ourSelectedIssue || 0;
+      if (oNI) {
+        if (oNI._dataIndex + 1 < 0) {
+          return false;
+          //return this.ourIndexedResults[[oNI._dataIndex]];
+        }
+      }
+      return this.ourIndexedResults[oNI._dataIndex + 1];
+    },
+
+    theirNextIssue() {
+      if (!this.theirSelectedIssue) return false;
+      const tNI = this.theirSelectedIssue || 0;
+      if (tNI) {
+        if (tNI._dataIndex + 1 >= this.theirIssuesResults.length) {
+          return false;
+          //return this.theirIssuesResults[[tNI._dataIndex]];
+        }
+      }
+      return this.theirIssuesResults[tNI._dataIndex + 1];
+    }
+    /*
     ourIssuesResultsFiltered() {
       const filtered = this.ourIssuesResults;
       return this.ourIssuesResults
@@ -97,45 +194,51 @@ export default {
 
           return true;
         });
+    }*/
+  },
+  methods: {
+    issuesNavigation(event) {
+      switch (event.srcKey) {
+        case "up":
+          if (this.theirPrevIssue) {
+            this.$store.dispatch(
+              `pricematch/${SET_THEIR_SELECTED_ISSUE}`,
+              this.theirPrevIssue,
+              { global: true }
+            );
+          }
+          break;
+        case "down":
+          if (this.theirNextIssue) {
+            this.$store.dispatch(
+              `pricematch/${SET_THEIR_SELECTED_ISSUE}`,
+              this.theirNextIssue,
+              { global: true }
+            );
+          }
+          break;
+        case "w":
+          if (this.ourPrevIssue) {
+            this.$store.dispatch(
+              `pricematch/${SET_OUR_SELECTED_ISSUE}`,
+              this.ourPrevIssue,
+              { global: true }
+            );
+          }
+          break;
+        case "s":
+          if (this.ourNextIssue) {
+            this.$store.dispatch(
+              `pricematch/${SET_OUR_SELECTED_ISSUE}`,
+              this.ourNextIssue,
+              { global: true }
+            );
+          }
+          break;
+      }
     }
   }
 };
-
-/*
-
-
-if(this.blnComicTypes){
-
-}
-if(this.blnVariants)
-
- */
 </script>
 
-<style>
-.leftBorder {
-  border-left: 2px solid #616161;
-}
-
-.rightBorder {
-  border-right: 2px solid #616161;
-}
-</style>
-<style scoped>
-.topRow {
-  flex-basis: min-content;
-}
-.bottomRow {
-  border-top: 2px solid #616161;
-}
-
-.leftColumn {
-  /*border-left: 5px solid #616161;*/
-  border-right: 2px solid #616161;
-}
-
-.rightColumn {
-  /*  border-right: 5px solid #616161;*/
-  border-left: 2px solid #616161;
-}
-</style>
+<style scoped></style>
