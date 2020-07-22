@@ -26,10 +26,10 @@
     <div class="d-flex align-self-stretch px-2">
       <div class="d-flex flex-row">
         <div
-          class="d-flex flex-column align-center align-self-stretch justify-space-around py-1"
+          class="d-flex flex-column align-center align-self-stretch justify-space-between py-1"
         >
           <div class="d-flex justify-space-between align-start w-100">
-            <div class="d-flex align-start justify-start w-100">
+            <div class="d-flex ">
               <v-btn
                 @click="clearOurSelectedIssue"
                 color="red"
@@ -40,7 +40,7 @@
                 ><v-icon small>fa fa-times</v-icon></v-btn
               >
             </div>
-            <div class="d-flex align-self-stretch ml-1 mt-1">
+            <div class="d-flex">
               <v-btn
                 @click="clearTheirSelectedIssue"
                 color="red"
@@ -55,7 +55,7 @@
 
           <!--<IssueMatcherModal class="" />-->
 
-          <div class="mx-3 mt-4">
+          <div class="mx-3 my-10">
             <v-btn color="success" class=""
               ><v-icon small class="mr-3">fa fa-save</v-icon>Save Match</v-btn
             >

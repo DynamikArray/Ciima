@@ -1,5 +1,10 @@
 <template>
-  <v-container fluid class="pa-0 ma-0 fullContainer" id="fullContainer">
+  <v-container
+    fluid
+    class="pa-0 ma-0 fullContainer"
+    id="fullContainer"
+    v-resize:debounce="onContainerResize"
+  >
     <div
       class="d-flex justify-space-around align-baseline px-2 mt-1 borderBottom"
       id="pageHeading"
@@ -28,14 +33,7 @@
 </template>
 
 <script>
-/* COME BACK TO THIS THING
 import resize from "vue-resize-directive";
-v-resize:debounce="onResize"
-directives: {
-   resize
-},
-
-*/
 
 import { mapState, mapGetters } from "vuex";
 import PriceMatchContainer from "@/components/Pricematch/PriceMatchContainer";
@@ -49,7 +47,9 @@ export default {
   data: () => ({
     containerHeight: 0
   }),
-
+  directives: {
+    resize
+  },
   mounted() {
     this.$nextTick(() => {
       this.setContainerSize();
@@ -64,6 +64,15 @@ export default {
       const formMatchWrapper = document.getElementById("formMatchWrapper")
         .clientHeight;
       const containerHeight = document.getElementById("fullContainer")
+        .clientHeight;
+
+      const maxHeight = containerHeight - headingHeight - formMatchWrapper - 55;
+      this.containerHeight = maxHeight;
+    },
+    onContainerResize(el) {
+      const containerHeight = el.clientHeight;
+      const headingHeight = document.getElementById("pageHeading").clientHeight;
+      const formMatchWrapper = document.getElementById("formMatchWrapper")
         .clientHeight;
 
       const maxHeight = containerHeight - headingHeight - formMatchWrapper - 55;
