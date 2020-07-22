@@ -14,6 +14,7 @@
         label="Search Our Titles"
         prepend-icon="fa-search"
         @input="handleSearchInput"
+        class="py-3"
       />
     </v-form>
   </div>

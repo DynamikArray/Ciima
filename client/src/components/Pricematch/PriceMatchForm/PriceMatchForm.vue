@@ -1,8 +1,8 @@
 <template>
-  <div class="d-flex justify-center align-center w-100 grey darken-4 pa-1">
+  <div class="d-flex justify-center align-center w-100 grey darken-4">
     <div
       class="d-flex flex-grow titleBox"
-      style="min-height:300px; max-height:300px;"
+      style="min-height:340px; max-height:340px;"
     >
       <OurIssue
         key="ourIssue"
@@ -26,7 +26,7 @@
     <div class="d-flex align-self-stretch px-2">
       <div class="d-flex flex-row">
         <div
-          class="d-flex flex-column align-center align-self-stretch justify-space-between py-1"
+          class="d-flex flex-column align-center align-self-stretch justify-space-between py-1 px-2 borderLeft borderRight borderBotttom secondary lighten"
         >
           <div class="d-flex justify-space-between align-start w-100">
             <div class="d-flex ">
@@ -53,10 +53,34 @@
             </div>
           </div>
 
-          <!--<IssueMatcherModal class="" />-->
+          <div class="d-flex flex-wrap align-center justify-center">
+            <h1 class="text-center textShadow" style="line-height: 1.1em;">
+              Price Matcher
+            </h1>
+          </div>
+
+          <div
+            class="d-flex justify-space-between align-center align-self-stretch textShadow"
+          >
+            <div class="d-flex align-start justify-start">
+              <h3 class="d-flex flex-column">
+                Ours<v-icon class="">fa fa-hand-point-left</v-icon>
+              </h3>
+            </div>
+            <div class="d-flex align-end justify-end">
+              <h3 class="d-flex flex-column">
+                Theirs
+                <v-icon class="">fa fa-hand-point-right</v-icon>
+              </h3>
+            </div>
+          </div>
 
           <div class="mx-3 my-10">
-            <v-btn color="success" class=""
+            <v-btn
+              :disabled="!isMatchEnabled"
+              color="success"
+              class=""
+              @click="saveTitleMatch()"
               ><v-icon small class="mr-3">fa fa-save</v-icon>Save Match</v-btn
             >
           </div>
@@ -66,7 +90,7 @@
 
     <div
       class="d-flex flex-grow titleBox"
-      style="min-height:300px; max-height:300px;"
+      style="min-height:340px; max-height:340px;"
     >
       <TheirIssue
         v-if="theirSelectedIssue"
@@ -90,17 +114,16 @@
 <script>
 import {
   CLEAR_OUR_SELECTED_ISSUE,
-  CLEAR_THEIR_SELECTED_ISSUE
+  CLEAR_THEIR_SELECTED_ISSUE,
+  SAVE_ISSUE_MATCH
 } from "@/store/action-types";
 import { mapGetters } from "vuex";
 
-//import IssueMatcherModal from "../IssueMatcherModal/IssueMatcherModal";
 import OurIssue from "./OurIssue/OurIssue";
 import TheirIssue from "./TheirIssue/TheirIssue";
 
 export default {
   components: {
-    //IssueMatcherModal,
     OurIssue,
     TheirIssue
   },
@@ -108,7 +131,11 @@ export default {
     ...mapGetters({
       ourSelectedIssue: "pricematch/getOurSelectedIssue",
       theirSelectedIssue: "pricematch/getTheirSelectedIssue"
-    })
+    }),
+    isMatchEnabled() {
+      if (this.ourSelectedIssue && this.theirSelectedIssue) return true;
+      return false;
+    }
   },
   methods: {
     clearOurSelectedIssue() {
@@ -124,6 +151,17 @@ export default {
         {},
         { global: true }
       );
+    },
+    saveTitleMatch() {
+      this.$store
+        .dispatch(
+          `pricematch/${SAVE_ISSUE_MATCH}`,
+          { ours: this.ourSelectedIssue, theirs: this.theirSelectedIssue },
+          { global: true }
+        )
+        .then(res => {
+          console.log("This was our response from dispatch", res);
+        });
     }
   }
 };

@@ -1,9 +1,9 @@
 <template>
   <v-img
-    class="ma-1"
+    class="my-1 mx-3"
     :key="item.images.fullsize"
     :src="item.images.fullsize"
-    max-width="180"
+    max-width="200"
     contain
   ></v-img>
 </template>

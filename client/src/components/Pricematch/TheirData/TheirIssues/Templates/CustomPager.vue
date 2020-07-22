@@ -14,7 +14,7 @@
       </v-btn>
     </div>
     <div class="d-flex align-center justify-end w-100" v-if="pager.length == 0">
-      <h4 class="pb-1 pr-3">No more pages</h4>
+      <h4 class="pb-1 pr-3 my-2">No more pages</h4>
     </div>
   </div>
 </template>

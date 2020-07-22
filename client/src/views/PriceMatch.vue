@@ -5,7 +5,7 @@
     id="fullContainer"
     v-resize:debounce="onContainerResize"
   >
-    <div
+    <!-- <div
       class="d-flex justify-space-around align-baseline px-2 mt-1 borderBottom"
       id="pageHeading"
     >
@@ -19,6 +19,7 @@
         Their Titles & Issues
       </h3>
     </div>
+  -->
 
     <v-divider></v-divider>
 
@@ -45,7 +46,8 @@ export default {
     PriceMatchContainer
   },
   data: () => ({
-    containerHeight: 0
+    containerHeight: 0,
+    fullscreen: false
   }),
   directives: {
     resize
@@ -56,26 +58,23 @@ export default {
     });
   },
   methods: {
-    onResize(val) {
-      this.setContainerSize();
-    },
     setContainerSize() {
-      const headingHeight = document.getElementById("pageHeading").clientHeight;
+      //const headingHeight = document.getElementById("pageHeading").clientHeight;
       const formMatchWrapper = document.getElementById("formMatchWrapper")
         .clientHeight;
       const containerHeight = document.getElementById("fullContainer")
         .clientHeight;
 
-      const maxHeight = containerHeight - headingHeight - formMatchWrapper - 55;
+      const maxHeight = containerHeight - formMatchWrapper - 55;
       this.containerHeight = maxHeight;
     },
     onContainerResize(el) {
       const containerHeight = el.clientHeight;
-      const headingHeight = document.getElementById("pageHeading").clientHeight;
+      //const headingHeight = document.getElementById("pageHeading").clientHeight;
       const formMatchWrapper = document.getElementById("formMatchWrapper")
         .clientHeight;
 
-      const maxHeight = containerHeight - headingHeight - formMatchWrapper - 55;
+      const maxHeight = containerHeight - formMatchWrapper - 55;
       this.containerHeight = maxHeight;
     }
   }

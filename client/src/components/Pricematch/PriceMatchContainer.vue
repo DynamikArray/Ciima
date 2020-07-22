@@ -18,10 +18,9 @@
           class=" secondary darken"
         />
 
-        <div
-          class="d-flex flex-wrap justify-space-around align-center borderBottom"
-        >
+        <div class="d-flex flex-wrap justify-space-around align-center">
           <DataFilters
+            v-if="ourSelectedTitle"
             ref="dataFilter"
             :borderBottom="false"
             :hideVariants.sync="hideVariants"
@@ -45,7 +44,7 @@
           :rowHeight="calculateRowHeight"
         />
       </div>
-      <div class="borderLeft" style="width:50%">
+      <div class="borderLeft " style="width:50%">
         <SelectedTitle
           :blnTheirs="true"
           :selectedTitle="theirSelectedTitle"

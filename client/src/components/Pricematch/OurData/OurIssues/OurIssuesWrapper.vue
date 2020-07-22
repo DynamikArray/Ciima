@@ -19,7 +19,6 @@
 
 <script>
 import Datalist from "./Datalist/Datalist";
-import CustomPager from "./Templates/CustomPager";
 
 export default {
   props: {
@@ -30,8 +29,7 @@ export default {
     ourIssuesPagination: [Boolean, Object]
   },
   components: {
-    Datalist,
-    CustomPager
+    Datalist
   },
   computed: {
     stylesObject() {

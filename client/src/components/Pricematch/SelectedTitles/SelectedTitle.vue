@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="d-flex flex-row justify-space-between align-center borderBottom pa-3"
-  >
+  <div class="d-flex flex-row justify-space-between align-center pa-3">
     <v-slide-y-reverse-transition mode="out-in">
       <div :key="`${title.title}-${title.issueCount}`" class="w-100">
         <div

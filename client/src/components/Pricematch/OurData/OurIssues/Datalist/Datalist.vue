@@ -80,6 +80,18 @@ export default {
     previewImage: false
   }),
   watch: {
+    ourIssuesPagination: function(newVal, oldVal) {
+      if (newVal.page !== oldVal.page) {
+        this.$refs["ourIssuesScroller"].scrollIntoView(`#ourIssues_0`, 250);
+      }
+    },
+    items: function(items) {
+      if (items[0]) {
+        this.$store.dispatch(`pricematch/${SET_OUR_SELECTED_ISSUE}`, items[0], {
+          global: true
+        });
+      }
+    },
     ourSelectedIssueIndex: function(val) {
       if (val) {
         let position = val;

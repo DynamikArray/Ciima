@@ -74,6 +74,22 @@ export default {
     CustomPager
   },
   watch: {
+    theirIssuesPagination: function(newVal, oldVal) {
+      if (newVal.page !== oldVal.page) {
+        this.$refs["theirIssuesScroller"].scrollIntoView(`#theirIssues_0`, 250);
+      }
+    },
+    items: function(items) {
+      if (items[0]) {
+        this.$store.dispatch(
+          `pricematch/${SET_THEIR_SELECTED_ISSUE}`,
+          items[0],
+          {
+            global: true
+          }
+        );
+      }
+    },
     theirSelectedIssueIndex: function(val) {
       if (val) {
         let position = val;

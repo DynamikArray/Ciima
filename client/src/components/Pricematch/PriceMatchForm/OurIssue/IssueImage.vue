@@ -1,9 +1,9 @@
 <template>
   <v-img
-    class="ma-1"
+    class="my-1 mx-3"
     :key="makeImageUrl"
     :src="makeImageUrl"
-    max-width="180"
+    max-width="200"
     contain
   ></v-img>
 </template>

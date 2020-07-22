@@ -16,7 +16,9 @@ import {
   SEARCH_THEIR_ISSUES,
   GET_THEIR_ISSUES_PAGE,
   SET_THEIR_SELECTED_ISSUE,
-  CLEAR_THEIR_SELECTED_ISSUE
+  CLEAR_THEIR_SELECTED_ISSUE,
+  /**/
+  SAVE_ISSUE_MATCH
 } from "@/store/action-types";
 
 import {
@@ -230,6 +232,22 @@ const pricematch = {
     },
     [CLEAR_THEIR_SELECTED_ISSUE]({ dispatch, commit }, params) {
       commit(THEIR_ISSUES_SELECTED_CLEAR);
+    },
+    [SAVE_ISSUE_MATCH]({ dispatch, commit }, params) {
+      dispatch(
+        "api/requestHandler",
+        {
+          method: "post",
+          url: "/pricematch/createIssueMatch",
+          params: params,
+          success: false,
+          loading: false
+        },
+        { root: true }
+      ).then(res => {
+        console.log("save_issue_match action res", res);
+        return res;
+      });
     }
   }
 };

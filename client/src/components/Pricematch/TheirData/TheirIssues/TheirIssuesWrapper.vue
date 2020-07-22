@@ -6,7 +6,7 @@
     <CustomPager
       name="MCSheaderPager"
       :pagination="theirIssuesPagination"
-      class="borderBottom"
+      class=""
     />
     <div class="HideOverflowY mb-0 w-100">
       <Datalist
