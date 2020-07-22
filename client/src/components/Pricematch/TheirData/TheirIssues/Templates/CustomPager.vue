@@ -1,14 +1,16 @@
 <template>
   <div class="d-flex align-center justify-center px-1 pt-1 w-100 textShadow">
-    <div v-for="page in pager" class="d-flex mx-1 align-center justify-center">
+    <div
+      v-for="page in pager"
+      class="d-flex mx-1 align-center justify-center pa-1"
+    >
       <v-btn
-        small
-        text
-        class="px-1"
+        class="px-1 grey darken-3"
+        elevation="3"
         @click="gotoTheirIssuesResultPage(page.params)"
         style="min-width:32px;"
       >
-        {{ page.text }}
+        {{ formatButtonText(page.text) }}
       </v-btn>
     </div>
     <div class="d-flex align-center justify-end w-100" v-if="pager.length == 0">
@@ -31,8 +33,9 @@ export default {
     }
   },
   methods: {
-    formattedPageText(text) {
-      if (text === "Previous") return "Prev";
+    formatButtonText(text) {
+      if (text === "Previous") return `Prev`;
+      if (text === "Next") return `Next`;
       return text;
     },
     gotoTheirIssuesResultPage(params) {

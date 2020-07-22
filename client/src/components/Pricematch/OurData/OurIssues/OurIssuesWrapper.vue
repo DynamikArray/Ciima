@@ -9,7 +9,9 @@
         v-if="ourIssuesResults"
         :items="ourIssuesResults"
         :containerHeight="rowHeight"
+        :ourSelectedTitle="ourSelectedTitle"
         :ourSelectedIssueIndex="ourSelectedIssueIndex"
+        :ourIssuesPagination="ourIssuesPagination"
       />
     </div>
   </div>
@@ -17,15 +19,19 @@
 
 <script>
 import Datalist from "./Datalist/Datalist";
+import CustomPager from "./Templates/CustomPager";
 
 export default {
   props: {
     rowHeight: [Number],
+    ourSelectedTitle: [Boolean, Object],
     ourSelectedIssueIndex: [Boolean, Number],
-    ourIssuesResults: [Boolean, Array]
+    ourIssuesResults: [Boolean, Array],
+    ourIssuesPagination: [Boolean, Object]
   },
   components: {
-    Datalist
+    Datalist,
+    CustomPager
   },
   computed: {
     stylesObject() {

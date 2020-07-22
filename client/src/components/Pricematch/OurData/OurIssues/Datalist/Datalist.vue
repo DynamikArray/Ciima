@@ -1,7 +1,7 @@
 <template>
   <vuescroll :ops="ops" class="" id="ourIssuesScroller" ref="ourIssuesScroller">
     <div
-      class="w-100 ma-1 pa-1 borderBottom"
+      class="w-100 ma-1 px-1 borderBottom"
       v-for="item in items"
       :id="`ourIssues_${item._dataIndex}`"
       :class="isRowSelected(item)"
@@ -9,6 +9,9 @@
       <div class="d-flex justify-start align-center w-100">
         <div class="px-2 text-left mr-auto">
           {{ item.title }} #{{ item.fullIssue }}
+        </div>
+        <div class="body-2 px-2 text-right" style="min-width:40px">
+          {{ item.coverDate | date }}
         </div>
         <div class="px-2 text-right" style="min-width:80px">
           {{ item.variation }}
@@ -18,9 +21,6 @@
         </div>
         <div class="px-2 text-right" style="min-width:80px">
           {{ item.fullIssue }}
-        </div>
-        <div class="px-2 text-right" style="min-width:80px">
-          {{ item.issueNumber }}
         </div>
         <div class="px-2" style="min-width:30px">
           <IssueImage :item="item" :onClick="showFullSizeImage" />
@@ -35,9 +35,14 @@
         </div>
       </div>
     </div>
-    <div class="d-flex align-center justify-center w-100 pb-10">
-      <h5 class="caption mt-4 mb-2">End of page</h5>
-    </div>
+
+    <CustomPager
+      name="ourHheaderPager"
+      :pagination="ourIssuesPagination"
+      :ourSelectedTitle="ourSelectedTitle"
+      class="mb-10"
+    />
+
     <v-dialog v-model="previewImage" max-width="500">
       <v-card color="secondary darken-3" dark class="pt-2">
         <v-card-text>
@@ -54,16 +59,20 @@ import vuescroll from "vuescroll";
 import { scrollbarSettings } from "@/util/scrollbarSettings";
 
 import IssueImage from "@/components/Pricematch/OurData/OurIssues/Templates/IssueImage";
+import CustomPager from "@/components/Pricematch/OurData/OurIssues/Templates/CustomPager";
 
 export default {
   props: {
+    ourSelectedTitle: [Boolean, Object],
+    ourIssuesPagination: [Boolean, Object],
     ourSelectedIssueIndex: [Boolean, Number],
     items: [Boolean, Array],
     loading: [Boolean]
   },
   components: {
     vuescroll,
-    IssueImage
+    IssueImage,
+    CustomPager
   },
   data: () => ({
     ops: scrollbarSettings,

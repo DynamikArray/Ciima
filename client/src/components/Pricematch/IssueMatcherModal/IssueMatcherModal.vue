@@ -181,8 +181,7 @@ export default {
       return false;
     },
     ourIndexedResults() {
-      return this.ourIssuesResults
-
+      return this.ourIssuesResults.rows
         .filter(issue => {
           if (this.hideVariants) {
             if (issue.variation !== "" || issue.variation.length > 0)

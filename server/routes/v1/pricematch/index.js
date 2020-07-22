@@ -1,6 +1,7 @@
 const {
   searchTheirTitlesSchema,
   searchTheirIssuesSchema,
+  searchOurIssuesSchema,
   getPageTheirIssuesSchema,
 } = require("../../../schemas/v1/pricematch");
 /**
@@ -12,6 +13,7 @@ module.exports = function (fastify, opts, next) {
   const {
     searchTheirTitlesHandler,
     searchTheirIssuesHandler,
+    searchOurIssuesHandler,
     getPageTheirIssuesHandler,
   } = require("../../../handlers/v1/pricematch")(fastify);
 
@@ -21,6 +23,14 @@ module.exports = function (fastify, opts, next) {
     handler: searchTheirTitlesHandler,
   };
   fastify.get("/pricematch/searchTheirTitles", searchTheirTitlesRoute);
+
+  const searchOurIssuesRoute = {
+    preValidation: fastify.authenticate,
+    schema: searchOurIssuesSchema,
+    handler: searchOurIssuesHandler,
+  };
+  fastify.get("/pricematch/searchOurIssues", searchOurIssuesRoute);
+  next();
 
   const searchTheirIssuesRoute = {
     preValidation: fastify.authenticate,

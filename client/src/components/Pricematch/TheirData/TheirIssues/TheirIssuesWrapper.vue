@@ -13,6 +13,7 @@
         class="mr-3"
         v-if="theirIssuesResults"
         :items="theirIssuesResults"
+        :theirIssuesPagination="theirIssuesPagination"
         :theirSelectedIssueIndex="theirSelectedIssueIndex"
       />
     </div>

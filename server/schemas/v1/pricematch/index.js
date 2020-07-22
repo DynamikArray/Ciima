@@ -1,5 +1,27 @@
 module.exports = {
   //
+  searchOurIssuesSchema: {
+    description: "Search our issues ",
+    tags: ["Pricematch"],
+    summary:
+      "Search our issues from selected title.  Results include pricematch status, and other meta data",
+    security: [
+      {
+        token: [],
+      },
+    ],
+    querystring: {
+      type: "object",
+      properties: {
+        title: { type: "string" },
+        page: { type: "string" },
+        pageLimit: { type: "string" },
+      },
+    },
+    /* NEEDS RESPONSES **/
+  },
+
+  //
   searchTheirTitlesSchema: {
     description: "Search online retialer for Prices",
     tags: ["Pricematch"],

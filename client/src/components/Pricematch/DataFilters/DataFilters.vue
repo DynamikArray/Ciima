@@ -3,10 +3,7 @@
     class="d-flex align-center justify-center textShadow"
     :class="getClasses"
   >
-    <div class="mr-1 px-2 ">
-      <h4>Our Issues Filter:</h4>
-    </div>
-    <div class="d-flex align-center justify-start mx-5">
+    <div class="d-flex align-center justify-start mx-3">
       <h5 class="mr-1">
         Variants:
       </h5>
@@ -23,7 +20,7 @@
       </h5>
     </div>
 
-    <div class="d-flex align-center justify-start mx-5">
+    <div class="d-flex align-center justify-start mx-3">
       <h5 class="mr-1">
         ComicTypes:
       </h5>

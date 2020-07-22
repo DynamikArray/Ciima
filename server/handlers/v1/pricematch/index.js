@@ -1,4 +1,10 @@
 const {
+  buildSelectQueries,
+  buildSelectQueriesParams,
+} = require("../../../../util/pricematch/searchOurIssues");
+
+const {
+  searchOurIssues,
   searchWebRetailerTitles,
   searchWebRetailerIssues,
   getPageOfWebRetailerIssues,
@@ -18,6 +24,39 @@ module.exports = (fastify) => ({
 
     if (result && !error) return { result };
     if (error && !result) return { error };
+  },
+
+  /**
+   *
+   *
+   */
+  searchOurIssuesHandler: async (req, res) => {
+    const { title } = req.query;
+    const page = Number(req.query.page) || 1;
+    const pageLimit = Number(req.query.limit) || 50;
+
+    const { selectQuery, totalQuery } = buildSelectQueries();
+    const { selectParams, totalParams } = buildSelectQueriesParams(
+      page - 1,
+      pageLimit,
+      title
+    );
+    try {
+      const [rows, fields] = await fastify.mysql.query(
+        selectQuery,
+        selectParams
+      );
+      const [totalRows] = await fastify.mysql.query(totalQuery, totalParams);
+      const rowsTotal = totalRows[0].rowCount;
+      const pageCount = Math.ceil(rowsTotal / pageLimit);
+
+      return {
+        result: { rows, pager: { page, pageCount, pageLimit, rowsTotal } },
+      };
+    } catch (error) {
+      fastify.winston.error(error);
+      res.send(error);
+    }
   },
 
   /**

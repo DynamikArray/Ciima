@@ -18,8 +18,6 @@
             ><v-icon small class="mr-3">fa fa-save</v-icon>Save Match</v-btn
           >
         </div>
-
-        <IssueMatcherModal />
       </div>
     </div>
 
@@ -49,8 +47,6 @@
 import OurIssue from "./OurIssue/OurIssue";
 import TheirIssue from "./TheirIssue/TheirIssue";
 
-import IssueMatcherModal from "../IssueMatcherModal/IssueMatcherModal";
-
 export default {
   props: {
     ourSelectedIssue: [Boolean, Object],
@@ -58,8 +54,7 @@ export default {
   },
   components: {
     OurIssue,
-    TheirIssue,
-    IssueMatcherModal
+    TheirIssue
   }
 };
 </script>

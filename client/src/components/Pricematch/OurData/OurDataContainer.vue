@@ -11,6 +11,7 @@
       :ourSelectedIssueIndex="ourSelectedIssueIndex"
       :ourSelectedTitle="ourSelectedTitle"
       :ourIssuesResults="ourIssuesResults"
+      :ourIssuesPagination="ourIssuesPagination"
       :loading="false"
       :rowHeight="rowHeight"
       :matchType="matchType"
@@ -27,6 +28,7 @@ export default {
     ourSelectedIssueIndex: [Boolean, Number],
     ourSelectedTitle: [Boolean, Object],
     ourIssuesResults: [Boolean, Array],
+    ourIssuesPagination: [Boolean, Object],
     loading: [Boolean],
     matchType: [String],
     rowHeight: [Number]

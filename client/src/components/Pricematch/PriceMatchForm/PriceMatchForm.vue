@@ -53,7 +53,7 @@
             </div>
           </div>
 
-          <IssueMatcherModal class="" />
+          <!--<IssueMatcherModal class="" />-->
 
           <div class="mx-3 mt-4">
             <v-btn color="success" class=""
@@ -94,13 +94,13 @@ import {
 } from "@/store/action-types";
 import { mapGetters } from "vuex";
 
-import IssueMatcherModal from "../IssueMatcherModal/IssueMatcherModal";
+//import IssueMatcherModal from "../IssueMatcherModal/IssueMatcherModal";
 import OurIssue from "./OurIssue/OurIssue";
 import TheirIssue from "./TheirIssue/TheirIssue";
 
 export default {
   components: {
-    IssueMatcherModal,
+    //IssueMatcherModal,
     OurIssue,
     TheirIssue
   },

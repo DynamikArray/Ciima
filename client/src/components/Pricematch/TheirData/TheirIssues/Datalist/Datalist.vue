@@ -34,9 +34,11 @@
         </div>
       </div>
     </div>
-    <div class="d-flex align-center justify-center my-4">
-      <h5 class="caption">End of page</h5>
-    </div>
+    <CustomPager
+      name="MCSFooterPager"
+      :pagination="theirIssuesPagination"
+      class="mb-5"
+    />
     <v-dialog v-model="previewImage" max-width="500">
       <v-card color="secondary darken-3" dark class="pt-2">
         <v-card-text>
@@ -56,8 +58,11 @@ import { scrollbarSettings } from "@/util/scrollbarSettings";
 import IssueImage from "@/components/Pricematch/TheirData/TheirIssues/Templates/IssueImage";
 import Prices from "@/components/Pricematch/TheirData/TheirIssues/Templates/Prices";
 
+import CustomPager from "@/components/Pricematch/TheirData/TheirIssues/Templates/CustomPager";
+
 export default {
   props: {
+    theirIssuesPagination: [Boolean, Object],
     theirSelectedIssueIndex: [Boolean, Number],
     items: [Boolean, Array],
     loading: [Boolean]
@@ -65,7 +70,8 @@ export default {
   components: {
     vuescroll,
     IssueImage,
-    Prices
+    Prices,
+    CustomPager
   },
   watch: {
     theirSelectedIssueIndex: function(val) {

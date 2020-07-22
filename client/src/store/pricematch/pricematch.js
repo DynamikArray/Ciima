@@ -47,7 +47,10 @@ const pricematch = {
     ourLoading: false,
     ourTitleSearchResults: false,
     ourSelectedTitle: false,
-    ourIssuesResults: [],
+    ourIssuesResults: {
+      rows: [],
+      pager: {}
+    },
     ourSelectedIssue: false,
     theirLoading: false,
     theirTitleSearchString: "",
@@ -117,7 +120,10 @@ const pricematch = {
     },
 
     getOurIssuesResults: state => {
-      return state.ourIssuesResults;
+      return state.ourIssuesResults.rows;
+    },
+    getOurIssuesPagination: state => {
+      return state.ourIssuesResults.pager;
     },
     getOurSelectedIssue: state => {
       return state.ourSelectedIssue;
@@ -152,7 +158,7 @@ const pricematch = {
         "api/requestHandler",
         {
           method: "get",
-          url: "/issueSearch",
+          url: "/pricematch/searchOurIssues",
           params: params,
           success: `pricematch/${OUR_ISSUES_SEARCH_RESULTS_SET}`,
           loading: `pricematch/${OUR_ISSUES_SEARCH_RESULTS_LOADING}`

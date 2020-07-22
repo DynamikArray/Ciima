@@ -10,28 +10,42 @@
     }"
     @shortkey="issuesNavigation"
   >
-    <div class="d-flex bottomRow">
-      <div class="w-100 borderRight">
+    <div class="d-flex bottomRow w-100">
+      <div class="borderRight" style="width:50%">
         <SelectedTitle
           :blnOurs="true"
           :selectedTitle="ourSelectedTitle"
           class=" secondary darken"
         />
 
-        <DataFilters
-          ref="dataFilter"
-          :hideVariants.sync="hideVariants"
-          :hideComicTypes.sync="hideComicTypes"
-        />
+        <div
+          class="d-flex flex-wrap justify-space-around align-center borderBottom"
+        >
+          <DataFilters
+            ref="dataFilter"
+            :borderBottom="false"
+            :hideVariants.sync="hideVariants"
+            :hideComicTypes.sync="hideComicTypes"
+          />
+          <CustomPager
+            name="ourHheaderPager"
+            :pagination="ourIssuesPagination"
+            :ourSelectedTitle="ourSelectedTitle"
+            class="justify-center align-center"
+          />
+        </div>
+
         <OurDataContainer
+          class="w-100"
           :ourSelectedTitle="ourSelectedTitle"
           :ourIssuesResults="ourIndexedResults"
+          :ourIssuesPagination="ourIssuesPagination"
           :ourSelectedIssueIndex="ourSelectedIssueIndex"
           :loading="false"
           :rowHeight="calculateRowHeight"
         />
       </div>
-      <div class="w-100 borderLeft">
+      <div class="borderLeft" style="width:50%">
         <SelectedTitle
           :blnTheirs="true"
           :selectedTitle="theirSelectedTitle"
@@ -39,6 +53,7 @@
         />
 
         <TheirDataContainer
+          class="w-100"
           :ourSelectedTitle="ourSelectedTitle"
           :theirSelectedTitle="theirSelectedTitle"
           :theirSelectedIssueIndex="theirSelectedIssueIndex"
@@ -62,7 +77,7 @@ import { mapState, mapGetters } from "vuex";
 import OurDataContainer from "./OurData/OurDataContainer";
 import TheirDataContainer from "./TheirData/TheirDataContainer";
 import DataFilters from "./DataFilters/DataFilters";
-
+import CustomPager from "./OurData/OurIssues/Templates/CustomPager";
 import SelectedTitle from "./SelectedTitles/SelectedTitle";
 
 export default {
@@ -73,7 +88,8 @@ export default {
     SelectedTitle,
     DataFilters,
     OurDataContainer,
-    TheirDataContainer
+    TheirDataContainer,
+    CustomPager
   },
   data: () => ({
     hideVariants: false,
@@ -86,6 +102,7 @@ export default {
       theirSelectedTitle: "pricematch/getTheirSelectedTitle",
       theirSelectedIssue: "pricematch/getTheirSelectedIssue",
       ourIssuesResults: "pricematch/getOurIssuesResults",
+      ourIssuesPagination: "pricematch/getOurIssuesPagination",
       theirIssuesResults: "pricematch/getTheirIssuesResults",
       theirIssuesPagination: "pricematch/getTheirIssuesPagination"
     }),

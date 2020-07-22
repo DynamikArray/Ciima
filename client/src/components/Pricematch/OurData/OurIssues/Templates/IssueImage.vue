@@ -2,12 +2,13 @@
   <v-img
     :src="makeImageUrl"
     :key="makeImageUrl"
-    max-height="60"
-    min-height="60"
+    max-height="58"
+    min-height="58"
     width="60"
     contain
     @click="onClick(makeImageUrl)"
     @error="handleImageError()"
+    class="mt-1 mb-1"
   ></v-img>
 </template>
 
