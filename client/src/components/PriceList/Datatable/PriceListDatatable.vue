@@ -50,8 +50,7 @@
 
     <CustomPager
       key="bottomPager"
-      align="end"
-      :limit.sync="limit"
+      :limit="limit"
       :page="page"
       :pageCount="pageCount"
       :pageLimit="pageLimit"
@@ -71,6 +70,7 @@ import CustomPager from "@/components/Datatable/Pager/CustomPager";
 
 export default {
   props: {
+    limit: [Number],
     items: [Boolean, Array],
     pagination: [Boolean, Object],
     loading: [Boolean],
@@ -84,7 +84,6 @@ export default {
   },
   data: () => ({
     headers,
-    limit: 15,
     footerProps: {}
   }),
   computed: {

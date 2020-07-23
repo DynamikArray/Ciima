@@ -37,8 +37,7 @@ export default {
     }
   },
   methods: {
-    handleImageError() {
-      console.log(`${settings.MEDIA_URL}${item.imageUrl} not found?`);
+    hadleImageError() {
       this.error = true;
     }
   }
