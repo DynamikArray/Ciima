@@ -34,8 +34,10 @@ export default {
   },
   methods: {
     fetchDataWithParams(params) {
-      //set our page limit if it changes
-      if (params.limit) this.limit = params.limit;
+      if (params) {
+        //set our page limit if it changes
+        if (params.limit) this.limit = params.limit;
+      }
       //add our page limit to all request
       const _params = { limit: this.limit, ...params };
 

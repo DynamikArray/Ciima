@@ -8,6 +8,7 @@
     width="60"
     contain
     @click="onClick(fullsize)"
+    class="hover"
   ></v-img>
 </template>
 

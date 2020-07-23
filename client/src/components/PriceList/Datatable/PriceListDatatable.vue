@@ -24,7 +24,7 @@
         <OurIssueImage
           style="min-height:60px"
           :imageUrl="item.ourImageUrl"
-          :onClick="() => ({})"
+          :onClick="showOurFullSize"
         />
       </template>
 
@@ -32,7 +32,7 @@
         <TheirIssueImage
           :thumbnail="item.theirImageThumbnail"
           :fullsize="item.theirImageFullsize"
-          :onClick="() => ({})"
+          :onClick="showTheirFullSize"
         />
       </template>
 
@@ -57,6 +57,14 @@
       :rowsTotal="rowsTotal"
       :getData="getData"
     />
+
+    <v-dialog v-model="previewImage" max-width="550">
+      <v-card color="secondary darken-3" dark class="pt-2">
+        <v-card-text>
+          <v-img :src="previewImageUrl" max-height="750" contain></v-img>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -84,7 +92,9 @@ export default {
   },
   data: () => ({
     headers,
-    footerProps: {}
+    footerProps: {},
+    previewImage: false,
+    previewImageUrl: false
   }),
   computed: {
     page() {
@@ -98,6 +108,16 @@ export default {
     },
     rowsTotal() {
       return this.pagination.rowsTotal;
+    }
+  },
+  methods: {
+    showTheirFullSize(imageUrl) {
+      this.previewImageUrl = imageUrl;
+      this.previewImage = true;
+    },
+    showOurFullSize(imageUrl) {
+      this.previewImageUrl = imageUrl;
+      this.previewImage = true;
     }
   }
 };
