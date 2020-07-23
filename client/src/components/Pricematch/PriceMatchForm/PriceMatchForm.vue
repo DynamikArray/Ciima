@@ -76,13 +76,11 @@
           </div>
 
           <div class="mx-3 my-10">
-            <v-btn
-              :disabled="!isMatchEnabled"
-              color="success"
-              class=""
-              @click="saveTitleMatch()"
-              ><v-icon small class="mr-3">fa fa-save</v-icon>Save Match</v-btn
-            >
+            <ActionButtons
+              :ourSelectedIssue="ourSelectedIssue"
+              :theirSelectedIssue="theirSelectedIssue"
+              :theirSelectedTitle="theirSelectedTitle"
+            />
           </div>
         </div>
       </div>
@@ -114,54 +112,41 @@
 <script>
 import {
   CLEAR_OUR_SELECTED_ISSUE,
-  CLEAR_THEIR_SELECTED_ISSUE,
-  SAVE_ISSUE_MATCH
+  CLEAR_THEIR_SELECTED_ISSUE
 } from "@/store/action-types";
 import { mapGetters } from "vuex";
 
 import OurIssue from "./OurIssue/OurIssue";
 import TheirIssue from "./TheirIssue/TheirIssue";
+import ActionButtons from "./Templates/ActionButtons";
 
 export default {
   components: {
     OurIssue,
-    TheirIssue
+    TheirIssue,
+    ActionButtons
   },
   computed: {
     ...mapGetters({
-      ourSelectedIssue: "pricematch/getOurSelectedIssue",
-      theirSelectedIssue: "pricematch/getTheirSelectedIssue"
-    }),
-    isMatchEnabled() {
-      if (this.ourSelectedIssue && this.theirSelectedIssue) return true;
-      return false;
-    }
+      ourSelectedIssue: "pricematch/ourData/getOurSelectedIssue",
+      theirSelectedIssue: "pricematch/theirData/getTheirSelectedIssue",
+      theirSelectedTitle: "pricematch/theirData/getTheirSelectedTitle"
+    })
   },
   methods: {
     clearOurSelectedIssue() {
       this.$store.dispatch(
-        `pricematch/${CLEAR_OUR_SELECTED_ISSUE}`,
+        `pricematch/ourData/${CLEAR_OUR_SELECTED_ISSUE}`,
         {},
-        { global: true }
+        { root: true }
       );
     },
     clearTheirSelectedIssue() {
       this.$store.dispatch(
-        `pricematch/${CLEAR_THEIR_SELECTED_ISSUE}`,
+        `pricematch/theirData/${CLEAR_THEIR_SELECTED_ISSUE}`,
         {},
-        { global: true }
+        { root: true }
       );
-    },
-    saveTitleMatch() {
-      this.$store
-        .dispatch(
-          `pricematch/${SAVE_ISSUE_MATCH}`,
-          { ours: this.ourSelectedIssue, theirs: this.theirSelectedIssue },
-          { global: true }
-        )
-        .then(res => {
-          console.log("This was our response from dispatch", res);
-        });
     }
   }
 };

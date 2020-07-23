@@ -5,18 +5,38 @@
   >
     <div class="d-flex align-center justify-start mx-3">
       <h5 class="mr-1">
-        Variants:
+        Has Match:
       </h5>
       <v-switch
+        inset
         color="info"
         dense
         hide-details
-        :value="hideVariants"
-        @change="filterVariants(!hideVariants)"
+        :input-value="filterHasMatch"
+        @change="handleFilterHasMatch(!filterHasMatch)"
         class="mt-0 mb-1"
       ></v-switch>
       <h5 class="caption mr-1">
-        {{ hideVariants ? `Hidden` : `Visible` }}
+        {{ filterHasMatch ? `Hidden` : `Visible` }}
+      </h5>
+    </div>
+
+    <div class="d-flex align-center justify-start mx-3">
+      <h5 class="mr-1">
+        Variants:
+      </h5>
+      <v-switch
+        inset
+        color="info"
+        dense
+        hide-details
+        :input-value="filterVariants"
+        @change="handleFilterVariants(!filterVariants)"
+        class="mt-0 mb-1"
+        true-value="YEP"
+      ></v-switch>
+      <h5 class="caption mr-1">
+        {{ filterVariants ? `Hidden` : `Visible` }}
       </h5>
     </div>
 
@@ -25,21 +45,30 @@
         ComicTypes:
       </h5>
       <v-switch
+        inset
         color="info"
         dense
         hide-details
-        :value="hideComicTypes"
-        @change="filterComicTypes(!hideComicTypes)"
+        :input-value="filterComicTypes"
+        @change="handleFilterComicTypes(!filterComicTypes)"
         class="mt-0 mb-1"
       ></v-switch>
       <h5 class="caption mr-1">
-        {{ hideComicTypes ? `Hidden` : `Visible` }}
+        {{ filterComicTypes ? `Hidden` : `Visible` }}
       </h5>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
+import {
+  SET_OUR_FILTER_COMIC_TYPES,
+  SET_OUR_FILTER_VARIANTS,
+  SET_OUR_FILTER_HAS_MATCH
+} from "@/store/action-types";
+
 export default {
   props: {
     asColumn: {
@@ -49,11 +78,14 @@ export default {
     borderBottom: {
       type: [Boolean],
       default: true
-    },
-    hideVariants: [Boolean],
-    hideComicTypes: [Boolean]
+    }
   },
   computed: {
+    ...mapGetters({
+      filterHasMatch: "pricematch/ourData/issuesFilter/getFilterHasMatch",
+      filterVariants: "pricematch/ourData/issuesFilter/getFilterVariants",
+      filterComicTypes: "pricematch/ourData/issuesFilter/getFilterComicTypes"
+    }),
     getClasses() {
       const classNames = [];
       if (this.asColumn) {
@@ -66,11 +98,32 @@ export default {
     }
   },
   methods: {
-    filterVariants(val) {
-      this.$emit("update:hideVariants", val);
+    handleFilterVariants(val) {
+      this.$store.dispatch(
+        `pricematch/ourData/issuesFilter/${SET_OUR_FILTER_VARIANTS}`,
+        val,
+        {
+          global: true
+        }
+      );
     },
-    filterComicTypes(val) {
-      this.$emit("update:hideComicTypes", val);
+    handleFilterComicTypes(val) {
+      this.$store.dispatch(
+        `pricematch/ourData/issuesFilter/${SET_OUR_FILTER_COMIC_TYPES}`,
+        val,
+        {
+          global: true
+        }
+      );
+    },
+    handleFilterHasMatch(val) {
+      this.$store.dispatch(
+        `pricematch/ourData/issuesFilter/${SET_OUR_FILTER_HAS_MATCH}`,
+        val,
+        {
+          global: true
+        }
+      );
     }
   }
 };

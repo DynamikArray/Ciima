@@ -5,24 +5,6 @@
     id="fullContainer"
     v-resize:debounce="onContainerResize"
   >
-    <!-- <div
-      class="d-flex justify-space-around align-baseline px-2 mt-1 borderBottom"
-      id="pageHeading"
-    >
-      <h3 class="mr-2 mb-0">
-        Our Titles & Issues
-      </h3>
-      <h1 class="mb-0">
-        Price Matching
-      </h1>
-      <h3 class="mr-2 mb-0">
-        Their Titles & Issues
-      </h3>
-    </div>
-  -->
-
-    <v-divider></v-divider>
-
     <div class="" id="formMatchWrapper">
       <PriceMatchForm />
     </div>
@@ -36,7 +18,6 @@
 <script>
 import resize from "vue-resize-directive";
 
-import { mapState, mapGetters } from "vuex";
 import PriceMatchContainer from "@/components/Pricematch/PriceMatchContainer";
 import PriceMatchForm from "@/components/Pricematch/PriceMatchForm/PriceMatchForm";
 

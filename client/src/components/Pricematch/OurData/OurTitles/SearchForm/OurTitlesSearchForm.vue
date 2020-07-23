@@ -43,7 +43,7 @@ export default {
       }
     }, 500),
     fetchTitlesByString(search) {
-      this.$store.dispatch(`pricematch/${SEARCH_OUR_TITLES}`, {
+      this.$store.dispatch(`pricematch/ourData/${SEARCH_OUR_TITLES}`, {
         query: search
       });
     }

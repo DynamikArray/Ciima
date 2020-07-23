@@ -33,7 +33,10 @@ export default {
       return text;
     },
     gotoTheirIssuesResultPage(params) {
-      this.$store.dispatch(`pricematch/${GET_THEIR_ISSUES_PAGE}`, params);
+      this.$store.dispatch(
+        `pricematch/theirData/${GET_THEIR_ISSUES_PAGE}`,
+        params
+      );
     }
   }
 };

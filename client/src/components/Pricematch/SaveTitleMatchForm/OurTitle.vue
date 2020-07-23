@@ -61,7 +61,10 @@ export default {
   },
   methods: {
     clearSelectedTitle() {
-      this.$store.dispatch(`pricematch/${CLEAR_OUR_SELECTED_TITLE}`, {});
+      this.$store.dispatch(
+        `pricematch/ourData/${CLEAR_OUR_SELECTED_TITLE}`,
+        {}
+      );
     }
   }
 };

@@ -135,22 +135,23 @@ const parseImages = ($cheerio, el) => {
  */
 const parseIssueFields = ($cheerio, el) => {
   const fields = {};
-  fields.title = $cheerio(el).find(".othercolleft .title a").text() || false;
+  fields.title =
+    $cheerio(el).find(".othercolleft .title a").text().trim() || false;
   fields.issueNumber =
-    $cheerio(el).find(".othercolleft .title strong").text() || false;
+    $cheerio(el).find(".othercolleft .title strong").text().trim() || false;
 
   fields.tags = [];
   $cheerio(el)
     .find(".othercolleft .indentrow a")
     .each((i, a) => {
-      fields.tags.push($cheerio(a).text());
+      fields.tags.push($cheerio(a).text().trim());
     });
 
   $cheerio(el)
     .find(".othercolright a")
     .each((i, a) => {
-      if (i == 0) fields.year = $cheerio(a).text();
-      if (i == 1) fields.publisher = $cheerio(a).text();
+      if (i == 0) fields.year = $cheerio(a).text().trim();
+      if (i == 1) fields.publisher = $cheerio(a).text().trim();
     });
   return fields;
 };
@@ -167,7 +168,10 @@ const parseIssuePrices = ($cheerio, el) => {
   $cheerio(el)
     .find(".issuegrades .issuestock td")
     .each((i, td) => {
-      const itemPrice = {};
+      const itemPrice = {
+        price: false,
+        grade: false,
+      };
       itemPrice.price = $cheerio(td)
         .find(".group .addcart a")
         .attr("data-price");
@@ -177,6 +181,9 @@ const parseIssuePrices = ($cheerio, el) => {
         .text()
         .replace("Add to cart", "")
         .replace("<br>", "");
+
+      if (itemPrice.price) itemPrice.price = itemPrice.price.trim();
+      if (itemPrice.grade) itemPrice.grade = itemPrice.grade.trim();
 
       prices.push(itemPrice);
     });

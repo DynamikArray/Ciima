@@ -1,10 +1,10 @@
 <template>
   <div class="d-flex justify-start align-center w-100 mb-5">
-    <div class="w-100" :class="titleResults.length > 0 ? 'mr-3' : 'mr-0'">
+    <div class="w-100" :class="items.length > 0 ? 'mr-3' : 'mr-0'">
       <v-data-table
         class="w-100"
         :headers="headers"
-        :items="titleResults || []"
+        :items="items"
         :loading="loading"
         loading-text="Searching Database"
         :items-per-page="250"
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapGetters } from "vuex";
 import { SET_OUR_SELECTED_TITLE } from "@/store/action-types";
 
 import { tableHeaders } from "./Settings/tableHeaders";
@@ -47,16 +47,20 @@ export default {
     }
   }),
   computed: {
-    ...mapState({
-      titleResults: state => state.pricematch.ourTitleSearchResults,
-      loading: state => state.pricematch.ourLoading
+    ...mapGetters({
+      items: "pricematch/ourData/getOurTitlesResults",
+      loading: "pricematch/ourData/getOurLoading"
     })
   },
   methods: {
     selectTitle(item) {
-      this.$store.dispatch(`pricematch/${SET_OUR_SELECTED_TITLE}`, item, {
-        gloabl: true
-      });
+      this.$store.dispatch(
+        `pricematch/ourData/${SET_OUR_SELECTED_TITLE}`,
+        item,
+        {
+          gloabl: true
+        }
+      );
     }
   }
 };

@@ -1,10 +1,11 @@
 <template>
   <v-img
-    class="my-1 mx-3"
+    class="my-1 mx-3 hover"
     :key="makeImageUrl"
     :src="makeImageUrl"
     max-width="200"
     contain
+    @click="onClick(makeImageUrl)"
   ></v-img>
 </template>
 

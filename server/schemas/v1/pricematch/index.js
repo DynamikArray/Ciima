@@ -13,10 +13,14 @@ module.exports = {
     querystring: {
       type: "object",
       properties: {
+        filterVariants: { type: "boolean" },
+        filterComicTypes: { type: "boolean" },
+        filterHasMatch: { type: "boolean" },
         title: { type: "string" },
         page: { type: "string" },
         pageLimit: { type: "string" },
       },
+      required: ["title"],
     },
     /* NEEDS RESPONSES **/
   },
@@ -78,6 +82,108 @@ module.exports = {
       properties: {
         tid: { type: "string" },
         pgi: { type: "string" },
+      },
+    },
+    /* NEEDS RESPONSES **/
+  },
+
+  createIssueMatchSchema: {
+    description: "Create a issue match with pricing data",
+    tags: ["Pricematch"],
+    summary: "Creates a IssueMatch record for web retailers issue to our issue",
+    security: [
+      {
+        token: [],
+      },
+    ],
+    body: {
+      type: "object",
+      properties: {
+        slc_IssueId: {
+          type: "number",
+        },
+        mcs_TID: {
+          type: "number",
+        },
+        issueUniqueId: {
+          type: "string",
+        },
+        issueNumber: {
+          type: "string",
+        },
+        issueTitle: {
+          type: "string",
+        },
+        issuePrices: {
+          type: "array",
+        },
+        issueTags: {
+          type: "array",
+        },
+        issuePublisher: {
+          type: "string",
+        },
+        issueDate: {
+          type: "string",
+        },
+        issueThumbnail: {
+          type: "string",
+        },
+        issueFullsize: {
+          type: "string",
+        },
+      },
+    },
+    /* NEEDS RESPONSES **/
+  },
+
+  updateIssueMatchSchema: {
+    description: "Update an issue match with pricing data",
+    tags: ["Pricematch"],
+    summary:
+      "Updates an existing IssueMatch record for web retailers issue to our new issue",
+    security: [
+      {
+        token: [],
+      },
+    ],
+    body: {
+      type: "object",
+      required: ["slc_IssueId"],
+      properties: {
+        slc_IssueId: {
+          type: "number",
+        },
+        mcs_TID: {
+          type: "number",
+        },
+        issueUniqueId: {
+          type: "string",
+        },
+        issueNumber: {
+          type: "string",
+        },
+        issueTitle: {
+          type: "string",
+        },
+        issuePrices: {
+          type: "array",
+        },
+        issueTags: {
+          type: "array",
+        },
+        issuePublisher: {
+          type: "string",
+        },
+        issueDate: {
+          type: "string",
+        },
+        issueThumbnail: {
+          type: "string",
+        },
+        issueFullsize: {
+          type: "string",
+        },
       },
     },
     /* NEEDS RESPONSES **/

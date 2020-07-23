@@ -142,7 +142,8 @@ const api = {
           }
           toastr.e(resp);
         }
-        throw new Error(data.message || data);
+        return { error: data.message || data };
+        //throw new Error(data.message || data);
       } finally {
         commit(`${REMOVE_API_CALL}`);
         if (loading) commit(loading, { loading: false }, { root: true });

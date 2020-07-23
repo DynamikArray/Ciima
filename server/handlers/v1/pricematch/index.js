@@ -4,6 +4,11 @@ const {
 } = require("../../../../util/pricematch/searchOurIssues");
 
 const {
+  queryCreateIssueMatch,
+  queryUpdateIssueMatch,
+} = require("../../../../util/pricematch/CRUDIssueMatch");
+
+const {
   searchOurIssues,
   searchWebRetailerTitles,
   searchWebRetailerIssues,
@@ -34,8 +39,13 @@ module.exports = (fastify) => ({
     const { title } = req.query;
     const page = Number(req.query.page) || 1;
     const pageLimit = Number(req.query.limit) || 50;
+    const { filterComicTypes, filterVariants, filterHasMatch } = req.query;
 
-    const { selectQuery, totalQuery } = buildSelectQueries();
+    const { selectQuery, totalQuery } = buildSelectQueries(
+      filterComicTypes,
+      filterVariants,
+      filterHasMatch
+    );
     const { selectParams, totalParams } = buildSelectQueriesParams(
       page - 1,
       pageLimit,
@@ -84,6 +94,45 @@ module.exports = (fastify) => ({
     const { tid, pgi } = req.query;
 
     const { result, error } = await getPageOfWebRetailerIssues({ tid, pgi });
+
+    if (result && !error) return { result };
+    if (error && !result) return { error };
+  },
+
+  /**
+   * [createIssueMatchHandler description]
+   * @param  {[type]}  req [description]
+   * @param  {[type]}  res [description]
+   * @return {Promise}     [description]
+   */
+  createIssueMatchHandler: async (req, res) => {
+    const params = req.body;
+    const userId = req.user.id;
+    const { result, error } = await queryCreateIssueMatch(
+      fastify,
+      userId,
+      params
+    );
+
+    if (result && !error) return { result };
+    if (error && !result) return { error };
+  },
+
+  /**
+   * [updateIssueMatchHandler description]
+   * @param  {[type]}  req [description]
+   * @param  {[type]}  res [description]
+   * @return {Promise}     [description]
+   */
+  updateIssueMatchHandler: async (req, res) => {
+    const params = req.body;
+    const userId = req.user.id;
+
+    const { result, error } = await queryUpdateIssueMatch(
+      fastify,
+      userId,
+      params
+    );
 
     if (result && !error) return { result };
     if (error && !result) return { error };

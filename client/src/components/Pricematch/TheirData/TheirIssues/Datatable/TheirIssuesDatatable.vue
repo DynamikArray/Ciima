@@ -85,9 +85,13 @@ export default {
       this.previewImage = true;
     },
     selectTheirIssue(item) {
-      this.$store.dispatch(`pricematch/${SET_THEIR_SELECTED_ISSUE}`, item, {
-        global: true
-      });
+      this.$store.dispatch(
+        `pricematch/theirData/${SET_THEIR_SELECTED_ISSUE}`,
+        item,
+        {
+          global: true
+        }
+      );
     }
   }
 };

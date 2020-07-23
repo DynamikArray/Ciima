@@ -148,6 +148,16 @@ let router = new Router({
       }
     },
     {
+      path: "/pricelist",
+      props: true,
+      name: "pricelist",
+      component: () =>
+        import(/*webpackChunkName: "ebay"*/ "@/views/PriceList.vue"),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
       path: "*",
       props: true,
       name: "404",

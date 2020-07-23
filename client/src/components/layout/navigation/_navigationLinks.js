@@ -13,7 +13,9 @@ module.exports = [
   { menuDivider: true },
   { icon: "fa fa-chart-bar", text: "Analytics", to: "analytics" },
   { icon: "fa fa-history", text: "Audit Log", to: "audit" },
-  { icon: "fa fa-project-diagram", text: "Price Matcher", to: "pricematch" }
+  { menuDivider: true },
+  { icon: "fa fa-project-diagram", text: "Price Matcher", to: "pricematch" },
+  { icon: "fa fa-comment-dollar", text: "Price List", to: "pricelist" }
   //{ menuDivider: true },
   //{ icon: "fab fa-ebay", text: "Search eBay", to: "ebay" }
 ];

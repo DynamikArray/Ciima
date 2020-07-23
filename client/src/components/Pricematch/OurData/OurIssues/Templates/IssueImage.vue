@@ -8,7 +8,7 @@
     contain
     @click="onClick(makeImageUrl)"
     @error="handleImageError()"
-    class="mt-1 mb-1"
+    class="mt-1 mb-1 hover"
   ></v-img>
 </template>
 
@@ -38,6 +38,7 @@ export default {
   },
   methods: {
     handleImageError() {
+      console.log(`${settings.MEDIA_URL}${item.imageUrl} not found?`);
       this.error = true;
     }
   }

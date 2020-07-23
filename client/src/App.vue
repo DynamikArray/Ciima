@@ -123,4 +123,7 @@ body {
 .textShadow {
   text-shadow: 1px 1px 1px #000;
 }
+.hover:hover {
+  cursor: pointer;
+}
 </style>

@@ -82,9 +82,15 @@ export default {
   methods: {
     clearSelectedTitle() {
       if (this.blnOurs)
-        this.$store.dispatch(`pricematch/${CLEAR_OUR_SELECTED_TITLE}`, {});
+        this.$store.dispatch(
+          `pricematch/ourData/${CLEAR_OUR_SELECTED_TITLE}`,
+          {}
+        );
       if (this.blnTheirs)
-        this.$store.dispatch(`pricematch/${CLEAR_THEIR_SELECTED_TITLE}`, {});
+        this.$store.dispatch(
+          `pricematch/theirData/${CLEAR_THEIR_SELECTED_TITLE}`,
+          {}
+        );
     }
   }
 };

@@ -1,12 +1,28 @@
 <template>
   <vuescroll :ops="ops" class="" id="ourIssuesScroller" ref="ourIssuesScroller">
     <div
-      class="w-100 ma-1 px-1 borderBottom"
+      class="w-100 ma-1 px-1 borderBottom hover"
       v-for="item in items"
       :id="`ourIssues_${item._dataIndex}`"
       :class="isRowSelected(item)"
+      @click="selectOurIssue(item)"
+      v-ripple
     >
       <div class="d-flex justify-start align-center w-100">
+        <div class="text-center" style="min-width:40px">
+          <v-icon
+            :name="`${item.TID}-${item.fullIssue}`"
+            v-if="item.hasMatch"
+            class=""
+          >
+            fas fa-link
+          </v-icon>
+        </div>
+
+        <div class="text-center" style="min-width:40px">
+          <Prices v-if="item.issuePrices" :prices="item.issuePrices" />
+        </div>
+
         <div class="px-2 text-left mr-auto">
           {{ item.title }} #{{ item.fullIssue }}
         </div>
@@ -20,18 +36,10 @@
           {{ item.comicType }}
         </div>
         <div class="px-2 text-right" style="min-width:80px">
-          {{ item.fullIssue }}
+          <h4>{{ item.fullIssue }}</h4>
         </div>
-        <div class="px-2" style="min-width:30px">
-          <IssueImage :item="item" :onClick="showFullSizeImage" />
-        </div>
-        <div class="px-2 mr-4">
-          <v-btn
-            class="textShadow pa-0"
-            style="min-width:40px;"
-            @click="selectOurIssue(item)"
-            ><v-icon small>fa fa-plus-circle</v-icon></v-btn
-          >
+        <div class="px-3" style="min-width:30px">
+          <IssueImage :item="item" :onClick="() => {}" />
         </div>
       </div>
     </div>
@@ -42,14 +50,6 @@
       :ourSelectedTitle="ourSelectedTitle"
       class="mb-10"
     />
-
-    <v-dialog v-model="previewImage" max-width="500">
-      <v-card color="secondary darken-3" dark class="pt-2">
-        <v-card-text>
-          <v-img :src="previewImageUrl" max-height="600" contain></v-img>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
   </vuescroll>
 </template>
 
@@ -60,6 +60,7 @@ import { scrollbarSettings } from "@/util/scrollbarSettings";
 
 import IssueImage from "@/components/Pricematch/OurData/OurIssues/Templates/IssueImage";
 import CustomPager from "@/components/Pricematch/OurData/OurIssues/Templates/CustomPager";
+import Prices from "@/components/Pricematch/OurData/OurIssues/Templates/Prices";
 
 export default {
   props: {
@@ -72,35 +73,29 @@ export default {
   components: {
     vuescroll,
     IssueImage,
-    CustomPager
+    CustomPager,
+    Prices
   },
   data: () => ({
-    ops: scrollbarSettings,
-    previewImageUrl: false,
-    previewImage: false
+    ops: scrollbarSettings
   }),
   watch: {
     ourIssuesPagination: function(newVal, oldVal) {
-      if (newVal.page !== oldVal.page) {
+      if (
+        newVal.page !== oldVal.page &&
+        newVal.rowsTotal !== oldVal.rowsTotal
+      ) {
         this.$refs["ourIssuesScroller"].scrollIntoView(`#ourIssues_0`, 250);
-      }
-    },
-    items: function(items) {
-      if (items[0]) {
-        this.$store.dispatch(`pricematch/${SET_OUR_SELECTED_ISSUE}`, items[0], {
-          global: true
-        });
       }
     },
     ourSelectedIssueIndex: function(val) {
       if (val) {
-        let position = val;
-        if (position - 1 > 0) position = position - 1;
-
         this.$refs["ourIssuesScroller"].scrollIntoView(
-          `#ourIssues_${position}`,
+          `#ourIssues_${val}`,
           250
         );
+      } else {
+        this.$refs["ourIssuesScroller"].scrollIntoView(`#ourIssues_0`, 250);
       }
     }
   },
@@ -112,13 +107,13 @@ export default {
       return "grey darken-3";
     },
     selectOurIssue(item) {
-      this.$store.dispatch(`pricematch/${SET_OUR_SELECTED_ISSUE}`, item, {
-        global: true
-      });
-    },
-    showFullSizeImage(image) {
-      this.previewImageUrl = image;
-      this.previewImage = true;
+      this.$store.dispatch(
+        `pricematch/ourData/${SET_OUR_SELECTED_ISSUE}`,
+        item,
+        {
+          global: true
+        }
+      );
     }
   }
 };

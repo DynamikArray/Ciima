@@ -34,7 +34,7 @@ export default {
   methods: {
     handleInput(page) {
       const title = this.ourSelectedTitle.title;
-      this.$store.dispatch(`pricematch/${SEARCH_OUR_ISSUES}`, {
+      this.$store.dispatch(`pricematch/ourData/${SEARCH_OUR_ISSUES}`, {
         title,
         page
       });

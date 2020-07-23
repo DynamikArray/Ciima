@@ -1,25 +1,46 @@
-const buildSelectQueries = () => {
-  const selectQuery = `SELECT
-    Id as id,
-    Title as title,
-    IssueNum as issueNumber,
-    ComicType as comicType,
-    LPAD(IssueNum, 5, "0") as issueOrder,
-    Variation as variation,
-    Printing as printing,
-    FullIssue as fullIssue,
-    CoverDate as coverDate,
-    ImageUrl as imageUrl
+const buildSelectQueries = (
+  filterComicTypes = false,
+  filterVariants = false,
+  filterHasMatch = false
+) => {
+  const selectSQL = `SELECT i.Id AS id,
+  	i.Title AS title,
+  	i.IssueNum AS issueNumber,
+  	i.ComicType AS comicType,
+  	LPAD(i.IssueNum, 5, "0") as issueOrder,
+  	i.Variation as variation,
+  	i.Printing as printing,
+  	i.FullIssue as fullIssue,
+  	i.CoverDate as coverDate,
+  	i.ImageUrl as imageUrl,
+  	CASE WHEN m.id IS NULL then false ELSE true END as hasMatch,
+  	m.issuePrices
   FROM slc_issues i
-  WHERE i.Title = ?
-  ORDER BY issueOrder
-  LIMIT ? OFFSET ?
+  LEFT JOIN mcs_issues m ON
+	 m.slc_IssueId = i.Id
   `;
 
-  const totalQuery = `SELECT
-      COUNT(*)as rowCount
+  const where = [];
+  where.push("WHERE (");
+  where.push("(i.Title = ?)");
+  if (filterVariants)
+    where.push('AND (i.Variation is NULL or i.Variation = "")');
+  if (filterComicTypes)
+    where.push('AND (i.comicType is NULL or i.comicType = "")');
+  if (filterHasMatch) where.push("AND (m.id is NULL)");
+  where.push(")");
+  const whereSQL = where.join(" ");
+
+  const orderSQL = `ORDER BY issueOrder LIMIT ? OFFSET ? `;
+  const selectQuery = `${selectSQL} ${whereSQL} ${orderSQL}`;
+
+  let totalQuery = `SELECT
+    COUNT(*)as rowCount,
+    CASE WHEN m.id IS NULL then false ELSE true END as hasMatch
     FROM slc_issues i
-    WHERE i.Title = ?`;
+    LEFT JOIN mcs_issues m ON
+     m.slc_IssueId = i.Id
+    ${whereSQL}`;
 
   return { selectQuery, totalQuery };
 };
@@ -34,56 +55,3 @@ const buildSelectQueriesParams = (page, pageLimit, searchString) => {
 };
 
 module.exports = { buildSelectQueries, buildSelectQueriesParams };
-
-/*
-const buildSelectQueries = () => {
-  const selectQuery = `
-      SELECT
-        d.*,
-        u.displayname as ownerName
-      FROM slc_drafts d
-      LEFT JOIN slc_users u ON d.ownerId = u.id
-      WHERE (
-        (inventoryTitle LIKE CONCAT("%",?,"%"))
-        AND
-        (status LIKE CONCAT("%",?,"%"))
-        AND
-        (draftType LIKE CONCAT("%",?,"%"))
-      )
-      ORDER BY d.createdDate DESC
-      LIMIT ? OFFSET ?`;
-
-  let totalQuery = `
-    SELECT
-      COUNT(*)as rowCount
-    FROM slc_drafts d
-    LEFT JOIN slc_users u ON d.ownerId = u.id
-    WHERE (
-      (inventoryTitle LIKE CONCAT("%",?,"%"))
-      AND
-      (status LIKE CONCAT("%",?,"%"))
-      AND
-      (draftType LIKE CONCAT("%",?,"%"))
-    )
-    ORDER BY d.createdDate DESC `;
-
-  return { selectQuery, totalQuery };
-};
-
-const buildSelectQueriesParams = (
-  page,
-  pageLimit,
-  status,
-  draftType,
-  searchString
-) => {
-  const pageOffset = page * pageLimit;
-  //default most recent
-  let selectParams = [searchString, status, draftType, pageLimit, pageOffset];
-  let totalParams = [searchString, status, draftType];
-
-  return { selectParams, totalParams };
-};
-
-module.exports = { buildSelectQueries, buildSelectQueriesParams };
-*/

@@ -23,8 +23,6 @@
             v-if="ourSelectedTitle"
             ref="dataFilter"
             :borderBottom="false"
-            :hideVariants.sync="hideVariants"
-            :hideComicTypes.sync="hideComicTypes"
           />
           <CustomPager
             name="ourHheaderPager"
@@ -96,14 +94,14 @@ export default {
   }),
   computed: {
     ...mapGetters({
-      ourSelectedTitle: "pricematch/getOurSelectedTitle",
-      ourSelectedIssue: "pricematch/getOurSelectedIssue",
-      theirSelectedTitle: "pricematch/getTheirSelectedTitle",
-      theirSelectedIssue: "pricematch/getTheirSelectedIssue",
-      ourIssuesResults: "pricematch/getOurIssuesResults",
-      ourIssuesPagination: "pricematch/getOurIssuesPagination",
-      theirIssuesResults: "pricematch/getTheirIssuesResults",
-      theirIssuesPagination: "pricematch/getTheirIssuesPagination"
+      ourSelectedTitle: "pricematch/ourData/getOurSelectedTitle",
+      ourSelectedIssue: "pricematch/ourData/getOurSelectedIssue",
+      theirSelectedTitle: "pricematch/theirData/getTheirSelectedTitle",
+      theirSelectedIssue: "pricematch/theirData/getTheirSelectedIssue",
+      ourIssuesResults: "pricematch/ourData/getOurIssuesResults",
+      ourIssuesPagination: "pricematch/ourData/getOurIssuesPagination",
+      theirIssuesResults: "pricematch/theirData/getTheirIssuesResults",
+      theirIssuesPagination: "pricematch/theirData/getTheirIssuesPagination"
     }),
     calculateRowHeight() {
       if (this.$refs["dataFilter"]) {
@@ -116,13 +114,15 @@ export default {
     },
 
     theirSelectedIssueIndex() {
-      if (this.theirSelectedIssue)
-        return this.theirSelectedIssue._dataIndex || false;
+      if (this.theirSelectedIssue) {
+        return this.theirSelectedIssue._dataIndex || 0;
+      }
       return false;
     },
     ourSelectedIssueIndex() {
-      if (this.ourSelectedIssue)
-        return this.ourSelectedIssue._dataIndex || false;
+      if (this.ourSelectedIssue) {
+        return this.ourSelectedIssue._dataIndex || 0;
+      }
       return false;
     },
     ourIndexedResults() {
@@ -191,26 +191,6 @@ export default {
       }
       return this.theirIssuesResults[tNI._dataIndex + 1];
     }
-    /*
-    ourIssuesResultsFiltered() {
-      const filtered = this.ourIssuesResults;
-      return this.ourIssuesResults
-        .map((issue, i) => {
-          return { _dataIndex: i, ...issue };
-        })
-        .filter(issue => {
-          if (this.hideVariants) {
-            if (issue.variation !== "" || issue.variation.length > 0)
-              return false;
-          }
-
-          if (this.hideComicTypes) {
-            if (issue.comicType.length > 0) return false;
-          }
-
-          return true;
-        });
-    }*/
   },
   methods: {
     issuesNavigation(event) {
@@ -218,36 +198,36 @@ export default {
         case "up":
           if (this.theirPrevIssue) {
             this.$store.dispatch(
-              `pricematch/${SET_THEIR_SELECTED_ISSUE}`,
+              `pricematch/theirData/${SET_THEIR_SELECTED_ISSUE}`,
               this.theirPrevIssue,
-              { global: true }
+              { root: true }
             );
           }
           break;
         case "down":
           if (this.theirNextIssue) {
             this.$store.dispatch(
-              `pricematch/${SET_THEIR_SELECTED_ISSUE}`,
+              `pricematch/theirData/${SET_THEIR_SELECTED_ISSUE}`,
               this.theirNextIssue,
-              { global: true }
+              { root: true }
             );
           }
           break;
         case "w":
           if (this.ourPrevIssue) {
             this.$store.dispatch(
-              `pricematch/${SET_OUR_SELECTED_ISSUE}`,
+              `pricematch/ourData/${SET_OUR_SELECTED_ISSUE}`,
               this.ourPrevIssue,
-              { global: true }
+              { root: true }
             );
           }
           break;
         case "s":
           if (this.ourNextIssue) {
             this.$store.dispatch(
-              `pricematch/${SET_OUR_SELECTED_ISSUE}`,
+              `pricematch/ourData/${SET_OUR_SELECTED_ISSUE}`,
               this.ourNextIssue,
-              { global: true }
+              { root: true }
             );
           }
           break;

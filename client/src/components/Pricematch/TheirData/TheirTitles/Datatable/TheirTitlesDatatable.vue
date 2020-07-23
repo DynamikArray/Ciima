@@ -53,15 +53,19 @@ export default {
   }),
   computed: {
     ...mapState({
-      titleResults: state => state.pricematch.theirTitleSearchResults,
-      loading: state => state.pricematch.theirLoading
+      titleResults: state => state.pricematch.theirData.theirTitleSearchResults,
+      loading: state => state.pricematch.theirData.theirLoading
     })
   },
   methods: {
     selectTitle(item) {
-      this.$store.dispatch(`pricematch/${SET_THEIR_SELECTED_TITLE}`, item, {
-        gloabl: true
-      });
+      this.$store.dispatch(
+        `pricematch/theirData/${SET_THEIR_SELECTED_TITLE}`,
+        item,
+        {
+          gloabl: true
+        }
+      );
     }
   }
 };

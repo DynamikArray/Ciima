@@ -1,5 +1,6 @@
 <template>
   <v-img
+    class="hover"
     :key="item.images.thumbnail"
     :src="item.images.thumbnail"
     max-height="60"
