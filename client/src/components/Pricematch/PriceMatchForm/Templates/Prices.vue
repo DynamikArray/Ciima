@@ -32,7 +32,7 @@ export default {
   props: {
     alignClass: {
       type: String,
-      default: "justify-start"
+      default: "justify-center"
     },
     prices: [Boolean, Array]
   }

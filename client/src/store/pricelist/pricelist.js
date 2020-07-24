@@ -2,22 +2,26 @@ import Vue from "vue";
 import Vuex from "vuex";
 Vue.use(Vuex);
 
+import { SEARCH_PRICELIST, GET_PRICELIST_RECORD } from "@/store/action-types";
 import {
-  SEARCH_PRICELIST,
   SEARCH_PRICELIST_RESULTS_SET,
-  SEARCH_PRICELIST_RESULTS_LOADING
-} from "@/store/action-types";
-import {} from "@/store/mutation-types";
+  GET_PRICELIST_RECORD_SET,
+  PRICELIST_LOADING
+} from "@/store/mutation-types";
 
 const pricelist = {
   namespaced: true,
   modules: {},
   state: {
+    selectedRecord: false,
     items: [],
     pager: false,
     loading: false
   },
   getters: {
+    getSelectedRecord: state => {
+      return state.selectedRecord;
+    },
     getItems: state => {
       return state.items;
     },
@@ -29,11 +33,14 @@ const pricelist = {
     }
   },
   mutations: {
+    [GET_PRICELIST_RECORD_SET](state, data) {
+      state.selectedRecord = data;
+    },
     [SEARCH_PRICELIST_RESULTS_SET](state, data) {
       state.items = data.rows;
       state.pager = data.pager;
     },
-    [SEARCH_PRICELIST_RESULTS_LOADING](state, data) {
+    [PRICELIST_LOADING](state, data) {
       state.loading = data.loading;
     }
   },
@@ -46,7 +53,20 @@ const pricelist = {
           url: "/pricelist/search",
           params: params,
           success: `pricelist/${SEARCH_PRICELIST_RESULTS_SET}`,
-          loading: `pricelist/${SEARCH_PRICELIST_RESULTS_LOADING}`
+          loading: `pricelist/${PRICELIST_LOADING}`
+        },
+        { root: true }
+      );
+    },
+    [GET_PRICELIST_RECORD]({ dispatch, commit }, issueId) {
+      dispatch(
+        "api/requestHandler",
+        {
+          method: "get",
+          url: `/pricelist/${issueId}`,
+          params: false,
+          success: `pricelist/${GET_PRICELIST_RECORD_SET}`,
+          loading: `pricelist/${PRICELIST_LOADING}`
         },
         { root: true }
       );

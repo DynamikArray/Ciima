@@ -29,17 +29,7 @@
             alignClass="justify-end"
             :prices="selectedIssue.issuePrices || false"
           />
-          <div
-            class="d-flex align-end justify-end mx-3"
-            v-if="selectedIssue.hasMatch"
-          >
-            <div class="d-flex flex-column align-center justify-center">
-              <h5>Matched:</h5>
-              <h4 class="mt-1">
-                <v-icon color="green">fa fas fa-link</v-icon>
-              </h4>
-            </div>
-          </div>
+          <IssueMatch :issue="selectedIssue" />
         </div>
       </div>
 
@@ -64,6 +54,7 @@
 <script>
 import IssueImage from "./IssueImage";
 import Prices from "../Templates/Prices";
+import IssueMatch from "../IssueMatch/IssueMatch";
 
 export default {
   props: {
@@ -71,7 +62,8 @@ export default {
   },
   components: {
     IssueImage,
-    Prices
+    Prices,
+    IssueMatch
   },
   data: () => ({
     previewImageUrl: false,

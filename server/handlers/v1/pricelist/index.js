@@ -3,6 +3,10 @@ const {
   buildSelectQueriesParams,
 } = require("../../../../util/pricelist/searchPricelist");
 
+const {
+  buildReadPricelistQuery,
+} = require("../../../../util/pricelist/readPricelist");
+
 module.exports = (fastify) => ({
   /**
    * [searchTheirTitlesHandler description]
@@ -34,6 +38,29 @@ module.exports = (fastify) => ({
       return {
         result: { rows, pager: { page, pageCount, pageLimit, rowsTotal } },
       };
+    } catch (error) {
+      fastify.winston.error(error);
+      res.send(error);
+    }
+  },
+
+  /**
+   * [readPricelistHandler description]
+   * @param  {[type]}  req [description]
+   * @param  {[type]}  res [description]
+   * @return {Promise}     [description]
+   */
+  readPricelistHandler: async (req, res) => {
+    const id = req.params.slc_IssueId;
+    const query = buildReadPricelistQuery();
+
+    try {
+      const [rows, fields] = await fastify.mysql.query(query, id);
+      if (rows.length !== 1) {
+        res.send({ error: "Record not found" });
+      }
+
+      return { result: rows[0] };
     } catch (error) {
       fastify.winston.error(error);
       res.send(error);

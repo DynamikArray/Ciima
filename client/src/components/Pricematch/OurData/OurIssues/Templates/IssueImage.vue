@@ -37,7 +37,7 @@ export default {
     }
   },
   methods: {
-    hadleImageError() {
+    handleImageError() {
       this.error = true;
     }
   }
