@@ -18,8 +18,8 @@ const issuesFilter = {
   namespaced: true,
 
   state: {
-    filterComicTypes: false,
-    filterVariants: false,
+    filterComicTypes: true,
+    filterVariants: true,
     filterHasMatch: false
   },
   getters: {

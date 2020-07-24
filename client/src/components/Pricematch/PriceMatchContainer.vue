@@ -126,23 +126,9 @@ export default {
       return false;
     },
     ourIndexedResults() {
-      return this.ourIssuesResults
-
-        .filter(issue => {
-          if (this.hideVariants) {
-            if (issue.variation !== "" || issue.variation.length > 0)
-              return false;
-          }
-
-          if (this.hideComicTypes) {
-            if (issue.comicType.length > 0) return false;
-          }
-
-          return true;
-        })
-        .map((issue, i) => {
-          return { ...issue, ...{ _dataIndex: i } };
-        });
+      return this.ourIssuesResults.map((issue, i) => {
+        return { ...issue, ...{ _dataIndex: i } };
+      });
     },
     ourPrevIssue() {
       if (!this.ourSelectedIssue) return false;
