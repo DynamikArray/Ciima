@@ -8,7 +8,8 @@ import theirData from "./theirData/theirData";
 import {
   /**/
   SAVE_ISSUE_MATCH,
-  UPDATE_ISSUE_MATCH
+  UPDATE_ISSUE_MATCH,
+  DELETE_ISSUE_MATCH
 } from "@/store/action-types";
 
 import {} from "@/store/mutation-types";
@@ -45,6 +46,19 @@ const pricematch = {
           method: "put",
           url: "/pricematch/updateIssueMatch",
           params: params,
+          success: false,
+          loading: false
+        },
+        { root: true }
+      );
+    },
+    async [DELETE_ISSUE_MATCH]({ dispatch, commit }, params) {
+      return await dispatch(
+        "api/requestHandler",
+        {
+          method: "delete",
+          url: `/pricematch/deleteIssueMatch/${params}`,
+          params: false,
           success: false,
           loading: false
         },

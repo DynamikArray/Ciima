@@ -6,6 +6,7 @@ const {
 const {
   queryCreateIssueMatch,
   queryUpdateIssueMatch,
+  queryDeleteIssueMatch,
 } = require("../../../../util/pricematch/CRUDIssueMatch");
 
 const {
@@ -133,6 +134,22 @@ module.exports = (fastify) => ({
       userId,
       params
     );
+
+    if (result && !error) return { result };
+    if (error && !result) return { error };
+  },
+
+  /**
+   * [deleteIssueMatchHandler description]
+   * @param  {[type]}  req [description]
+   * @param  {[type]}  res [description]
+   * @return {Promise}     [description]
+   */
+  deleteIssueMatchHandler: async (req, res) => {
+    const id = req.params.slc_IssueId;
+    const userId = req.user.id;
+
+    const { result, error } = await queryDeleteIssueMatch(fastify, userId, id);
 
     if (result && !error) return { result };
     if (error && !result) return { error };

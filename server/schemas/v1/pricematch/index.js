@@ -188,4 +188,20 @@ module.exports = {
     },
     /* NEEDS RESPONSES **/
   },
+
+  deleteIssueMatchSchema: {
+    description: "Delete an item from Matched Issues by IssueId.",
+    tags: ["Pricelist"],
+    summary: "Delete an item from Matched Issues by IssueId.",
+    security: [
+      {
+        token: [],
+      },
+    ],
+    params: {
+      slc_IssueId: {
+        type: "number",
+      },
+    },
+  },
 };

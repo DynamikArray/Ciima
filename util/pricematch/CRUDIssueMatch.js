@@ -2,6 +2,7 @@ const { PRICE_MATCH } = require("../auditLog/logResourceTypes");
 const {
   CREATE_ISSUE_MATCH,
   UPDATE_ISSUE_MATCH,
+  DELETE_ISSUE_MATCH,
 } = require("../auditLog/logActionTypes");
 
 const queryCreateIssueMatch = async (fastify, userId, params) => {
@@ -64,4 +65,33 @@ const queryUpdateIssueMatch = async (fastify, userId, params) => {
   }
 };
 
-module.exports = { queryCreateIssueMatch, queryUpdateIssueMatch };
+const queryDeleteIssueMatch = async (fastify, userId, slc_IssueId) => {
+  const query = `DELETE FROM mcs_issues WHERE slc_IssueId = ?`;
+
+  let successResult,
+    errorResult = false;
+  try {
+    const [rows, fields] = await fastify.mysql.query(query, slc_IssueId);
+    const { affectedRows, insertId } = rows;
+    successResult = rows;
+    return { result: { affectedRows, insertId } };
+  } catch (error) {
+    errorResult = error;
+    fastify.winston.error(error);
+    return { error: error.message, result: false };
+  } finally {
+    fastify.auditLogger.log(
+      DELETE_ISSUE_MATCH,
+      userId,
+      slc_IssueId || 0,
+      PRICE_MATCH,
+      JSON.stringify({ successResult, errorResult })
+    );
+  }
+};
+
+module.exports = {
+  queryCreateIssueMatch,
+  queryUpdateIssueMatch,
+  queryDeleteIssueMatch,
+};

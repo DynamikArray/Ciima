@@ -3,7 +3,7 @@
     <CustomPager
       key="topPager"
       align="end"
-      :limit.sync="limit"
+      :limit="limit"
       :page="page"
       :pageCount="pageCount"
       :pageLimit="pageLimit"
@@ -20,8 +20,17 @@
       hide-default-footer
       :footer-props="footerProps"
     >
+      <template v-slot:item.ourTitle="{ item }">
+        <h4>{{ item.ourTitle }}</h4>
+      </template>
+
+      <template v-slot:item.theirTitle="{ item }">
+        <h4>{{ item.theirTitle }}</h4>
+      </template>
+
       <template v-slot:item.ourImageUrl="{ item }">
         <OurIssueImage
+          class="ma-1"
           style="min-height:60px"
           :imageUrl="item.ourImageUrl"
           :onClick="showOurFullSize"
@@ -30,6 +39,7 @@
 
       <template v-slot:item.theirImageThumbnail="{ item }">
         <TheirIssueImage
+          class="ma-1"
           :thumbnail="item.theirImageThumbnail"
           :fullsize="item.theirImageFullsize"
           :onClick="showTheirFullSize"
@@ -41,10 +51,15 @@
       </template>
 
       <template v-slot:item.dateCreated="{ item }">
-        {{ item.dateCreated | dateTime }}
+        <h5 class="">{{ item.dateCreated | dateTime }}</h5>
       </template>
       <template v-slot:item.dateUpdated="{ item }">
-        {{ item.dateCreated | dateTime }}
+        <h5 class="">{{ item.dateUpdated | dateTime }}</h5>
+      </template>
+
+      <!--ACTION COLUMN-->
+      <template v-slot:item.action="{ item }">
+        <ActionButtons :item="item" :getData="getData" />
       </template>
     </v-data-table>
 
@@ -69,11 +84,11 @@
 </template>
 
 <script>
-import { headers } from "./tableHeaders";
-
+import { headers } from "./Templates/tableHeaders";
 import Prices from "./Templates/Prices";
 import OurIssueImage from "./Templates/OurIssueImage";
 import TheirIssueImage from "./Templates/TheirIssueImage";
+import ActionButtons from "./Templates/ActionButtons";
 import CustomPager from "@/components/Datatable/Pager/CustomPager";
 
 export default {
@@ -88,6 +103,7 @@ export default {
     OurIssueImage,
     TheirIssueImage,
     Prices,
+    ActionButtons,
     CustomPager
   },
   data: () => ({

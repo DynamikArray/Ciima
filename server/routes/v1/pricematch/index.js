@@ -5,6 +5,7 @@ const {
   getPageTheirIssuesSchema,
   createIssueMatchSchema,
   updateIssueMatchSchema,
+  deleteIssueMatchSchema,
 } = require("../../../schemas/v1/pricematch");
 /**
  * PriceMathc routes endpoints
@@ -19,6 +20,7 @@ module.exports = function (fastify, opts, next) {
     getPageTheirIssuesHandler,
     createIssueMatchHandler,
     updateIssueMatchHandler,
+    deleteIssueMatchHandler,
   } = require("../../../handlers/v1/pricematch")(fastify);
 
   const searchTheirTitlesRoute = {
@@ -34,7 +36,6 @@ module.exports = function (fastify, opts, next) {
     handler: searchOurIssuesHandler,
   };
   fastify.get("/pricematch/searchOurIssues", searchOurIssuesRoute);
-  next();
 
   const searchTheirIssuesRoute = {
     preValidation: fastify.authenticate,
@@ -42,7 +43,6 @@ module.exports = function (fastify, opts, next) {
     handler: searchTheirIssuesHandler,
   };
   fastify.get("/pricematch/searchTheirIssues", searchTheirIssuesRoute);
-  next();
 
   const getPageTheirIssuesRoute = {
     preValidation: fastify.authenticate,
@@ -50,7 +50,6 @@ module.exports = function (fastify, opts, next) {
     handler: getPageTheirIssuesHandler,
   };
   fastify.get("/pricematch/getPageTheirIssues", getPageTheirIssuesRoute);
-  next();
 
   /*  C-RUD */
   const createIssueMatchRoute = {
@@ -59,7 +58,7 @@ module.exports = function (fastify, opts, next) {
     handler: createIssueMatchHandler,
   };
   fastify.post("/pricematch/createIssueMatch", createIssueMatchRoute);
-  next();
+
   /* CR-U-D */
   const updateIssueMatchRoute = {
     preValidation: fastify.authenticate,
@@ -67,5 +66,17 @@ module.exports = function (fastify, opts, next) {
     handler: updateIssueMatchHandler,
   };
   fastify.put("/pricematch/updateIssueMatch", updateIssueMatchRoute);
+
+  /* CRU-D */
+  const deleteIssueMatchRoute = {
+    preValidation: fastify.authenticate,
+    schema: deleteIssueMatchSchema,
+    handler: deleteIssueMatchHandler,
+  };
+  fastify.delete(
+    "/pricematch/deleteIssueMatch/:slc_IssueId",
+    deleteIssueMatchRoute
+  );
+
   next();
 };

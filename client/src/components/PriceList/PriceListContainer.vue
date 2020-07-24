@@ -17,7 +17,8 @@ import PriceListDatatable from "./Datatable/PriceListDatatable";
 export default {
   props: {},
   data: () => ({
-    limit: 15
+    limit: 15,
+    page: 1
   }),
   computed: {
     ...mapGetters({
@@ -37,9 +38,10 @@ export default {
       if (params) {
         //set our page limit if it changes
         if (params.limit) this.limit = params.limit;
+        if (params.page) this.page = params.page;
       }
       //add our page limit to all request
-      const _params = { limit: this.limit, ...params };
+      const _params = { limit: this.limit, page: this.page, ...params };
 
       this.$store.dispatch(`pricelist/${SEARCH_PRICELIST}`, _params, {
         root: true

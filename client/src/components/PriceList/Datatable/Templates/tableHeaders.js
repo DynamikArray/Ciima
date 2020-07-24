@@ -7,26 +7,25 @@ export const headers = [
     width: "60px"
   },
   {
-    text: "Our Image",
-    value: "ourImageUrl",
-    sortable: false,
-    align: "center pa-1",
-    width: "60px"
-  },
-  {
     text: "Our Title",
     value: "ourTitle",
     sortable: false,
-    align: "start px-5",
+    align: "end px-5",
     width: ""
   },
-
+  {
+    text: "Our Image",
+    value: "ourImageUrl",
+    sortable: false,
+    align: "",
+    width: "100px"
+  },
   {
     text: "Their Image",
     value: "theirImageThumbnail",
     sortable: false,
-    align: "center pa-1",
-    width: "90px"
+    align: "",
+    width: "100px"
   },
 
   {
@@ -49,5 +48,12 @@ export const headers = [
     sortable: false,
     align: "center pa-1",
     width: "90px"
+  },
+  {
+    text: "Actions",
+    value: "action",
+    sortable: false,
+    align: "center pa-1",
+    width: "110px"
   }
 ];
