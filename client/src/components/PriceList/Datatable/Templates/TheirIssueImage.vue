@@ -3,9 +3,9 @@
     v-if="thumbnail"
     :key="thumbnail"
     :src="thumbnail"
-    max-height="60"
-    min-height="60"
-    width="60"
+    max-height="100"
+    min-height="100"
+    width="100"
     contain
     @click="onClick(fullsize)"
     class="hover"

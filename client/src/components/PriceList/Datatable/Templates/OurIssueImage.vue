@@ -3,9 +3,9 @@
     v-if="imageUrl"
     :src="makeImageUrl"
     :key="makeImageUrl"
-    max-height="58"
-    min-height="58"
-    width="60"
+    max-height="100"
+    min-height="100"
+    width="100"
     contain
     @click="onClick(makeImageUrl)"
     @error="handleImageError()"

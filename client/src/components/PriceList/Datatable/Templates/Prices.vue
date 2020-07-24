@@ -2,8 +2,8 @@
   <div v-if="prices.length > 0" class="">
     <v-tooltip left :max-width="420" color="info">
       <template v-slot:activator="{ on }">
-        <v-btn icon label color="white" v-on="on" class=" textShadow">
-          <v-icon class="">
+        <v-btn xLarge icon label color="white" v-on="on" class=" textShadow">
+          <v-icon xLarge class="">
             fa fa-comment-dollar
           </v-icon>
         </v-btn>

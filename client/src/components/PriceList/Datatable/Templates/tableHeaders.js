@@ -1,12 +1,5 @@
 export const headers = [
   {
-    text: "Prices",
-    value: "ourPricesFromThem",
-    sortable: false,
-    align: "center pa-1 mx-5",
-    width: "60px"
-  },
-  {
     text: "Our Title",
     value: "ourTitle",
     sortable: false,
@@ -20,6 +13,15 @@ export const headers = [
     align: "",
     width: "100px"
   },
+
+  {
+    text: "Prices",
+    value: "ourPricesFromThem",
+    sortable: false,
+    align: "center pa-1 mx-5",
+    width: "60px"
+  },
+
   {
     text: "Their Image",
     value: "theirImageThumbnail",
