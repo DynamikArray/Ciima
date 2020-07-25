@@ -45,8 +45,6 @@ const buildSelectQueries = (dateCreated, dateUpdated) => {
     	slc_issues slc ON  slc.id = mcs.slc_IssueId
     ${whereSQL}`;
 
-  console.log("\n\n", selectQuery, "\n\n");
-
   return { selectQuery, totalQuery };
 };
 
