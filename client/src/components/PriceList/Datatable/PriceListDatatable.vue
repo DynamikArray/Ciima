@@ -8,13 +8,14 @@
       :items-per-page="limit"
       hide-default-footer
       :footer-props="footerProps"
+      class="textShadow"
     >
       <template v-slot:item.ourTitle="{ item }">
-        <h4>{{ item.ourTitle }}</h4>
+        <h3>{{ item.ourTitle }}</h3>
       </template>
 
       <template v-slot:item.theirTitle="{ item }">
-        <h4>{{ item.theirTitle }}</h4>
+        <h3>{{ item.theirTitle }}</h3>
       </template>
 
       <template v-slot:item.ourImageUrl="{ item }">
@@ -36,14 +37,14 @@
       </template>
 
       <template v-slot:item.ourPricesFromThem="{ item }">
-        <Prices :prices="item.ourPricesFromThem" />
+        <PricesFlexbox :prices="item.ourPricesFromThem" />
       </template>
 
       <template v-slot:item.dateCreated="{ item }">
-        <h5 class="">{{ item.dateCreated | dateTime }}</h5>
+        <h5 class="caption">{{ item.dateCreated | dateTime }}</h5>
       </template>
       <template v-slot:item.dateUpdated="{ item }">
-        <h5 class="">{{ item.dateUpdated | dateTime }}</h5>
+        <h5 class="caption">{{ item.dateUpdated | dateTime }}</h5>
       </template>
 
       <!--ACTION COLUMN-->
@@ -64,7 +65,9 @@
 
 <script>
 import { headers } from "./Templates/tableHeaders";
-import Prices from "./Templates/Prices";
+import PricesPopup from "./Templates/PricesPopup";
+import PricesFlexbox from "./Templates/PricesFlexbox";
+
 import OurIssueImage from "./Templates/OurIssueImage";
 import TheirIssueImage from "./Templates/TheirIssueImage";
 import ActionButtons from "./Templates/ActionButtons";
@@ -79,7 +82,8 @@ export default {
   components: {
     OurIssueImage,
     TheirIssueImage,
-    Prices,
+    PricesPopup,
+    PricesFlexbox,
     ActionButtons
   },
   data: () => ({
