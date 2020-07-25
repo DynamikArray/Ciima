@@ -1,16 +1,5 @@
 <template>
   <div class="w-100 h-100">
-    <CustomPager
-      key="topPager"
-      align="end"
-      :limit="limit"
-      :page="page"
-      :pageCount="pageCount"
-      :pageLimit="pageLimit"
-      :rowsTotal="rowsTotal"
-      :getData="getData"
-    />
-
     <v-data-table
       :headers="headers"
       :items="items"
@@ -63,16 +52,6 @@
       </template>
     </v-data-table>
 
-    <CustomPager
-      key="bottomPager"
-      :limit="limit"
-      :page="page"
-      :pageCount="pageCount"
-      :pageLimit="pageLimit"
-      :rowsTotal="rowsTotal"
-      :getData="getData"
-    />
-
     <v-dialog v-model="previewImage" max-width="550">
       <v-card color="secondary darken-3" dark class="pt-2">
         <v-card-text>
@@ -89,13 +68,11 @@ import Prices from "./Templates/Prices";
 import OurIssueImage from "./Templates/OurIssueImage";
 import TheirIssueImage from "./Templates/TheirIssueImage";
 import ActionButtons from "./Templates/ActionButtons";
-import CustomPager from "@/components/Datatable/Pager/CustomPager";
 
 export default {
   props: {
     limit: [Number],
     items: [Boolean, Array],
-    pagination: [Boolean, Object],
     loading: [Boolean],
     getData: [Function]
   },
@@ -103,8 +80,7 @@ export default {
     OurIssueImage,
     TheirIssueImage,
     Prices,
-    ActionButtons,
-    CustomPager
+    ActionButtons
   },
   data: () => ({
     headers,
@@ -112,20 +88,7 @@ export default {
     previewImage: false,
     previewImageUrl: false
   }),
-  computed: {
-    page() {
-      return this.pagination.page;
-    },
-    pageCount() {
-      return this.pagination.pageCount;
-    },
-    pageLimit() {
-      return this.pagination.pageLimit;
-    },
-    rowsTotal() {
-      return this.pagination.rowsTotal;
-    }
-  },
+  computed: {},
   methods: {
     showTheirFullSize(imageUrl) {
       this.previewImageUrl = imageUrl;

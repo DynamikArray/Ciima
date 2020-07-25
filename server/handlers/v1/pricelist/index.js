@@ -16,10 +16,16 @@ module.exports = (fastify) => ({
    */
   searchPricelistHandler: async (req, res) => {
     const searchString = req.body.searchString || "";
+    const dateCreated = req.body.dateCreated || false;
+    const dateUpdated = req.body.dateUpdated || false;
+
     const page = Number(req.body.page) || 1;
     const pageLimit = Number(req.body.limit) || 50;
 
-    const { selectQuery, totalQuery } = buildSelectQueries();
+    const { selectQuery, totalQuery } = buildSelectQueries(
+      dateCreated,
+      dateUpdated
+    );
     const { selectParams, totalParams } = buildSelectQueriesParams(
       page - 1,
       pageLimit,

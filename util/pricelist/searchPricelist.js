@@ -1,4 +1,4 @@
-const buildSelectQueries = () => {
+const buildSelectQueries = (dateCreated, dateUpdated) => {
   const selectSQL = `SELECT
   	mcs.slc_IssueId AS ourIssueId,
   	slc.imageUrl AS ourImageUrl,
@@ -20,6 +20,17 @@ const buildSelectQueries = () => {
   const where = [];
   where.push("WHERE (");
   where.push("slc.Title LIKE CONCAT('%',?,'%')");
+
+  if (dateCreated) {
+    where.push("AND");
+    where.push(`DATE(mcs.dateCreated) = "${dateCreated}"`);
+  }
+
+  if (dateUpdated) {
+    where.push("AND");
+    where.push(`DATE(mcs.dateUpdated) = "${dateUpdated}"`);
+  }
+
   where.push(")");
   const whereSQL = where.join(" ");
 
