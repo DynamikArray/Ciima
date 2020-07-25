@@ -34,7 +34,7 @@
 <script>
 import { mapState } from "vuex";
 
-import SetDraftForm from "@/components/Draft/DraftForm";
+import SetDraftForm from "@/components/Draft/SetsDraftForm";
 import LotDraftForm from "@/components/Draft/Lot/LotDraftForm";
 
 export default {

@@ -13,6 +13,7 @@ module.exports = {
     title: { type: "string" },
   },
 
+  /*
   response: {
     200: {
       description: "Succesful response",
@@ -47,10 +48,12 @@ module.exports = {
               issuesCount: { type: "number" },
               publisher: { type: "string" },
               yearsPublished: { type: "string" },
+              issuePrices: { type: "array", items: [{ type: "object" }] },
             },
           },
         },
       },
     },
   },
+  */
 };

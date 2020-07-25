@@ -64,8 +64,14 @@
             label="Price"
             hint="Price it will list for on eBay"
             :rules="fieldRules.price"
-          ></v-text-field
-        ></v-col>
+          >
+            <template slot="append-outer">
+              <div v-if="defaultProductType === 'singles'">
+                <!-- PUT PRICE HJOVER OPVER -->
+              </div>
+            </template>
+          </v-text-field>
+        </v-col>
       </v-row>
       <!--END ROW -->
 
@@ -94,7 +100,7 @@
                   v-model="inventoryTitle"
                   :rules="fieldRules.inventoryTitle"
                 >
-                  <template v-client\src:append-outer>
+                  <template v-slot:append-outer>
                     <v-btn
                       style="margin-top:-5px"
                       color="primary"

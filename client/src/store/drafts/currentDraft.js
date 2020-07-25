@@ -27,7 +27,8 @@ const blankDraft = {
   publishedYear: "",
   publishedDate: "",
   main_image: false,
-  other_images: []
+  other_images: [],
+  priceList: false
 };
 
 import { CURRENT_DRAFT_SAVE } from "@/store/action-types";

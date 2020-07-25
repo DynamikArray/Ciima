@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-row justify-start align-center">
-    <div class="d-flex flex-column grow flex-wrap ">
+    <div class="d-flex flex-column flex-wrap ">
       <div class="d-flex">
         <h3 class="title">{{ item.title }}</h3>
       </div>
@@ -41,7 +41,25 @@
         </v-chip>
       </div>
     </div>
-    <div class="d-flex mr-2">
+    <div class="d-flex mr-10 ml-auto">
+      <div
+        class="d-flex flex-wrap justify-start align-center caption"
+        style="line-height:1.3em;"
+      >
+        <div
+          v-for="price in item.issuePrices"
+          class="d-flex flex-column aling-center justify-center mx-2"
+        >
+          <div class="d-flex align-center justify-center body-1">
+            {{ price.grade }}
+          </div>
+          <div class="d-flex align-center justify-center body-1">
+            {{ price.price | currency }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex mr-2 ">
       <h3 class="display-2" style="font-size: 2.25em !important">
         {{ item.fullIssue }}
       </h3>
