@@ -1,5 +1,7 @@
 <template>
   <div class="d-flex align-end justify-start">
+    <SearchBox :getData="getData" />
+
     <DatePicker
       :getData="getData"
       fieldName="dateCreated"
@@ -16,13 +18,15 @@
 
 <script>
 import DatePicker from "./DatePicker";
+import SearchBox from "./SearchBox";
 
 export default {
   props: {
     getData: [Function]
   },
   components: {
-    DatePicker
+    DatePicker,
+    SearchBox
   }
 };
 </script>

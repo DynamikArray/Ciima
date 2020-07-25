@@ -15,7 +15,7 @@ module.exports = (fastify) => ({
    * @return {Promise}     [description]
    */
   searchPricelistHandler: async (req, res) => {
-    const searchString = req.body.searchString || "";
+    const searchString = req.body.title || "";
     const dateCreated = req.body.dateCreated || false;
     const dateUpdated = req.body.dateUpdated || false;
 
