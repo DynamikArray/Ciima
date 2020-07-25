@@ -70,6 +70,10 @@ const currentDraft = {
     hasCoverPhoto: state => {
       if (!state.coverPhoto) return false;
       return true;
+    },
+    getFirstIssue: state => {
+      if (!state.issues) return false;
+      if (state.issues.length > 0) return state.issues[0];
     }
   },
   mutations: {

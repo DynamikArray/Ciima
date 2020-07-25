@@ -9,35 +9,20 @@
 
       <v-row>
         <v-col cols="5">
-          <v-text-field
-            autocomplete="off"
-            dense
-            autofocus
+          <LocationCode
             :value="locationCode"
-            id="locationCode"
-            @input="handleInputLocationCode"
-            name="locationCode"
-            outlined
-            label="Location"
-            hint="Location code for the item"
+            :input="handleInputLocationCode"
             :rules="fieldRules.locationCode"
-            counter
-          ></v-text-field>
+          />
         </v-col>
+
         <v-col cols="3">
-          <v-text-field
-            autocomplete="off"
-            dense
+          <Grade
             :value="grade"
-            @input="handleInputGrade"
-            id="grade"
-            name="grade"
-            outlined
-            label="Grade"
-            hint="Grade of the product"
+            :input="handleInputGrade"
             :rules="fieldRules.grade"
-          ></v-text-field
-        ></v-col>
+          />
+        </v-col>
 
         <v-col cols="2">
           <v-text-field
@@ -54,23 +39,25 @@
         ></v-col>
 
         <v-col cols="2">
-          <v-text-field
-            autocomplete="off"
-            dense
-            v-model="price"
-            name="price"
-            id="price"
-            outlined
-            label="Price"
-            hint="Price it will list for on eBay"
-            :rules="fieldRules.price"
-          >
-            <template slot="append-outer">
-              <div v-if="defaultProductType === 'singles'">
-                <!-- PUT PRICE HJOVER OPVER -->
-              </div>
-            </template>
-          </v-text-field>
+          <div id="pricesWrapper">
+            <v-text-field
+              autocomplete="off"
+              dense
+              v-model="price"
+              name="price"
+              id="price"
+              outlined
+              label="Price"
+              hint="Price it will list for on eBay"
+              :rules="fieldRules.price"
+            >
+              <template slot="append-outer" class="pa-0 ma-0">
+                <div v-if="defaultProductType === 'singles'">
+                  <Prices />
+                </div>
+              </template>
+            </v-text-field>
+          </div>
         </v-col>
       </v-row>
       <!--END ROW -->
@@ -128,54 +115,6 @@
         </v-col>
       </v-row>
       <v-divider class="my-1"></v-divider>
-
-      <!--
-      <v-divider class="my-1"></v-divider>
-      <v-row>
-        <v-col sm="12" md="12" lg="3">
-          <AutoFillButton></AutoFillButton>
-        </v-col>
-        <v-col sm="12" md="12" lg="9">
-          <div>
-            <v-text-field
-              dense
-              outlined
-              label="Inventory Title"
-              hint="Title as it will appear on Ebay"
-              clearable
-              counter
-              id="inventoryTitle"
-              name="inventoryTitle"
-              v-model="inventoryTitle"
-              :rules="fieldRules.inventoryTitle"
-            >
-              <template v-slot:append-outer>
-                <v-btn
-                  style="margin-top:-5px"
-                  color="primary"
-                  @click="toggleExtraDescriptionDetails"
-                >
-                  <v-icon class="mr-1">{{ extraDescriptionIcon() }}</v-icon
-                  >More
-                </v-btn>
-              </template>
-            </v-text-field>
-          </div>
-
-          <div v-if="showExtra">
-            <v-textarea
-              v-model="extraDescription"
-              auto-grow
-              outlined
-              label="Extra Description Information"
-              hint="Will be added underneath the title in the description of the ebay listing"
-            >
-            </v-textarea>
-          </div>
-        </v-col>
-      </v-row>
-    -->
-      <!--END ROW -->
 
       <h3>Comic Attributes:</h3>
       <v-divider class="my-1"></v-divider>
@@ -408,12 +347,19 @@ import { ebayStoreCategories } from "@/util/ebay/ebayStoreCategories.js";
 
 import { fieldNames, fieldRules } from "./fieldNamesAndRules.js";
 
+import LocationCode from "./fields/LocationCode";
+import Grade from "./fields/Grade";
+import Prices from "./fields/Prices";
+
 import RequiredDataChecks from "./RequiredDataChecks.vue";
 import ActionButtons from "./fields/ActionButtons.vue";
 import AutoFillButton from "./fields/AutoFillButton.vue";
 
 export default {
   components: {
+    LocationCode,
+    Grade,
+    Prices,
     RequiredDataChecks,
     ActionButtons,
     AutoFillButton
@@ -470,10 +416,10 @@ export default {
       return valid;
     },
     handleInputLocationCode(val) {
-      this.locationCode = val.toUpperCase();
+      if (val) this.locationCode = val.toUpperCase();
     },
     handleInputGrade(val) {
-      this.grade = val.toUpperCase();
+      if (val) this.grade = val.toUpperCase();
     },
     toggleExtraDescriptionDetails() {
       this.showExtra = !this.showExtra;
