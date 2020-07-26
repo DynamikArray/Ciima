@@ -9,6 +9,7 @@ const queryCreateIssueMatch = async (fastify, userId, params) => {
   //stringify our json fields
   params.issueTags = JSON.stringify(params.issueTags);
   params.issuePrices = JSON.stringify(params.issuePrices);
+  params.userId = userId;
 
   const query = "INSERT INTO mcs_issues SET ?";
   let successResult,
@@ -39,6 +40,7 @@ const queryUpdateIssueMatch = async (fastify, userId, params) => {
   //stringify our json fields
   params.issueTags = JSON.stringify(params.issueTags);
   params.issuePrices = JSON.stringify(params.issuePrices);
+  params.userId = userId;
   const { slc_IssueId } = params;
 
   const query = `UPDATE mcs_issues SET ? WHERE slc_IssueId=${slc_IssueId}`;

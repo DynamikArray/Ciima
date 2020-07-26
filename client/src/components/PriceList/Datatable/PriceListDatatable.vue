@@ -40,6 +40,10 @@
         <PricesFlexbox :prices="item.ourPricesFromThem" />
       </template>
 
+      <template v-slot:item.userName="{ item }">
+        <UserAvatar :userName="item.userName" />
+      </template>
+
       <template v-slot:item.dateCreated="{ item }">
         <h5 class="caption">{{ item.dateCreated | dateTime }}</h5>
       </template>
@@ -72,6 +76,8 @@ import OurIssueImage from "./Templates/OurIssueImage";
 import TheirIssueImage from "./Templates/TheirIssueImage";
 import ActionButtons from "./Templates/ActionButtons";
 
+import UserAvatar from "./Templates/UserAvatar";
+
 export default {
   props: {
     limit: [Number],
@@ -84,6 +90,7 @@ export default {
     TheirIssueImage,
     PricesPopup,
     PricesFlexbox,
+    UserAvatar,
     ActionButtons
   },
   data: () => ({

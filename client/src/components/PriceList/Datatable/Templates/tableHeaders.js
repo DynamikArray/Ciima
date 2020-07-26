@@ -46,6 +46,13 @@ export const headers = [
     width: ""
   },
   {
+    text: "Username",
+    value: "userName",
+    sortable: false,
+    align: "center pa-1",
+    width: "50px"
+  },
+  {
     text: "Created",
     value: "dateCreated",
     sortable: false,

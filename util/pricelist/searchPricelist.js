@@ -11,11 +11,14 @@ const buildSelectQueries = (dateCreated, dateUpdated) => {
   	slc.CoverDate AS issueCoverDate,
   	mcs.issueTags AS theirIssueTags,
   	mcs.dateCreated AS dateCreated,
-  	mcs.dateUpdated AS dateUpdated
+  	mcs.dateUpdated AS dateUpdated,
+    usr.displayName as userName
   FROM
   	mcs_issues mcs
   LEFT JOIN
-  	slc_issues slc ON  slc.id = mcs.slc_IssueId`;
+  	slc_issues slc ON  slc.id = mcs.slc_IssueId
+  LEFT JOIN
+    slc_users usr ON usr.id = mcs.userId`;
 
   const where = [];
   where.push("WHERE (");
