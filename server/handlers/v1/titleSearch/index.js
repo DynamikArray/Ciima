@@ -6,14 +6,15 @@
 const buildAdvanced = (search, alpha) => {
   const query = `SELECT
         COUNT(i.Title)as issueCount,
+        COUNT(mcs.slc_IssueId) as matchedCount,
         t.Title as title,
         t.TitleId as titleId,
         t.Publisher as publisher,
-        t.YearsPublished as yearsPublished,
-        0 as matched
+        t.YearsPublished as yearsPublished
       FROM
         slc_issues i,
         slc_titles t
+      LEFT JOIN mcs_issues mcs ON i.Id = mcs.slc_IssueId
       WHERE
       (
         MATCH (storylines) against (? IN NATURAL LANGUAGE MODE)
@@ -31,14 +32,15 @@ const buildAdvanced = (search, alpha) => {
 const buildSearch = (search, alpha) => {
   const query = `SELECT
         COUNT(i.Title)as issueCount,
+        COUNT(mcs.slc_IssueId) as matchedCount,
         t.Title as title,
         t.TitleId as titleId,
         t.Publisher as publisher,
-        t.YearsPublished as yearsPublished,
-        0 as matched
+        t.YearsPublished as yearsPublished
       FROM
         slc_titles t,
         slc_issues i
+      LEFT JOIN mcs_issues mcs ON i.Id = mcs.slc_IssueId
       WHERE
       (
         ( t.Title LIKE concat('%',?,'%')  OR  t.AlphabetizedTitle LIKE concat('%',?,'%') )

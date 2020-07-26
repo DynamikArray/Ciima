@@ -81,6 +81,12 @@ export default {
           value: "issueCount",
           sortable: true,
           align: "center"
+        },
+        {
+          text: "Priced",
+          value: "matchedCount",
+          sortable: true,
+          align: "center"
         }
       ]
     };

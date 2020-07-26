@@ -1,9 +1,8 @@
 module.exports = {
   readPricelistSchema: {
-    description: "Read our Price List of Matched Issues by IssueId.",
+    description: "Fetch an Issue Match based on our issues by IssueId.",
     tags: ["Pricelist"],
-    summary:
-      "Search our list of Matched Issues to a list of other retailers prices ",
+    summary: "Gets a Issue Match record for our specific IssueId",
     security: [
       {
         token: [],
@@ -20,7 +19,7 @@ module.exports = {
     description: "Search our Price List of Matched Issues.",
     tags: ["Pricelist"],
     summary:
-      "Search our list of Matched Issues to a list of other retailers prices ",
+      "Search our list of Matched Issues to a list of other retailers prices",
     security: [
       {
         token: [],

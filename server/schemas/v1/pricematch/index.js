@@ -191,7 +191,7 @@ module.exports = {
 
   deleteIssueMatchSchema: {
     description: "Delete an item from Matched Issues by IssueId.",
-    tags: ["Pricelist"],
+    tags: ["Pricematch"],
     summary: "Delete an item from Matched Issues by IssueId.",
     security: [
       {

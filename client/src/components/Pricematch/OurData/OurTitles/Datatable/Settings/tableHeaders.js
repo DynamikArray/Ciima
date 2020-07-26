@@ -23,5 +23,11 @@ export const tableHeaders = [
     sortable: true,
     align: "center"
   },
+  {
+    text: "Priced",
+    value: "matchedCount",
+    sortable: true,
+    align: "center"
+  },
   { text: "Select", value: "action", sortable: false, align: "center" }
 ];
