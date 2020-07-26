@@ -8,7 +8,7 @@ module.exports = {
 
     querystring: {
       query: { type: "string" },
-      advanced: { type: "number" },
+      publisher: { type: "string" },
     },
 
     /*

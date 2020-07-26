@@ -3,6 +3,7 @@
 ////  MUCH FASTER LESS ACCURATE
 ////  MATCH (storylines) against (? IN NATURAL LANGUAGE MODE)
 ////
+/*
 const buildAdvanced = (search, alpha) => {
   const query = `SELECT
         COUNT(i.Title)as issueCount,
@@ -28,8 +29,9 @@ const buildAdvanced = (search, alpha) => {
   const params = [search];
   return { query, params };
 };
+*/
 
-const buildSearch = (search, alpha) => {
+const buildSearch = (search, alpha, publisher = "") => {
   const query = `SELECT
         COUNT(i.Title)as issueCount,
         COUNT(mcs.slc_IssueId) as matchedCount,
@@ -46,12 +48,14 @@ const buildSearch = (search, alpha) => {
         ( t.Title LIKE concat('%',?,'%')  OR  t.AlphabetizedTitle LIKE concat('%',?,'%') )
       AND
         (t.Title = i.Title)
+      AND
+        ( t.Publisher LIKE CONCAT('%',?,'%') )
       )
       GROUP BY t.title, t.titleId, t.publisher, t.yearsPublished
       ORDER BY issueCount DESC, t.title ASC
       LIMIT 500`;
 
-  const params = [search, alpha];
+  const params = [search, alpha, publisher];
   return { query, params };
 };
 
@@ -119,13 +123,14 @@ module.exports = (fastify) => ({
     //removes all extra chars from search string
     const searchString = req.query.query;
     const alphaTitle = searchString.replace(/[^a-z0-9+]+/gi, "");
-
+    const publisher = req.query.publisher;
     //check if advaned or standard
-    const isAdvanced = req.query.advanced;
+    //const isAdvanced = req.query.advanced;
 
     let sqlOpts = {};
-    if (isAdvanced) sqlOpts = buildAdvanced(searchString, alphaTitle);
-    if (!isAdvanced) sqlOpts = buildSearch(searchString, alphaTitle);
+    //if (isAdvanced) sqlOpts = buildAdvanced(searchString, alphaTitle);
+    //if (!isAdvanced)
+    sqlOpts = buildSearch(searchString, alphaTitle, publisher);
 
     const [rows, fields] = await fastify.mysql.query(
       sqlOpts.query,

@@ -16,6 +16,18 @@
         @input="handleSearchInput"
         class="py-3"
       />
+
+      <v-text-field
+        autocomplete="off"
+        autofocus
+        hide-details
+        persistent-hint
+        v-model="searchPublisherString"
+        label="Search Our Publishers"
+        prepend-icon="fa-search"
+        @input="handlePublisherInput"
+        class="py-3"
+      />
     </v-form>
   </div>
 </template>
@@ -27,6 +39,7 @@ import { SEARCH_OUR_TITLES } from "@/store/action-types.js";
 export default {
   props: {},
   data: () => ({
+    searchPublisherString: "",
     searchTitleString: "",
     validTitleSearch: false
   }),
@@ -35,16 +48,36 @@ export default {
       //search value
       const search = this.searchTitleString;
       //on submit or debounce after 3 chars
-      if (event.type === "submit" || search.length > 3) {
+      if (event.type === "submit" || search.length >= 2) {
         //when submit is prssed make sure its not empty
         if (!search.length == 0) {
           this.fetchTitlesByString(search);
         }
       }
     }, 500),
+    handlePublisherInput: debounce(function(event) {
+      //search value
+      const search = this.searchPublisherString;
+      //on submit or debounce after 3 chars
+      if (event.type === "submit" || search.length >= 2) {
+        //when submit is prssed make sure its not empty
+        if (!search.length == 0) {
+          this.fetchTitlesByPublisher(search);
+        }
+      }
+    }, 500),
     fetchTitlesByString(search) {
+      const publisher = this.searchPublisherString || "";
       this.$store.dispatch(`pricematch/ourData/${SEARCH_OUR_TITLES}`, {
-        query: search
+        query: search,
+        publisher
+      });
+    },
+    fetchTitlesByPublisher(publisher) {
+      const query = this.searchTitleString || "";
+      this.$store.dispatch(`pricematch/ourData/${SEARCH_OUR_TITLES}`, {
+        publisher,
+        query
       });
     }
   }
