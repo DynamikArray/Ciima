@@ -80,6 +80,7 @@
               :ourSelectedIssue="ourSelectedIssue"
               :theirSelectedIssue="theirSelectedIssue"
               :theirSelectedTitle="theirSelectedTitle"
+              :theirCurrentPage="getCurrentPGI"
             />
           </div>
         </div>
@@ -130,8 +131,15 @@ export default {
     ...mapGetters({
       ourSelectedIssue: "pricematch/ourData/getOurSelectedIssue",
       theirSelectedIssue: "pricematch/theirData/getTheirSelectedIssue",
-      theirSelectedTitle: "pricematch/theirData/getTheirSelectedTitle"
-    })
+      theirSelectedTitle: "pricematch/theirData/getTheirSelectedTitle",
+      getTheirIssuesPagination: "pricematch/theirData/getTheirIssuesPagination"
+    }),
+    getCurrentPGI() {
+      if (this.getTheirIssuesPagination) {
+        return this.getTheirIssuesPagination.currentPGI;
+      }
+      return 0;
+    }
   },
   methods: {
     clearOurSelectedIssue() {

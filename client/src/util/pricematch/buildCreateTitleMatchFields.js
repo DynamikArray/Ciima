@@ -1,4 +1,9 @@
-const buildCreateTitleMatchFields = (ourIssue, theirIssue, theirTitle) => {
+const buildCreateTitleMatchFields = (
+  ourIssue,
+  theirIssue,
+  theirTitle,
+  theirCurrentPage
+) => {
   const params = {
     slc_IssueId: false,
     mcs_TID: false,
@@ -10,7 +15,8 @@ const buildCreateTitleMatchFields = (ourIssue, theirIssue, theirTitle) => {
     issuePublisher: false,
     issueDate: false,
     issueThumbnail: false,
-    issueFullsize: false
+    issueFullsize: false,
+    mcs_PGI: false
   };
 
   params.slc_IssueId = ourIssue.id;
@@ -27,6 +33,8 @@ const buildCreateTitleMatchFields = (ourIssue, theirIssue, theirTitle) => {
   params.issueDate = theirIssue.year;
   params.issueThumbnail = theirIssue.images.thumbnail;
   params.issueFullsize = theirIssue.images.fullsize;
+
+  params.mcs_PGI = theirCurrentPage;
 
   return params;
 };

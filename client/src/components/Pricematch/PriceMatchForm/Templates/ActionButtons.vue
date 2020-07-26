@@ -38,7 +38,8 @@ export default {
   props: {
     theirSelectedTitle: [Boolean, Object],
     theirSelectedIssue: [Boolean, Object],
-    ourSelectedIssue: [Boolean, Object]
+    ourSelectedIssue: [Boolean, Object],
+    theirCurrentPage: [Number, String]
   },
   computed: {
     isEnabled() {
@@ -116,7 +117,8 @@ export default {
       const params = buildCreateTitleMatchFields(
         this.ourSelectedIssue,
         this.theirSelectedIssue,
-        this.theirSelectedTitle
+        this.theirSelectedTitle,
+        this.theirCurrentPage
       );
 
       this.$store

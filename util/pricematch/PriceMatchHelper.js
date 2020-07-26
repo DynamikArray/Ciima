@@ -32,7 +32,7 @@ const searchWebRetailerIssues = async (TID) => {
     const pager = parsePagerPages(fetched);
 
     return {
-      result: { issues, pagination: { prevnext, pager } },
+      result: { issues, pagination: { currentPGI: 0, prevnext, pager } },
       error: false,
     };
   } catch (e) {
@@ -43,6 +43,7 @@ const searchWebRetailerIssues = async (TID) => {
 
 const getPageOfWebRetailerIssues = async (params) => {
   try {
+    const currentPGI = params.pgi || 0;
     const fetched = await fetchResults(params);
     const parsed = parseIssues(fetched);
     const issues = parsed.map((issue, i) => {
@@ -53,7 +54,7 @@ const getPageOfWebRetailerIssues = async (params) => {
     const pager = parsePagerPages(fetched);
 
     return {
-      result: { issues, pagination: { prevnext, pager } },
+      result: { issues, pagination: { currentPGI, prevnext, pager } },
       error: false,
     };
   } catch (e) {
