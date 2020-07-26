@@ -6,7 +6,9 @@
       up: ['arrowup'],
       down: ['arrowdown'],
       w: ['w'],
-      s: ['s']
+      s: ['s'],
+      bothDown: ['ctrl', 'arrowdown'],
+      bothUp: ['ctrl', 'arrowup']
     }"
     @shortkey="issuesNavigation"
   >
@@ -224,6 +226,38 @@ export default {
             this.$store.dispatch(
               `pricematch/ourData/${SET_OUR_SELECTED_ISSUE}`,
               this.ourNextIssue,
+              { root: true }
+            );
+          }
+          break;
+        case "bothDown":
+          if (this.ourNextIssue) {
+            this.$store.dispatch(
+              `pricematch/ourData/${SET_OUR_SELECTED_ISSUE}`,
+              this.ourNextIssue,
+              { root: true }
+            );
+          }
+          if (this.theirNextIssue) {
+            this.$store.dispatch(
+              `pricematch/theirData/${SET_THEIR_SELECTED_ISSUE}`,
+              this.theirNextIssue,
+              { root: true }
+            );
+          }
+          break;
+        case "bothUp":
+          if (this.ourPrevIssue) {
+            this.$store.dispatch(
+              `pricematch/ourData/${SET_OUR_SELECTED_ISSUE}`,
+              this.ourPrevIssue,
+              { root: true }
+            );
+          }
+          if (this.theirPrevIssue) {
+            this.$store.dispatch(
+              `pricematch/theirData/${SET_THEIR_SELECTED_ISSUE}`,
+              this.theirPrevIssue,
               { root: true }
             );
           }
