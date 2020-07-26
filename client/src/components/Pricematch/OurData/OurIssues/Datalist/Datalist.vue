@@ -77,19 +77,18 @@ export default {
     Prices
   },
   data: () => ({
-    ops: scrollbarSettings
+    ops: scrollbarSettings,
+    selectedIndex: 0
   }),
   watch: {
     ourIssuesPagination: function(newVal, oldVal) {
-      if (
-        newVal.page !== oldVal.page &&
-        newVal.rowsTotal !== oldVal.rowsTotal
-      ) {
+      if (newVal.page !== oldVal.page && newVal.rowsTotal == oldVal.rowsTotal) {
         this.$refs["ourIssuesScroller"].scrollIntoView(`#ourIssues_0`, 250);
       }
     },
     ourSelectedIssueIndex: function(val) {
       if (val) {
+        this.selectedIndex = val;
         this.$refs["ourIssuesScroller"].scrollIntoView(
           `#ourIssues_${val}`,
           250

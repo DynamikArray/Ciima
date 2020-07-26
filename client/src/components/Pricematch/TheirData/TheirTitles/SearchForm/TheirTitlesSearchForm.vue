@@ -10,6 +10,11 @@
         hide-details
         persistent-hint
         v-model="searchTitleString"
+        @input="
+          v => {
+            searchTitleString = v.toLowerCase();
+          }
+        "
         label="Search Their Titles"
         prepend-icon="fa-search"
       >
@@ -40,7 +45,7 @@ export default {
   watch: {
     ourSelectedTitle: function(newVal, oldVal) {
       if (newVal.title) {
-        this.searchTitleString = titleCleaner(newVal.title);
+        this.searchTitleString = titleCleaner(newVal.title).toLowerCase();
         this.handleSearchInput(false);
       }
     }

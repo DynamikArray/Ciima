@@ -15,7 +15,7 @@
         ></v-text-field>
       </template>
 
-      <v-date-picker v-model="dateValue" scrollable>
+      <v-date-picker v-model="dateValue" scrollable color="primary">
         <v-spacer></v-spacer>
         <v-btn text color="primary" @click="modal = false">Cancel</v-btn>
         <v-btn text color="primary" @click="handleModalSave(dateValue)"

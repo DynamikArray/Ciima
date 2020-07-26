@@ -92,6 +92,17 @@ export default {
     hideVariants: false,
     hideComicTypes: false
   }),
+  watch: {
+    ourIssuesPagination: function(newVal, oldVal) {
+      if (newVal.page !== oldVal.page && newVal.rowsTotal == oldVal.rowsTotal) {
+        this.$store.dispatch(
+          `pricematch/ourData/${SET_OUR_SELECTED_ISSUE}`,
+          this.ourIndexedResults[0],
+          { root: true }
+        );
+      }
+    }
+  },
   computed: {
     ...mapGetters({
       ourSelectedTitle: "pricematch/ourData/getOurSelectedTitle",
