@@ -82,7 +82,7 @@ const buildUpcIssue = (search) => {
   const query = `
         SELECT
         @curRow := @curRow + 1 AS rowNumber,
-        Id as id,
+        i.Id as id,
         Title as title,
         IssueNum as issueNumber,
         LPAD(IssueNum, 5, "0") as issueOrder,
@@ -100,9 +100,11 @@ const buildUpcIssue = (search) => {
         UPC as upc,
         ImageUrl as imageUrl,
         eBayCat1 as eBayCat1,
-        eBayCat2 as eBayCat2
+        eBayCat2 as eBayCat2,
+        mcs.issuePrices as issuePrices
       FROM slc_issues i
       JOIN    (SELECT @curRow := 0) r
+      LEFT JOIN mcs_issues mcs ON mcs.slc_IssueId = i.id
       WHERE i.UPC = ?
       ORDER BY issueOrder`;
 

@@ -11,6 +11,7 @@ module.exports = {
       advanced: { type: "number" },
     },
 
+    /*
     response: {
       200: {
         description: "Succesful response",
@@ -32,7 +33,7 @@ module.exports = {
           },
         },
       },
-    },
+    },*/
   },
 
   upcSearch: {

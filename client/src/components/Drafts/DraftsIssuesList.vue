@@ -45,6 +45,45 @@
               <h4 class=" text-truncate">{{ issue.title }}</h4>
             </div>
 
+            <div
+              v-if="issue.issuePrices"
+              class="d-flex flex-wrap align-center mx-3"
+              style="min-width:30px;"
+            >
+              <div v-if="issue.issuePrices.length > 0" class="">
+                <v-tooltip left :max-width="420" color="info">
+                  <template v-slot:activator="{ on }">
+                    <v-btn
+                      icon
+                      label
+                      color="white"
+                      v-on="on"
+                      class=" textShadow"
+                    >
+                      <v-icon class="">
+                        fa fa-comment-dollar
+                      </v-icon>
+                    </v-btn>
+                  </template>
+                  <div v-if="issue.issuePrices" class="w-100 text-center">
+                    <h4>Current Prices:</h4>
+                    <v-divider class="my-1"></v-divider>
+                    <div
+                      class="d-flex align-center justify-space-between w-100"
+                      v-for="price in issue.issuePrices"
+                    >
+                      <div class="mr-4 ml-1">
+                        {{ price.grade }}
+                      </div>
+                      <div class="ml-4 mr-1">
+                        {{ price.price | currency }}
+                      </div>
+                    </div>
+                  </div>
+                </v-tooltip>
+              </div>
+            </div>
+
             <div class="d-flex align-center ml-3">
               <v-btn small text color="red" @click="removeDraftIssue(issue)">
                 <v-icon small>fa-times-circle</v-icon>

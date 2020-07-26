@@ -28,7 +28,6 @@ module.exports = (fastify) => ({
         JOIN (SELECT @curRow := 0) r
         LEFT JOIN mcs_issues mcs ON mcs.slc_IssueId = i.id
         WHERE i.Title = ?
-
         ORDER BY issueOrder`;
 
     const [rows, fields] = await fastify.mysql.query(query, [req.query.title]);
