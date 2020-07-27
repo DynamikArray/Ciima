@@ -2,7 +2,7 @@
   <div class="d-flex flex-column w-100 h-100" :style="stylesObject">
     <vuescroll :ops="ops" class="" id="ourTitlesScroller">
       <div class="HideOverflowY mb-0">
-        <div class="d-flex align-center justify-start ma-4">
+        <div class="d-flex align-center justify-start mt-2 mb-4 mx-4">
           <OurTitlesSearchForm />
         </div>
         <div class="d-flex align-stretch justify-center h-100">

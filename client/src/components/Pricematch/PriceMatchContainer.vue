@@ -20,7 +20,7 @@
           class=" secondary darken"
         />
 
-        <div class="d-flex flex-wrap justify-space-around align-center">
+        <div class="d-flex flex-wrap justify-space-around align-center pa-1">
           <DataFilters
             v-if="ourSelectedTitle"
             ref="dataFilter"

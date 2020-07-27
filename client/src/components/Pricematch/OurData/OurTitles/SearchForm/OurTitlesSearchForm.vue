@@ -6,27 +6,27 @@
       class="w-100 grey darken-4 textShadow px-4 pb-2"
     >
       <div class="d-flex justify-center align-center w-100">
-        <div class="d-flex align-center justify-center w-100">
+        <div class="d-flex align-center justify-center w-100 mx-1">
           <v-text-field
             autocomplete="off"
             autofocus
             hide-details
             persistent-hint
             v-model="searchTitleString"
-            label="Search Our Titles"
+            label="Search by Title"
             prepend-icon="fa-search"
             @input="handleSearchInput"
             class="py-3"
           />
         </div>
-        <div class="d-flex align-center justify-center w-100">
+        <div class="d-flex align-center justify-center w-100 mx-1">
           <v-text-field
             autocomplete="off"
             hide-details
             persistent-hint
             v-model="searchPublisherString"
-            label="Search Our Publishers"
-            prepend-icon="fa-search"
+            label="Search by Publisher"
+            prepend-icon="fa-book"
             @input="handlePublisherInput"
             class="py-3"
           />
