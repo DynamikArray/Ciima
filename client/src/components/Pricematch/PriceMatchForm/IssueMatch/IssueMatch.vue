@@ -27,6 +27,7 @@
     <IssueCard
       v-if="issue.hasMatch"
       :selectedRecord="selectedRecord"
+      :dialog.sync="dialog"
     ></IssueCard>
   </v-dialog>
 </template>
