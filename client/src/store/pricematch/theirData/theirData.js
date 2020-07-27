@@ -63,6 +63,9 @@ const theirData = {
     }
   },
   getters: {
+    getTheirLoading: state => {
+      return state.theirLoading;
+    },
     getTheirSelectedTitle: state => {
       return state.theirSelectedTitle;
     },

@@ -12,7 +12,7 @@
       :ourSelectedTitle="ourSelectedTitle"
       :ourIssuesResults="ourIssuesResults"
       :ourIssuesPagination="ourIssuesPagination"
-      :loading="false"
+      :loading="loading"
       :rowHeight="rowHeight"
       :matchType="matchType"
     />

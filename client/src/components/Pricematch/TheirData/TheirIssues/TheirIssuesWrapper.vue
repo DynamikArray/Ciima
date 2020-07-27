@@ -9,6 +9,7 @@
       class=""
     />
     <div class="HideOverflowY mb-0 w-100">
+      <LoadingScreen :loading="loading" />
       <Datalist
         class="mr-3"
         v-if="theirIssuesResults"
@@ -23,9 +24,11 @@
 <script>
 import CustomPager from "./Templates/CustomPager";
 import Datalist from "./Datalist/Datalist";
+import LoadingScreen from "./Templates/LoadingScreen";
 
 export default {
   props: {
+    loading: [Boolean],
     rowHeight: [Number],
     theirSelectedIssueIndex: [Boolean, Number],
     theirIssuesResults: [Boolean, Array],
@@ -33,7 +36,8 @@ export default {
   },
   components: {
     CustomPager,
-    Datalist
+    Datalist,
+    LoadingScreen
   },
   computed: {
     stylesObject() {

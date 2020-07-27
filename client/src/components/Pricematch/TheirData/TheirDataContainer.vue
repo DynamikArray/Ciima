@@ -11,7 +11,7 @@
       :theirSelectedIssueIndex="theirSelectedIssueIndex"
       :theirIssuesResults="theirIssuesResults"
       :theirIssuesPagination="theirIssuesPagination"
-      :loading="false"
+      :loading="loading"
       :rowHeight="rowHeight"
     />
   </v-slide-x-reverse-transition>

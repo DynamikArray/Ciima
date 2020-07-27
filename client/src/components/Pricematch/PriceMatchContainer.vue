@@ -40,7 +40,7 @@
           :ourIssuesResults="ourIndexedResults"
           :ourIssuesPagination="ourIssuesPagination"
           :ourSelectedIssueIndex="ourSelectedIssueIndex"
-          :loading="false"
+          :loading="ourDataLoading"
           :rowHeight="calculateRowHeight"
         />
       </div>
@@ -58,7 +58,7 @@
           :theirSelectedIssueIndex="theirSelectedIssueIndex"
           :theirIssuesResults="theirIssuesResults"
           :theirIssuesPagination="theirIssuesPagination"
-          :loading="false"
+          :loading="theirDataLoading"
           :rowHeight="containerHeight"
         />
       </div>
@@ -106,7 +106,13 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      ourDataLoading: state => state.pricematch.ourData.ourLoading,
+      theirDataLoading: state => state.pricematch.theirData.theirLoading
+    }),
     ...mapGetters({
+      //ourDataLoading: "pricematch/ourData/getOurLoading",
+      //theirDataLoading: "pricematch/theirData/getTheirLoading",
       ourSelectedTitle: "pricematch/ourData/getOurSelectedTitle",
       ourSelectedIssue: "pricematch/ourData/getOurSelectedIssue",
       theirSelectedTitle: "pricematch/theirData/getTheirSelectedTitle",

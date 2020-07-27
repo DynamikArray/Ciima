@@ -1,5 +1,7 @@
 <template>
-  <div class="d-flex align-center justify-center px-1 pt-1 w-100 textShadow">
+  <div
+    class="d-flex flex-wrap align-center justify-start w-100 px-5 pt-1 textShadow"
+  >
     <div
       v-for="page in pager"
       class="d-flex mx-1 align-center justify-center pa-1"

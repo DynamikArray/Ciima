@@ -4,6 +4,7 @@
     :style="stylesObject"
   >
     <div class="HideOverflowY mb-0 w-100">
+      <LoadingScreen :loading="loading" />
       <Datalist
         class="mr-3"
         v-if="ourIssuesResults"
@@ -19,9 +20,11 @@
 
 <script>
 import Datalist from "./Datalist/Datalist";
+import LoadingScreen from "./Templates/LoadingScreen";
 
 export default {
   props: {
+    loading: [Boolean],
     rowHeight: [Number],
     ourSelectedTitle: [Boolean, Object],
     ourSelectedIssueIndex: [Boolean, Number],
@@ -29,7 +32,8 @@ export default {
     ourIssuesPagination: [Boolean, Object]
   },
   components: {
-    Datalist
+    Datalist,
+    LoadingScreen
   },
   computed: {
     stylesObject() {
