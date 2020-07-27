@@ -2,7 +2,7 @@ import axios from "axios";
 
 const config = {
   baseURL: "/v1/",
-  timeout: 10000
+  timeout: 20000
 };
 
 const clientAxios = axios.create({ ...config });
