@@ -8,10 +8,11 @@ const { buildSelectQueries, buildSelectQueriesParams } = require("./helper");
  */
 module.exports = (fastify) => ({
   readHandler: async (req, res) => {
-    let { status, all, draftType, searchString } = req.query;
-    if (!status) status = "open"; //default to open if no param
-    if (!draftType) draftType = "";
-    if (!searchString) searchString = "";
+    const createdDate = req.query.createdDate || "";
+    const titleString = req.query.searchString || "";
+    const locationString = req.query.searchString || "";
+    const status = req.query.status || "open"; //default to open if no param
+    const draftType = req.query.draftType || "";
 
     const page = Number(req.query.page) || 1;
     const pageLimit = Number(req.query.limit) || 5; //Limit to 500 by default, and let client handle filtering
@@ -22,7 +23,9 @@ module.exports = (fastify) => ({
       pageLimit,
       status,
       draftType,
-      searchString
+      titleString,
+      locationString,
+      createdDate
     );
 
     try {

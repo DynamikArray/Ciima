@@ -1,6 +1,17 @@
 <template>
-  <div :class="`d-flex justify-${align} align-center mr-4 w-100`">
-    <h2 class="my-0 mr-auto">Drafts:</h2>
+  <div :class="`d-flex flex-wrap justify-${align} align-end mr-4 w-100`">
+    <div
+      class="d-flex flex-column justify-end align-center align-self-stretch mr-auto"
+    >
+      <h1 class="my-0 mr-auto">Drafts:</h1>
+    </div>
+
+    <DateChooser
+      class="mt-1"
+      fieldName="createdDate"
+      fieldLabel="Date"
+      :getData="getData"
+    />
 
     <DraftStatusDropdown
       :draftStatus="draftStatus"
@@ -9,6 +20,7 @@
     />
 
     <DraftTypeDropdown :draftType="draftType" :getData="getData" class="mx-3" />
+
     <DraftSearchForm
       :getData="getData"
       :searchString="searchString"
@@ -21,6 +33,7 @@
 import DraftStatusDropdown from "./DraftStatusDropdown.vue";
 import DraftSearchForm from "./DraftSearchForm";
 import DraftTypeDropdown from "./DraftTypeDropdown";
+import DateChooser from "./DatePicker";
 
 export default {
   props: {
@@ -45,6 +58,7 @@ export default {
     }
   },
   components: {
+    DateChooser,
     DraftStatusDropdown,
     DraftTypeDropdown,
     DraftSearchForm

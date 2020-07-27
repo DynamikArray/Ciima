@@ -2,9 +2,10 @@
   <div class="DraftsContainer">
     <DraftsFilters
       align="end"
-      :draftStatus.sync="draftStatus"
-      :draftType.sync="draftType"
-      :searchString.sync="searchString"
+      :createdDate="filters.createdDate"
+      :draftStatus="filters.draftStatus"
+      :draftType="filters.draftType"
+      :searchString="filters.searchString"
       :loading="loading"
       :getData="fetchDraftsWithParams"
     ></DraftsFilters>
@@ -14,7 +15,7 @@
     <DraftsPager
       key="topPager"
       align="end"
-      :limit.sync="limit"
+      :limit="filters.limit"
       :page="page"
       :pageCount="pageCount"
       :pageLimit="pageLimit"
@@ -25,10 +26,10 @@
     <v-divider class="my-1"></v-divider>
 
     <DraftsTable
-      :limit="limit"
+      :limit="filters.limit"
       :isMobile="isMobile"
       :headers="rowHeaders"
-      :status="draftStatus"
+      :status="filters.draftStatus"
       :drafts="drafts"
       :loading="loading"
       :getData="fetchDraftsWithParams"
@@ -39,7 +40,7 @@
     <DraftsPager
       key="bottomPager"
       align="end"
-      :limit.sync="limit"
+      :limit="filters.limit"
       :page="page"
       :pageCount="pageCount"
       :pageLimit="pageLimit"
@@ -69,10 +70,13 @@ export default {
     DraftsFilters
   },
   data: () => ({
-    draftStatus: "open",
-    limit: 15,
-    draftType: "",
-    searchString: "",
+    filters: {
+      draftStatus: "open",
+      limit: 15,
+      draftType: "",
+      searchString: "",
+      createdDate: ""
+    },
     headers: headers,
     mobileHeaders: ["inventoryTitle"]
   }),
@@ -101,17 +105,17 @@ export default {
     }
   },
   methods: {
+    updateLocalParam(params) {
+      Object.keys(params).forEach(key => {
+        this.filters[key] = params[key];
+      });
+    },
     fetchDraftsWithParams(params = {}) {
-      //defaults,
-      const _params = {
-        status: this.draftStatus,
-        limit: this.limit,
-        draftType: this.draftType,
-        searchString: this.searchString,
+      this.updateLocalParam(params);
+      this.$store.dispatch(`openDrafts/${OPEN_DRAFTS_FETCH}`, {
+        ...this.filters,
         ...params
-      };
-
-      this.$store.dispatch(`openDrafts/${OPEN_DRAFTS_FETCH}`, _params);
+      });
     }
   }
 };

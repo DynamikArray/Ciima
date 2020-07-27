@@ -1,7 +1,7 @@
 <template>
-  <div class="d-flex align-start flex-column mb-2">
+  <div class="d-flex align-center flex-column mb-2">
     <div class="d-flex align-center justify-start">
-      <h5 class="mt-0 mr-2 mb-1">Search Draft Titles:</h5>
+      <h5 class="mt-0 mr-2 mb-1">Search Titles or Locations:</h5>
     </div>
 
     <div class="d-flex align-center justify-end w-100">

@@ -17,9 +17,11 @@
         large
         @save="saveChanges(item.id, 'locationCode', editValue)"
       >
-        <span class="locationCodeSpan subtitle-2  grey darken-4 py-1 px-2">{{
-          item.locationCode
-        }}</span>
+        <div
+          class="d-flex locationCodeSpan subtitle-2 align-center text-center grey darken-4 py-1 px-2"
+        >
+          {{ item.locationCode }}
+        </div>
 
         <template v-slot:input>
           <v-form ref="form" v-on:submit.prevent>

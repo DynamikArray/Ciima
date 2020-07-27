@@ -5,12 +5,16 @@ module.exports = {
     summary: "Return a list of open drafts",
     security: [
       {
-        token: []
-      }
+        token: [],
+      },
     ],
-    querystring: {
+    query: {
+      createdDate: { type: "string" },
       status: { type: "string" },
-      all: { type: "number" }
-    }
-  }
+      draftType: { type: "string" },
+      searchString: { type: "string" },
+      limit: { type: "number" },
+      page: { type: "number" },
+    },
+  },
 };
