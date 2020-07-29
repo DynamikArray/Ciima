@@ -28,6 +28,7 @@
     "fastify-rabbit": "^1.2.1",
     "fastify-static": "^2.5.0",
     "fastify-swagger": "^2.4.0",
+    "json-2-csv": "^3.7.6",
     "logdna-winston": "^2.2.4",
     "morgan": "^1.9.1",
     "mysql2": "^1.7.0",
