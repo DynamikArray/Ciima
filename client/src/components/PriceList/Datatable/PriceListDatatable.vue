@@ -41,7 +41,7 @@
       </template>
 
       <template v-slot:item.userName="{ item }">
-        <UserAvatar :userName="item.userName" />
+        <UserAvatar :userName="item.userName" :userColor="item.userColor" />
       </template>
 
       <template v-slot:item.dateCreated="{ item }">

@@ -4,6 +4,7 @@
       <template v-slot:activator="{ on }">
         <div v-on="on" class="">
           <Avatar
+            :backgroundColor="userColor"
             :username="userName"
             :size="30"
             class="mr-1"
@@ -21,7 +22,8 @@ import Avatar from "vue-avatar";
 
 export default {
   props: {
-    userName: [Boolean, String]
+    userName: [Boolean, String],
+    userColor: [Boolean, String]
   },
   components: {
     Avatar

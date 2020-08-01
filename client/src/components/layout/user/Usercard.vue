@@ -7,7 +7,12 @@
   >
     <v-layout align-center justify-center column>
       <v-flex>
-        <avatar :username="userName" :size="140" class="ma-2"></avatar>
+        <avatar
+          :username="userName"
+          :backgroundColor="displayColor"
+          :size="140"
+          class="ma-2"
+        ></avatar>
       </v-flex>
       <v-flex>
         <div class="my-1" style="max-width:200px;">
@@ -36,7 +41,8 @@ export default {
     ...mapGetters({
       isLoggedIn: "user/isLoggedIn",
       userName: "user/userName",
-      email: "user/email"
+      email: "user/email",
+      displayColor: "user/displayColor"
     })
   }
 };

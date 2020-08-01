@@ -8,6 +8,7 @@
               <avatar
                 v-if="item"
                 :username="item.ownerName"
+                :backgroundColor="item.ownerColor"
                 :size="35"
               ></avatar>
             </div>

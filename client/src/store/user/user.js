@@ -5,6 +5,8 @@ Vue.use(Vuex);
 import { axiosInstance, createInterceptor } from "@/util/axios/axiosInstance";
 import router from "@/router/router";
 
+import { getField, updateField } from "vuex-map-fields";
+
 import { UPDATE_API_STATUS } from "@/store/mutation-types";
 
 const user = {
@@ -16,6 +18,8 @@ const user = {
     user: false
   },
   getters: {
+    getField,
+
     isLoggedIn: state => {
       if (state.user) return true;
       return false;
@@ -26,9 +30,12 @@ const user = {
     authError: state => state.errMsg,
     userName: state => state.user.username,
     displayName: state => state.user.displayname,
+    displayColor: state => state.user.displaycolor,
     email: state => state.user.email
   },
   mutations: {
+    updateField,
+
     auth_request(state) {
       state.status = "loading";
       state.errMsg = false;
@@ -41,7 +48,8 @@ const user = {
         id: user.id,
         username: user.username,
         email: user.email,
-        displayname: user.displayname
+        displayname: user.displayname,
+        displaycolor: user.displaycolor
       };
     },
     auth_error(state, errMsg = false) {
@@ -56,6 +64,20 @@ const user = {
     }
   },
   actions: {
+    updateUser({ dispatch, commit }, params) {
+      return dispatch(
+        "api/requestHandler",
+        {
+          method: "post",
+          url: "/user/update",
+          params: params,
+          success: false,
+          loading: false
+        },
+        { root: true }
+      );
+    },
+
     loginCheck({ commit }, options) {
       const { user, token } = this.state;
       return new Promise(async (resolve, reject) => {
@@ -73,8 +95,20 @@ const user = {
           });
 
           if (userResp.data) {
-            const { id, username, email, displayname } = userResp.data;
-            commit("auth_success", { id, username, email, displayname });
+            const {
+              id,
+              username,
+              email,
+              displayname,
+              displaycolor
+            } = userResp.data;
+            commit("auth_success", {
+              id,
+              username,
+              email,
+              displayname,
+              displaycolor
+            });
             commit(`api/${UPDATE_API_STATUS}`, `Logged in user ${username}`, {
               root: true
             });
@@ -99,12 +133,26 @@ const user = {
           method: "POST"
         })
           .then(resp => {
-            const { id, username, displayname, email, token } = resp.data;
+            const {
+              id,
+              username,
+              displayname,
+              displaycolor,
+              email,
+              token
+            } = resp.data;
             localStorage.setItem("token", token);
             axiosInstance.defaults.headers.common[
               "Authorization"
             ] = `Bearer ${token}`;
-            commit("auth_success", { id, username, displayname, email, token });
+            commit("auth_success", {
+              id,
+              username,
+              displayname,
+              displaycolor,
+              email,
+              token
+            });
             commit(`api/${UPDATE_API_STATUS}`, `Logged in user ${username}`, {
               root: true
             });
@@ -135,12 +183,26 @@ const user = {
           method: "POST"
         })
           .then(resp => {
-            const { id, username, displayname, email, token } = resp.data;
+            const {
+              id,
+              username,
+              displayname,
+              displaycolor,
+              email,
+              token
+            } = resp.data;
             localStorage.setItem("token", token);
             axiosInstance.defaults.headers.common[
               "Authorization"
             ] = `Bearer ${token}`;
-            commit("auth_success", { id, username, displayname, email, token });
+            commit("auth_success", {
+              id,
+              username,
+              displayname,
+              displaycolor,
+              email,
+              token
+            });
             commit(`api/${UPDATE_API_STATUS}`, `Logged in user ${username}`, {
               root: true
             });
@@ -176,8 +238,20 @@ const user = {
           method: "POST"
         })
           .then(resp => {
-            const { id, username, displayname, email } = resp.data;
-            commit("auth_success", { id, username, displayname, email });
+            const {
+              id,
+              username,
+              displayname,
+              displaycolor,
+              email
+            } = resp.data;
+            commit("auth_success", {
+              id,
+              username,
+              displayname,
+              displaycolor,
+              email
+            });
             commit(`api/${UPDATE_API_STATUS}`, `Logged in user ${username}`, {
               root: true
             });

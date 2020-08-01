@@ -104,6 +104,7 @@ module.exports = {
         token: [],
       },
     ],
+    /*
     response: {
       200: {
         description: "Succesful response",
@@ -118,5 +119,6 @@ module.exports = {
         },
       },
     },
+    */
   },
 };

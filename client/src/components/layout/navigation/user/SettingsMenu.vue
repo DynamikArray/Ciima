@@ -165,7 +165,6 @@
 </template>
 
 <script>
-import avatar from "vue-avatar";
 import { mapGetters, mapState } from "vuex";
 import {
   TOGGLE_UTILITY_DRAWER,
@@ -175,9 +174,6 @@ import {
 } from "@/store/mutation-types";
 
 export default {
-  components: {
-    avatar
-  },
   data: () => ({
     blnMenu: false,
     blnPrices: false,

@@ -28,7 +28,13 @@
         >
           <template v-slot:activator="{ on }">
             <v-btn text v-on="on">
-              <avatar :username="displayName" :size="30" class="mr-1"></avatar>
+              <avatar
+                :username="displayName"
+                :backgroundColor="displayColor"
+                :size="30"
+                class="mr-1"
+              ></avatar>
+
               <div class="" style="max-width:130px;">
                 <div class="text-truncate">
                   {{ displayName }}
@@ -44,6 +50,7 @@
                 <v-list-item-avatar>
                   <avatar
                     :username="displayName"
+                    :backgroundColor="displayColor"
                     :size="35"
                     class="mr-1"
                   ></avatar>
@@ -56,6 +63,10 @@
                 </v-list-item-content>
               </v-list-item>
             </v-list>
+
+            <v-divider></v-divider>
+
+            <UserUpdate />
 
             <v-divider></v-divider>
 
@@ -79,9 +90,12 @@
 import avatar from "vue-avatar";
 import { mapGetters, mapState } from "vuex";
 
+import UserUpdate from "@/components/layout/user/UserUpdate";
+
 export default {
   components: {
-    avatar
+    avatar,
+    UserUpdate
   },
   data: () => ({
     blnMenu: false
@@ -91,7 +105,8 @@ export default {
       isLoggedIn: "user/isLoggedIn",
       userName: "user/userName",
       userEmail: "user/email",
-      displayName: "user/displayName"
+      displayName: "user/displayName",
+      displayColor: "user/displayColor"
     })
   },
 

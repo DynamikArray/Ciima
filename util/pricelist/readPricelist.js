@@ -12,7 +12,8 @@ const buildReadPricelistQuery = (slc_IssueId) => {
   	mcs.issueTags AS theirIssueTags,
   	mcs.dateCreated AS dateCreated,
   	mcs.dateUpdated AS dateUpdated,
-    usr.displayName as userName
+    usr.displayName as userName,
+    usr.displayColor as userColor
   FROM
   	mcs_issues mcs
   LEFT JOIN
