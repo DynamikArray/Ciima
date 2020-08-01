@@ -31,7 +31,7 @@ const buildAdvanced = (search, alpha) => {
 };
 */
 
-const buildSearch = (search, alpha, publisher = "") => {
+const buildSearch = (search, alpha, display, publisher = "") => {
   const query = `SELECT
         COUNT(i.Title)as issueCount,
         COUNT(mcs.slc_IssueId) as matchedCount,
@@ -45,7 +45,13 @@ const buildSearch = (search, alpha, publisher = "") => {
       LEFT JOIN mcs_issues mcs ON i.Id = mcs.slc_IssueId
       WHERE
       (
-        ( t.Title LIKE concat('%',?,'%')  OR  t.AlphabetizedTitle LIKE concat('%',?,'%') )
+        (
+          t.Title LIKE concat('%',?,'%')
+          OR
+          t.AlphabetizedTitle LIKE concat('%',?,'%')
+          OR
+          t.DisplayTitle LIKE concat('%',?,'%')
+        )
       AND
         (t.Title = i.Title)
       AND
@@ -53,9 +59,9 @@ const buildSearch = (search, alpha, publisher = "") => {
       )
       GROUP BY t.title, t.titleId, t.publisher, t.yearsPublished
       ORDER BY issueCount DESC, t.title ASC
-      LIMIT 500`;
+      LIMIT 1000`;
 
-  const params = [search, alpha, publisher];
+  const params = [search, alpha, display, publisher];
   return { query, params };
 };
 
@@ -78,7 +84,7 @@ const buildUpcTitle = (search) => {
       )
       GROUP BY t.title, t.titleId, t.publisher, t.yearsPublished
       ORDER BY issueCount DESC, t.title ASC
-      LIMIT 500`;
+      LIMIT 1000`;
 
   const params = [search];
   return { query, params };
@@ -123,6 +129,8 @@ module.exports = (fastify) => ({
     //removes all extra chars from search string
     const searchString = req.query.query;
     const alphaTitle = searchString.replace(/[^a-z0-9+]+/gi, "");
+    const displayTitle = req.query.query;
+
     const publisher = req.query.publisher;
     //check if advaned or standard
     //const isAdvanced = req.query.advanced;
@@ -130,7 +138,7 @@ module.exports = (fastify) => ({
     let sqlOpts = {};
     //if (isAdvanced) sqlOpts = buildAdvanced(searchString, alphaTitle);
     //if (!isAdvanced)
-    sqlOpts = buildSearch(searchString, alphaTitle, publisher);
+    sqlOpts = buildSearch(searchString, alphaTitle, displayTitle, publisher);
 
     const [rows, fields] = await fastify.mysql.query(
       sqlOpts.query,
