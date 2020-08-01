@@ -34,6 +34,8 @@ import WeekToWeekChart from "./Charts/WeekToWeekChartContainer";
 import TodayVsYesterday from "./Cards/TodayVsYesterday";
 import ThisWeekVsLastWeek from "./Cards/ThisWeekVsLastWeek";
 
+import { Colors } from "./Charts/colors";
+
 export default {
   components: {
     TodayVsYesterday,
@@ -107,9 +109,7 @@ export default {
       return {
         label,
         data: itemCountTotals,
-        backgroundColor: `#${Math.floor(Math.random() * 16777215).toString(
-          16
-        )}`,
+        backgroundColor: Colors.random(),
         barThickness: "flex",
         minBarLength: 5
         //yAxisID: yAxisID

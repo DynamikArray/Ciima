@@ -1,5 +1,8 @@
 <template>
-  <div class="d-flex flex-grow justify-start align-center w-100 flex-column">
+  <div
+    class="d-flex flex-grow justify-start align-center w-100 flex-column"
+    v-if="!loading"
+  >
     <div class="d-flex">
       <h2>{{ title }}</h2>
     </div>
@@ -71,8 +74,6 @@ import AverageItemsPrices from "./Cards/AverageItemsPrices";
 import NewItemsChartContainer from "./Charts/NewItemsChartContainer";
 import ItemsPriceChartContainer from "./Charts/ItemsPriceChartContainer";
 
-import { Colors } from "./Charts/colors";
-
 export default {
   props: {
     days: [Number, Boolean],
@@ -91,6 +92,41 @@ export default {
     NewItemsChartContainer,
     ItemsPriceChartContainer
   },
+  created() {
+    this.loading = true;
+    this.$store
+      .dispatch(
+        "api/requestHandler",
+        {
+          method: "get",
+          url: "/auditLog/userList",
+          params: {},
+          success: false,
+          loading: false
+        },
+        { root: true }
+      )
+      .then(({ result }) => {
+        this.loading = false;
+
+        if (result) {
+          this.usersColorsLists = result.reduce((acc, curr) => {
+            return {
+              ...acc,
+              [curr.text]: curr
+            };
+          }, {});
+        }
+      })
+      .catch(e => {
+        console.log(e);
+        this.loading = false;
+      });
+  },
+  data: () => ({
+    loading: false,
+    usersColorsLists: false
+  }),
   computed: {
     groupedData() {
       //group by user
@@ -104,14 +140,6 @@ export default {
         return this.$options.filters.monthDayYear(item.createdDate);
       });
       return new Set(datesList);
-    },
-
-    usersColorsLists() {
-      return this.analyticsData.reduce((users, item) => {
-        const color = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
-        users[item.username] = { color };
-        return users;
-      }, {});
     },
 
     //
@@ -141,7 +169,9 @@ export default {
         datasets.push({
           label: key,
           data: data,
-          backgroundColor: this.usersColorsLists[key].color,
+          backgroundColor:
+            this.usersColorsLists[key].color ||
+            `#${Math.floor(Math.random() * 16777215).toString(16)}`,
           barThickness: "flex",
           minBarLength: 5
         });
@@ -218,7 +248,7 @@ export default {
         datasets.push({
           label: key,
           data: data,
-          backgroundColor: Colors.random(),
+          backgroundColor: this.usersColorsLists[key].color,
           barThickness: "flex",
           minBarLength: 5
         });
