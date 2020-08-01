@@ -1,5 +1,9 @@
 const bcrypt = require("bcryptjs");
 
+const {
+  queryUpdateUser,
+} = require("../../../../util/ciima/queries/user/updateUser");
+
 module.exports = (fastify) => ({
   /**
    * [register description]
@@ -10,7 +14,7 @@ module.exports = (fastify) => ({
   register: async (req, res) => {
     fastify.winston.debug("Registration Attempt");
 
-    const { email, username, password, displayname } = req.body;
+    const { email, username, password, displayname, displaycolor } = req.body;
 
     //email check
     const emailExists = await checkIfEmailExists(fastify, email);
@@ -31,7 +35,7 @@ module.exports = (fastify) => ({
     }
 
     //add user by building the query
-    const query = `INSERT INTO slc_users SET email=?, username=?, password=?, displayname=?`;
+    const query = `INSERT INTO slc_users SET email=?, username=?, password=?, displayname=?, displaycolor=?`;
 
     //hash the plain pass into something cryptic
     const salt = await bcrypt.genSalt(10);
@@ -44,6 +48,7 @@ module.exports = (fastify) => ({
         username,
         hashPassword,
         displayname,
+        displaycolor,
       ]);
 
       //pull of the props we care about
@@ -98,6 +103,22 @@ module.exports = (fastify) => ({
       res.send({ ...user });
     }
   },
+
+  /**
+   * [update description]
+   * @param  {[type]}  req [description]
+   * @param  {[type]}  res [description]
+   * @return {Promise}     [description]
+   */
+  update: async (req, res) => {
+    const params = req.body;
+    const userId = req.user.id;
+
+    const { result, error } = await queryUpdateUser(fastify, userId, params);
+
+    if (result && !error) return { result };
+    if (error && !result) return { error };
+  },
 });
 
 /**
@@ -107,7 +128,7 @@ module.exports = (fastify) => ({
  * @return {Promise}            User if found or error:msg
  */
 const getUserById = async (fastify, id) => {
-  const query = `SELECT id, email, username, displayname FROM slc_users WHERE id = ? `;
+  const query = `SELECT id, email, username, displayname, displaycolor FROM slc_users WHERE id = ? `;
   try {
     const [rows, fields] = await fastify.mysql.query(query, [id]);
 
@@ -174,7 +195,7 @@ const checkIfUsernameExists = async (fastify, username) => {
  * @return {Promise}            [description]
  */
 const getUserByUsernamePassword = async (fastify, username, password) => {
-  const query = `SELECT id, username, password, email, displayname FROM slc_users WHERE username = ?`;
+  const query = `SELECT id, username, password, email, displayname, displaycolor FROM slc_users WHERE username = ?`;
   try {
     const [rows, fields] = await fastify.mysql.query(query, [username]);
     if (rows.length > 0) {

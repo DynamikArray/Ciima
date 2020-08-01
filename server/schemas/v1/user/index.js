@@ -26,6 +26,8 @@ module.exports = {
         properties: {
           id: { type: "string" },
           username: { type: "string" },
+          displayname: { type: "string" },
+          displaycolor: { type: "string" },
           email: { type: "string" },
           token: { type: "string" },
         },
@@ -44,18 +46,11 @@ module.exports = {
     body: {
       type: "object",
       properties: {
-        username: {
-          type: "string",
-        },
-        displayname: {
-          type: "string",
-        },
-        email: {
-          type: "string",
-        },
-        password: {
-          type: "string",
-        },
+        username: { type: "string" },
+        displayname: { type: "string" },
+        displaycolor: { type: "string" },
+        email: { type: "string" },
+        password: { type: "string" },
       },
     },
     response: {
@@ -66,6 +61,7 @@ module.exports = {
           id: { type: "string" },
           username: { type: "string" },
           displayname: { type: "string" },
+          displaycolor: { type: "string" },
           email: { type: "string" },
           created_at: { type: "string" },
           updated_at: { type: "string" },
@@ -91,6 +87,32 @@ module.exports = {
           id: { type: "string" },
           username: { type: "string" },
           displayname: { type: "string" },
+          displaycolor: { type: "string" },
+          email: { type: "string" },
+          token: { type: "string" },
+        },
+      },
+    },
+  },
+
+  updateSchema: {
+    description: "Update your user profile information",
+    tags: ["user"],
+    summary: "Updates a user profile only if selected user.",
+    security: [
+      {
+        token: [],
+      },
+    ],
+    response: {
+      200: {
+        description: "Succesful response",
+        type: "object",
+        properties: {
+          id: { type: "string" },
+          username: { type: "string" },
+          displayname: { type: "string" },
+          displaycolor: { type: "string" },
           email: { type: "string" },
           token: { type: "string" },
         },
