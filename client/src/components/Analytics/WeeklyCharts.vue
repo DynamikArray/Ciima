@@ -98,7 +98,7 @@ export default {
       return {
         label,
         data: itemCountTotals,
-        backgroundColor: Colors.random(),
+        backgroundColor: "#51a0fa",
         barThickness: "flex",
         minBarLength: 5
         //yAxisID: yAxisID
