@@ -8,12 +8,12 @@
         <v-divider class="w-100 my-1"></v-divider>
       </div>
       <div class="d-flex justify-center align-center align-self-stretch">
-        <div v-if="thisWeeksTotals" class="text-center">
+        <div v-if="thisWeeks" class="text-center">
           <div class="d-flex flex-row align-center justify-center">
             <h4 class="mr-2">Items:</h4>
-            <h2>{{ thisWeeksTotals.totalItems || 0 }}</h2>
+            <h2>{{ thisWeeks.totalItems || 0 }}</h2>
           </div>
-          <h2>{{ thisWeeksTotals.totalPrice || 0 | currency }}</h2>
+          <h2>{{ thisWeeks.totalPrice || 0 | currency }}</h2>
         </div>
         <div v-else>
           <h4>No Results</h4>
@@ -27,12 +27,12 @@
         <v-divider class="w-100 my-1"></v-divider>
       </div>
       <div class="d-flex justify-center  align-center align-self-stretch">
-        <div v-if="lastWeeksTotals" class="text-center">
+        <div v-if="lastWeeks" class="text-center">
           <div class="d-flex flex-row align-center justify-center">
             <h4 class="mr-2">Items:</h4>
-            <h2>{{ lastWeeksTotals.totalItems || 0 }}</h2>
+            <h2>{{ lastWeeks.totalItems || 0 }}</h2>
           </div>
-          <h2>{{ lastWeeksTotals.totalPrice || 0 | currency }}</h2>
+          <h2>{{ lastWeeks.totalPrice || 0 | currency }}</h2>
         </div>
         <div v-else>
           <h4>No Results</h4>
@@ -84,47 +84,21 @@
 <script>
 export default {
   props: {
-    thisWeeks: [Boolean, Array],
-    lastWeeks: [Boolean, Array]
+    thisWeeks: [Boolean, Object],
+    lastWeeks: [Boolean, Object]
   },
   computed: {
-    thisWeeksTotals() {
-      return this.thisWeeks.reduce((acc, i) => {
-        if (acc) {
-          if (acc.totalItems && acc.totalPrice) {
-            return (acc = {
-              totalItems: acc.totalItems + i.totalItems,
-              totalPrice: acc.totalPrice + i.totalPrice
-            });
-          }
-        }
-        return (acc = { totalItems: i.totalItems, totalPrice: i.totalPrice });
-      }, {});
-    },
-    lastWeeksTotals() {
-      return this.lastWeeks.reduce((acc, i) => {
-        if (acc) {
-          if (acc.totalItems && acc.totalPrice) {
-            return (acc = {
-              totalItems: acc.totalItems + i.totalItems,
-              totalPrice: acc.totalPrice + i.totalPrice
-            });
-          }
-        }
-        return (acc = { totalItems: i.totalItems, totalPrice: i.totalPrice });
-      }, {});
-    },
     weeklyDifference() {
-      const twItems = this.thisWeeksTotals.totalItems;
-      const twPrices = this.thisWeeksTotals.totalPrice;
-      const lwItems = this.lastWeeksTotals.totalItems;
-      const lwPrices = this.lastWeeksTotals.totalPrice;
+      const twItems = this.thisWeeks.totalItems;
+      const twPrices = this.thisWeeks.totalPrice;
+      const lwItems = this.lastWeeks.totalItems;
+      const lwPrices = this.lastWeeks.totalPrice;
 
       return { item: twItems - lwItems, price: twPrices - lwPrices };
     },
     weeklyItemsPercentageChange() {
-      const twItems = this.thisWeeksTotals.totalItems;
-      const lwItems = this.lastWeeksTotals.totalItems;
+      const twItems = this.thisWeeks.totalItems;
+      const lwItems = this.lastWeeks.totalItems;
       if (twItems && lwItems) {
         const diff = ((twItems - lwItems) / ((twItems + lwItems) / 2)) * 100;
         return diff.toFixed(2);
@@ -132,8 +106,8 @@ export default {
       return 0;
     },
     weeklyPricesPercentageChange() {
-      const twPrices = this.thisWeeksTotals.totalPrice;
-      const lwPrices = this.lastWeeksTotals.totalPrice;
+      const twPrices = this.thisWeeks.totalPrice;
+      const lwPrices = this.lastWeeks.totalPrice;
 
       if (twPrices && lwPrices) {
         const diff =

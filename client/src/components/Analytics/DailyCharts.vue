@@ -1,5 +1,9 @@
 <template>
   <div class="d-flex flex-column justify-center align-center w-100">
+    <div class="d-flex justify-center align-center w-100 mb-2 ">
+      <h1>Daily Totals (Last 2 Weeks)</h1>
+    </div>
+
     <div class="d-flex justify-center align-center w-100 ">
       <div class="d-flex justify-center align-center w-100">
         <TodayVsYesterday
@@ -8,28 +12,19 @@
           class="w-100"
         />
       </div>
-      <div class="d-flex justify-center align-center w-100">
-        <ThisWeekVsLastWeek
-          :thisWeeks="thisWeeks"
-          :lastWeeks="lastWeeks"
-          class="w-100"
-        />
-      </div>
-    </div>
-    <div class="w-100">
-      <v-divider class="w-100 my-4"></v-divider>
     </div>
     <div class="d-flex justify-center align-center w-100">
       <WeekToWeekChart
-        :itemsData="createItemsData"
-        :pricesData="createPricesData"
+        :itemsData="createDailyItemsData"
+        :pricesData="createDailyPricesData"
       />
     </div>
   </div>
 </template>
 
 <script>
-import { isToday, isYesterday, isThisWeek, addDays } from "date-fns";
+import { format, isToday, isYesterday, isThisWeek, addDays } from "date-fns";
+import WeeklyChart from "./Charts/WeeklyChart";
 import WeekToWeekChart from "./Charts/WeekToWeekChartContainer";
 import TodayVsYesterday from "./Cards/TodayVsYesterday";
 import ThisWeekVsLastWeek from "./Cards/ThisWeekVsLastWeek";
@@ -38,6 +33,7 @@ import { Colors } from "./Charts/colors";
 
 export default {
   components: {
+    WeeklyChart,
     TodayVsYesterday,
     ThisWeekVsLastWeek,
     WeekToWeekChart
@@ -52,7 +48,8 @@ export default {
       });
       return [...new Set(datesList)];
     },
-    createItemsData() {
+
+    createDailyItemsData() {
       if (!this.dailyTotals.length > 0) return false;
       return {
         labels: this.uniqueDatesList,
@@ -65,7 +62,7 @@ export default {
         ]
       };
     },
-    createPricesData() {
+    createDailyPricesData() {
       if (!this.dailyTotals.length > 0) return false;
 
       return {
@@ -79,6 +76,7 @@ export default {
         ]
       };
     },
+
     todays() {
       return (
         this.dailyTotals.filter(day => isToday(day.createdDate)).shift() ||

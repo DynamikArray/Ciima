@@ -17,8 +17,9 @@
           color="primary"
           id="analyticsTabs"
         >
-          <v-tab> <v-icon left>fa fa-chart-line</v-icon>Summary</v-tab>
-          <v-tab> <v-icon left>fa fa-chart-bar</v-icon>Detailed</v-tab>
+          <v-tab> <v-icon left>fa fa-calendar-week</v-icon>Weekly</v-tab>
+          <v-tab> <v-icon left>fa fa-calendar-day</v-icon>Daily</v-tab>
+          <v-tab> <v-icon left>fa fa-calendar-alt</v-icon>Detailed</v-tab>
         </v-tabs>
       </div>
     </div>
@@ -30,11 +31,15 @@
       class="w-100 d-flex flex-column align-self-stretch"
       style="background-color:transparent"
     >
-      <v-tab-item key="overview" class="mx-2 pb-3">
-        <WeekToWeek />
+      <v-tab-item key="weekly" class="mx-2 pb-3">
+        <WeeklyCharts />
       </v-tab-item>
 
-      <v-tab-item key="breakdown" class="pt-2">
+      <v-tab-item key="daily" class="pt-2">
+        <DailyCharts />
+      </v-tab-item>
+
+      <v-tab-item key="detailed" class="pt-2">
         <div class="d-flex flex-wrap justify-space-between align-start">
           <div class="d-flex align-end justify-center ">
             <DatasetTypeButton :isActive.sync="showNewItems" />
@@ -109,7 +114,8 @@ import AnalyticsFilters from "./AnalyticsFilters";
 import DatasetTypeButton from "./Buttons/DatasetTypeButton";
 import AnalyticsContent from "./AnalyticsContent";
 import AnalyticsGrandTotal from "./AnalyticsGrandTotal";
-import WeekToWeek from "./WeekToWeek";
+import WeeklyCharts from "./WeeklyCharts";
+import DailyCharts from "./DailyCharts";
 
 export default {
   components: {
@@ -117,7 +123,8 @@ export default {
     DatasetTypeButton,
     AnalyticsGrandTotal,
     AnalyticsContent,
-    WeekToWeek
+    DailyCharts,
+    WeeklyCharts
   },
   data: () => ({
     userId: "ALL",
