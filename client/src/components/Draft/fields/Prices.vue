@@ -1,6 +1,6 @@
 <template>
   <div v-if="firstIssue">
-    <div v-if="prices.length > 0" class="ml-5 mt-1">
+    <div v-if="prices && prices.length > 0" class="ml-5 mt-1">
       <v-tooltip left :max-width="420" color="info">
         <template v-slot:activator="{ on }">
           <v-icon large v-on="on" class="textShadow" color="green">
