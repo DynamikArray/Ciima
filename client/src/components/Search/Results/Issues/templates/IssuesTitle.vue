@@ -1,6 +1,6 @@
 <template>
-  <div class="d-flex flew-row justify-start align-center">
-    <div class="d-flex flex-row flex-wrap justify-start align-center w-100">
+  <div class="d-flex flew-row justify-space-between align-center">
+    <div class="d-flex flex-row flex-wrap justify-start align-center">
       <div class="d-flex flex-column flex-wrap ">
         <div class="d-flex">
           <h3 class="title">{{ item.title }}</h3>
@@ -66,8 +66,8 @@
         </div>
       </div>
     </div>
-    <div class="d-flex ml-auto ">
-      <h3 class="display-2" style="font-size: 2.25em !important">
+    <div class="d-flex">
+      <h3 class="display-2" style="font-size: 2.25em !important;">
         {{ item.fullIssue }}
       </h3>
     </div>
