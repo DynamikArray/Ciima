@@ -12,6 +12,9 @@ const {
 
 const { linnworks } = require("../../util/linnworks/linnworks.js");
 const draftHelper = require("../../util/ciima/draftHelper.js");
+const {
+  createConfiguratorValue,
+} = require("../../util/linnworks/helpers/createConfiguratorValue.js");
 
 const cleanImagePath = require("../../util/linnworks/helpers/cleanImagePath.js");
 
@@ -71,16 +74,19 @@ const submitDraftHandler = async (message, callback) => {
           ImageUrl: draft.main_image,
           isMain: true,
         });
-
         if (imageResult) await updateMainImage(draft.id, imageResult.ImageUrl);
         //  Main Image Didnt Save
         if (imageError) hasErrors.push(imageError);
 
-        //Add extended properties
+        //Choose EBAY_CONFIGURATOR_VALUE && Add extended properties
+        const EBAY_CONFIGURATOR = createConfiguratorValue(draft.draftType);
         const { extPropsResult, extPropsError } = await addExtendedProperties(
           StockItemId,
           ItemNumber,
-          draft
+          {
+            ...draft,
+            EBAY_CONFIGURATOR,
+          }
         );
         // extended Properties didnt Save
         if (!extPropsResult && extPropsError)

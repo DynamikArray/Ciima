@@ -6,74 +6,80 @@ const extendedProperties = [
   {
     name: "Extra Description",
     field: "extraDescription",
-    default: ""
+    default: "",
   },
   {
     name: "UPC",
     field: "upc",
-    default: ""
+    default: "",
   },
   {
     name: "Series",
     field: "series",
-    default: ""
+    default: "",
   },
   {
     name: "Publisher",
     field: "publisher",
-    default: ""
+    default: "",
   },
   {
     name: "Main Character",
     field: "mainCharacter",
-    default: ""
+    default: "",
   },
   {
     name: "Issue Number",
     field: "issueNumbers",
-    default: ""
+    default: "",
   },
   {
     name: "Year Published",
     field: "publishedYear",
-    default: ""
+    default: "",
   },
   {
     name: "Cover Date",
     field: "publishedDate",
-    default: ""
+    default: "",
   },
   {
     name: "Grade",
     field: "grade",
-    default: ""
+    default: "",
   },
   {
     name: "Ebay Site Category 1",
     field: "ebaySiteCategoryId",
-    default: ""
+    default: "",
   },
   {
     name: "Ebay Store Category 1",
     field: "ebayStoreCategoryIdOne",
-    default: ""
+    default: "",
   },
   {
     name: "Ebay Store Category 2",
     field: "ebayStoreCategoryIdTwo",
-    default: ""
+    default: "",
+  },
+  /* -- EBAY CONFIGURATOR -- */
+  {
+    name: "EBAY_CONFIGURATOR",
+    field: "EBAY_CONFIGURATOR",
+    default: "",
   },
   /* -- These lastPrice and lastPriced are used by our repricer */
   {
     name: "LastPrice",
     field: "lastPrice",
-    default: ""
+    default: "",
   },
   {
     name: "LastPriced",
     field: "lastPriced",
-    default: ""
-  }
+    default: "",
+  },
 ];
 
 module.exports = extendedProperties;
