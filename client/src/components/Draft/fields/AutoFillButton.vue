@@ -38,6 +38,7 @@ import { format } from "date-fns";
 import { mapState } from "vuex";
 
 import { ebayStoreCategories } from "@/util/ebay/ebayStoreCategories.js";
+import { mainCharactersList } from "@/util/mainCharactersList.js";
 
 export default {
   data: () => ({
@@ -90,6 +91,16 @@ export default {
     getUpc() {
       const { upc } = this.issues.find(issue => issue.upc !== false);
       return upc;
+    },
+    //
+    //
+    checkMainCharacterAgainstTitle(title) {
+      const mainChars = mainCharactersList.filter((char, i) => {
+        if (title.includes(char)) return true;
+        return false;
+      });
+      if (mainChars.length > 0) return mainChars.shift();
+      return "";
     },
     //
     //
@@ -214,6 +225,10 @@ export default {
       }
 
       this.draft.inventoryTitle = this.createTitleWithOptions(false, false);
+
+      this.draft.mainCharacter = this.checkMainCharacterAgainstTitle(
+        this.draft.inventoryTitle
+      );
 
       //Tell user we did a thing
       this.$toastr.s(
