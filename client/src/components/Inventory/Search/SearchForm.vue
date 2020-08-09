@@ -1,6 +1,7 @@
 <template>
   <v-form v-model="validLinnworksSearch" @submit.prevent="searchLinnworks">
     <v-text-field
+      autocomplete="off"
       ref="searchString"
       autofocus
       hide-details

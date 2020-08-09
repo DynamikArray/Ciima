@@ -19,9 +19,30 @@
       :loading="loading"
       :headers="headers"
       :items-per-page="15"
-      :items="inventory"
+      :items="filteredItems"
       class="elevation-1"
     >
+      <template v-slot:top="{ pagination, options, updateOptions }">
+        <div class="d-flex justify-start align-center">
+          <h4 class="pt-2 ml-4 textShadow IssueTopLabel" style="minWidth:80px">
+            Filter Issue #
+          </h4>
+          <div class="d-flex flex-shrink mx-1 ">
+            <v-text-field
+              autocomplete="off"
+              style="minWidth: 160px; maxWidth: 160px"
+              class="pt-0"
+              :value="filterString"
+              @input="updateFilter"
+              prepend-icon="fa fa-filter"
+              label=""
+              single-line
+              hide-details
+            ></v-text-field>
+          </div>
+        </div>
+      </template>
+
       <template v-slot:item.imgThumb="{ item }">
         <ImagesHoverOver
           :imageFull="item.imageFull"
@@ -121,16 +142,28 @@ export default {
     return {
       headers,
       returnValue: false,
-      searchString: ""
+      searchString: "",
+      filterString: ""
     };
   },
   computed: {
     ...mapState({
       loading: state => state.linnworks.loading,
       inventory: state => state.linnworks.items
-    })
+    }),
+    filteredItems() {
+      return this.inventory.filter(row => {
+        if (row.extendedProperties.issueNumbers)
+          return row.extendedProperties.issueNumbers.includes(
+            this.filterString
+          );
+      });
+    }
   },
   methods: {
+    updateFilter(val) {
+      this.filterString = val;
+    },
     getFieldEnum(field) {
       switch (field) {
         case "BinRack":
