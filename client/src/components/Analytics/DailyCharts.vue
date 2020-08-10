@@ -23,7 +23,14 @@
 </template>
 
 <script>
-import { format, isToday, isYesterday, isThisWeek, addDays } from "date-fns";
+import {
+  format,
+  isToday,
+  isYesterday,
+  isThisWeek,
+  addDays,
+  parse
+} from "date-fns";
 import WeeklyChart from "./Charts/WeeklyChart";
 import WeekToWeekChart from "./Charts/WeekToWeekChartContainer";
 import TodayVsYesterday from "./Cards/TodayVsYesterday";
@@ -44,7 +51,8 @@ export default {
     },
     uniqueDatesList() {
       const datesList = this.dailyTotals.map(item => {
-        return this.$options.filters.monthDayYear(item.createdDate);
+        const newdate = parse(item.createdDate, "YYYY MMM ddd do");
+        return format(newdate, "ddd MMM do"); //     this.$options.filters.monthDayYear(item.createdDate);
       });
       return [...new Set(datesList)];
     },
