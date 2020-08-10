@@ -51,8 +51,8 @@ export default {
     },
     uniqueDatesList() {
       const datesList = this.dailyTotals.map(item => {
-        const newdate = parse(item.createdDate, "YYYY MMM ddd do");
-        return format(newdate, "ddd MMM do"); //     this.$options.filters.monthDayYear(item.createdDate);
+        const newdate = parse(item.createdDate);
+        return format(newdate, "ddd MMM Do"); //     this.$options.filters.monthDayYear(item.createdDate);
       });
       return [...new Set(datesList)];
     },
