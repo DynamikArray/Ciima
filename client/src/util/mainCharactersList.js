@@ -9,6 +9,7 @@ const mainCharactersList = [
   "Iron Man",
   "Moon Knight",
   "Phantom Stranger",
+  "Punisher",
   "Robin",
   "Superman",
   "Silver Surfer",
