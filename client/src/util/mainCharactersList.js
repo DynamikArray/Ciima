@@ -11,6 +11,7 @@ const mainCharactersList = [
   "G.I. Joe",
   "Green Lantern",
   "Hulk",
+  "Lobo",
   "Iron Man",
   "Moon Knight",
   "Phantom Stranger",
