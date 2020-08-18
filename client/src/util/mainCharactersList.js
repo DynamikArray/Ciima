@@ -3,7 +3,8 @@ const mainCharactersList = [
   "Batman",
   "Catwoman",
   "Captain America",
-  "DareDevil",
+  "Daredevil",
+  "Darkness",
   "Deadpool",
   "Deathlok",
   "Fantastic Four",
@@ -20,11 +21,13 @@ const mainCharactersList = [
   "Shi",
   "Silver Surfer",
   "Spider-Man",
+  "Spawn",
   "Superman",
   "Thor",
   "Wolverine",
   "Wonder Woman",
-  "Xena"
+  "Xena",
+  "X-Men"
 ];
 
 module.exports = { mainCharactersList };
