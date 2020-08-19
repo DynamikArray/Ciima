@@ -83,10 +83,10 @@ export default {
       };
     },
     thisWeeks() {
-      return this.weeklyTotals[0];
+      return this.weeklyTotals.pop();
     },
     lastWeeks() {
-      return this.weeklyTotals[1];
+      return this.weeklyTotals[this.weeklyTotals.length - 1];
     }
   },
   methods: {
