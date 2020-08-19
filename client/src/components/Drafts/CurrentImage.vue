@@ -24,7 +24,7 @@
           <div v-if="!draft.savingCover">
             <v-img
               id="coverPhoto"
-              :src="optimizedImageUrl"
+              :src="draft.coverPhoto"
               width="140"
               class="d-flex shrink"
             ></v-img>
@@ -77,18 +77,7 @@ export default {
     ...mapState({
       draft: state => state.currentDraft,
       draftIssues: state => state.currentDraft.issues
-    }),
-    optimizedImageUrl() {
-      const basePath = "https://res.cloudinary.com/ciima/image/upload";
-      const productPath = "productPhotos";
-
-      const fullUrl = this.draft.coverPhoto;
-      const fileNameArray = fullUrl.split(`/${productPath}/`);
-      const fileName = fileNameArray[1];
-
-      const src = `${basePath}/f_auto,fl_lossy,q_auto/${productPath}/${fileName}`;
-      return src;
-    }
+    })
   },
   methods: {
     //

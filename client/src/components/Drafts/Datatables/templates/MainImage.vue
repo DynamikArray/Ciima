@@ -34,11 +34,15 @@ export default {
         return this.item.main_image;
       }
 
+      return this.item.main_image;
+
+      /*
       const urlPieces = this.item.main_image.split("upload/");
       const transformation = "upload/w_500,h_600,c_fit,f_auto,fl_lossy,q_auto/";
       urlPieces.splice(1, 0, transformation).join("");
       const finalUrl = urlPieces.join("");
       return finalUrl;
+      */
     },
     getMainImageThumb() {
       if (this.item.main_image.indexOf("upload/") === -1) {
@@ -49,11 +53,15 @@ export default {
         return thumbNail;
       }
 
+      return this.item.main_image;
+
+      /*
       const urlPieces = this.item.main_image.split("upload/");
       const transformation = "upload/w_160,h_100,c_fit,f_auto,fl_lossy,q_auto/";
       urlPieces.splice(1, 0, transformation).join("");
       const finalUrl = urlPieces.join("");
       return finalUrl;
+      */
     }
   }
 };

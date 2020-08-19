@@ -390,7 +390,19 @@ export default {
       }
     },
     //
-    //
+    optimizedImageUrl(imageUrl) {
+      const basePath = "https://res.cloudinary.com/ciima/image/upload";
+
+      if (imageUrl.startsWith(basePath)) {
+        const productPath = "lotPhotos";
+        const fileNameArray = imageUrl.split(`/${productPath}/`);
+        const fileName = fileNameArray[1];
+        const src = `${basePath}/f_auto,fl_lossy,q_auto/${productPath}/${fileName}`;
+        return src;
+      }
+
+      return imageUrl;
+    },
     //
     async handleImageUploading() {
       this.updateLoadingStatus(
@@ -424,7 +436,7 @@ export default {
           });
 
           if (resp.data && resp.data.secure_url) {
-            this.images[i].src = resp.data.secure_url;
+            this.images[i].src = this.optimizedImageUrl(resp.data.secure_url);
             this.images[i].saved = true;
             this.updateLoadingStatus(
               true,

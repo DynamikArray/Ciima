@@ -237,14 +237,13 @@ export default {
 
       addDisclaimer(canvas, this.gridCols, this.gridRows);
     },
-    //
+
     //
     handleOnClickSaveCanvas() {
       this.handleImageUploading();
     },
     //
-    //
-    //
+
     //
     configureCanvas() {
       //we first need to know our gird layout and there locations
@@ -331,7 +330,17 @@ export default {
       };
     },
     //
-    //
+
+    optimizedImageUrl(url) {
+      const basePath = "https://res.cloudinary.com/ciima/image/upload";
+      const productPath = "productPhotos";
+
+      const fileNameArray = url.split(`/${productPath}/`);
+      const fileName = fileNameArray[1];
+
+      const src = `${basePath}/f_auto,fl_lossy,q_auto/${productPath}/${fileName}`;
+      return src;
+    },
     //
     //
     handleImageLoading(issue, x, y, canvas, z) {
@@ -421,6 +430,13 @@ export default {
     },
     //
     //
+    //
+    //
+
+    //
+    //
+    //
+    //
     handleImageUploading() {
       const _this = this;
 
@@ -449,11 +465,13 @@ export default {
             // File uploaded successfully
             var response = JSON.parse(xhr.responseText);
             var url = response.secure_url;
+
             //commit to state\
             _this.$store.commit(
               `currentDraft/${CURRENT_DRAFT_COVER_PHOTO_UPDATE}`,
-              url
+              _this.optimizedImageUrl(url)
             );
+
             _this.$store.commit(
               `currentDraft/${CURRENT_DRAFT_COVER_PHOTO_SAVING}`,
               false

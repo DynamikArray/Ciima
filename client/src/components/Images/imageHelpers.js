@@ -29,7 +29,7 @@ const addDisclaimer = (canvas, gridCols, gridRows) => {
   ctx.fillText(
     "Stock covers shown, not actual product photos.",
     canvas.width / 2,
-    canvas.height - gridCols * (gridCols < 4 ? 30 : 20)
+    canvas.height - gridCols * (gridCols < 4 ? 25 : 20)
   );
 
   ctx.font = `normal bold ${fontHeight / 1.3}px Verdana`;
