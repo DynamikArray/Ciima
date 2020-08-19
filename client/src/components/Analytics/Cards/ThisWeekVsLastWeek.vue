@@ -49,33 +49,43 @@
         class="d-flex flex-row align-center justify-space-between  px-5 w-100"
       >
         <h4 class="d-flex mr-2">Items:</h4>
-        <h2 class="d-flex align-center justify-start">
+        <h2
+          class="d-flex align-center justify-start"
+          :class="`${weeklyItemsColorsAndIcon.color}--text`"
+        >
           {{ weeklyDifference.item }}
         </h2>
         <h2
           class="d-flex align-end justify-end ml-10"
-          :class="
-            weeklyItemsPercentageChange > 0 ? 'success--text' : 'red--text'
-          "
+          :class="`${weeklyItemsColorsAndIcon.color}--text`"
         >
-          {{ weeklyItemsPercentageChange }}%
+          {{ weeklyItemsPercentageChange }}
+          <div class="body-1 mx-1 pb-1">%</div>
         </h2>
+        <v-icon :color="weeklyItemsColorsAndIcon.color"
+          >fa {{ weeklyItemsColorsAndIcon.icon }}</v-icon
+        >
       </div>
       <div
         class="d-flex flex-row align-center justify-space-between px-5 w-100 "
       >
         <h4 class="mr-2">Value:</h4>
-        <h2 class="d-flex align-end justify-end">
+        <h2
+          class="d-flex align-end justify-end"
+          :class="`${weeklyPricesColorsAndIcon.color}--text`"
+        >
           {{ weeklyDifference.price | currency }}
         </h2>
         <h2
           class="d-flex align-end justify-end ml-10"
-          :class="
-            weeklyPricesPercentageChange > 0 ? 'success--text' : 'red--text'
-          "
+          :class="`${weeklyPricesColorsAndIcon.color}--text`"
         >
-          {{ weeklyPricesPercentageChange }}%
+          {{ weeklyPricesPercentageChange }}
+          <div class="body-1 mx-1 pb-1">%</div>
         </h2>
+        <v-icon :color="weeklyPricesColorsAndIcon.color"
+          >fa {{ weeklyPricesColorsAndIcon.icon }}</v-icon
+        >
       </div>
     </div>
   </div>
@@ -115,6 +125,30 @@ export default {
         return diff.toFixed(2);
       }
       return 0;
+    },
+    weeklyItemsColorsAndIcon() {
+      if (this.weeklyItemsPercentageChange > 0) {
+        return {
+          color: "green",
+          icon: "fa-arrow-up"
+        };
+      }
+      return {
+        color: "red",
+        icon: "fa-arrow-down"
+      };
+    },
+    weeklyPricesColorsAndIcon() {
+      if (this.weeklyPricesPercentageChange > 0) {
+        return {
+          color: "green",
+          icon: "fa-arrow-up"
+        };
+      }
+      return {
+        color: "red",
+        icon: "fa-arrow-down"
+      };
     }
   }
 };

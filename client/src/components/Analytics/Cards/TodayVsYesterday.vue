@@ -45,37 +45,46 @@
         <h2 class="">Change</h2>
         <v-divider class="w-100 my-1"></v-divider>
       </div>
-      <div
-        class="d-flex flex-row align-center justify-space-between  px-5 w-100"
-      >
+      <div class="d-flex flex-row align-center justify-start  px-5 w-100">
         <h4 class="d-flex mr-2">Items:</h4>
-        <h2 class="d-flex align-center justify-start">
+        <h2
+          class="d-flex align-center justify-start mr-auto"
+          :class="`${dailyItemsColorAndIcon.color}--text`"
+        >
           {{ dailyDifference.item }}
         </h2>
+
         <h2
           class="d-flex align-end justify-end ml-10"
-          :class="
-            dailyItemsPercentageChange > 0 ? 'success--text' : 'red--text'
-          "
+          :class="`${dailyItemsColorAndIcon.color}--text`"
         >
-          {{ dailyItemsPercentageChange }}%
+          {{ dailyItemsPercentageChange }}
+          <div class="body-1 mx-1 pb-1">%</div>
         </h2>
+        <v-icon :color="dailyItemsColorAndIcon.color"
+          >fa {{ dailyItemsColorAndIcon.icon }}</v-icon
+        >
       </div>
       <div
         class="d-flex flex-row align-center justify-space-between px-5 w-100 "
       >
         <h4 class="mr-2">Value:</h4>
-        <h2 class="d-flex align-end justify-end">
+        <h2
+          class="d-flex align-end justify-end mr-auto pr-10"
+          :class="`${dailyPricesColorAndIcon.color}--text`"
+        >
           {{ dailyDifference.price | currency }}
         </h2>
         <h2
-          class="d-flex align-end justify-end ml-10"
-          :class="
-            dailyPricesPercentageChange > 0 ? 'success-text' : 'red--text'
-          "
+          class="d-flex align-end justify-end"
+          :class="`${dailyPricesColorAndIcon.color}--text`"
         >
-          {{ dailyPricesPercentageChange }}%
+          {{ dailyPricesPercentageChange }}
+          <div class="body-1 mx-1 pb-1">%</div>
         </h2>
+        <v-icon :color="dailyPricesColorAndIcon.color"
+          >fa {{ dailyPricesColorAndIcon.icon }}</v-icon
+        >
       </div>
     </div>
   </div>
@@ -115,6 +124,30 @@ export default {
         return diff.toFixed(2);
       }
       return 0;
+    },
+    dailyItemsColorAndIcon() {
+      if (this.dailyItemsPercentageChange > 0) {
+        return {
+          color: "green",
+          icon: "fa-arrow-up"
+        };
+      }
+      return {
+        color: "red",
+        icon: "fa-arrow-down"
+      };
+    },
+    dailyPricesColorAndIcon() {
+      if (this.dailyPricesPercentageChange > 0) {
+        return {
+          color: "green",
+          icon: "fa-arrow-up"
+        };
+      }
+      return {
+        color: "red",
+        icon: "fa-arrow-down"
+      };
     }
   }
 };
