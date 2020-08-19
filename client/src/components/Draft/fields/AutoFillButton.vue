@@ -128,6 +128,47 @@ export default {
     },
     //
     //
+    addOrdinalSuffixOf(i) {
+      var j = i % 10,
+        k = i % 100;
+      if (j == 1 && k != 11) {
+        return i + "st";
+      }
+      if (j == 2 && k != 12) {
+        return i + "nd";
+      }
+      if (j == 3 && k != 13) {
+        return i + "rd";
+      }
+      return i + "th";
+    },
+    //
+    //
+    //
+    buildExtraDescriptionIssueNumbers() {
+      //title, issuse number, variation,  printing     comictype anl = Annnual
+      const fullIssueNumbers = this.issues.map(issue => {
+        const fullTitle = `${issue.title} #${issue.issueNumber}`;
+
+        const comicTypeOrVariation = `${
+          issue.comicType ? issue.comicType : ""
+        } ${issue.variation ? issue.variation : ""}`;
+        const printing = this.addOrdinalSuffixOf(issue.printing);
+
+        console.log({
+          fullTitle: `${fullTitle} ${comicTypeOrVariation || printing}`
+        });
+
+        return {
+          fullTitle: `${fullTitle} ${comicTypeOrVariation || printing}`
+        };
+      });
+
+      return "";
+    },
+    //
+    //
+    //
     createTitleWithOptions(pub = false, year = false) {
       const issueNumbers = this.getIssueNumbers();
 
@@ -229,6 +270,10 @@ export default {
       this.draft.mainCharacter = this.checkMainCharacterAgainstTitle(
         this.draft.inventoryTitle
       );
+
+      //extra descrption issues numbers:
+      //
+      //this.draft.extraDescription = this.buildExtraDescriptionIssueNumbers();
 
       //Tell user we did a thing
       this.$toastr.s(
