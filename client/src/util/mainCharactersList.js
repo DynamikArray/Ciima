@@ -15,6 +15,7 @@ const mainCharactersList = [
   "Lobo",
   "Iron Man",
   "Moon Knight",
+  "Phantom",
   "Phantom Stranger",
   "Punisher",
   "Robin",
