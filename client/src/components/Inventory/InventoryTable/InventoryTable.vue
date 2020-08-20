@@ -45,6 +45,7 @@
 
       <template v-slot:item.imgThumb="{ item }">
         <ImagesHoverOver
+          :key="item.imageFull"
           :imageFull="item.imageFull"
           :imageThumb="item.imageThumb"
         />

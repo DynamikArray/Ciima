@@ -8,6 +8,7 @@
             class="ma-1 pa-0 mr-3"
           >
             <ImagesHoverOver
+              :key="item.image"
               :imageFull="item.image"
               :imageThumb="item.thumbnail"
             />

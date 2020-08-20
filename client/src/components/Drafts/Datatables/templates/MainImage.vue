@@ -6,6 +6,7 @@
       style="min-width:140px;"
     >
       <ImagesHoverOver
+        :key="getMainImageThumb"
         :imageFull="getMainImageFull"
         :imageThumb="getMainImageThumb"
         :maxHeight="100"
