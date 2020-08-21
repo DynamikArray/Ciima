@@ -4,6 +4,17 @@ import store from "./store/store.js";
 import router from "./router/router.js";
 import vuetify from "./plugins/vuetify.js";
 
+import * as Sentry from "@sentry/browser";
+import { Vue as VueIntegration } from "@sentry/integrations";
+
+Sentry.init({
+  dsn:
+    "https://c239a0d730584cbea513baf394a8d470@o437408.ingest.sentry.io/5399968",
+  integrations: [
+    new VueIntegration({ Vue, attachProps: true, logErrors: true })
+  ]
+});
+
 import { axiosInstance } from "./util/axios/axiosInstance";
 Vue.prototype.$http = axiosInstance;
 
