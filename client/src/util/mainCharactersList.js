@@ -11,6 +11,7 @@ const mainCharactersList = [
   "Flash",
   "G.I. Joe",
   "Green Lantern",
+  "Hellboy",
   "Hulk",
   "Lobo",
   "Iron Man",
