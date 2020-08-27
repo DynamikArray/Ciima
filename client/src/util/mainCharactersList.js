@@ -10,6 +10,7 @@ const mainCharactersList = [
   "Fantastic Four",
   "Flash",
   "G.I. Joe",
+  "Green Arrow",
   "Green Lantern",
   "Hellboy",
   "Hulk",
