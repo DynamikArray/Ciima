@@ -38,7 +38,8 @@ import { format } from "date-fns";
 import { mapState } from "vuex";
 
 import { ebayStoreCategories } from "@/util/ebay/ebayStoreCategories.js";
-import { mainCharactersList } from "@/util/mainCharactersList.js";
+import { mainCharactersList } from "@/util/data/mainCharactersList.js";
+import { buildExtraDescriptionIssueNumbers } from "./helpers/buildExtraDescriptionIssueNumbers.js";
 
 export default {
   data: () => ({
@@ -126,46 +127,7 @@ export default {
           }
       }
     },
-    //
-    //
-    addOrdinalSuffixOf(i) {
-      var j = i % 10,
-        k = i % 100;
-      if (j == 1 && k != 11) {
-        return i + "st";
-      }
-      if (j == 2 && k != 12) {
-        return i + "nd";
-      }
-      if (j == 3 && k != 13) {
-        return i + "rd";
-      }
-      return i + "th";
-    },
-    //
-    //
-    //
-    buildExtraDescriptionIssueNumbers() {
-      //title, issuse number, variation,  printing     comictype anl = Annnual
-      const fullIssueNumbers = this.issues.map(issue => {
-        const fullTitle = `${issue.title} #${issue.issueNumber}`;
 
-        const comicTypeOrVariation = `${
-          issue.comicType ? issue.comicType : ""
-        } ${issue.variation ? issue.variation : ""}`;
-        const printing = this.addOrdinalSuffixOf(issue.printing);
-
-        console.log({
-          fullTitle: `${fullTitle} ${comicTypeOrVariation || printing}`
-        });
-
-        return {
-          fullTitle: `${fullTitle} ${comicTypeOrVariation || printing}`
-        };
-      });
-
-      return "";
-    },
     //
     //
     //
@@ -272,8 +234,9 @@ export default {
       );
 
       //extra descrption issues numbers:
-      //
-      //this.draft.extraDescription = this.buildExtraDescriptionIssueNumbers();
+      this.draft.extraDescription = buildExtraDescriptionIssueNumbers(
+        this.issues
+      );
 
       //Tell user we did a thing
       this.$toastr.s(
