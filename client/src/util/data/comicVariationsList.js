@@ -5,7 +5,7 @@ const comicVariationsList = [
   },
   {
     Variation: "A",
-    DisplayName: "Variation A"
+    DisplayName: "Variant A"
   },
   {
     Variation: "ACE",
@@ -21,7 +21,7 @@ const comicVariationsList = [
   },
   {
     Variation: "B",
-    DisplayName: "Variation B"
+    DisplayName: "Variant B"
   },
   {
     Variation: "BR",
@@ -29,7 +29,7 @@ const comicVariationsList = [
   },
   {
     Variation: "C",
-    DisplayName: "Variation C"
+    DisplayName: "Variant C"
   },
   {
     Variation: "CF",
@@ -45,7 +45,7 @@ const comicVariationsList = [
   },
   {
     Variation: "D",
-    DisplayName: "Variation D"
+    DisplayName: "Variant D"
   },
   {
     Variation: "DF",
@@ -65,11 +65,11 @@ const comicVariationsList = [
   },
   {
     Variation: "E",
-    DisplayName: "Variation E"
+    DisplayName: "Variant E"
   },
   {
     Variation: "F",
-    DisplayName: "Variation F"
+    DisplayName: "Variant F"
   },
   {
     Variation: "FAN",
@@ -77,7 +77,7 @@ const comicVariationsList = [
   },
   {
     Variation: "G",
-    DisplayName: "Variation G"
+    DisplayName: "Variant G"
   },
   {
     Variation: "GF",
@@ -97,7 +97,7 @@ const comicVariationsList = [
   },
   {
     Variation: "H",
-    DisplayName: "Variation H"
+    DisplayName: "Variant H"
   },
   {
     Variation: "HC",
@@ -109,19 +109,19 @@ const comicVariationsList = [
   },
   {
     Variation: "I",
-    DisplayName: "Variation I"
+    DisplayName: "Variant I"
   },
   {
     Variation: "J",
-    DisplayName: "Variation J"
+    DisplayName: "Variant J"
   },
   {
     Variation: "K",
-    DisplayName: "Variation K"
+    DisplayName: "Variant K"
   },
   {
     Variation: "L",
-    DisplayName: "Variation L"
+    DisplayName: "Variant L"
   },
   {
     Variation: "LE",
@@ -133,11 +133,11 @@ const comicVariationsList = [
   },
   {
     Variation: "M",
-    DisplayName: "Variation M"
+    DisplayName: "Variant M"
   },
   {
     Variation: "N",
-    DisplayName: "Variation N"
+    DisplayName: "Variant N"
   },
   {
     Variation: "Nude",
@@ -145,11 +145,11 @@ const comicVariationsList = [
   },
   {
     Variation: "O",
-    DisplayName: "Variation O"
+    DisplayName: "Variant O"
   },
   {
     Variation: "P",
-    DisplayName: "Variation P"
+    DisplayName: "Variant P"
   },
   {
     Variation: "Pl",
@@ -165,15 +165,15 @@ const comicVariationsList = [
   },
   {
     Variation: "Q",
-    DisplayName: "Variation Q"
+    DisplayName: "Variant Q"
   },
   {
     Variation: "R",
-    DisplayName: "Variation R"
+    DisplayName: "Variant R"
   },
   {
     Variation: "S",
-    DisplayName: "Variation S"
+    DisplayName: "Variant S"
   },
   {
     Variation: "SC",
@@ -189,19 +189,19 @@ const comicVariationsList = [
   },
   {
     Variation: "T",
-    DisplayName: "Variation T"
+    DisplayName: "Variant T"
   },
   {
     Variation: "U",
-    DisplayName: "Variation U"
+    DisplayName: "Variant U"
   },
   {
     Variation: "V",
-    DisplayName: "Variation V"
+    DisplayName: "Variant V"
   },
   {
     Variation: "W",
-    DisplayName: "Variation W"
+    DisplayName: "Variant W"
   },
   {
     Variation: "WF",
@@ -209,15 +209,15 @@ const comicVariationsList = [
   },
   {
     Variation: "X",
-    DisplayName: "Variation X"
+    DisplayName: "Variant X"
   },
   {
     Variation: "Y",
-    DisplayName: "Variation Y"
+    DisplayName: "Variant Y"
   },
   {
     Variation: "Z",
-    DisplayName: "Variation Z"
+    DisplayName: "Variant Z"
   }
 ];
 

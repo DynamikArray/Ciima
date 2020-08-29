@@ -16,13 +16,15 @@ const addOrdinalSuffixOf = i => {
   return i + "th";
 };
 
-const parseComicType = (comicType = false) => {
+const parseComicType = (comicType = false, comicVariation = false) => {
   const cType = comicTypesList.filter(listType => {
     if (listType.ComicType == comicType) return true;
     return false;
   });
 
   if (cType.length == 1) {
+    if (cType[0].ComicType === "Bk" && !comicVariation.includes("HC"))
+      return "TPB";
     return cType[0].DisplayName;
   }
   return comicType;
@@ -40,6 +42,13 @@ const parseComicVariation = (comicVariation = false) => {
   return comicVariation;
 };
 
+const createPrintingString = printing => {
+  if (printing > 1) {
+    return `${addOrdinalSuffixOf(printing)} Printing`;
+  }
+  return false;
+};
+
 //
 //title, issuse number, variation,  printing  comictype
 //
@@ -49,10 +58,12 @@ export const buildExtraDescriptionIssueNumbers = issues => {
   const fullIssueTitlesList = issues.map(issue => {
     const fullTitle = issue.title;
     const issueNumber = `#${issue.issueNumber}`;
-    const comicType = parseComicType(issue.comicType);
-    const comicVariation = parseComicVariation(issue.variation);
-    const printing = `${addOrdinalSuffixOf(issue.printing)} Printing`;
 
+    const comicVariation = parseComicVariation(issue.variation);
+
+    const comicType = parseComicType(issue.comicType, issue.variation);
+
+    const printing = createPrintingString(issue.printing);
     return [fullTitle, issueNumber, comicVariation, printing, comicType]
       .filter(Boolean)
       .join(" ");
