@@ -39,7 +39,10 @@ import { mapState } from "vuex";
 
 import { ebayStoreCategories } from "@/util/ebay/ebayStoreCategories.js";
 import { mainCharactersList } from "@/util/data/mainCharactersList.js";
-import { buildExtraDescriptionIssueNumbers } from "./helpers/buildExtraDescriptionIssueNumbers.js";
+import {
+  buildExtraDescriptionIssueNumbers,
+  buildSingelsTitleWithIssueNumbers
+} from "./helpers/buildExtraDescriptionIssueNumbers.js";
 
 export default {
   data: () => ({
@@ -62,6 +65,13 @@ export default {
   },
   methods: {
     getIssueNumbers() {
+      const issueNumbs = this.issues.map(issue => {
+        return issue.issueNumber;
+      });
+      return issueNumbs;
+    },
+
+    getFullIssueNumbers() {
       const issueNumbs = this.issues.map(issue => {
         return issue.fullIssue;
       });
@@ -127,7 +137,6 @@ export default {
           }
       }
     },
-
     //
     //
     //
@@ -136,17 +145,31 @@ export default {
 
       const publisher = this.getPublisher();
       const coverDate = this.getCoverDate();
+
       //plceholder for values later
       let titleYear = "";
       if (coverDate) titleYear = format(coverDate, "YYYY");
 
       const title = [];
-      //title
-      title.push(this.draft.titles[0].title);
-      //issue numbers
 
-      if (issueNumbers.length < 15) {
-        title.push(this.draft.issueNumbers);
+      switch (this.defaultProductType) {
+        case "sets":
+          const strIssues = this.issues
+            .map(issue => issue.issueNumber)
+            .join(" ");
+          title.push(`${this.draft.titles[0].title} ${strIssues}`);
+          break;
+        case "singles":
+          const strTitle = buildSingelsTitleWithIssueNumbers(this.issues);
+          title.push(strTitle);
+          break;
+        default:
+          //title
+          title.push(this.draft.titles[0].title);
+          //issue numbers
+          if (issueNumbers.length < 15) {
+            title.push(this.draft.issueNumbers);
+          }
       }
 
       //publisher
@@ -159,7 +182,7 @@ export default {
         title.push("Complete Set Run Lot");
       }
 
-      //if over 2 issues then add first and last
+      //if FIELD issueNumbers is over 2 issues then add first and last
       if (issueNumbers.length >= 2) {
         const firstLast = `${[...issueNumbers].shift()}-${[
           ...issueNumbers
@@ -210,7 +233,7 @@ export default {
       }
 
       //issue Number
-      this.draft.issueNumbers = this.getIssueNumbers().join(" ");
+      this.draft.issueNumbers = this.getFullIssueNumbers().join(" ");
 
       //publisher/year/date
       this.draft.publisher = this.getPublisher();
@@ -253,12 +276,12 @@ export default {
       //value sent to endpoint
       this.draft.ebaySiteCategoryId = "1604";
       //field used as displayy
-      let field = document.getElementById("searchEbaySiteCategoryId");
-      field.disabled = true;
+      //let field = document.getElementById("searchEbaySiteCategoryId");
+      //field.disabled = true;
 
-      let label = document.querySelectorAll('[for="searchEbaySiteCategoryId"]');
-      label[0].innerText =
-        "Everything Else > Adult Only > Collectibles > Comics";
+      //let label = document.querySelectorAll('[for="searchEbaySiteCategoryId"]');
+      //label[0].innerText =
+      //  "Everything Else > Adult Only > Collectibles > Comics";
 
       //secondary store category should be auto filled
       this.draft.ebayStoreCategoryIdTwo = this.ebayStoreCategories[

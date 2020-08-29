@@ -69,5 +69,23 @@ export const buildExtraDescriptionIssueNumbers = issues => {
       .join(" ");
   });
 
-  return headerText + fullIssueTitlesList.join(",   ");
+  return headerText + fullIssueTitlesList.join(",      ");
+};
+
+export const buildSingelsTitleWithIssueNumbers = issues => {
+  return issues
+    .map(issue => {
+      const fullTitle = issue.title;
+      const issueNumber = `#${issue.issueNumber}`;
+
+      const comicVariation = parseComicVariation(issue.variation);
+
+      const comicType = parseComicType(issue.comicType, issue.variation);
+
+      const printing = createPrintingString(issue.printing);
+      return [fullTitle, issueNumber, comicVariation, printing, comicType]
+        .filter(Boolean)
+        .join(" ");
+    })
+    .join(" ");
 };
