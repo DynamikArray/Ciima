@@ -4,7 +4,7 @@
     <div class="d-flex flex-wrap justify-space-between align-center">
       <div class="d-flex flex-shrink">
         <h1 class="ma-0">
-          <v-icon large class="mr-1">fa-chart-bar</v-icon>Anayltics & Reporting
+          <v-icon large class="mr-1">fa-chart-bar</v-icon>Anayltics
         </h1>
       </div>
       <div class="d-flex flex-grow flex-wrap m-3">
