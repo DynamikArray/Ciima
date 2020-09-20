@@ -22,7 +22,7 @@ module.exports = (fastify) => ({
     });
 
     if (!result.IsError)
-      return { results: result.Results, total: result.TotalResults };
+      return { result: result.Results, total: result.TotalResults };
     if (error) return { error: error };
   },
 });
