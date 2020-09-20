@@ -29,6 +29,7 @@ import analytics from "@/store/analytics/analytics";
 
 import pricematch from "@/store/pricematch/pricematch";
 import pricelist from "@/store/pricelist/pricelist";
+import reports from "@/store/reports";
 
 export default new Vuex.Store({
   modules: {
@@ -50,7 +51,8 @@ export default new Vuex.Store({
     auditLog,
     analytics,
     pricematch,
-    pricelist
+    pricelist,
+    reports
   },
   state: {},
   mutations: {}

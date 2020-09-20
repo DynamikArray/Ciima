@@ -16,8 +16,10 @@
           id="analyticsTabs"
         >
           <v-tab> <v-icon left>fab fa-stack-overflow</v-icon>Lots</v-tab>
+          <!--
           <v-tab> <v-icon left>fa fa-images</v-icon>Sets</v-tab>
           <v-tab> <v-icon left>fa fa-image</v-icon>Singles</v-tab>
+          -->
         </v-tabs>
       </div>
     </div>

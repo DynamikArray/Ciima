@@ -16,28 +16,28 @@
       style="background-color:transparent"
     >
       <v-tab-item key="lots" class="pt-2">
-        <LotReport />
+        <LotsReport :items="soldItems" :loading="loading" />
       </v-tab-item>
 
+      <!--
       <v-tab-item key="sets" class="mx-2 pb-3 w-100 fill-height">
-        <h1 class="display-2 text-center">
-          <v-icon x-large class="">fa-exclamation-circle</v-icon>
-          Set Reports are not yet completed!
-        </h1>
+        <SetsReport :items="soldItems" :loading="loading" />
       </v-tab-item>
 
       <v-tab-item key="singles" class="mx-2 pb-3 w-100 fill-height">
-        <h1 class="display-2 text-center">
-          <v-icon x-large class="">fa-exclamation-circle</v-icon>
-          Singles Reports are not yet completed!
-        </h1>
+        <SinglesReport :items="soldItems" :loading="loading" />
       </v-tab-item>
+    -->
     </v-tabs-items>
   </div>
 </template>
 
 <script>
-import LotReport from "./Tabs/LotReport";
+import { mapState } from "vuex";
+import { SEARCH_SOLD_ITEMS } from "@/store/action-types";
+import LotsReport from "./Tabs/LotReport/LotsReport";
+import SetsReport from "./Tabs/SetsReport";
+import SinglesReport from "./Tabs/SinglesReport";
 import ReportFilters from "./ReportFilters";
 
 const { format, subDays } = require("date-fns");
@@ -47,7 +47,9 @@ export default {
     tab: [Boolean, Number]
   },
   components: {
-    LotReport,
+    LotsReport,
+    SetsReport,
+    SinglesReport,
     ReportFilters
   },
   created() {
@@ -55,15 +57,21 @@ export default {
     this.filters.categoryName = "EBAY-LOTS";
     this.filters.startDate = format(subDays(Date.now(), 5), "YYYY-MM-DD");
     this.filters.endDate = format(Date.now(), "YYYY-MM-DD");
+    this.getData();
   },
   data: () => ({
-    loading: false, //will come from mapState
     filters: {
       startDate: "",
       endDate: "",
       categoryName: ""
     }
   }),
+  computed: {
+    ...mapState({
+      loading: state => state.reports.loading,
+      soldItems: state => state.reports.items
+    })
+  },
   methods: {
     updateLocalParam(params) {
       Object.keys(params).forEach(key => {
@@ -72,18 +80,10 @@ export default {
     },
     getData(params = {}) {
       this.updateLocalParam(params);
-
-      console.log("Call some action we ahve to make still with these params", {
+      this.$store.dispatch(`reports/${SEARCH_SOLD_ITEMS}`, {
         ...this.filters,
         ...params
       });
-      /*
-      this.updateLocalParam(params);
-      this.$store.dispatch(`openDrafts/${OPEN_DRAFTS_FETCH}`, {
-        ...this.filters,
-        ...params
-      });
-      */
     }
   }
 };
