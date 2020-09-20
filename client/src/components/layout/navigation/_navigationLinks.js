@@ -15,7 +15,9 @@ module.exports = [
   { icon: "fa fa-history", text: "Audit Log", to: "audit" },
   { menuDivider: true },
   { icon: "fa fa-project-diagram", text: "Price Matcher", to: "pricematch" },
-  { icon: "fa fa-comment-dollar", text: "Price List", to: "pricelist" }
+  { icon: "fa fa-comment-dollar", text: "Price List", to: "pricelist" },
+  { menuDivider: true },
+  { icon: "fa fa-file-invoice-dollar", text: "Sold Reports", to: "reports" }
   //{ menuDivider: true },
   //{ icon: "fab fa-ebay", text: "Search eBay", to: "ebay" }
 ];
