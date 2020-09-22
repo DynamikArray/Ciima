@@ -1,4 +1,5 @@
 const mainCharactersList = [
+  "Authority",
   "Aquaman",
   "Batgirl",
   "Batman",

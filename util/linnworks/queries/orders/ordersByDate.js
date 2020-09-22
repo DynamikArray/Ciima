@@ -25,7 +25,7 @@ const ordersByDate = (startDate, endDate, categoryName) => {
     LEFT OUTER JOIN [StockItem_ExtendedProperties] extPublishers on si.pkStockItemId = extPublishers.fkStockItemId AND extPublishers.ProperyName = 'Publisher'
   WHERE
   (
-    (pc.CategoryName ='EBAY-LOTS')
+    (pc.CategoryName = @categoryName)
    AND
     (o.dProcessedOn between @StartDate and @EndDate)
   )
