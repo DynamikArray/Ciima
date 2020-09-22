@@ -2,11 +2,10 @@
   <div class="d-flex flex-wrap align-center justify-start">
     <div
       v-for="tag in tags"
-      class="d-flex flex-wrap align-center grey darken-2 mx-3 my-2 px-2"
-      style="border-radius:20px;"
+      class="d-flex flex-wrap align-center grey darken-2 mx-2 my-1 px-1"
+      style="border-radius:5px;"
     >
-      <h3 class="mx-1">{{ tag.count }}</h3>
-      <div class="mx-1">{{ tag.tag }}</div>
+      <div class="mx-1 body-2">{{ tag.tag }}</div>
     </div>
   </div>
 </template>
