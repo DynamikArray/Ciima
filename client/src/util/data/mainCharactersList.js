@@ -30,6 +30,7 @@ const mainCharactersList = [
   "Phantom Stranger",
   "Punisher",
   "Robin",
+  "Savage Hawkman",
   "Secret Files",
   "Shi",
   "Silver Surfer",
