@@ -167,6 +167,7 @@ let router = new Router({
         requiresAuth: true
       }
     },
+
     {
       path: "*",
       props: true,
@@ -180,7 +181,6 @@ let router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  //Requires Authentication
   if (to.matched.some(record => record.meta.requiresAuth)) {
     store
       .dispatch("user/loginCheck", false)

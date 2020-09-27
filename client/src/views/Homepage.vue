@@ -14,6 +14,8 @@
             Welcome back
             <span class="username">{{ displayName }}</span>
           </h3>
+
+          <!--
           <p>
             Choose of one the options below to get started.
           </p>
@@ -30,7 +32,7 @@
               >
             </div>
           </div>
-        </div>
+        --></div>
 
         <h3 v-if="!isLoggedIn"><LoginForm></LoginForm></h3>
 

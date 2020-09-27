@@ -168,8 +168,18 @@ export default {
     rotate(deg) {
       this.$refs.cropper.rotate(deg);
     },
-    showFileChooser() {
-      this.$refs.input.click();
+    async showFileChooser() {
+      //We want a loginCheck here
+      const loginCheck = await this.$store
+        .dispatch("user/loginCheck", false)
+        .catch(err => {
+          this.$toastr.e(
+            "Your user session has expired, you are being redirected to the login screen"
+          );
+          this.$store.dispatch("user/logout");
+          this.$router.push("/login").catch(e => {});
+        });
+      if (loginCheck) this.$refs.input.click();
     },
     setImages(e) {
       const files = [...e.target.files];

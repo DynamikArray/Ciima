@@ -79,12 +79,14 @@ const user = {
     },
 
     loginCheck({ commit }, options) {
-      const { user, token } = this.state;
       return new Promise(async (resolve, reject) => {
-        if (this.state.user) resolve(true);
+        let { user, token } = this.state;
+        //see if we have a full user object on state?
+        if (user && token && token.length > 1) resolve(true);
+        //if (this.state.user) resolve(true);
 
         //No user but do we have token
-        const token = localStorage.getItem("token");
+        token = localStorage.getItem("token");
         if (token) {
           //do we have a token?
           const userResp = await axiosInstance({
@@ -92,9 +94,12 @@ const user = {
             url: "/user/account",
             method: "POST",
             headers: { Authorization: `Bearer ${token}` }
+          }).catch(e => {
+            if (e.response && e.response.status === 401)
+              console.log("You are not logged in!");
           });
 
-          if (userResp.data) {
+          if (userResp && userResp.data) {
             const {
               id,
               username,
@@ -112,7 +117,7 @@ const user = {
             commit(`api/${UPDATE_API_STATUS}`, `Logged in user ${username}`, {
               root: true
             });
-            resolve();
+            resolve(true);
           }
         }
         //if we get here, reject it
