@@ -170,6 +170,7 @@ export default {
     },
     async showFileChooser() {
       //We want a loginCheck here
+      /* we disabled login check
       const loginCheck = await this.$store
         .dispatch("user/loginCheck", false)
         .catch(err => {
@@ -180,6 +181,8 @@ export default {
           this.$router.push("/login").catch(e => {});
         });
       if (loginCheck) this.$refs.input.click();
+      */
+      this.$refs.input.click();
     },
     setImages(e) {
       const files = [...e.target.files];
