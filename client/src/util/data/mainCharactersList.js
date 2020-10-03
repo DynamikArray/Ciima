@@ -4,6 +4,7 @@ const mainCharactersList = [
   "Barbie",
   "Batgirl",
   "Batman",
+  "Battletech",
   "Catwoman",
   "Conan",
   "Captain America",
