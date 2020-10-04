@@ -47,7 +47,8 @@ module.exports = {
     ],
 
     querystring: {
-      q: { type: "string" },
+      CategoryParent: { type: "number" },
+      LevelLimit: { type: "number", default: 1 },
     },
 
     response: {
