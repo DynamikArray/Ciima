@@ -45,7 +45,7 @@ module.exports = (fastify) => ({
           },
           (error, itemsResponse) => {
             if (error) reject(error);
-            resolve({ results: itemsResponse.Categorys });
+            resolve({ result: itemsResponse.Categorys });
           }
         );
       } catch (e) {

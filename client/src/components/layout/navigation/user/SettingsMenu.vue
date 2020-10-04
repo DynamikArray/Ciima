@@ -57,20 +57,29 @@
           <v-card>
             <v-list>
               <v-list-item>
-                <v-list-item-content>
+                <v-list-item-content class="mb-0 pb-0">
                   <v-list-item-title>Default Product Type:</v-list-item-title>
                   <v-list-item-subtitle>
                     Applies defaults for Draft form fields.
                   </v-list-item-subtitle>
 
-                  <div class="px-2">
+                  <div
+                    id="defaultProductWrapper"
+                    class="secondary darken-1 my-2"
+                    style="border-radius:6px;"
+                  >
                     <v-radio-group
                       row
                       :value="defaultProductType"
                       @change="changeDefaultProductType"
+                      class="w-100"
                     >
-                      <div class="d-flex justify-space-around align-center">
-                        <div class="d-flex justify-start align-center">
+                      <div
+                        class="d-flex flex-column justify-center align-center w-100"
+                      >
+                        <div
+                          class="d-flex my-1 justify-space-around align-center w-100"
+                        >
                           <v-radio
                             label="Sets"
                             color="primary"
@@ -86,13 +95,24 @@
                             color="primary"
                             value="adult"
                           ></v-radio>
+                        </div>
+
+                        <v-divider class="w-100 my-2"></v-divider>
+
+                        <div
+                          class="d-flex justify-space-around align-center w-100 my-1"
+                        >
                           <v-radio
                             label="Lots"
                             color="primary"
                             value="lots"
                           ></v-radio>
+                          <v-radio
+                            label="Gtc"
+                            color="primary"
+                            value="gtc"
+                          ></v-radio>
                         </div>
-                        <div class="d-flex justify-start align-center"></div>
                       </div>
                     </v-radio-group>
                   </div>
@@ -238,4 +258,16 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style>
+#defaultProductWrapper > .v-input {
+  margin: 0px;
+}
+
+#defaultProductWrapper > .v-input > .v-input__control {
+  width: 100%;
+}
+
+#defaultProductWrapper .v-input > .v-input__control > .v-input__slot {
+  margin: 0%;
+}
+</style>
