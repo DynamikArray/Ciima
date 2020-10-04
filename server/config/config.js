@@ -6,7 +6,7 @@ if (process.env.NODE_ENV === "production") {
 const config = {
   host: host,
   port: process.env.PORT,
-  name: process.env.APP_NAME || "Api"
+  name: process.env.APP_NAME || "Api",
 };
 
 const documentation = {
@@ -16,8 +16,9 @@ const documentation = {
       version: "1.0.0", //get from package
       title: "Ciima API Documentation",
       description:
-        "Ciima API Endpoints Documentation. When authorizationing through these documentation helpers, the `Value:` should be in the format of `Bearer TokenString`"
+        "Ciima API Endpoints Documentation. When authorizationing through these documentation helpers, the `Value:` should be in the format of `Bearer TokenString`",
     },
+    tags: ["Ebay"],
     //schemes: [process.env.options.https ? "https" : "http"],
     consumes: ["application/json"],
     produces: ["application/json"],
@@ -25,10 +26,10 @@ const documentation = {
       token: {
         type: "apiKey",
         name: "Authorization",
-        in: "header"
-      }
-    }
+        in: "header",
+      },
+    },
   },
-  exposeRoute: true
+  exposeRoute: true,
 };
 module.exports = { config, documentation };

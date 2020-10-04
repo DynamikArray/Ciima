@@ -13,4 +13,10 @@ module.exports = (fastify) => ({
 
     return { result: rows };
   },
+
+  ebaySiteCategories: async (req, reply) => {
+    console.log("TEST");
+
+    return { result: "WINNING" };
+  },
 });
