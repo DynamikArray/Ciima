@@ -14,6 +14,9 @@ module.exports = (fastify) => ({
     const status = req.query.status || "open"; //default to open if no param
     const draftType = req.query.draftType || "";
 
+    let userId = "";
+    if (req.query.userId !== "ALL") userId = req.query.userId;
+
     const page = Number(req.query.page) || 1;
     const pageLimit = Number(req.query.limit) || 5; //Limit to 500 by default, and let client handle filtering
 
@@ -25,7 +28,8 @@ module.exports = (fastify) => ({
       draftType,
       titleString,
       locationString,
-      createdDate
+      createdDate,
+      userId
     );
 
     try {

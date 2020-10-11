@@ -18,6 +18,8 @@ const buildSelectQueries = () => {
         (draftType LIKE CONCAT("%",?,"%"))
         AND
         (CAST(DATE(d.createdDate)AS CHAR) LIKE CONCAT("%",?,"%"))
+        AND
+        (ownerId LIKE CONCAT("%",?,"%"))
       )
       ORDER BY d.createdDate DESC
       LIMIT ? OFFSET ?`;
@@ -39,6 +41,8 @@ const buildSelectQueries = () => {
       (draftType LIKE CONCAT("%",?,"%"))
       AND
       (CAST(DATE(d.createdDate)AS CHAR) LIKE CONCAT("%",?,"%"))
+      AND
+      (ownerId LIKE CONCAT("%",?,"%"))
     )
     ORDER BY d.createdDate DESC `;
 
@@ -52,7 +56,8 @@ const buildSelectQueriesParams = (
   draftType,
   titleString,
   locationString,
-  createdDate
+  createdDate,
+  userId
 ) => {
   const pageOffset = page * pageLimit;
   //default most recent
@@ -62,6 +67,7 @@ const buildSelectQueriesParams = (
     status,
     draftType,
     createdDate,
+    userId,
     pageLimit,
     pageOffset,
   ];
@@ -71,6 +77,7 @@ const buildSelectQueriesParams = (
     status,
     draftType,
     createdDate,
+    userId,
   ];
 
   return { selectParams, totalParams };

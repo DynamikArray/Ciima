@@ -13,6 +13,7 @@ module.exports = {
       status: { type: "string" },
       draftType: { type: "string" },
       searchString: { type: "string" },
+      userId: { type: "string" },
       limit: { type: "number" },
       page: { type: "number" },
     },

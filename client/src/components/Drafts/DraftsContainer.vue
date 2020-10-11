@@ -6,6 +6,7 @@
       :draftStatus="filters.draftStatus"
       :draftType="filters.draftType"
       :searchString="filters.searchString"
+      :userId="filters.userId"
       :loading="loading"
       :getData="fetchDraftsWithParams"
     ></DraftsFilters>
@@ -75,7 +76,8 @@ export default {
       limit: 15,
       draftType: "",
       searchString: "",
-      createdDate: ""
+      createdDate: "",
+      userId: "ALL"
     },
     headers: headers,
     mobileHeaders: ["inventoryTitle"]

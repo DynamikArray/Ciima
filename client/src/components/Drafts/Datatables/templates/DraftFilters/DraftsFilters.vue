@@ -21,6 +21,8 @@
 
     <DraftTypeDropdown :draftType="draftType" :getData="getData" class="mx-3" />
 
+    <UserListDropdown :userId="userId" :getData="getData" />
+
     <DraftSearchForm
       :getData="getData"
       :searchString="searchString"
@@ -34,6 +36,7 @@ import DraftStatusDropdown from "./DraftStatusDropdown.vue";
 import DraftSearchForm from "./DraftSearchForm";
 import DraftTypeDropdown from "./DraftTypeDropdown";
 import DateChooser from "./DatePicker";
+import UserListDropdown from "@/components/Datatable/Filters/UserListDropdown";
 
 export default {
   props: {
@@ -55,9 +58,14 @@ export default {
     searchString: {
       type: [String],
       default: ""
+    },
+    userId: {
+      type: [String, Number],
+      default: "ALL"
     }
   },
   components: {
+    UserListDropdown,
     DateChooser,
     DraftStatusDropdown,
     DraftTypeDropdown,
