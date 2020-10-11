@@ -15,6 +15,9 @@ module.exports = {
     proxy: {
       "/v1": {
         target: "http://127.0.0.1:4200"
+      },
+      "/docs": {
+        target: "http://127.0.0.1:4200"
       }
     },
     stats: {
