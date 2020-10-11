@@ -13,7 +13,11 @@ module.exports = (fastify) => ({
     });
 
     if (!result.IsError)
-      return { result: result.Results, total: result.TotalResults };
-    if (error) return { error: error };
+      return {
+        result: result.Results,
+        total: result.TotalResults,
+        error: false,
+      };
+    if (error) return { error: error, result: false };
   },
 });

@@ -13,6 +13,8 @@
             :value="locationCode"
             :input="handleInputLocationCode"
             :rules="fieldRules.locationCode"
+            :blur="checkLocationCode"
+            :errorMessages="locationCodeErrorMessages"
           />
         </v-col>
 
@@ -386,7 +388,8 @@ export default {
     ebayStoreCategories,
     fieldRules,
     showExtra: false,
-    showCategoryLookup: false
+    showCategoryLookup: false,
+    locationCodeErrorMessages: []
   }),
   computed: {
     ...mapState({
@@ -411,6 +414,32 @@ export default {
     }
   },
   methods: {
+    async checkLocationCode(e) {
+      const locationCode = e.target.value;
+
+      const res = await this.$store
+        .dispatch(`api/requestHandler`, {
+          method: "post",
+          url: "inventory/utility/checkLocationCode",
+          params: { locationCode }
+        })
+        .catch(err => {
+          this.$toastr.e("Couldnt verify location");
+        });
+
+      if (res.result && !res.error) {
+        if (res.result.length) {
+          this.locationCodeErrorMessages = ["Items exist in location already"];
+        } else {
+          this.locationCodeErrorMessages = [];
+        }
+      }
+
+      if (res.error && !res.result) {
+        this.$toastr.e(res.error);
+      }
+    },
+
     validateForm() {
       const valid = this.$refs.draftForm.validate();
       return valid;
