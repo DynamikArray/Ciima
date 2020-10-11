@@ -1,21 +1,30 @@
 <template>
-  <div class="d-flex flex-wrap">
-    <div
-      style="min-width:260px"
-      class="d-flex flex-wrap justify-start mr-4"
-      v-for="(level, index) in ebaySiteCategories"
-    >
-      <v-select
-        :key="index + 'categoryLevel'"
-        :items="addLeafIndicator(level, index)"
-        item-text="CategoryName"
-        item-value="CategoryID"
-        return-object
-        @input="updateSelected"
-      >
-      </v-select>
+  <section>
+    <div>
+      <span class="heading">Ebay Site Category:</span>
+      <b>{{ categoryLabel.name }} {{ categoryLabel.id }}</b>
     </div>
-  </div>
+    <div class="d-flex flex-wrap mt-2">
+      <div
+        style=""
+        class="d-flex flex-wrap justify-start mr-4 align-baseline"
+        v-for="(level, index) in ebaySiteCategories"
+      >
+        <v-select
+          hide-details
+          :label="`Category Level L${index + 1}`"
+          outlined
+          :key="index + 'categoryLevel'"
+          :items="addLeafIndicator(level, index)"
+          item-text="CategoryName"
+          item-value="CategoryID"
+          return-object
+          @input="updateSelected"
+        >
+        </v-select>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script>
@@ -24,7 +33,7 @@ export default {
     loading: false,
     ebaySiteCategories: [],
     selected: [],
-    finalCategory: false
+    categoryLabel: false
   }),
   async created() {
     this.fetchCategory({ LevelLimit: 1 });
@@ -64,6 +73,8 @@ export default {
         id: value.CategoryID,
         name: value.CategoryName
       };
+      this.categoryLabel = ebaySiteCategory;
+
       this.$emit("categorySelected", { ebaySiteCategory });
     },
     async fetchCategory(params) {
