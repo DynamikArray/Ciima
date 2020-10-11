@@ -80,6 +80,8 @@ fastify.register(require("./routes/v1/ebay/search"), { prefix: "v1" });
 fastify.register(require("./routes/v1/pricing"), { prefix: "v1" });
 //Locations
 fastify.register(require("./routes/v1/inventory/location"), { prefix: "v1" });
+//INVENTORY Utilities
+fastify.register(require("./routes/v1/inventory/utility"), { prefix: "v1" });
 //Price Matching
 fastify.register(require("./routes/v1/pricematch"), { prefix: "v1" });
 fastify.register(require("./routes/v1/pricelist"), { prefix: "v1" });
