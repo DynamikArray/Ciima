@@ -43,6 +43,11 @@ module.exports = {
     description: "Register a new user into the application.",
     tags: ["user"],
     summary: "Register a new user to the application",
+    security: [
+      {
+        token: [],
+      },
+    ],
     body: {
       type: "object",
       properties: {
