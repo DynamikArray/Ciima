@@ -38,6 +38,7 @@
             listingsType="ended"
             sortResultsByDate
             sortResultsByPrice
+            :isDisabled="true"
           />
         </v-tab-item>
         <v-tab-item

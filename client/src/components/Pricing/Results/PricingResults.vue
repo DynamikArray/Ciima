@@ -85,10 +85,29 @@
       class="pa-4"
       style="text-shadow: 1px 1px 1px #000;"
     >
-      <h4 class="text-center mx-4 px-4">
-        Search for product prices across various websites.
-      </h4>
-      <h1 class=" text-center display-1 my-3">No Results</h1>
+      <div v-if="isDisabled" class="text-center">
+        <v-alert
+          color="primary"
+          icon="fa-exclamation-circle"
+          border="left"
+          dark
+          prominent
+        >
+          <h1 class="display-1 mb-4">
+            Sorry! This feature is currently disabled.
+          </h1>
+          <h3 class="headline">
+            If you used this feature in your day to day workflow, please contact
+            Brian or Johnny and make them aware.
+          </h3>
+        </v-alert>
+      </div>
+      <div v-else>
+        <h4 class="text-center mx-4 px-4">
+          Search for product prices across various websites.
+        </h4>
+        <h1 class=" text-center display-1 my-3">No Results</h1>
+      </div>
     </div>
   </div>
 </template>
@@ -105,6 +124,7 @@ export default {
     sortPriceDir: "DESC"
   }),
   props: {
+    isDisabled: [Boolean],
     items: [Boolean, Array],
     loading: [Number, Boolean],
     endDateText: [Boolean, String],

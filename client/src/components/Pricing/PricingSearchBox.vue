@@ -5,6 +5,7 @@
         <div class="d-flex align-center grow mx-2">
           <v-text-field
             autofocus
+            autocomplete="off"
             hide-details
             persistent-hint
             v-model="searchString"
@@ -79,12 +80,14 @@ export default {
 
       if (!searchString.length == 0) {
         this.$store.commit(`pricing/${PRICE_SEARCH_CLEAR}`);
-
         //always try to search ebay
+        /*
+        THIS CALL WE MAKE WAS DEPRECATED WE NEED TO SCRAPE NOW
         this.$store.dispatch(`pricing/${PRICE_SEARCH}`, {
           searchString,
           searchType: "ebayEnded"
         });
+        */
 
         //always try to search ebay
         this.$store.dispatch(`pricing/${PRICE_SEARCH}`, {

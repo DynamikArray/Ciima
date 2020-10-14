@@ -190,10 +190,13 @@ export default {
       this.$store.commit(`settings/${UTILITY_DRAWER_TAB}`, 1);
 
       //always try to search ebay
+      /*
+      THIS CALL WE MAKE WAS DEPRECATED WE NEED TO SCRAPE NOW
       this.$store.dispatch(`pricing/${PRICE_SEARCH}`, {
         searchString,
         searchType: "ebayEnded"
       });
+      */
 
       //always try to search ebay
       this.$store.dispatch(`pricing/${PRICE_SEARCH}`, {
