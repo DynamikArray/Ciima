@@ -15,6 +15,7 @@ const dailySoldItems = (startDate, endDate) => {
   SET @ebayLots = 'EBAY-LOTS';
 
   SELECT
+    oi.fkOrderId as orderId,
     CAST(CAST(o.dProcessedOn AS DATE)  AS  VARCHAR(11)) AS 'processedOnDate',
     CAST(CAST(si.CreationDate AS DATE)  AS  VARCHAR(11)) AS 'linnworksCreationDate',
     pc.CategoryName as 'categoryName',

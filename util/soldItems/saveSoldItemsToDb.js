@@ -8,13 +8,15 @@ const saveSoldItemsToDb = async (values) => {
   logger.info("STARTING - saveSoldItemsToDb");
 
   const strQuery = `INSERT into slc_sold_items (
+    orderId,
     processedOnDate,
     linnworksCreationDate,
     categoryName,
     linnworksSKU,
     linnworksTitle,
     pricePerUnit
-  ) VALUES ? ON DUPLICATE KEY UPDATE processedOnDate = VALUES(processedOnDate),
+  ) VALUES ? ON DUPLICATE KEY UPDATE orderId = VALUES(orderId),
+    processedOnDate = VALUES(processedOnDate),
     categoryName = VALUES(categoryName),
     linnworksCreationDate = VALUES(linnworksCreationDate),
     linnworksSKU = VALUES(linnworksSKU),
