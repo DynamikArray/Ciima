@@ -12,6 +12,8 @@ const {
   repriceLotsWithLastPrice,
 } = require("./scheduleJobs/repricer");
 
+const { soldItemsManager } = require("./scheduleJobs/soldItemsManager");
+
 //main schdule method
 const scheduler = () => {
   //Fetch new items listed today
@@ -38,6 +40,10 @@ const scheduler = () => {
   const withLastPriceRule = new schedule.RecurrenceRule();
   withLastPriceRule.minute = [21];
   //schedule.scheduleJob(withLastPriceRule, repriceLotsWithLastPrice);
+
+  const soldItemsRule = new schedule.RecurrenceRule();
+  soldItemsRule.hour = [0, 05, 12, 17, 22];
+  schedule.scheduleJob(soldItemsRule, soldItemsManager);
 };
 
 module.exports = scheduler;

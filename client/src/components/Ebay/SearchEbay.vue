@@ -34,10 +34,13 @@ export default {
         if (!keywords.length == 0) {
           this.$store.commit(`pricing/${PRICE_SEARCH_CLEAR}`);
 
+          /*
+          THIS CALL WE MAKE WAS DEPRECATED WE NEED TO SCRAPE NOW
           this.$store.dispatch(`pricing/${PRICE_SEARCH}`, {
-            searchString: keywords,
+            searchString keywords,
             searchType: "ebayEnded"
           });
+          */
 
           this.$store.dispatch(`pricing/${PRICE_SEARCH}`, {
             searchString: keywords,
