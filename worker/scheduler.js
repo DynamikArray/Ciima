@@ -42,7 +42,7 @@ const scheduler = () => {
   //schedule.scheduleJob(withLastPriceRule, repriceLotsWithLastPrice);
 
   const soldItemsRule = new schedule.RecurrenceRule();
-  soldItemsRule.hour = [0, 05, 12, 17, 22];
+  soldItemsRule.minute = [5];
   schedule.scheduleJob(soldItemsRule, soldItemsManager);
 };
 
