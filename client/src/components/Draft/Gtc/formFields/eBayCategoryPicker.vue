@@ -20,6 +20,7 @@
           item-value="CategoryID"
           return-object
           @input="updateSelected"
+          :rules="rules"
         >
         </v-select>
       </div>
@@ -29,6 +30,12 @@
 
 <script>
 export default {
+  props: {
+    rules: {
+      type: [Array],
+      default: () => []
+    }
+  },
   data: () => ({
     loading: false,
     ebaySiteCategories: [],
@@ -75,7 +82,7 @@ export default {
       };
       this.categoryLabel = ebaySiteCategory;
 
-      this.$emit("categorySelected", { ebaySiteCategory });
+      this.$emit("categorySelected", { ebaySiteCategoryId: value.CategoryID });
     },
     async fetchCategory(params) {
       this.loading = true;

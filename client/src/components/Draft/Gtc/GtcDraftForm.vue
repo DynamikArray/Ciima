@@ -8,7 +8,11 @@
 
     <v-row>
       <v-col class="py-0">
-        <InventoryTitle @update="updateLocalParams" :value="inventoryTitle" />
+        <InventoryTitle
+          @update="updateLocalParams"
+          :value="inventoryTitle"
+          :rules="rules.inventoryTitle"
+        />
       </v-col>
     </v-row>
 
@@ -16,13 +20,25 @@
 
     <v-row>
       <v-col class="py-0">
-        <InventorySku @update="updateLocalParams" :value="locationCode" />
+        <InventorySku
+          @update="updateLocalParams"
+          :value="locationCode"
+          :rules="rules.locationCode"
+        />
       </v-col>
       <v-col class="py-0">
-        <InventoryPrice @update="updateLocalParams" :value="price" />
+        <InventoryPrice
+          @update="updateLocalParams"
+          :value="price"
+          :rules="rules.price"
+        />
       </v-col>
       <v-col class="py-0">
-        <InventoryQuantity @update="updateLocalParams" :value="quantity" />
+        <InventoryQuantity
+          @update="updateLocalParams"
+          :value="quantity"
+          :rules="rules.quantity"
+        />
       </v-col>
     </v-row>
 
@@ -30,7 +46,10 @@
 
     <v-row>
       <v-col class="py-0">
-        <EbayCategoryPicker @categorySelected="updateLocalParams" />
+        <EbayCategoryPicker
+          @categorySelected="updateLocalParams"
+          :rules="rules.ebaySiteCategoryId"
+        />
       </v-col>
     </v-row>
 
@@ -40,17 +59,19 @@
       <v-col>
         <EbayStoreCategory
           label="Ebay Store 1st Category:"
-          name="eBayStoreCategory1"
+          name="ebayStoreCategoryIdOne"
           @update="updateLocalParams"
-          :value="eBayStoreCategory1"
+          :value="ebayStoreCategoryIdOne"
+          :rules="rules.ebayStoreCategoryIdOne"
         />
       </v-col>
       <v-col>
         <EbayStoreCategory
           label="Ebay Store 2nd Category:"
-          name="eBayStoreCategory2"
+          name="ebayStoreCategoryIdTwo"
           @update="updateLocalParams"
-          :value="eBayStoreCategory2"
+          :value="ebayStoreCategoryIdTwo"
+          :rules="rules.ebayStoreCategoryIdTwo"
         />
       </v-col>
     </v-row>
@@ -59,10 +80,18 @@
 
     <v-row>
       <v-col>
-        <MainCharacter @update="updateLocalParams" :value="mainCharacter" />
+        <MainCharacter
+          @update="updateLocalParams"
+          :value="mainCharacter"
+          :rules="rules.mainCharacter"
+        />
       </v-col>
       <v-col>
-        <Publisher @update="updateLocalParams" :value="publisher" />
+        <Publisher
+          @update="updateLocalParams"
+          :value="publisher"
+          :rules="rules.publisher"
+        />
       </v-col>
     </v-row>
 
@@ -87,6 +116,8 @@ import EbayStoreCategory from "./formFields/EbayStoreCategory";
 import MainCharacter from "./formFields/MainCharacter";
 import Publisher from "./formFields/Publisher";
 
+import rules from "./formUtil/rules";
+
 export default {
   components: {
     Heading,
@@ -100,15 +131,18 @@ export default {
     Publisher
   },
   data: () => ({
-    ebaySiteCategory: false,
+    rules,
+    //temp GTC Draft fields
+    //will be in state
     inventoryTitle: "",
     locationCode: "",
     price: "",
     quantity: "",
+    ebaySiteCategoryId: false,
+    ebayStoreCategoryIdOne: false,
+    ebayStoreCategoryIdTwo: false,
     mainCharacter: "",
-    publisher: "",
-    eBayStoreCategory1: false,
-    eBayStoreCategory2: false
+    publisher: ""
   }),
   methods: {
     updateLocalParams(params) {

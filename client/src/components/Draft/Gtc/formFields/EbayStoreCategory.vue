@@ -8,6 +8,7 @@
       :hint="hint"
       :items="ebayStoreCategories"
       @input="onUpdate"
+      :rules="rules"
     >
     </v-select>
   </div>
@@ -18,6 +19,10 @@ import { ebayStoreCategories } from "@/util/ebay/ebayStoreCategories.js";
 
 export default {
   props: {
+    rules: {
+      type: [Array],
+      default: () => []
+    },
     label: {
       type: [String],
       default: "Ebay Store Category"

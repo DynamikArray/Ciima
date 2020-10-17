@@ -11,6 +11,7 @@
       outlined
       label="Price"
       hint="Listing Price for the item"
+      :rules="rules"
     ></v-text-field>
   </div>
 </template>
@@ -18,7 +19,11 @@
 <script>
 export default {
   props: {
-    value: { String }
+    value: { String },
+    rules: {
+      type: [Array],
+      default: () => []
+    }
   },
   data: () => ({}),
   methods: {

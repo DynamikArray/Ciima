@@ -3,7 +3,6 @@
     <div class="heading mb-1">Location / SKU :</div>
     <v-text-field
       autocomplete="off"
-      autofocus
       ref="locationCode"
       dense
       :value="value"
@@ -14,6 +13,7 @@
       label="Location"
       hint="Location code for the item"
       counter
+      :rules="rules"
     ></v-text-field>
   </div>
 </template>
@@ -21,6 +21,10 @@
 <script>
 export default {
   props: {
+    rules: {
+      type: [Array],
+      default: () => []
+    },
     value: [String]
   },
   data: () => ({}),

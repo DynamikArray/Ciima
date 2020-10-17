@@ -2,6 +2,7 @@
   <div>
     <div class="heading mb-1">Inventory Title:</div>
     <v-textarea
+      autofocus
       rows="2"
       dense
       :value="value"
@@ -12,6 +13,7 @@
       outlined
       counter="80"
       @input="handleUserInput"
+      :rules="rules"
     ></v-textarea>
   </div>
 </template>
@@ -19,11 +21,13 @@
 <script>
 export default {
   props: {
-    value: [String]
+    value: [String],
+    rules: {
+      type: [Array],
+      default: () => []
+    }
   },
-  data: () => ({
-    rules: false
-  }),
+  data: () => ({}),
   methods: {
     handleUserInput(inventoryTitle) {
       this.$emit("update", { inventoryTitle });
