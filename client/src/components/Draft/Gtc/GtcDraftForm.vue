@@ -21,13 +21,16 @@
       <v-col class="py-0">
         <InventoryPrice @update="updateLocalParams" :value="price" />
       </v-col>
+      <v-col class="py-0">
+        <InventoryQuantity @update="updateLocalParams" :value="quantity" />
+      </v-col>
     </v-row>
 
     <v-divider class="mb-3"></v-divider>
 
     <v-row>
       <v-col class="py-0">
-        <eBayCategoryPicker @categorySelected="updateLocalParams" />
+        <EbayCategoryPicker @categorySelected="updateLocalParams" />
       </v-col>
     </v-row>
 
@@ -35,10 +38,20 @@
 
     <v-row>
       <v-col>
-        <span class="heading">Ebay Store 1st Category:</span>
+        <EbayStoreCategory
+          label="Ebay Store 1st Category:"
+          name="eBayStoreCategory1"
+          @update="updateLocalParams"
+          :value="eBayStoreCategory1"
+        />
       </v-col>
       <v-col>
-        <span class="heading">Ebay Store 2nd Category:</span>
+        <EbayStoreCategory
+          label="Ebay Store 2nd Category:"
+          name="eBayStoreCategory2"
+          @update="updateLocalParams"
+          :value="eBayStoreCategory2"
+        />
       </v-col>
     </v-row>
 
@@ -68,8 +81,9 @@ import Heading from "./Heading";
 import InventoryTitle from "./formFields/InventoryTitle";
 import InventorySku from "./formFields/InventorySku";
 import InventoryPrice from "./formFields/InventoryPrice";
-import eBayCategoryPicker from "./formFields/eBayCategoryPicker";
-
+import InventoryQuantity from "./formFields/InventoryQuantity";
+import EbayCategoryPicker from "./formFields/EbayCategoryPicker";
+import EbayStoreCategory from "./formFields/EbayStoreCategory";
 import MainCharacter from "./formFields/MainCharacter";
 import Publisher from "./formFields/Publisher";
 
@@ -79,7 +93,9 @@ export default {
     InventorySku,
     InventoryTitle,
     InventoryPrice,
-    eBayCategoryPicker,
+    InventoryQuantity,
+    EbayCategoryPicker,
+    EbayStoreCategory,
     MainCharacter,
     Publisher
   },
@@ -88,8 +104,11 @@ export default {
     inventoryTitle: "",
     locationCode: "",
     price: "",
+    quantity: "",
     mainCharacter: "",
-    publisher: ""
+    publisher: "",
+    eBayStoreCategory1: false,
+    eBayStoreCategory2: false
   }),
   methods: {
     updateLocalParams(params) {
