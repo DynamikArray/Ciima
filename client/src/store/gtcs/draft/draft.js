@@ -28,8 +28,8 @@ const defaultDraft = {
   mainCharacter: "",
   //characters: [],
   publisher: "",
-
   extraDescription: "",
+
   images: [],
   imageToCrop: false,
   savingLotDraft: false,

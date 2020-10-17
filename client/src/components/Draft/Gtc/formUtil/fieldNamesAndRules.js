@@ -44,7 +44,9 @@ const fieldNames = [
   "ebayStoreCategoryIdOne",
   "ebayStoreCategoryIdTwo",
   "mainCharacter",
-  "publisher"
+  "publisher",
+  "extraDescription",
+  "images"
 ];
 
 module.exports = { fieldNames, fieldRules };

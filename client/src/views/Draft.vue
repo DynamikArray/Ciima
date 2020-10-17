@@ -26,7 +26,11 @@
       style="min-height:100%; height: 100%"
       v-if="defaultProductType == 'lots'"
     >
-      <LotDraftForm />
+      <v-row>
+        <v-col>
+          <LotDraftForm />
+        </v-col>
+      </v-row>
     </v-container>
 
     <v-container
@@ -34,7 +38,11 @@
       style="min-height:100%; height: 100%"
       v-if="defaultProductType == 'gtc'"
     >
-      <GtcDraftForm />
+      <v-row>
+        <v-col>
+          <GtcDraftForm />
+        </v-col>
+      </v-row>
     </v-container>
   </section>
 </template>
