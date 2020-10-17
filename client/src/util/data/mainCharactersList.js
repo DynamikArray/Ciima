@@ -27,6 +27,7 @@ const mainCharactersList = [
   "Lobo",
   "Iron Man",
   "Moon Knight",
+  "My Little Pony",
   "Nick Fury",
   "Phantom",
   "Phantom Stranger",
