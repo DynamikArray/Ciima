@@ -15,12 +15,20 @@ import {
 } from "@/store/mutation-types";
 
 const defaultDraft = {
-  locationCode: "EBAY-",
-  issuesCount: "",
   inventoryTitle: "",
-  characters: [],
+  locationCode: "EBAY-GTC-",
+
+  quantity: null,
+  price: null,
+
+  ebaySiteCategoryId: null,
+  ebayStoreCategoryIdOne: null,
+  ebayStoreCategoryIdTwo: null,
+
+  mainCharacter: "",
+  //characters: [],
   publisher: "",
-  price: "",
+
   extraDescription: "",
   images: [],
   imageToCrop: false,
@@ -48,9 +56,9 @@ const draft = {
     },
     [RESET_GTC_DRAFT](state) {
       state.locationCode = defaultDraft.locationCode;
-      state.issuesCount = defaultDraft.issuesCount;
       state.inventoryTitle = defaultDraft.inventoryTitle;
-      state.characters = defaultDraft.characters;
+      state.mainCharacter = defaultDraft.mainCharacter;
+      //state.characters = defaultDraft.characters;
       state.publisher = defaultDraft.publisher;
       state.price = defaultDraft.price;
       state.images = defaultDraft.images;

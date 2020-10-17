@@ -49,6 +49,7 @@ export default new Vuex.Store({
     pricing,
     locations,
     lots,
+    gtcs,
     auditLog,
     analytics,
     pricematch,

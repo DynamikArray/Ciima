@@ -35,4 +35,16 @@ const fieldRules = {
   ]
 };
 
-module.exports = fieldRules;
+const fieldNames = [
+  "inventoryTitle",
+  "locationCode",
+  "price",
+  "quantity",
+  "ebaySiteCategoryId",
+  "ebayStoreCategoryIdOne",
+  "ebayStoreCategoryIdTwo",
+  "mainCharacter",
+  "publisher"
+];
+
+module.exports = { fieldNames, fieldRules };

@@ -17,10 +17,13 @@
     </v-row>
 
     <v-divider class="mb-3"></v-divider>
+    <ImageCropper :imageToCrop="imageToCrop" />
+    <GtcDraftImages :imageToCrop="imageToCrop" class="my-1" />
+    <v-divider class="my-3"></v-divider>
 
     <v-row>
       <v-col class="py-0">
-        <InventorySku
+        <LocationCode
           @update="updateLocalParams"
           :value="locationCode"
           :rules="rules.locationCode"
@@ -108,7 +111,11 @@
 <script>
 import Heading from "./Heading";
 import InventoryTitle from "./formFields/InventoryTitle";
-import InventorySku from "./formFields/InventorySku";
+
+import ImageCropper from "./Images/ImageCropper";
+import GtcDraftImages from "./Images/GtcDraftImages";
+
+import LocationCode from "./formFields/LocationCode";
 import InventoryPrice from "./formFields/InventoryPrice";
 import InventoryQuantity from "./formFields/InventoryQuantity";
 import EbayCategoryPicker from "./formFields/EbayCategoryPicker";
@@ -116,12 +123,21 @@ import EbayStoreCategory from "./formFields/EbayStoreCategory";
 import MainCharacter from "./formFields/MainCharacter";
 import Publisher from "./formFields/Publisher";
 
-import rules from "./formUtil/rules";
+import { fieldNames, fieldRules } from "./formUtil/fieldNamesAndRules";
+
+import { mapState } from "vuex";
+import { createHelpers } from "vuex-map-fields";
+const { mapFields } = createHelpers({
+  getterType: "gtcs/draft/getField",
+  mutationType: "gtcs/draft/updateField"
+});
 
 export default {
   components: {
     Heading,
-    InventorySku,
+    ImageCropper,
+    GtcDraftImages,
+    LocationCode,
     InventoryTitle,
     InventoryPrice,
     InventoryQuantity,
@@ -131,19 +147,20 @@ export default {
     Publisher
   },
   data: () => ({
-    rules,
-    //temp GTC Draft fields
-    //will be in state
-    inventoryTitle: "",
-    locationCode: "",
-    price: "",
-    quantity: "",
-    ebaySiteCategoryId: false,
-    ebayStoreCategoryIdOne: false,
-    ebayStoreCategoryIdTwo: false,
-    mainCharacter: "",
-    publisher: ""
+    blnValidForm: false,
+    rules: fieldRules
   }),
+  computed: {
+    ...mapState({
+      defaultProductType: state => state.settings.defaultProductType
+    }),
+    ...mapFields([
+      ...fieldNames,
+      "imageToCrop",
+      "savingGtcDraft",
+      "savingGtcDraftMessage"
+    ])
+  },
   methods: {
     updateLocalParams(params) {
       Object.keys(params).forEach(key => {
