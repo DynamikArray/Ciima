@@ -245,6 +245,7 @@ export default {
     clearDraft() {
       this.blnValidForm = false;
       this.$store.commit(`gtcs/draft/${RESET_GTC_DRAFT}`);
+      document.getElementById("GTC-inventoryTitle").focus();
     },
 
     async saveDraft() {

@@ -16,7 +16,7 @@ import {
 
 const defaultDraft = {
   inventoryTitle: "",
-  locationCode: "EBAY-GTC-",
+  locationCode: "EBAY-",
 
   quantity: null,
   price: null,

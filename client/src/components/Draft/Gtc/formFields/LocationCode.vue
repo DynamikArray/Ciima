@@ -29,7 +29,8 @@ export default {
   },
   data: () => ({}),
   methods: {
-    handleInputLocationCode(locationCode) {
+    handleInputLocationCode(val) {
+      const locationCode = val.toUpperCase();
       this.$emit("update", { locationCode });
     }
   }
