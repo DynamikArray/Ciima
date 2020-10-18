@@ -1,30 +1,25 @@
 <template>
-  <v-alert type="success" class="">
+  <v-alert class="grey darken-4">
     <v-row>
       <!--Left Side-->
       <v-col>
         <div class="d-flex justify-space-between align-center">
-          <h4>
-            Total Rows after Filter:
-          </h4>
+          <h5>
+            eBay Auction Payment Rows
+          </h5>
           <h3>
             {{ totalResults }}
           </h3>
         </div>
+
+        <v-divider class="my-1"></v-divider>
+
         <div class="d-flex justify-space-between align-center">
           <h4>
             Total Gross:
           </h4>
           <h3>
             {{ totalGross }}
-          </h3>
-        </div>
-        <div class="d-flex justify-space-between align-center">
-          <h4>
-            Total Net:
-          </h4>
-          <h3>
-            {{ totalNet }}
           </h3>
         </div>
 
@@ -36,52 +31,128 @@
             {{ totalFee }}
           </h3>
         </div>
+
+        <v-divider class="my-1"></v-divider>
+
+        <div class="d-flex justify-space-between align-center">
+          <h4>
+            Total Net:
+          </h4>
+          <h3>
+            {{ totalNet }}
+          </h3>
+        </div>
       </v-col>
       <!--Right Side-->
       <v-col>
-        <div class="d-flex justify-space-between align-center">
-          <h4>
-            Shipping:
-          </h4>
-          <h3>Rows To Floor: {{ shippingObligations.rowsToThreshold }}</h3>
-          <h3>Rows After: {{ shippingObligations.rowsAfterThreshold }}</h3>
-        </div>
+        <v-tooltip top color="grey lighten-3 black--text">
+          <template v-slot:activator="{ on, attrs }">
+            <div
+              v-bind="attrs"
+              v-on="on"
+              class="d-flex justify-space-between align-center"
+            >
+              <div class="d-flex justify-space-between align-center mr-1">
+                <h5>
+                  <v-icon small class="mb-1 mr-1">fa fa-question-circle</v-icon
+                  >Rows To Starting#:
+                </h5>
+                <h3>{{ shippingObligations.rowsToThreshold }}</h3>
+              </div>
+              <div class="d-flex justify-space-between align-center ml-1">
+                <h5>Rows After:</h5>
+                <h3>{{ shippingObligations.rowsAfterThreshold }}</h3>
+              </div>
+            </div>
+          </template>
+          <div class="text-center subtitle-1">
+            <div class="subtitle-2">
+              Rows for Gross Sum to be greater than Starting#
+            </div>
+          </div>
+        </v-tooltip>
 
-        <div class="d-flex justify-space-between align-center">
-          <h4>
-            Shipping Cost:
-          </h4>
-          <h3>
-            {{ Number(shippingCosts).toFixed(2) }}
-          </h3>
-        </div>
+        <v-divider class="my-1"></v-divider>
 
-        <div class="d-flex justify-space-between align-center">
-          <h4>
-            Sales Floor
-          </h4>
-          <h3>
-            {{ Number(salesFloor).toFixed(2) }}
-          </h3>
-        </div>
+        <v-tooltip top color="grey lighten-3 black--text">
+          <template v-slot:activator="{ on, attrs }">
+            <div
+              v-bind="attrs"
+              v-on="on"
+              class="d-flex justify-space-between align-center"
+            >
+              <h4>
+                <v-icon small class="mb-1">fa fa-question-circle</v-icon>
+                Shipping Cost:
+              </h4>
+              <h3>
+                {{ Number(shippingCosts).toFixed(2) }}
+              </h3>
+            </div>
+          </template>
+          <div class="text-center title">
+            <div>(Rows After * Shipping Cost)</div>
+            <div>
+              {{ shippingObligations.rowsAfterThreshold }} *
+              {{ shippingCost }} = {{ Number(shippingCosts).toFixed(2) }}
+            </div>
+          </div>
+        </v-tooltip>
 
-        <div class="d-flex justify-space-between align-center">
-          <h4>
-            Sales Floor - Shipping Costs
-          </h4>
-          <h3>
-            {{ Number(salesMinusShipping).toFixed(2) }}
-          </h3>
-        </div>
+        <v-divider class="my-1"></v-divider>
 
-        <div class="d-flex justify-space-between align-center">
-          <h4>
-            Commish Result
-          </h4>
-          <h3>
-            {{ Number(commishResult).toFixed(2) }}
-          </h3>
-        </div>
+        <v-tooltip top color="grey lighten-3 black--text">
+          <template v-slot:activator="{ on, attrs }">
+            <div
+              v-bind="attrs"
+              v-on="on"
+              class="d-flex justify-space-between align-center"
+            >
+              <h4>
+                <v-icon small class="mb-1">fa fa-question-circle</v-icon>
+                Net-Starting-Shipping
+              </h4>
+              <h3>
+                {{ Number(salesMinusShipping).toFixed(2) }}
+              </h3>
+            </div>
+          </template>
+          <div class="text-center title">
+            <div>(Net - Starting# - Shipping)</div>
+            <div>
+              {{ totalNet }} - {{ salesFloor }} -
+              {{ Number(shippingCosts).toFixed(2) }} =
+              {{ Number(salesMinusShipping).toFixed(2) }}
+            </div>
+          </div>
+        </v-tooltip>
+
+        <v-divider class="my-1"></v-divider>
+
+        <v-tooltip top color="grey lighten-3 black--text">
+          <template v-slot:activator="{ on, attrs }">
+            <div
+              v-bind="attrs"
+              v-on="on"
+              class="d-flex justify-space-between align-center"
+            >
+              <h4>
+                <v-icon small class="mb-1">fa fa-question-circle</v-icon>
+                Commish Result
+              </h4>
+              <h3>
+                {{ Number(commishResult).toFixed(2) }}
+              </h3>
+            </div>
+          </template>
+          <div class="text-center title">
+            <div>((Net - Starting# - Shipping) * Commish % )</div>
+            <div>
+              {{ salesMinusShipping }} * {{ commishPercent }} =
+              {{ Number(commishResult).toFixed(2) }}
+            </div>
+          </div>
+        </v-tooltip>
       </v-col>
     </v-row>
   </v-alert>
