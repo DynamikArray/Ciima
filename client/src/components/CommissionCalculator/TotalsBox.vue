@@ -42,6 +42,25 @@
             {{ totalNet }}
           </h3>
         </div>
+
+        <div class="d-flex justify-space-between align-center">
+          <h4>
+            Total Tax:
+          </h4>
+          <h3>
+            {{ totalTax }}
+          </h3>
+        </div>
+
+        <v-divider class="my-1"></v-divider>
+        <div class="d-flex justify-space-between align-center">
+          <h4>
+            Actual Sales:
+          </h4>
+          <h2>
+            {{ totalActual }}
+          </h2>
+        </div>
       </v-col>
       <!--Right Side-->
       <v-col>
@@ -110,7 +129,7 @@
             >
               <h4>
                 <v-icon small class="mb-1">fa fa-question-circle</v-icon>
-                Net-Starting-Shipping
+                Actual-Starting#-Shipping
               </h4>
               <h3>
                 {{ Number(salesMinusShipping).toFixed(2) }}
@@ -118,9 +137,9 @@
             </div>
           </template>
           <div class="text-center title">
-            <div>(Net - Starting# - Shipping)</div>
+            <div>(Actual - Starting# - Shipping)</div>
             <div>
-              {{ totalNet }} - {{ salesFloor }} -
+              {{ totalActual }} - {{ salesFloor }} -
               {{ Number(shippingCosts).toFixed(2) }} =
               {{ Number(salesMinusShipping).toFixed(2) }}
             </div>
@@ -146,9 +165,10 @@
             </div>
           </template>
           <div class="text-center title">
-            <div>((Net - Starting# - Shipping) * Commish % )</div>
+            <div>((Actual - Starting# - Shipping) * Commish % )</div>
             <div>
-              {{ salesMinusShipping }} * {{ commishPercent }} =
+              ({{ totalActual }} - {{ salesFloor }} - {{ shippingCosts }} ) *
+              {{ commishPercent }} =
               {{ Number(commishResult).toFixed(2) }}
             </div>
           </div>
@@ -165,6 +185,7 @@ export default {
     shippingCost: [Number],
     totalResults: [Number],
     totalFee: [Number],
+    totalTax: [Number],
     totalGross: [Number],
     totalNet: [Number],
     shippingObligations: {
@@ -178,10 +199,13 @@ export default {
       return this.shippingObligations.rowsAfterThreshold * this.shippingCost;
     },
     salesMinusShipping() {
-      return this.totalNet - this.salesFloor - this.shippingCosts;
+      return this.totalActual - this.salesFloor - this.shippingCosts;
     },
     commishResult() {
       return this.salesMinusShipping * this.commishPercent;
+    },
+    totalActual() {
+      return this.totalNet - this.totalTax;
     }
   }
 };

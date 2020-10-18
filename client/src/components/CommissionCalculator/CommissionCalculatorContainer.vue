@@ -51,9 +51,10 @@
       <v-col col="6">
         <TotalsBox
           :totalResults="results.length"
-          :totalFee="Number(totalFee)"
-          :totalNet="Number(totalNet)"
           :totalGross="Number(totalGross)"
+          :totalFee="Number(totalFee)"
+          :totalTax="Number(totalTax)"
+          :totalNet="Number(totalNet)"
           :shippingObligations="shippingObligations"
           :shippingCost="Number(shippingCost)"
           :commishPercent="Number(commishPercent / 100)"
@@ -87,9 +88,9 @@ export default {
     headers,
     rawResults: [],
     itemsOrder: "orig",
-    commishPercent: 5,
-    shippingCost: 3.99,
-    salesFloor: 30000
+    commishPercent: "",
+    shippingCost: "",
+    salesFloor: ""
   }),
   computed: {
     results() {
@@ -132,6 +133,14 @@ export default {
       return this.results
         .reduce((sum, item) => {
           sum = Number(sum) - Number(item.Fee);
+          return sum;
+        }, 0)
+        .toFixed(2);
+    },
+    totalTax() {
+      return this.results
+        .reduce((sum, item) => {
+          sum = Number(sum) + Number(item["Sales Tax"]);
           return sum;
         }, 0)
         .toFixed(2);
