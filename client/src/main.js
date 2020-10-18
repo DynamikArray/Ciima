@@ -84,6 +84,10 @@ Vue.use(VuetifyConfirm, {
 //shortkey
 Vue.use(require("vue-shortkey"), { prevent: ["input", "textarea"] });
 
+//Papa-parse
+import VuePapaParse from "vue-papa-parse";
+Vue.use(VuePapaParse);
+
 new Vue({
   router,
   store,

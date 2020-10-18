@@ -169,6 +169,17 @@ let router = new Router({
     },
 
     {
+      path: "/commish",
+      props: true,
+      name: "commish",
+      component: () =>
+        import(/*webpackChunkName: "ebay"*/ "@/views/Commish.vue"),
+      meta: {
+        requiresAuth: true
+      }
+    },
+
+    {
       path: "*",
       props: true,
       name: "404",
