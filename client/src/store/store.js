@@ -16,6 +16,7 @@ import editDraft from "@/store/drafts/editDraft";
 import deleteDraft from "@/store/drafts/deleteDraft";
 
 import lots from "@/store/lots/lots";
+import gtcs from "@/store/gtcs/gtcs";
 
 import linnworks from "@/store/inventory/linnworks";
 import ebay from "@/store/ebay/search";
@@ -48,6 +49,7 @@ export default new Vuex.Store({
     pricing,
     locations,
     lots,
+    gtcs,
     auditLog,
     analytics,
     pricematch,

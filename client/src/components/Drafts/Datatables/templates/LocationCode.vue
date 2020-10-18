@@ -67,16 +67,17 @@ export default {
 
   computed: {
     getCorrectRuleType() {
-      let LOCATION_PREFIX = false;
+      let LOCATION_PREFIX = "EBAY-";
       if (this.item.draftType === "lots") LOCATION_PREFIX = "EBAY-LOTS-";
       if (this.item.draftType === "sets") LOCATION_PREFIX = "EBAY-SETS-";
       if (this.item.draftType === "singles") LOCATION_PREFIX = "EBAY-SINGLES-";
+      if (this.item.draftType === "gtcs") LOCATION_PREFIX = "EBAY-";
 
       const locationCode = [
         v => !!v || "Location code is a required field",
         v => {
           if (!v.startsWith(LOCATION_PREFIX))
-            return `Location code must start with ${LOCATION_PREFIX}`;
+            return `Location code must begin ${LOCATION_PREFIX} `;
           return false;
         },
         v => {

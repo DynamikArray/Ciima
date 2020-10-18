@@ -1,13 +1,13 @@
 module.exports = {
   searchSchema: {
     description: "Search Ebay for sold items",
-    tags: ["ebay"],
+    tags: ["Ebay"],
     summary: "Search Ebays sold items",
 
     security: [
       {
-        token: []
-      }
+        token: [],
+      },
     ],
 
     body: {
@@ -16,14 +16,14 @@ module.exports = {
         keywords: {
           type: "array",
           items: {
-            type: "string"
-          }
+            type: "string",
+          },
         },
         searchType: {
           type: "string",
-          enum: ["findCompletedItems", "findItemsAdvanced"]
-        }
-      }
+          enum: ["findCompletedItems", "findItemsAdvanced"],
+        },
+      },
     },
 
     response: {
@@ -38,9 +38,9 @@ module.exports = {
                 type: "object",
                 properties: {
                   count: {
-                    type: "string"
-                  }
-                }
+                    type: "string",
+                  },
+                },
               },
 
               item: {
@@ -56,8 +56,8 @@ module.exports = {
                       type: "object",
                       properties: {
                         categoryId: { type: "string" },
-                        categoryName: { type: "string" }
-                      }
+                        categoryName: { type: "string" },
+                      },
                     },
                     galleryURL: { type: "string" },
                     viewItemURL: { type: "string" },
@@ -70,15 +70,15 @@ module.exports = {
                           type: "object",
                           properties: {
                             amount: { type: "number" },
-                            currencyId: { type: "string" }
-                          }
+                            currencyId: { type: "string" },
+                          },
                         },
                         shippingType: { type: "string" },
                         shipToLocations: { type: "string" },
                         expeditedShipping: { type: "string" },
                         oneDayShippingAvailable: { type: "string" },
-                        handlingTime: { type: "string" }
-                      }
+                        handlingTime: { type: "string" },
+                      },
                     },
 
                     //selling status
@@ -89,19 +89,19 @@ module.exports = {
                           type: "object",
                           properties: {
                             amount: { type: "number" },
-                            currencyId: { type: "string" }
-                          }
+                            currencyId: { type: "string" },
+                          },
                         },
                         convertedCurrentPrice: {
                           type: "object",
                           properties: {
                             amount: { type: "number" },
-                            currencyId: { type: "string" }
-                          }
+                            currencyId: { type: "string" },
+                          },
                         },
                         sellingState: { type: "string" },
-                        timeLeft: { type: "string" }
-                      }
+                        timeLeft: { type: "string" },
+                      },
                     },
 
                     sellerInfo: {
@@ -111,8 +111,8 @@ module.exports = {
                         feedbackScore: { type: "string" },
                         positiveFeedbackPercent: { type: "string" },
                         feedbackRatingStar: { type: "string" },
-                        topRatedSeller: { type: "string" }
-                      }
+                        topRatedSeller: { type: "string" },
+                      },
                     },
 
                     listingInfo: {
@@ -123,21 +123,21 @@ module.exports = {
                         startTime: { type: "string" },
                         endTime: { type: "string" },
                         listingType: { type: "string" },
-                        gift: { type: "string" }
-                      }
+                        gift: { type: "string" },
+                      },
                     },
 
                     returnsAccepted: { type: "string" },
                     galleryPlusPictureURL: { type: "string" },
                     isMultiVariationListing: { type: "string" },
-                    topRatedListing: { type: "string" }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+                    topRatedListing: { type: "string" },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  },
 };

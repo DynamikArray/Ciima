@@ -66,6 +66,7 @@ fastify.register(require("./routes/v1/imageFetch"), { prefix: "v1" });
 
 fastify.register(require("./routes/v1/draft"), { prefix: "v1" });
 fastify.register(require("./routes/v1/draft/lots"), { prefix: "v1" });
+fastify.register(require("./routes/v1/draft/gtcs"), { prefix: "v1" });
 
 fastify.register(require("./routes/v1/drafts"), { prefix: "v1" });
 fastify.register(require("./routes/v1/submitDraft"), { prefix: "v1" });

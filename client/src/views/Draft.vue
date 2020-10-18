@@ -3,7 +3,7 @@
     <v-container
       fluid
       style="min-height:100%; height: 100%"
-      v-if="defaultProductType !== 'lots'"
+      v-if="usesSetsForm"
     >
       <v-row>
         <v-col>
@@ -18,7 +18,7 @@
         </v-col>
       </v-row>
       <v-divider></v-divider>
-      <SetDraftForm v-if="defaultProductType !== 'lots'"></SetDraftForm>
+      <SetDraftForm v-if="usesSetsForm"></SetDraftForm>
     </v-container>
 
     <v-container
@@ -26,7 +26,23 @@
       style="min-height:100%; height: 100%"
       v-if="defaultProductType == 'lots'"
     >
-      <LotDraftForm v-if="defaultProductType == 'lots'"></LotDraftForm>
+      <v-row>
+        <v-col>
+          <LotDraftForm />
+        </v-col>
+      </v-row>
+    </v-container>
+
+    <v-container
+      fluid
+      style="min-height:100%; height: 100%"
+      v-if="defaultProductType == 'gtc'"
+    >
+      <v-row>
+        <v-col>
+          <GtcDraftForm />
+        </v-col>
+      </v-row>
     </v-container>
   </section>
 </template>
@@ -36,16 +52,33 @@ import { mapState } from "vuex";
 
 import SetDraftForm from "@/components/Draft/SetsDraftForm";
 import LotDraftForm from "@/components/Draft/Lot/LotDraftForm";
+import GtcDraftForm from "@/components/Draft/Gtc/GtcDraftForm";
 
 export default {
   components: {
     SetDraftForm,
-    LotDraftForm
+    LotDraftForm,
+    GtcDraftForm
   },
   computed: {
     ...mapState({
       defaultProductType: state => state.settings.defaultProductType
-    })
+    }),
+    usesSetsForm() {
+      switch (this.defaultProductType) {
+        case "sets":
+          return true;
+          break;
+        case "singles":
+          return true;
+          break;
+        case "adult":
+          return true;
+          break;
+        default:
+          return false;
+      }
+    }
   }
 };
 </script>
