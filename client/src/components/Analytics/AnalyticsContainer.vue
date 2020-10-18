@@ -4,7 +4,7 @@
     <div class="d-flex flex-wrap justify-space-between align-center">
       <div class="d-flex flex-shrink">
         <h1 class="ma-0">
-          <v-icon large class="mr-1">fa-chart-bar</v-icon>Anayltics
+          <v-icon large class="mr-1">fa-chart-bar</v-icon>Analytics
         </h1>
       </div>
       <div class="d-flex flex-grow flex-wrap m-3">
@@ -40,7 +40,18 @@
       </v-tab-item>
 
       <v-tab-item key="detailed" class="pt-2">
-        <div class="d-flex flex-wrap justify-space-between align-start">
+        <div class="d-flex align-center justify-center">
+          <AnalyticsGrandTotal
+            class="mx-auto my-2"
+            :title="analyticsDaysAsString"
+            :newItems="newItems"
+            :existingItems="existingItems"
+          />
+        </div>
+
+        <v-divider class="my-1"></v-divider>
+
+        <div class="d-flex flex-wrap justify-space-between align-start mt-2">
           <div class="d-flex align-end justify-center ">
             <DatasetTypeButton :isActive.sync="showNewItems" />
           </div>
@@ -54,16 +65,8 @@
             />
           </div>
         </div>
-        <v-divider class="my-1"></v-divider>
 
-        <div class="d-flex align-center justify-center">
-          <AnalyticsGrandTotal
-            class="mx-auto my-2"
-            :title="analyticsDaysAsString"
-            :newItems="newItems"
-            :existingItems="existingItems"
-          />
-        </div>
+        <v-divider class="my-1"></v-divider>
 
         <div class="d-flex flex-grow justify-start align-center">
           <v-dialog
