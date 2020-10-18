@@ -1,17 +1,17 @@
 module.exports = {
   createSchema: {
     description: "Creates a Lot Draft record using supplied values. ",
-    tags: ["Lots"],
+    tags: ["Draft", "Lots"],
     summary: "(C)of the CRUD for Lot Draft records",
     security: [
       {
-        token: []
-      }
+        token: [],
+      },
     ],
 
     //TODO MAKE PROPER BODY - also doenst seem to be working yet ?
     body: {
-      type: "object"
+      type: "object",
     },
 
     //TODO MAKE PROPER RESPONSE
@@ -24,16 +24,16 @@ module.exports = {
             type: "object",
             properties: {
               affectedRows: {
-                type: "string"
+                type: "string",
               },
               insertId: {
-                type: "string"
-              }
-            }
-          }
-        }
-      }
-    }
+                type: "string",
+              },
+            },
+          },
+        },
+      },
+    },
   },
 
   checkTitleSchema: {
@@ -43,8 +43,8 @@ module.exports = {
       "Checks to make sure that the title we are trying to save for a Lot draft is not already in use by us on ebay",
     security: [
       {
-        token: []
-      }
+        token: [],
+      },
     ],
 
     //TODO MAKE PROPER BODY - also doenst seem to be working yet ?
@@ -52,10 +52,10 @@ module.exports = {
       type: "object",
       properties: {
         title: {
-          type: "string"
-        }
-      }
-    }
+          type: "string",
+        },
+      },
+    },
 
     /*
     //TODO MAKE PROPER RESPONSE
@@ -85,5 +85,5 @@ module.exports = {
       }
     }
     */
-  }
+  },
 };
