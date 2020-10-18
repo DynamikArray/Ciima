@@ -173,7 +173,7 @@ import GtcDraftImages from "./Images/GtcDraftImages";
 import LocationCode from "./formFields/LocationCode";
 import InventoryPrice from "./formFields/InventoryPrice";
 import InventoryQuantity from "./formFields/InventoryQuantity";
-import EbayCategoryPicker from "./formFields/EbayCategoryPicker";
+import EbayCategoryPicker from "./formFields/EbayCategoryDropdown";
 import EbayStoreCategory from "./formFields/EbayStoreCategory";
 import MainCharacter from "./formFields/MainCharacter";
 import Publisher from "./formFields/Publisher";
