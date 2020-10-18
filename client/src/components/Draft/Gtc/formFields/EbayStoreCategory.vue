@@ -9,6 +9,7 @@
       :items="ebayStoreCategories"
       @input="onUpdate"
       :rules="rules"
+      :value="value"
     >
     </v-select>
   </div>

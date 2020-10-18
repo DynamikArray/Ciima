@@ -12,7 +12,10 @@ const fieldRules = {
     v => !!v || "Location/Sku is a required field",
     v => v.length <= 50 || "Location Code must be less than 50 characters"
   ],
-  price: [v => !!v || "Price is a required field"],
+  price: [
+    v => !!v || "Price is a required field",
+    v => !!Number(v) > 0 || "Price must be greater than zero or is not a number"
+  ],
   quantity: [
     v => !!v || "Quantity is a required field",
     v =>

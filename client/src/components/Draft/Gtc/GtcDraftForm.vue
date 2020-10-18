@@ -57,6 +57,7 @@
         <v-col class="py-0">
           <EbayCategoryPicker
             @categorySelected="updateLocalParams"
+            :value="ebaySiteCategoryId"
             :rules="rules.ebaySiteCategoryId"
           />
         </v-col>
@@ -119,21 +120,50 @@
 
       <v-row>
         <v-col>
-          <div class="d-flex justify-center align-center mt-5 mb-10">
-            <v-btn color="red" @click.prevent="clearDraft" class="mx-10">
-              <v-icon small class="mr-1">fa-trash</v-icon>Reset
-            </v-btn>
-            <v-btn color="success" @click.prevent="saveDraft" class="mx-3">
-              <v-icon small class="mr-1">fa-upload</v-icon>Save
-            </v-btn>
+          <div class="d-flex align-center justify-center">
+            <div class="d-flex flex-column align-center justify-start">
+              <div class="d-flex align-center justify-space-between my-3">
+                <v-btn color="red" @click.prevent="clearDraft" class="mx-10">
+                  <v-icon small class="mr-1">fa-trash</v-icon>Reset
+                </v-btn>
+
+                <v-btn color="success" @click.prevent="saveDraft" class="mx-3">
+                  <v-icon small class="mr-1">fa-upload</v-icon>Save
+                </v-btn>
+              </div>
+
+              <div class="d-flex align-center justify-start mb-5">
+                <v-alert type="error" dense v-show="!blnValidForm">
+                  There are errors with your form, please fix before saving.
+                </v-alert>
+              </div>
+            </div>
           </div>
         </v-col>
       </v-row>
     </v-container>
+
+    <v-dialog v-model="savingGtcDraft" hide-overlay persistent width="300">
+      <v-card color="primary" dark class="pt-2">
+        <v-card-text>
+          <h4 class="text-center mb-2">
+            <v-icon class="mr-2">fas fa-cloud-upload-alt</v-icon
+            >{{ savingGtcDraftMessage || "Saving ..." }}
+          </h4>
+          <v-progress-linear
+            indeterminate
+            color="white"
+            class="mt-1"
+          ></v-progress-linear>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </v-form>
 </template>
 
 <script>
+import axios from "axios";
+
 import Heading from "./Heading";
 import InventoryTitle from "./formFields/InventoryTitle";
 
@@ -157,6 +187,13 @@ const { mapFields } = createHelpers({
   getterType: "gtcs/draft/getField",
   mutationType: "gtcs/draft/updateField"
 });
+
+import { CURRENT_GTC_DRAFT_SAVE } from "@/store/action-types";
+import {
+  CURRENT_GTC_DRAFT_SAVING,
+  UPDATE_API_STATUS,
+  RESET_GTC_DRAFT
+} from "@/store/mutation-types";
 
 export default {
   components: {
@@ -206,7 +243,8 @@ export default {
     },
 
     clearDraft() {
-      console.log("CLEAR THE DRAFT DUMMY");
+      this.blnValidForm = false;
+      this.$store.commit(`gtcs/draft/${RESET_GTC_DRAFT}`);
     },
 
     async saveDraft() {
@@ -226,6 +264,120 @@ export default {
       } finally {
         document.body.style.cursor = "default";
       }
+    },
+
+    async handleImageUploading() {
+      this.updateLoadingStatus(
+        true,
+        "Preparing images for upload to remote server."
+      );
+
+      var unsignedUploadPreset = "ciima_lot_photos";
+      var cloudName = "ciima"; //FPVLink rebrand
+      var url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload/`;
+      const imagesLength = this.images.length;
+
+      for (var i = 0; i < imagesLength; i++) {
+        let fd = new FormData();
+        let img = this.images[i].src;
+        fd.append("file", img);
+        fd.append("upload_preset", unsignedUploadPreset);
+        fd.append("tags", "browser_upload"); // Optional - add tag for image admin in Cloudinary
+        fd.append("folder", "lotPhotos");
+
+        try {
+          this.updateLoadingStatus(
+            true,
+            `Uploading image ${i + 1} of ${imagesLength} to remote server`
+          );
+
+          const resp = await axios({
+            method: "post",
+            url,
+            data: fd
+          });
+
+          if (resp.data && resp.data.secure_url) {
+            this.images[i].src = this.optimizedImageUrl(resp.data.secure_url);
+            this.images[i].saved = true;
+            this.updateLoadingStatus(
+              true,
+              ` SAVED image ${i} of ${imagesLength}!`
+            );
+          }
+        } catch (e) {
+          console.log(e.message);
+          this.$toastr.e(`Error Uploading File : ${e.message}`);
+          return false;
+        }
+      }
+      this.updateLoadingStatus(false, false);
+
+      return true;
+    },
+
+    optimizedImageUrl(imageUrl) {
+      const basePath = "https://res.cloudinary.com/ciima/image/upload";
+
+      if (imageUrl.startsWith(basePath)) {
+        const productPath = "lotPhotos";
+        const fileNameArray = imageUrl.split(`/${productPath}/`);
+        const fileName = fileNameArray[1];
+        const src = `${basePath}/f_auto,fl_lossy,q_auto/${productPath}/${fileName}`;
+        return src;
+      }
+
+      return imageUrl;
+    },
+
+    handleSavingFormData() {
+      //error handle this better
+      if (!this.verifyImagesSaved()) return false;
+      const draft = this.getAllFormFields();
+
+      this.updateLoadingStatus(true, "Saving draft with uploaded images.");
+
+      this.$store
+        .dispatch(`gtcs/draft/${CURRENT_GTC_DRAFT_SAVE}`, draft)
+        .then(result => {
+          this.$store.commit(
+            `api/${UPDATE_API_STATUS}`,
+            `Saved | ${this.locationCode} | ${this.inventoryTitle}`
+          );
+
+          this.$toastr.s(`Draft Saved! ${JSON.stringify(result)}`);
+          //clear draft and start next one
+          this.clearDraft();
+        })
+        .catch(e => {
+          console.log(e);
+          this.$toastr.e(`Error: ${e.message}`);
+        });
+    },
+
+    verifyImagesSaved() {
+      const saved = this.images.filter(image => {
+        if (image.hasOwnProperty("saved")) return true;
+        return false;
+      });
+      //do we have same number of saved as images?
+      if (saved.length == this.images.length) return true;
+      return false;
+    },
+
+    getAllFormFields() {
+      const draft = {};
+      fieldNames.forEach(field => {
+        draft[field] = this[field];
+      });
+      return draft;
+    },
+
+    updateLoadingStatus(loading, loadingMessage) {
+      this.$store.commit(`gtcs/draft/${CURRENT_GTC_DRAFT_SAVING}`, {
+        loading,
+        loadingMessage
+      });
     }
   }
 };

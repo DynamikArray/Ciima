@@ -34,12 +34,19 @@ export default {
     rules: {
       type: [Array],
       default: () => []
+    },
+    value: {
+      type: [Boolean, String]
+    }
+  },
+  watch: {
+    value: function(val) {
+      if (val === null) this.resetLocalValues();
     }
   },
   data: () => ({
     loading: false,
     ebaySiteCategories: [],
-    selected: [],
     categoryLabel: false
   }),
   async created() {
@@ -47,6 +54,11 @@ export default {
   },
   computed: {},
   methods: {
+    resetLocalValues() {
+      this.ebaySiteCategories = [];
+      this.categoryLabel = false;
+      this.fetchCategory({ LevelLimit: 1 });
+    },
     addLeafIndicator(categories, index) {
       return categories
         .filter(cat => {
@@ -81,7 +93,6 @@ export default {
         name: value.CategoryName
       };
       this.categoryLabel = ebaySiteCategory;
-
       this.$emit("categorySelected", { ebaySiteCategoryId: value.CategoryID });
     },
     async fetchCategory(params) {

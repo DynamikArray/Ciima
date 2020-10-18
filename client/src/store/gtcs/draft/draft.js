@@ -32,8 +32,8 @@ const defaultDraft = {
 
   images: [],
   imageToCrop: false,
-  savingLotDraft: false,
-  savingLotDraftMessage: false
+  savingGtcDraft: false,
+  savingGtcDraftMessage: false
 };
 
 const draft = {
@@ -57,13 +57,23 @@ const draft = {
     [RESET_GTC_DRAFT](state) {
       state.locationCode = defaultDraft.locationCode;
       state.inventoryTitle = defaultDraft.inventoryTitle;
-      state.mainCharacter = defaultDraft.mainCharacter;
-      //state.characters = defaultDraft.characters;
-      state.publisher = defaultDraft.publisher;
+
       state.price = defaultDraft.price;
+      state.quantity = defaultDraft.quantity;
+
+      state.mainCharacter = defaultDraft.mainCharacter;
+      state.publisher = defaultDraft.publisher;
+      state.extraDescription = defaultDraft.extraDescription;
+
       state.images = defaultDraft.images;
       state.imageToCrop = defaultDraft.imageToCrop;
-      state.extraDescription = defaultDraft.extraDescription;
+
+      state.ebaySiteCategoryId = defaultDraft.ebaySiteCategoryId;
+      state.ebayStoreCategoryIdOne = defaultDraft.ebayStoreCategoryIdOne;
+      state.ebayStoreCategoryIdTwo = defaultDraft.ebayStoreCategoryIdTwo;
+
+      state.savingGtcDraft = defaultDraft.savingGtcDraft;
+      state.savingGtcDraftMessage = defaultDraft.savingGtcDraftMessage;
     },
     [UPDATE_GTC_DRAFT_IMAGES](state, images) {
       state.images = [...images];
@@ -79,10 +89,10 @@ const draft = {
           "api/requestHandler",
           {
             method: "post",
-            url: "/draft/gtc",
+            url: "/draft/gtcs",
             params,
-            success: `gtc/draft/${CURRENT_GTC_DRAFT_UPDATE}`,
-            loading: `gtc/draft/${CURRENT_GTC_DRAFT_SAVING}`
+            success: `gtcs/draft/${CURRENT_GTC_DRAFT_UPDATE}`,
+            loading: `gtcs/draft/${CURRENT_GTC_DRAFT_SAVING}`
           },
           { root: true }
         );
