@@ -13,6 +13,40 @@
             @change="handleFileUpload"
           />
         </v-alert>
+
+        <div class="grey darken-4 pa-2">
+          <div class="d-flex align-center justify-space-between mt-3">
+            <v-text-field
+              class="px-2"
+              v-model="salesFloor"
+              label="Starting Sales"
+              outlined
+              dense
+            />
+            <v-text-field
+              class="px-2"
+              v-model="shippingCost"
+              label="Shipping Cost"
+              outlined
+              dense
+            />
+            <v-text-field
+              class="px-2"
+              v-model="commishPercent"
+              label="Commission %"
+              outlined
+              dense
+            />
+          </div>
+
+          <v-radio-group v-model="itemsOrder" :column="false" class="">
+            <v-radio key="orig" value="orig" label="Original Order" />
+            <v-radio key="newest" value="date-desc" label="Date Desc" />
+            <v-radio key="oldest" value="date-asc" label="Dates Asc" />
+            <v-radio key="largest" value="gross-desc" label="Gross Desc" />
+            <v-radio key="smallest" value="gross-asc" label="Gross Asc" />
+          </v-radio-group>
+        </div>
       </v-col>
       <v-col col="6">
         <TotalsBox
@@ -20,13 +54,17 @@
           :totalFee="Number(totalFee)"
           :totalNet="Number(totalNet)"
           :totalGross="Number(totalGross)"
+          :shippingObligations="shippingObligations"
+          :shippingCost="Number(shippingCost)"
+          :commishPercent="Number(commishPercent / 100)"
+          :salesFloor="Number(salesFloor)"
         />
       </v-col>
     </v-row>
     <v-row>
       <v-col>
         <v-data-table
-          :items-per-page="500"
+          :items-per-page="25"
           :headers="headers"
           :items="results"
           :item-key="'Transaction Id'"
@@ -47,9 +85,33 @@ export default {
   },
   data: () => ({
     headers,
-    results: []
+    rawResults: [],
+    itemsOrder: "orig",
+    commishPercent: 5,
+    shippingCost: 3.99,
+    salesFloor: 30000
   }),
   computed: {
+    results() {
+      const results = [...this.rawResults];
+
+      switch (this.itemsOrder) {
+        case "date-asc":
+          return results.sort((a, b) => new Date(a.Date) - new Date(b.Date));
+          break;
+        case "date-desc":
+          return results.sort((a, b) => new Date(b.Date) - new Date(a.Date));
+          break;
+        case "gross-asc":
+          return results.sort((a, b) => a.Gross - b.Gross);
+          break;
+        case "gross-desc":
+          return results.sort((a, b) => b.Gross - a.Gross);
+          break;
+        default:
+          return results;
+      }
+    },
     totalGross() {
       return this.results
         .reduce((sum, item) => {
@@ -73,6 +135,22 @@ export default {
           return sum;
         }, 0)
         .toFixed(2);
+    },
+    shippingObligations() {
+      let total = 0;
+      let totalRow = 0;
+
+      this.results.map((item, index) => {
+        if (!totalRow) {
+          if (total > this.salesFloor) totalRow = index;
+        }
+        if (total < this.salesFloor) total = Number(total) + Number(item.Net);
+      });
+
+      return {
+        rowsToThreshold: totalRow,
+        rowsAfterThreshold: this.results.length - totalRow
+      };
     }
   },
   methods: {
@@ -85,7 +163,7 @@ export default {
           worker: true,
           header: true,
           complete: function(results) {
-            _this.results = results.data.filter(row => {
+            _this.rawResults = results.data.filter(row => {
               return row.Type === "eBay Auction Payment";
             });
           }
