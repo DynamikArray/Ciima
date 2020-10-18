@@ -33,6 +33,7 @@ export default {
     return {
       items: [
         { text: "All", value: "" },
+        { text: "Gtcs", value: "gtcs" },
         { text: "Lots", value: "lots" },
         { text: "Sets", value: "sets" },
         { text: "Singles", value: "singles" },

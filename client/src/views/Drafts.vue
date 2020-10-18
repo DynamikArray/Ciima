@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid style="min-height:100%">
+  <v-container fill-height fluid style="">
     <v-row>
       <v-col class="pt-0">
         <DraftsContainer class="" :isMobile="isMobile"></DraftsContainer>

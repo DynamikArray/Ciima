@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="">
     <v-edit-dialog
       ref="dialog"
       persistent
@@ -10,13 +10,15 @@
 
       <template v-slot:input>
         <v-form ref="form" v-on:submit.prevent>
-          <v-text-field
+          <v-textarea
+            rows="2"
             v-model="editValue"
             label="Edit"
             single-line
             :rules="getCorrectRuleType"
             counter
-          ></v-text-field>
+            style="width:500px"
+          ></v-textarea>
         </v-form>
       </template>
     </v-edit-dialog>
@@ -31,6 +33,7 @@ export default {
   props: {
     item: [Object]
   },
+
   data: () => {
     return {
       editValue: ""
@@ -96,4 +99,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style>
+.theme--dark.v-small-dialog__menu-content,
+.theme--dark.v-small-dialog__actions {
+  background: #2d2d2d;
+}
+</style>
