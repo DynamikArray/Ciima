@@ -39,13 +39,45 @@
             />
           </div>
 
-          <v-radio-group v-model="itemsOrder" :column="false" class="">
-            <v-radio key="orig" value="orig" label="Original Order" />
-            <v-radio key="newest" value="date-desc" label="Date Desc" />
-            <v-radio key="oldest" value="date-asc" label="Dates Asc" />
-            <v-radio key="largest" value="gross-desc" label="Gross Desc" />
-            <v-radio key="smallest" value="gross-asc" label="Gross Asc" />
-          </v-radio-group>
+          <v-divider />
+
+          <div class="d-flex align-center justify-center">
+            <h4 class="mb-2 mr-2">Order Sales By:</h4>
+            <div>
+              <v-radio-group v-model="itemsOrder" :column="false" class="">
+                <v-radio
+                  key="orig"
+                  value="orig"
+                  label="Original Order"
+                  color="primary"
+                />
+                <v-radio
+                  key="newest"
+                  value="date-desc"
+                  label="Date Desc"
+                  color="primary"
+                />
+                <v-radio
+                  key="oldest"
+                  value="date-asc"
+                  label="Date Asc"
+                  color="primary"
+                />
+                <v-radio
+                  key="largest"
+                  value="gross-desc"
+                  label="Gross Desc"
+                  color="primary"
+                />
+                <v-radio
+                  key="smallest"
+                  value="gross-asc"
+                  label="Gross Asc"
+                  color="primary"
+                />
+              </v-radio-group>
+            </div>
+          </div>
         </div>
       </v-col>
       <v-col col="6">
@@ -88,9 +120,9 @@ export default {
     headers,
     rawResults: [],
     itemsOrder: "orig",
-    commishPercent: "",
-    shippingCost: "",
-    salesFloor: ""
+    commishPercent: 5,
+    shippingCost: 4.0,
+    salesFloor: 30000
   }),
   computed: {
     results() {

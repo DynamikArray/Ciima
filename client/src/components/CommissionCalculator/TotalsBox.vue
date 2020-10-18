@@ -19,7 +19,7 @@
             Total Gross:
           </h4>
           <h3>
-            {{ totalGross }}
+            {{ Number(totalGross).toFixed(2) | currency }}
           </h3>
         </div>
 
@@ -28,7 +28,7 @@
             Total Fees:
           </h4>
           <h3>
-            {{ totalFee }}
+            {{ Number(totalFee).toFixed(2) | currency }}
           </h3>
         </div>
 
@@ -39,7 +39,7 @@
             Total Net:
           </h4>
           <h3>
-            {{ totalNet }}
+            {{ Number(totalNet).toFixed(2) | currency }}
           </h3>
         </div>
 
@@ -48,7 +48,7 @@
             Total Tax:
           </h4>
           <h3>
-            {{ totalTax }}
+            {{ Number(totalTax).toFixed(2) | currency }}
           </h3>
         </div>
 
@@ -58,7 +58,7 @@
             Actual Sales:
           </h4>
           <h2>
-            {{ totalActual }}
+            {{ Number(totalActual).toFixed(2) | currency }}
           </h2>
         </div>
       </v-col>
@@ -72,14 +72,14 @@
               class="d-flex justify-space-between align-center"
             >
               <div class="d-flex justify-space-between align-center mr-1">
-                <h5>
+                <h5 class="mr-1">
                   <v-icon small class="mb-1 mr-1">fa fa-question-circle</v-icon
                   >Rows To Starting#:
                 </h5>
                 <h3>{{ shippingObligations.rowsToThreshold }}</h3>
               </div>
               <div class="d-flex justify-space-between align-center ml-1">
-                <h5>Rows After:</h5>
+                <h5 class="mr-1">Rows After:</h5>
                 <h3>{{ shippingObligations.rowsAfterThreshold }}</h3>
               </div>
             </div>
@@ -105,7 +105,7 @@
                 Shipping Cost:
               </h4>
               <h3>
-                {{ Number(shippingCosts).toFixed(2) }}
+                {{ Number(shippingCosts).toFixed(2) | currency }}
               </h3>
             </div>
           </template>
@@ -132,7 +132,7 @@
                 Actual-Starting#-Shipping
               </h4>
               <h3>
-                {{ Number(salesMinusShipping).toFixed(2) }}
+                {{ Number(salesMinusShipping).toFixed(2) | currency }}
               </h3>
             </div>
           </template>
@@ -148,31 +148,35 @@
 
         <v-divider class="my-1"></v-divider>
 
-        <v-tooltip top color="grey lighten-3 black--text">
-          <template v-slot:activator="{ on, attrs }">
-            <div
-              v-bind="attrs"
-              v-on="on"
-              class="d-flex justify-space-between align-center"
-            >
-              <h4>
-                <v-icon small class="mb-1">fa fa-question-circle</v-icon>
-                Commish Result
-              </h4>
-              <h3>
-                {{ Number(commishResult).toFixed(2) }}
-              </h3>
-            </div>
-          </template>
-          <div class="text-center title">
-            <div>((Actual - Starting# - Shipping) * Commish % )</div>
-            <div>
-              ({{ totalActual }} - {{ salesFloor }} - {{ shippingCosts }} ) *
-              {{ commishPercent }} =
-              {{ Number(commishResult).toFixed(2) }}
-            </div>
+        <v-slide-y-reverse-transition mode="out-in">
+          <div class="" :key="commishResult">
+            <v-tooltip top color="grey lighten-3 black--text">
+              <template v-slot:activator="{ on, attrs }">
+                <div
+                  v-bind="attrs"
+                  v-on="on"
+                  class="d-flex justify-space-between align-center"
+                >
+                  <h4>
+                    <v-icon small class="mb-1">fa fa-question-circle</v-icon>
+                    Commish Result
+                  </h4>
+                  <h1 class="green--text">
+                    {{ Number(commishResult).toFixed(2) | currency }}
+                  </h1>
+                </div>
+              </template>
+              <div class="text-center title">
+                <div>((Actual - Starting# - Shipping) * Commish % )</div>
+                <div>
+                  ({{ totalActual }} - {{ salesFloor }} - {{ shippingCosts }} )
+                  * {{ commishPercent }} =
+                  {{ Number(commishResult).toFixed(2) }}
+                </div>
+              </div>
+            </v-tooltip>
           </div>
-        </v-tooltip>
+        </v-slide-y-reverse-transition>
       </v-col>
     </v-row>
   </v-alert>
