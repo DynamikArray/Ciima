@@ -1,5 +1,8 @@
 const createConfiguratorValue = (draftType) => {
   switch (draftType) {
+    case "gtcs":
+      return "Ciima - Gtcs - GTC Template";
+      break;
     case "lots":
       return "Ciima - Lots - 5 Day Auction";
       break;
