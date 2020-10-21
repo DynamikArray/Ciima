@@ -5,11 +5,9 @@
       v-if="item.status === 'Open'"
       class="d-flex justify-space-around align-center"
     >
-      <!--
       <v-btn xSmall color="warning" @click="editItem(item.id)" class="mx-1">
         <v-icon xSmall>fa-edit</v-icon>
       </v-btn>
-    -->
 
       <v-btn xSmall color="red" @click="deleteItem(item.id)" class="mx-1">
         <v-icon xSmall>fa-times-circle</v-icon>
