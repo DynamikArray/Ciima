@@ -30,6 +30,7 @@ export default {
       return this.item.main_image;
     },
     otherImages() {
+      if (this.item.draftType === "singles") return false;
       return this.item.other_images;
     }
   }

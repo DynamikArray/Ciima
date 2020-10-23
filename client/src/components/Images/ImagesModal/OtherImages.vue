@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex align-center justify-start">
     <div
-      v-for="image in otherImages"
+      v-for="image in getOtherImages"
       :key="`key-${image.imageUrl}`"
       class="ma-1 grey darken-4 pa-2"
       @click="handleClick(image)"
@@ -34,6 +34,11 @@ export default {
     maxWidth: 100,
     maxHeight: 90
   }),
+  computed: {
+    getOtherImages() {
+      return this.otherImages;
+    }
+  },
   methods: {
     handleClick({ imageUrl }) {
       this.$emit("imageSelected", imageUrl);

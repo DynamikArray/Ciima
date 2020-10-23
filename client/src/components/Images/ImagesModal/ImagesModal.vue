@@ -1,5 +1,11 @@
 <template>
-  <v-dialog v-model="dialog" width="600" :scrollable="true">
+  <v-dialog
+    v-model="dialog"
+    width="620"
+    :scrollable="true"
+    overlay-color="grey darken-4"
+    overlay-opacity=".7"
+  >
     <template v-slot:activator="{ on, attrs }">
       <div
         v-bind="attrs"
@@ -7,7 +13,7 @@
         :style="`min-height: ${minHeight}px;`"
         class="d-flex justify-center mx-auto pa-1"
       >
-        <div class="d-flex align-center">
+        <div class="d-flex align-center justify-center">
           <v-img
             v-if="mainImageUrl"
             :key="makeFileNameKey()"
@@ -28,13 +34,14 @@
       </div>
     </template>
 
-    <v-card class="secondary darken-1">
+    <v-card class="">
       <v-card-text class="text-center py-1">
         <MainImage :imageFull="selectedImage" />
       </v-card-text>
       <v-divider></v-divider>
       <v-card-text>
         <OtherImages
+          v-if="otherImages"
           :otherImages="allImages"
           @imageSelected="handleImageSelection"
         />
