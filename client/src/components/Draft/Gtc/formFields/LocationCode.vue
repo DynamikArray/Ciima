@@ -14,6 +14,9 @@
       hint="Location code for the item"
       counter
       :rules="rules"
+      validate-on-blur
+      @blur="blur"
+      :error-messages="errorMessages"
     ></v-text-field>
   </div>
 </template>
@@ -25,7 +28,12 @@ export default {
       type: [Array],
       default: () => []
     },
-    value: [String]
+    value: [String],
+    errorMessages: {
+      type: [Array],
+      default: () => []
+    },
+    blur: [Function]
   },
   data: () => ({}),
   methods: {

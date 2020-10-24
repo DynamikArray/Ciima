@@ -33,6 +33,8 @@
             @update="updateLocalParams"
             :value="locationCode"
             :rules="rules.locationCode"
+            :blur="checkLocationCode"
+            :errorMessages="locationCodeErrorMessages"
           />
         </v-col>
         <v-col class="py-0">
@@ -212,7 +214,8 @@ export default {
   },
   data: () => ({
     blnValidForm: false,
-    rules: fieldRules
+    rules: fieldRules,
+    locationCodeErrorMessages: []
   }),
   computed: {
     ...mapState({
@@ -233,16 +236,24 @@ export default {
     },
 
     validateForm() {
+      if (this.locationCodeErrorMessages.length) {
+        this.$toastr.e(
+          "Its look like there is already an item in that location!"
+        );
+        return false;
+      }
       //check for images
       if (!this.images.length) {
         this.$toastr.e("You must include one or more images in your listing.");
         return false;
       }
       //checks form fields
-      return this.$refs.GtcDraftForm.validate();
+      const valid = this.$refs.GtcDraftForm.validate();
+      return valid;
     },
 
     clearDraft() {
+      this.locationCodeErrorMessages = [];
       this.blnValidForm = false;
       this.$store.commit(`gtcs/draft/${RESET_GTC_DRAFT}`);
       document.getElementById("GTC-inventoryTitle").focus();
@@ -264,6 +275,32 @@ export default {
         return false;
       } finally {
         document.body.style.cursor = "default";
+      }
+    },
+
+    async checkLocationCode(e) {
+      const locationCode = e.target.value;
+
+      const res = await this.$store
+        .dispatch(`api/requestHandler`, {
+          method: "post",
+          url: "inventory/utility/checkLocationCode",
+          params: { locationCode }
+        })
+        .catch(err => {
+          this.$toastr.e("Couldnt verify location");
+        });
+
+      if (res.result && !res.error) {
+        if (res.result.length) {
+          this.locationCodeErrorMessages = ["Items exist in location already"];
+        } else {
+          this.locationCodeErrorMessages = [];
+        }
+      }
+
+      if (res.error && !res.result) {
+        this.$toastr.e(res.error);
       }
     },
 
