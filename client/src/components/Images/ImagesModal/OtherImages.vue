@@ -36,7 +36,12 @@ export default {
   }),
   computed: {
     getOtherImages() {
-      return this.otherImages;
+      return this.otherImages.map(img => {
+        if (img.imageUrl.includes("/zCustomApps")) {
+          return { imageUrl: `https://searchlightcomics.com${img.imageUrl}` };
+        }
+        return img;
+      });
     }
   },
   methods: {
