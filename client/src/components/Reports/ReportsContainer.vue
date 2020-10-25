@@ -42,6 +42,10 @@ import ReportFilters from "./ReportFilters";
 
 const { format, subDays } = require("date-fns");
 
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
 export default {
   props: {
     tab: [Boolean, Number]
@@ -100,37 +104,57 @@ export default {
         ...params
       });
     },
+
     printCurrentTab() {
-      // Get HTML to print from element
-      const prtHtml = document.getElementById("reportsWrapper").innerHTML;
-      const stylesHtml =
-        '<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">';
-      // Get all stylesheets HTML
-      /*
-      let stylesHtml = "";
-      for (const node of [
-        ...document.querySelectorAll('link[rel="stylesheet"], style')
-      ]) {
-        stylesHtml += node.outerHTML;
-      }
-      */
+      const _this = this;
 
-      // Open the print window
-      const WinPrint = window.open("", "title", "attributes");
+      //Sort Ascending Title
+      const soldItems = this.soldItems.sort((a, b) =>
+        a.linnworksTitle > b.linnworksTitle ? 1 : -1
+      );
 
-      WinPrint.document.write(`<!DOCTYPE html>
-      <html>
-        <head>
-          ${stylesHtml}
-        </head>
-        <body>
-          ${prtHtml}
-        </body>
-      </html>`);
+      //main method handling
+      var dd = {
+        pageMargins: [10, 10, 10, 10],
+        pageOrientation: "landscape",
+        content: this.createPDFContent(soldItems)
+      };
 
-      WinPrint.document.close();
-      WinPrint.focus();
-      WinPrint.print();
+      pdfMake.createPdf(dd).open();
+    },
+
+    createPDFContent(soldItems) {
+      soldItems.unshift({
+        processedOnDate: "Date",
+        pricePerUnit: "Price",
+        linnworksTitle: "Title"
+      });
+
+      return {
+        layout: "lightHorizontalLines",
+        table: {
+          widths: [70, 40, "*"],
+          body: soldItems.map((item, i) => {
+            return [
+              {
+                text: item.processedOnDate,
+                alignment: "left",
+                fontSize: 12
+              },
+              {
+                text: item.pricePerUnit,
+                alignment: "center",
+                fontSize: 12
+              },
+              {
+                text: item.linnworksTitle,
+                alignment: "left",
+                fontSize: 12
+              }
+            ];
+          })
+        }
+      };
     }
   }
 };
