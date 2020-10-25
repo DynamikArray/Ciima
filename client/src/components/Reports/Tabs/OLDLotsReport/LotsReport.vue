@@ -36,7 +36,7 @@
 
 <script>
 import LoadingModal from "@/components/Loading/LoadingModal";
-import TagsList from "@/components/Reports/Tabs/LotReport/TagsList";
+import TagsList from "@/components/Reports/Tabs/LotsReport/TagsList";
 
 export default {
   props: {

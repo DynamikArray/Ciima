@@ -1,5 +1,6 @@
 <template>
-  <div class="d-flex justify-end align-center">
+  <div class="d-flex justify-space-betwen align-center w-100">
+    <h1 class="mr-auto">{{ categoryName }}</h1>
     <DateFilter
       class="mt-0 mx-2"
       fieldName="startDate"
@@ -14,31 +15,32 @@
       :fieldValue="endDate"
       :getData="getData"
     />
-    <CategoryNameDropdown
-      class="mt-0 mx-2"
-      fieldName="categoryName"
-      fieldLabel="Lot Type"
-      :fieldValue="categoryName"
-      :getData="getData"
-    />
+    <div class="align-center justify-center mt-3 ml-3">
+      <v-btn color="primary" @click="printGrid"
+        ><v-icon class="mr-2">fa fa-print</v-icon>Print</v-btn
+      >
+    </div>
   </div>
 </template>
 
 <script>
 import DateFilter from "./Filters/DateFilter";
-import CategoryNameDropdown from "./Filters/CategoryNameDropdown";
 
 export default {
   props: {
     startDate: [String],
     endDate: [String],
-    categoryName: [String],
     loading: [Boolean],
-    getData: [Function]
+    getData: [Function],
+    categoryName: [String]
   },
   components: {
-    DateFilter,
-    CategoryNameDropdown
+    DateFilter
+  },
+  methods: {
+    printGrid() {
+      this.$emit("printGrid");
+    }
   }
 };
 </script>
