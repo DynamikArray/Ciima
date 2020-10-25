@@ -7,7 +7,15 @@
       :items="items"
       :options="options"
       :footer-props="footerProps"
+      group-by="mainCharacters"
     >
+      <template v-slot:group.header="{ item, group, groupBy }">
+        <td colspan="3" class="secondary lighten-1">
+          <div class="subtitle-1 w-100">
+            Main Character: {{ group || "Not Provided" }}
+          </div>
+        </td>
+      </template>
       <template v-slot:item.pricePerUnit="{ item }">
         <div class="subtitle-1">
           {{ item.pricePerUnit | currency }}
