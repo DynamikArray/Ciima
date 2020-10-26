@@ -11,8 +11,8 @@
     >
       <template v-slot:group.header="{ item, group, groupBy }">
         <td colspan="3" class="secondary lighten-1">
-          <div class="subtitle-1 w-100">
-            Main Character: {{ group || "Not Provided" }}
+          <div class="subtitle-1 w-100 d-flex align-center justify-start">
+            <h3 class="mx-3">{{ group || "No character provided" }}</h3>
           </div>
         </td>
       </template>

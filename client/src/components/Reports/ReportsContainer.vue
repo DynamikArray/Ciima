@@ -115,15 +115,46 @@ export default {
 
       //main method handling
       var dd = {
-        pageMargins: [10, 10, 10, 10],
+        pageMargins: [10, 20, 10, 20],
         pageOrientation: "landscape",
-        content: this.createPDFContent(soldItems)
+        header: function(currentPage, pageCount, pageSize) {
+          const opts = { currentPage, pageCount, pageSize };
+          return _this.buildReportHeader(opts);
+        },
+        content: this.buildPDFContent(soldItems),
+        footer: function(currentPage, pageCount, pageSize) {
+          const opts = { currentPage, pageCount, pageSize };
+          return _this.buildReportFooter(opts);
+        }
       };
 
       pdfMake.createPdf(dd).open();
     },
 
-    createPDFContent(soldItems) {
+    buildReportHeader: function({ currentPage }) {
+      const { categoryName, startDate, endDate } = this.filters;
+      const dateFilter = this.$options.filters.date;
+
+      if (currentPage == 1) {
+        return {
+          text: `Sold Items Report: ${categoryName} from ${dateFilter(
+            startDate
+          )} through ${dateFilter(endDate)}`,
+          fontSize: 16,
+          alignment: "center"
+        };
+      }
+    },
+
+    buildReportFooter: function({ currentPage, pageCount }) {
+      return {
+        text: `Page ${currentPage} of ${pageCount}`,
+        fontSize: 10,
+        alignment: "center"
+      };
+    },
+
+    buildPDFContent(soldItems) {
       soldItems.unshift({
         processedOnDate: "Date",
         pricePerUnit: "Price",
@@ -133,13 +164,14 @@ export default {
       return {
         layout: "lightHorizontalLines",
         table: {
+          headerRows: 1,
           widths: [70, 40, "*"],
           body: soldItems.map((item, i) => {
             return [
               {
                 text: item.processedOnDate,
                 alignment: "left",
-                fontSize: 12
+                fontSize: 10
               },
               {
                 text: item.pricePerUnit,
