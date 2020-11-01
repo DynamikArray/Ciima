@@ -125,7 +125,8 @@ import { headers } from "./tableHeaders.js";
 
 import {
   UPDATE_INVENTORY_ITEM_LEVELS,
-  UPDATE_ITEM_FIELDS
+  UPDATE_ITEM_FIELDS,
+  UPDATE_ITEM_PRICE
 } from "@/store/action-types.js";
 import { UPDATE_API_STATUS } from "@/store/mutation-types.js";
 
@@ -190,6 +191,9 @@ export default {
         case "StockLevel":
           this.saveLocationField(fieldName, fieldValueProp, item);
           break;
+        case "Price":
+          this.saveItemPrice("Price", fieldValueProp, item);
+          break;
         default:
           this.saveItemField(fieldName, fieldValueProp, item);
       }
@@ -242,6 +246,30 @@ export default {
           this.fieldNotSaved({ name: fieldName, value: fieldValue });
         });
     },
+
+    saveItemPrice(fieldName, fieldValueProp, item) {
+      const fieldValue = this.getDescendantProp(item, fieldValueProp);
+      const params = {
+        inventoryItemId: item.stockItemId,
+        fieldValue: fieldValue
+      };
+
+      this.$store
+        .dispatch(`linnworks/${UPDATE_ITEM_PRICE}`, params)
+        .then(resp => {
+          const { result } = resp;
+          if (result) this.fieldSaved({ name: fieldName, value: fieldValue });
+          if (!result)
+            this.fieldNotSaved({
+              name: fieldName,
+              value: fieldValue
+            });
+        })
+        .catch(err => {
+          this.fieldNotSaved({ name: fieldName, value: fieldValue });
+        });
+    },
+
     fieldSaved({ name, value }) {
       //update our status bar
       this.$store.commit(

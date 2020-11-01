@@ -12,7 +12,8 @@ import {
 import {
   SEARCH_INVENTORY,
   UPDATE_INVENTORY_ITEM_LEVELS,
-  UPDATE_ITEM_FIELDS
+  UPDATE_ITEM_FIELDS,
+  UPDATE_ITEM_PRICE
 } from "@/store/action-types";
 
 const linnworks = {
@@ -70,6 +71,20 @@ const linnworks = {
         {
           method: "post",
           url: "/inventory/linnworks/updateItemField",
+          params: params,
+          success: `linnworks/${UPDATE_INVENTORY_RESPONSE}`,
+          loading: `linnworks/${UPDATE_INVENTORY_LOADING}`
+        },
+        { root: true }
+      );
+    },
+
+    async [UPDATE_ITEM_PRICE]({ dispatch, commit }, params) {
+      return await dispatch(
+        "api/requestHandler",
+        {
+          method: "post",
+          url: "/inventory/linnworks/updateItemPrices",
           params: params,
           success: `linnworks/${UPDATE_INVENTORY_RESPONSE}`,
           loading: `linnworks/${UPDATE_INVENTORY_LOADING}`
