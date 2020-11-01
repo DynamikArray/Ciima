@@ -5,17 +5,17 @@ module.exports = {
     summary: "Search through linnworks inventory using A, B, C",
     security: [
       {
-        token: []
-      }
+        token: [],
+      },
     ],
     body: {
       type: "object",
       properties: {
         searchString: {
-          type: "string"
-        }
-      }
-    }
+          type: "string",
+        },
+      },
+    },
 
     /*
     response: {
@@ -41,29 +41,29 @@ module.exports = {
       "Update location and or quantity of Inventory items values in Linnworks",
     security: [
       {
-        token: []
-      }
+        token: [],
+      },
     ],
     body: {
       type: "object",
       properties: {
         inventoryItemId: {
-          type: "string"
+          type: "string",
         },
         locationId: {
-          type: "string"
+          type: "string",
         },
         fieldName: {
-          type: "number"
+          type: "number",
         },
         fieldValue: {
-          type: "string"
+          type: "string",
         },
         changeSource: {
-          type: "string"
-        }
-      }
-    }
+          type: "string",
+        },
+      },
+    },
   },
 
   updateInventoryItemFieldSchema: {
@@ -73,22 +73,46 @@ module.exports = {
       "Update non Location Fields of Inventory items values in Linnworks ",
     security: [
       {
-        token: []
-      }
+        token: [],
+      },
     ],
     body: {
       type: "object",
       properties: {
         inventoryItemId: {
-          type: "string"
+          type: "string",
         },
         fieldName: {
-          type: "number"
+          type: "number",
         },
         fieldValue: {
-          type: "string"
-        }
-      }
-    }
-  }
+          type: "string",
+        },
+      },
+    },
+  },
+
+  updateItemPricesSchema: {
+    description:
+      "Updates an Inventory items prices, including any listing template prices",
+    tags: ["Inventory"],
+    summary:
+      "This will update an inventory items prices, including any listing templates, and push that updated price to the template.",
+    security: [
+      {
+        token: [],
+      },
+    ],
+    body: {
+      type: "object",
+      properties: {
+        inventoryItemId: {
+          type: "string",
+        },
+        fieldValue: {
+          type: "string",
+        },
+      },
+    },
+  },
 };

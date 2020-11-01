@@ -1,25 +1,27 @@
 const {
   searchInventorySchema,
   updateLocationOrQuantitySchema,
-  updateInventoryItemFieldSchema
+  updateInventoryItemFieldSchema,
+  updateItemPricesSchema,
 } = require("../../../../schemas/v1/inventory/linnworks");
 /**
  * Info routes endpoints
  *
  * @param {Fastify} fastify
  */
-module.exports = function(fastify, opts, next) {
+module.exports = function (fastify, opts, next) {
   const {
     searchInventoryHandler,
     updateLocationOrQuantityHandler,
-    updateItemFieldHandler
+    updateItemFieldHandler,
+    updateItemPricesHandler,
   } = require("../../../../handlers/v1/inventory/linnworks")(fastify);
 
   //Inventory Search
   const linnworksSearch = {
     preValidation: fastify.authenticate,
     schema: searchInventorySchema,
-    handler: searchInventoryHandler
+    handler: searchInventoryHandler,
   };
   //http verbs
   fastify.post("/inventory/linnworks/search", linnworksSearch);
@@ -28,7 +30,7 @@ module.exports = function(fastify, opts, next) {
   const linnworksUpdateLocationOrQuantity = {
     preValidation: fastify.authenticate,
     schema: updateLocationOrQuantitySchema,
-    handler: updateLocationOrQuantityHandler
+    handler: updateLocationOrQuantityHandler,
   };
 
   fastify.post(
@@ -40,12 +42,24 @@ module.exports = function(fastify, opts, next) {
   const linnworksUpdateItemField = {
     preValidation: fastify.authenticate,
     schema: updateInventoryItemFieldSchema,
-    handler: updateItemFieldHandler
+    handler: updateItemFieldHandler,
   };
 
   fastify.post(
     "/inventory/linnworks/updateItemField",
     linnworksUpdateItemField
+  );
+
+  //ALL Price fields for an item
+  const linnworksUpdateItemPrices = {
+    //preValidation: fastify.authenticate,
+    schema: updateItemPricesSchema,
+    handler: updateItemPricesHandler,
+  };
+
+  fastify.post(
+    "/inventory/linnworks/updateItemPrices",
+    linnworksUpdateItemPrices
   );
 
   next();

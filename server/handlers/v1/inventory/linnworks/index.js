@@ -7,6 +7,10 @@ const {
 } = require("../../../../../util/auditLog/logActionTypes");
 const { LINNWORKS } = require("../../../../../util/auditLog/logResourceTypes");
 
+/*item repricing*/
+const updateItemRetailPrice = require("./updateItemRetailPrice");
+const updateItemTemplatePrice = require("./updateItemTemplatePrice");
+
 module.exports = (fastify) => ({
   /**
    * [searchInventoryHandler description]
@@ -121,6 +125,36 @@ module.exports = (fastify) => ({
         inventoryItemId,
         LINNWORKS,
         JSON.stringify({ fieldName, fieldValue })
+      );
+    }
+  },
+
+  /**
+   * [updateItemPricesHandler description]
+   * @param  {[type]}  req [description]
+   * @param  {[type]}  res [description]
+   * @return {Promise}     [description]
+   */
+  updateItemPricesHandler: async (req, res) => {
+    const { inventoryItemId, fieldValue } = req.body;
+    const results = await Promise.all([
+      updateItemRetailPrice(inventoryItemId, fieldValue),
+      updateItemTemplatePrice(inventoryItemId, fieldValue),
+    ]);
+
+    const hasError = results.filter((result) => result.error);
+    if (hasError.length > 0) return { error: hasError };
+    return { result: "Price Changed Successfully!", ...results[0].result };
+    try {
+    } catch (error) {
+      fastify.winston.error(error);
+    } finally {
+      fastify.auditLogger.log(
+        UPDATE_ITEM_FIELD,
+        req.user.id,
+        inventoryItemId,
+        LINNWORKS,
+        JSON.stringify({ fieldName: "Prices", fieldValue })
       );
     }
   },
