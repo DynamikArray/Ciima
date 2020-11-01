@@ -25,20 +25,20 @@ export const headers = [
     align: "center",
     sortable: true,
     value: "location.qty",
-    width: "40px"
+    width: "50px"
   },
   {
     text: "Bin/Rack",
     align: "center",
     sortable: true,
     value: "location.name",
-    width: "100px"
+    width: "120px"
   },
   {
     text: "Price",
     align: "center",
     sortable: true,
     value: "price",
-    width: "70px"
+    width: "90px"
   }
 ];

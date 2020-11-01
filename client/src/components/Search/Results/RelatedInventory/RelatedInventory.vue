@@ -74,6 +74,7 @@
             </template>
             <template v-slot:input>
               <v-text-field
+                autocomplete="off"
                 v-model="item.location.qty"
                 label="Edit"
                 single-line
@@ -85,26 +86,7 @@
         </template>
 
         <template v-slot:item.price="{ item }">
-          <v-edit-dialog
-            :return-value.sync="item.price"
-            large
-            persistent
-            @save="saveChanges('Price', 'price', item)"
-          >
-            <div>{{ item.price }}</div>
-            <template v-slot:input>
-              <div class="mt-4 title">Update Price</div>
-            </template>
-            <template v-slot:input>
-              <v-text-field
-                v-model="item.price"
-                label="Edit"
-                single-line
-                counter
-                autofocus
-              ></v-text-field>
-            </template>
-          </v-edit-dialog>
+          <Price :item.sync="item" />
         </template>
 
         <template v-slot:item.action="{ item }">
@@ -123,6 +105,8 @@
 import ImagesHoverOver from "@/components/Images/ImageHoverOver";
 import { headers } from "./tableHeaders.js";
 
+import Price from "@/components/Shared/Datatable/FieldTemplates/Price";
+
 import {
   UPDATE_INVENTORY_ITEM_LEVELS,
   UPDATE_ITEM_FIELDS,
@@ -132,7 +116,8 @@ import { UPDATE_API_STATUS } from "@/store/mutation-types.js";
 
 export default {
   components: {
-    ImagesHoverOver
+    ImagesHoverOver,
+    Price
   },
   props: {
     items: [Boolean, Array],
@@ -191,9 +176,6 @@ export default {
         case "StockLevel":
           this.saveLocationField(fieldName, fieldValueProp, item);
           break;
-        case "Price":
-          this.saveItemPrice("Price", fieldValueProp, item);
-          break;
         default:
           this.saveItemField(fieldName, fieldValueProp, item);
       }
@@ -233,29 +215,6 @@ export default {
 
       this.$store
         .dispatch(`linnworks/${UPDATE_ITEM_FIELDS}`, params)
-        .then(resp => {
-          const { result } = resp;
-          if (result) this.fieldSaved({ name: fieldName, value: fieldValue });
-          if (!result)
-            this.fieldNotSaved({
-              name: fieldName,
-              value: fieldValue
-            });
-        })
-        .catch(err => {
-          this.fieldNotSaved({ name: fieldName, value: fieldValue });
-        });
-    },
-
-    saveItemPrice(fieldName, fieldValueProp, item) {
-      const fieldValue = this.getDescendantProp(item, fieldValueProp);
-      const params = {
-        inventoryItemId: item.stockItemId,
-        fieldValue: fieldValue
-      };
-
-      this.$store
-        .dispatch(`linnworks/${UPDATE_ITEM_PRICE}`, params)
         .then(resp => {
           const { result } = resp;
           if (result) this.fieldSaved({ name: fieldName, value: fieldValue });
