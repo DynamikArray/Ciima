@@ -78,7 +78,7 @@ const user = {
       );
     },
 
-    loginCheck({ commit }, options) {
+    loginCheck({ dispatch, commit }, options) {
       return new Promise(async (resolve, reject) => {
         let { user, token } = this.state;
         //see if we have a full user object on state?
@@ -114,9 +114,15 @@ const user = {
               displayname,
               displaycolor
             });
-            commit(`api/${UPDATE_API_STATUS}`, `Logged in user ${username}`, {
-              root: true
-            });
+
+            dispatch(
+              `api/updateStatus`,
+              { msg: `Logged in user ${username}` },
+              {
+                root: true
+              }
+            );
+
             resolve(true);
           }
         }
@@ -128,7 +134,7 @@ const user = {
     //
     //
     //
-    register({ commit }, user) {
+    register({ dispatch, commit }, user) {
       return new Promise((resolve, reject) => {
         commit("auth_request");
         axiosInstance({
@@ -158,7 +164,7 @@ const user = {
               email,
               token
             });
-            commit(`api/${UPDATE_API_STATUS}`, `Logged in user ${username}`, {
+            dispatch(`api/updateStatus`, `Logged in user ${username}`, {
               root: true
             });
             resolve(resp);
@@ -178,7 +184,7 @@ const user = {
     //
     //
     //
-    login({ commit }, user) {
+    login({ dispatch, commit }, user) {
       return new Promise((resolve, reject) => {
         commit("auth_request");
         axiosInstance({
@@ -208,7 +214,7 @@ const user = {
               email,
               token
             });
-            commit(`api/${UPDATE_API_STATUS}`, `Logged in user ${username}`, {
+            dispatch(`api/updateStatus`, `Logged in user ${username}`, {
               root: true
             });
             resolve(resp);
@@ -228,7 +234,7 @@ const user = {
     //
     //
     //
-    account({ commit }, user) {
+    account({ dispatch, commit }, user) {
       const { expired } = createInterceptor(() => {
         commit("user/logout", false, { root: true });
       });
@@ -257,7 +263,7 @@ const user = {
               displaycolor,
               email
             });
-            commit(`api/${UPDATE_API_STATUS}`, `Logged in user ${username}`, {
+            dispatch(`api/updateStatus`, `Logged in user ${username}`, {
               root: true
             });
             resolve(resp);

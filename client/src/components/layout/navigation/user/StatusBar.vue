@@ -1,6 +1,6 @@
 <template>
   <div v-if="isLoggedIn">
-    <v-slide-x-transition>
+    <v-slide-x-transition mode="out-in">
       <span class="caption" :key="status.time">
         {{ status.time | dateTime }} | {{ status.status }}
       </span>

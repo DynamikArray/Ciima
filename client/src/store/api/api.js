@@ -44,6 +44,16 @@ const api = {
     }
   },
   actions: {
+    updateStatus: async ({ commit, state }, payload) => {
+      if (typeof payload === "string") commit(`${UPDATE_API_STATUS}`, payload);
+
+      //initial login hack , REALLY HACKY
+      if (typeof payload === "object") {
+        if (!state.status.length) {
+          commit(`${UPDATE_API_STATUS}`, payload.msg);
+        }
+      }
+    },
     requestHandler: async ({ dispatch, commit }, payload) => {
       //create axios interceptor by passing our logout function to our helper
       //and then pull off the function it returns
