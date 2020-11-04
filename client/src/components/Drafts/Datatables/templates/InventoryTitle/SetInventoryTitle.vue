@@ -28,7 +28,7 @@
 
           <div class="d-flex align-center w-100 justify-start">
             <div class="d-flex w-100">
-              <IssueNumbers :label="true" :item="item"></IssueNumbers>
+              <IssueNumbers :label="true" :item.sync="item"></IssueNumbers>
             </div>
           </div>
         </div>

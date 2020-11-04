@@ -20,7 +20,7 @@
             </div>
             <div class="d-flex justify-start align-start flex-column mr-4">
               <Grade :label="true" :item="item"></Grade>
-              <IssueNumbers :label="true" :item="item"></IssueNumbers>
+              <IssueNumbers :label="true" :item.sync="item"></IssueNumbers>
             </div>
           </div>
 

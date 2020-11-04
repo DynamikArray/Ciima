@@ -20,7 +20,8 @@
             </div>
             <div class="d-flex align-end flex-column mr-auto w-100">
               <Grade v-if="item.grade" :label="true" :item="item"></Grade>
-              <IssueNumbers :label="true" :item="item"></IssueNumbers>
+
+              <IssueNumbers :label="true" :item.sync="item"></IssueNumbers>
             </div>
           </div>
 
