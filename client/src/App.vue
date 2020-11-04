@@ -5,14 +5,18 @@
       :loggedIn="isLoggedIn && user"
       :drawer="navigationDrawer"
     />
+
     <UtilityDrawer />
+
     <AppBar :toggleNavigationDrawer="toggleNavigationDrawer" />
     <v-content style="padding-bottom:45px">
       <TransitionPage>
         <router-view />
       </TransitionPage>
     </v-content>
+
     <Footer v-if="isLoggedIn && user" />
+    <WhatsNew v-if="isLoggedIn && user" />
   </v-app>
 </template>
 
@@ -21,6 +25,7 @@ import { INIT_SETTINGS } from "@/store/mutation-types";
 import { mapGetters } from "vuex";
 
 import UtilityDrawer from "@/components/layout/navigation/UtilityDrawer/UtilityDrawer";
+import WhatsNew from "@/components/WhatsNew/WhatsNew";
 
 import NavigationDrawer from "@/components/layout/navigation/NavigationDrawer";
 import AppBar from "@/components/layout/navigation/AppBar";
@@ -34,6 +39,7 @@ export default {
     NavigationDrawer,
     //DraftsDrawer,
     UtilityDrawer,
+    WhatsNew,
     TransitionPage,
     Footer
   },

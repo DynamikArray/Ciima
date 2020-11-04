@@ -88,6 +88,8 @@ Vue.use(require("vue-shortkey"), { prevent: ["input", "textarea"] });
 import VuePapaParse from "vue-papa-parse";
 Vue.use(VuePapaParse);
 
+Vue.use(require("vue-cookies"));
+
 new Vue({
   router,
   store,
