@@ -2,6 +2,8 @@ import Vue from "vue";
 import Vuex from "vuex";
 Vue.use(Vuex);
 
+import priceSync from "./priceSync/priceSync";
+
 import {
   SEARCH_INVENTORY_RESULTS,
   SEARCH_INVENTORY_LOADING,
@@ -18,6 +20,10 @@ import {
 
 const linnworks = {
   namespaced: true,
+  modules: {
+    priceSync
+  },
+
   state: {
     loading: false,
     items: []

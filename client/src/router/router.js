@@ -122,7 +122,8 @@ let router = new Router({
       path: "/audit",
       props: true,
       name: "audit",
-      component: () => import(/*webpackChunkName: "ebay"*/ "@/views/Audit.vue"),
+      component: () =>
+        import(/*webpackChunkName: "audit"*/ "@/views/Audit.vue"),
       meta: {
         requiresAuth: true
       }
@@ -132,7 +133,7 @@ let router = new Router({
       props: true,
       name: "analytics",
       component: () =>
-        import(/*webpackChunkName: "ebay"*/ "@/views/Analytics.vue"),
+        import(/*webpackChunkName: "analytics"*/ "@/views/Analytics.vue"),
       meta: {
         requiresAuth: true
       }
@@ -142,7 +143,7 @@ let router = new Router({
       props: true,
       name: "pricematch",
       component: () =>
-        import(/*webpackChunkName: "ebay"*/ "@/views/PriceMatch.vue"),
+        import(/*webpackChunkName: "pricematch"*/ "@/views/PriceMatch.vue"),
       meta: {
         requiresAuth: true
       }
@@ -152,17 +153,29 @@ let router = new Router({
       props: true,
       name: "pricelist",
       component: () =>
-        import(/*webpackChunkName: "ebay"*/ "@/views/PriceList.vue"),
+        import(/*webpackChunkName: "pricelist"*/ "@/views/PriceList.vue"),
       meta: {
         requiresAuth: true
       }
     },
+
+    {
+      path: "/pricesync",
+      props: true,
+      name: "pricesync",
+      component: () =>
+        import(/*webpackChunkName: "pricesync"*/ "@/views/PriceSync.vue"),
+      meta: {
+        requiresAuth: true
+      }
+    },
+
     {
       path: "/reports",
       props: true,
       name: "reports",
       component: () =>
-        import(/*webpackChunkName: "ebay"*/ "@/views/Reports.vue"),
+        import(/*webpackChunkName: "reports"*/ "@/views/Reports.vue"),
       meta: {
         requiresAuth: true
       }
@@ -184,7 +197,7 @@ let router = new Router({
       props: true,
       name: "commish",
       component: () =>
-        import(/*webpackChunkName: "ebay"*/ "@/views/Commish.vue"),
+        import(/*webpackChunkName: "commish"*/ "@/views/Commish.vue"),
       meta: {
         requiresAuth: true
       }
@@ -194,7 +207,7 @@ let router = new Router({
       path: "*",
       props: true,
       name: "404",
-      component: () => import(/*webpackChunkName: "ebay"*/ "@/views/404.vue"),
+      component: () => import(/*webpackChunkName: "404"*/ "@/views/404.vue"),
       meta: {
         requiresAuth: false
       }
