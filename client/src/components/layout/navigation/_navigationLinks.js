@@ -1,7 +1,6 @@
 module.exports = [
   //{ icon: "fa fa-home", text: "Home", to: "home" },
   { icon: "fa fa-search", text: "Title Search", to: "titles" },
-  { menuDivider: true },
   { icon: "fa fa-list-ol", text: "Issue Lookup", to: "issues" },
   { icon: "fa fa-image", text: "Photo Builder", to: "images" },
   { menuDivider: true },
@@ -12,12 +11,15 @@ module.exports = [
   { icon: "fa fa-cube", text: "Locations", to: "locations" },
   { menuDivider: true },
   { icon: "fa fa-chart-bar", text: "Analytics", to: "analytics" },
-  { icon: "fa fa-history", text: "Audit Log", to: "audit" },
   { menuDivider: true },
-  { icon: "fa fa-project-diagram", text: "Price Matcher", to: "pricematch" },
-  { icon: "fa fa-comment-dollar", text: "Price List", to: "pricelist" },
+  { icon: "fa fa-file-invoice-dollar", text: "Sold Reports", to: "reports" },
   { menuDivider: true },
-  { icon: "fa fa-file-invoice-dollar", text: "Sold Reports", to: "reports" }
-  //{ menuDivider: true },
-  //{ icon: "fab fa-ebay", text: "Search eBay", to: "ebay" }
+  { icon: "fa fab fa-toolbox", text: "Tools & Utilities", to: "tools" }
 ];
+/*
+MOVED TO BUTTONS IN TOOLS
+{ icon: "fa fa-history", text: "Audit Log", to: "audit" },
+{ icon: "fa fa-project-diagram", text: "Price Matcher", to: "pricematch" },
+{ icon: "fa fa-comment-dollar", text: "Price List", to: "pricelist" },
+{ menuDivider: true },
+*/

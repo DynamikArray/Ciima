@@ -169,6 +169,17 @@ let router = new Router({
     },
 
     {
+      path: "/tools",
+      props: true,
+      name: "tools",
+      component: () =>
+        import(/*webpackChunkName: "tools" */ "@/views/Tools.vue"),
+      meta: {
+        requireAuth: true
+      }
+    },
+
+    {
       path: "/commish",
       props: true,
       name: "commish",

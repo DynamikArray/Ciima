@@ -1,0 +1,60 @@
+<template>
+  <v-container fluid class="pa-0 h-100" style="min-height:100%">
+    <v-row no-gutters>
+      <v-col class="px-3 pt-3">
+        <h1>Tools:</h1>
+        <v-divider />
+      </v-col>
+    </v-row>
+
+    <v-row no-gutters>
+      <v-col class="text-center">
+        <v-card class="ma-5">
+          <v-card-title>
+            <h4 class="subtitle">
+              <v-icon class="mr-2">fa fa-project-diagram</v-icon>
+              Price Matching Tools
+            </h4>
+          </v-card-title>
+
+          <v-card-text>
+            <div class="subtitle-1">Match Our Titles to Competitors</div>
+            <v-divider />
+            <v-btn to="pricematch" class="ma-3" color="success">
+              <v-icon class="mr-2">fa fa-project-diagram</v-icon>Price Matcher
+            </v-btn>
+            <v-btn to="pricelist" class="ma-3" color="success">
+              <v-icon class="mr-2"> fa fa-comment-dollar</v-icon>Saved Prices
+              List
+            </v-btn>
+          </v-card-text>
+        </v-card>
+      </v-col>
+      <v-col class="text-center">
+        <v-card class="ma-5">
+          <v-card-title>
+            <h4 class="subtitle">
+              <v-icon class="mr-2">fa fa-history</v-icon>
+              Audit Log
+            </h4>
+          </v-card-title>
+          <v-card-text>
+            <div class="subtitle-1">Look at system logs of user actions</div>
+            <v-divider />
+            <v-btn to="audit" class="ma-3" color="error">
+              <v-icon class="mr-2">fa fa-history</v-icon>Audit Log
+            </v-btn>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
+</template>
+
+<script>
+export default {
+  components: {}
+};
+</script>
+
+<style scoped></style>
