@@ -14,7 +14,7 @@ module.exports = [
   { menuDivider: true },
   { icon: "fa fa-file-invoice-dollar", text: "Sold Reports", to: "reports" },
   { menuDivider: true },
-  { icon: "fa fab fa-toolbox", text: "Tools & Utilities", to: "tools" }
+  { icon: "fa fab fa-tools", text: "Tools & Utilities", to: "tools" }
 ];
 /*
 MOVED TO BUTTONS IN TOOLS
