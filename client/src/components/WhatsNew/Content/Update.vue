@@ -1,16 +1,15 @@
 <template>
   <div class="mt-3 white--text">
-    <p>
-      <b class="mr-2">This Screen</b>A Whats New popup has been created to help
-      keep you informed of new changes to the application as they go live.
-      Please take a moment to read this screen when you it appears, and use the
-      "Dont' show this again" option to keep it from showing on every login. It
-      will only appear when there are new updates.
+    <p class="body-1">
+      <b class="mr-2">Navigation Menu</b>A few less common items were
+      consolidated under the new "Tools" section
     </p>
-    <p>
-      <b class="mr-2">Draft Listings:</b>Issue Numbers is now an inline editable
-      field. Just click on the field to edit the value of a draft that has not
-      been submited to Linnworks yet.
+    <p class="body-1">
+      <b class="mr-2">Price Sync:</b>In the new Tools section there is a Price
+      Sync option. This new feature checks our Linnworks Inventory against our
+      Ebay Listings for any prices that are not in sync with each other. In the
+      future there will be an Action button allowing you to correct this, and
+      bring the prices in sync with each other.
     </p>
   </div>
 </template>

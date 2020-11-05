@@ -1,9 +1,9 @@
 <template>
   <v-dialog v-model="showDialog" width="500">
     <v-card>
-      <v-card-title class="headline grey darken-2">
-        What's New
-        <span class="ml-auto my-1 mx-3">11/3/2020</span>
+      <v-card-title class="headline primary">
+        <v-icon class="mr-2">fa-bullhorn</v-icon> What's New
+        <span class="ml-auto my-1 mx-3">11/5/2020</span>
       </v-card-title>
 
       <v-card-text class="pa-4">
@@ -51,7 +51,7 @@ export default {
   data: () => ({
     blnShowAgain: false,
     showDialog: false,
-    updateNumber: "0001"
+    updateNumber: "0002"
   }),
   methods: {
     handleOnClick() {
