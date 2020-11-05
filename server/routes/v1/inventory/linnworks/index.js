@@ -3,6 +3,7 @@ const {
   updateLocationOrQuantitySchema,
   updateInventoryItemFieldSchema,
   updateItemPricesSchema,
+  getOutOfSyncPricesSchema,
 } = require("../../../../schemas/v1/inventory/linnworks");
 /**
  * Info routes endpoints
@@ -15,6 +16,7 @@ module.exports = function (fastify, opts, next) {
     updateLocationOrQuantityHandler,
     updateItemFieldHandler,
     updateItemPricesHandler,
+    getOutOfSyncPricesHandler,
   } = require("../../../../handlers/v1/inventory/linnworks")(fastify);
 
   //Inventory Search
@@ -61,6 +63,14 @@ module.exports = function (fastify, opts, next) {
     "/inventory/linnworks/updateItemPrices",
     linnworksUpdateItemPrices
   );
+
+  //ALL Price fields for an item
+  const getOutOfSyncPrices = {
+    //preValidation: fastify.authenticate,
+    schema: getOutOfSyncPricesSchema,
+    handler: getOutOfSyncPricesHandler,
+  };
+  fastify.get("/inventory/linnworks/outOfSyncPrices", getOutOfSyncPrices);
 
   next();
 };

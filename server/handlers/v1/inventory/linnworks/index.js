@@ -11,6 +11,9 @@ const { LINNWORKS } = require("../../../../../util/auditLog/logResourceTypes");
 const updateItemRetailPrice = require("./updateItemRetailPrice");
 const updateItemTemplatePrice = require("./updateItemTemplatePrice");
 
+/*Out of Sync Price Helper*/
+const outOfSyncPrices = require("../../../../../util/linnworks/queries/inventory/outOfSyncPrices");
+
 module.exports = (fastify) => ({
   /**
    * [searchInventoryHandler description]
@@ -157,5 +160,20 @@ module.exports = (fastify) => ({
         JSON.stringify({ fieldName: "Prices", fieldValue })
       );
     }
+  },
+
+  getOutOfSyncPricesHandler: async (req, res) => {
+    const data = outOfSyncPrices();
+
+    const { result, error } = await fastify.linnworks.makeApiCall({
+      method: "POST",
+      url: "Dashboards/ExecuteCustomScriptQuery",
+      headers: "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
+      data,
+    });
+
+    if (!result.IsError)
+      return { result: result.Results, total: result.TotalResults };
+    if (error) return { error: error };
   },
 });

@@ -115,4 +115,84 @@ module.exports = {
       },
     },
   },
+
+  getOutOfSyncPricesSchema: {
+    description: "Query Inventory for prices that are out of sync.",
+    tags: ["Inventory"],
+    summary:
+      "Checks Products Price and Listing/Channel Price against Ebay Listing Price and returns results that dont match. ",
+    security: [
+      {
+        token: [],
+      },
+    ],
+
+    response: {
+      200: {
+        description: "Succesful response",
+        type: "object",
+        properties: {
+          result: {
+            type: "array",
+            items: {
+              type: "object",
+              properties: {
+                pkStockItemID: {
+                  type: "string",
+                },
+                ItemNumber: {
+                  type: "string",
+                },
+                CategoryName: {
+                  type: "string",
+                },
+                LocationCode: {
+                  type: "string",
+                },
+                ItemTitle: {
+                  type: "string",
+                },
+                Quantity: {
+                  type: "number",
+                },
+                InOrderBook: {
+                  type: "number",
+                },
+                OnOrder: {
+                  type: "number",
+                },
+                RetailPrice: {
+                  type: "number",
+                },
+                StockItemPrice: {
+                  type: "number",
+                },
+                eBayListingPrice: {
+                  type: "number",
+                },
+                eBayQty: {
+                  type: "number",
+                },
+                eBayTitle: {
+                  type: "string",
+                },
+                eBaySKU: {
+                  type: "string",
+                },
+                eBayStartTime: {
+                  type: "string",
+                },
+                eBayEndTime: {
+                  type: "string",
+                },
+              },
+            },
+          },
+          total: {
+            type: "number",
+          },
+        },
+      },
+    },
+  },
 };
