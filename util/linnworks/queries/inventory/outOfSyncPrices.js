@@ -20,7 +20,8 @@ const outOfSyncPrices = () => {
                       el.ItemTitle as 'eBayTitle',
                       el.SKU as 'eBaySKU',
                       el.startTime as 'eBayStartTime',
-                      el.endTime as 'eBayEndTime'
+                      el.endTime as 'eBayEndTime',
+                      et.ListingStatus as 'eBayListingStatus'
                   FROM
                       StockItem si,
                       ProductCategories pc,
@@ -28,7 +29,8 @@ const outOfSyncPrices = () => {
                       StockLevel sl,
                       StockItem_Pricing sip,
                       Stock_ImageReg sir,
-                      Automation_eBayListing el
+                      Automation_eBayListing el,
+                      eBay_Templates2 et
                   WHERE
                   (
                       (pc.CategoryId = si.CategoryId)
@@ -43,6 +45,10 @@ const outOfSyncPrices = () => {
                       AND (el.Active = 1)
                       AND (el.FixedPrice = 1)
                       AND (el.SiteId = 'US')
+
+                      AND (et.fkInventoryItemId = si.pkStockItemID)
+                      AND (et.ListingStatus = 'Ok' OR et.ListingStatus = 'Updating')
+                      AND (et.AccountId = 'EBAY1')
 
                       AND (si.bLogicalDelete = 0 OR si.isVariationGroup = 1)
                       AND (pc.CategoryName = @SETS OR pc.CategoryName = @SINGLES)

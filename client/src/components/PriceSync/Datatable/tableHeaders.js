@@ -53,5 +53,12 @@ export const tableHeaders = [
     sortable: true,
     align: "center",
     width: 110
+  },
+  {
+    text: "Ebay Listing Status",
+    value: "eBayListingStatus",
+    sortable: true,
+    align: "center",
+    width: 110
   }
 ];

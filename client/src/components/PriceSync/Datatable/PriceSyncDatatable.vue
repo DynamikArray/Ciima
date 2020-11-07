@@ -29,6 +29,7 @@
         priceField="RetailPrice"
         :otherFields="['StockItemPrice']"
         idField="pkStockItemID"
+        @itemUpdated="itemUpdated"
       />
     </template>
     <template v-slot:item.StockItemPrice="{ item }">
@@ -53,6 +54,10 @@
         {{ item.eBayEndTime | dateTime }}
       </div>
     </template>
+
+    <template v-slot:item.eBayListingStatus="{ item }">
+      <ListingStatus :status="item.eBayListingStatus" />
+    </template>
   </v-data-table>
 </template>
 
@@ -61,6 +66,7 @@ import { tableHeaders } from "./tableHeaders.js";
 import LinnworksImage from "./fieldTemplates/LinnworksImage";
 import EditablePrice from "./fieldTemplates/Price";
 import StockItemPrice from "./fieldTemplates/StockItemPrice";
+import ListingStatus from "./fieldTemplates/ListingStatus";
 
 export default {
   props: {
@@ -76,7 +82,8 @@ export default {
   components: {
     LinnworksImage,
     EditablePrice,
-    StockItemPrice
+    StockItemPrice,
+    ListingStatus
   },
   data: () => ({
     headers: tableHeaders,
@@ -85,8 +92,8 @@ export default {
     }
   }),
   methods: {
-    priceUpdate(newPrice) {
-      console.log(newPrice);
+    itemUpdated() {
+      this.$emit("rowUpdated");
     }
   }
 };

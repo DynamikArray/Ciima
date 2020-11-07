@@ -4,7 +4,7 @@
       <div
         class="d-flex align-center w-100"
         :class="alignValue"
-        :key="`price-${item.price}`"
+        :key="`price-${Date.now()}-${item.price}`"
       >
         {{ Number(item.price) | currency }}
       </div>
@@ -48,6 +48,11 @@ export default {
   created() {
     if (this.item) {
       this.editValue = this.item.price;
+    }
+  },
+  watch: {
+    item(newVal) {
+      this.editValue = newVal.price;
     }
   },
   methods: {

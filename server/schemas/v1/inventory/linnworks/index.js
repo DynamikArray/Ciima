@@ -188,6 +188,9 @@ module.exports = {
                 eBayEndTime: {
                   type: "string",
                 },
+                eBayListingStatus: {
+                  type: "string",
+                },
               },
             },
           },

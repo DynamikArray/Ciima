@@ -1,5 +1,10 @@
 <template>
-  <v-edit-dialog persistent large @save="saveChanges(item, 'Price', editValue)">
+  <v-edit-dialog
+    persistent
+    large
+    @save="saveChanges(item, 'Price', editValue)"
+    :key="item[idField]"
+  >
     <v-slide-x-reverse-transition mode="out-in">
       <div
         class="d-flex align-center w-100 body-1"
@@ -62,6 +67,11 @@ export default {
       this.editValue = this.item[this.priceField];
     }
   },
+  watch: {
+    item(newVal) {
+      this.editValue = newVal[this.priceField];
+    }
+  },
   methods: {
     handleError(error) {
       this.hasErrors = error;
@@ -86,6 +96,7 @@ export default {
               this.$toastr.s("Price update success!", result);
               const updatedItem = this.updateOtherFields(item, price);
               this.$emit("update:item", updatedItem);
+              this.$emit("itemUpdated", updatedItem);
             }
             if (!result && error) this.$toastr.e("Price not updated!", error);
           })
