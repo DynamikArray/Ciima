@@ -3,8 +3,8 @@ export const tableHeaders = [
     text: "Main Image",
     value: "Image",
     sortable: true,
-    align: "left",
-    width: 140
+    align: "center",
+    width: 80
   },
   {
     text: "Title",
