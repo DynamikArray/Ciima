@@ -11,7 +11,7 @@
         v-bind="attrs"
         v-on="on"
         :style="`min-height: 100px;`"
-        class="d-flex justify-center mx-auto pa-1"
+        class="d-flex justify-center mx-auto pa-1 hover"
       >
         <div class="d-flex align-center justify-center">
           <v-img
@@ -49,6 +49,8 @@
               <v-progress-circular
                 indeterminate
                 color="blue darken-1"
+                size="300"
+                width="25"
               ></v-progress-circular>
             </v-row>
           </template>

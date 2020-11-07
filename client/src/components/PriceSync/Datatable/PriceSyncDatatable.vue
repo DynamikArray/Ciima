@@ -24,14 +24,18 @@
       </div>
     </template>
     <template v-slot:item.RetailPrice="{ item }">
-      <div class="body-1">
-        {{ item.RetailPrice | currency }}
-      </div>
+      <EditablePrice
+        :item="item"
+        priceField="RetailPrice"
+        :otherFields="['StockItemPrice']"
+        idField="pkStockItemID"
+      />
     </template>
     <template v-slot:item.StockItemPrice="{ item }">
-      <div class="body-1">
-        {{ item.StockItemPrice | currency }}
-      </div>
+      <StockItemPrice
+        :itemId="item.pkStockItemID"
+        :price="item.StockItemPrice"
+      />
     </template>
     <template v-slot:item.eBayListingPrice="{ item }">
       <div class="body-1">
@@ -55,6 +59,8 @@
 <script>
 import { tableHeaders } from "./tableHeaders.js";
 import LinnworksImage from "./fieldTemplates/LinnworksImage";
+import EditablePrice from "./fieldTemplates/Price";
+import StockItemPrice from "./fieldTemplates/StockItemPrice";
 
 export default {
   props: {
@@ -68,14 +74,21 @@ export default {
     }
   },
   components: {
-    LinnworksImage
+    LinnworksImage,
+    EditablePrice,
+    StockItemPrice
   },
   data: () => ({
     headers: tableHeaders,
     footerProps: {
       "items-per-page-options": [5, 10, 25, 50]
     }
-  })
+  }),
+  methods: {
+    priceUpdate(newPrice) {
+      console.log(newPrice);
+    }
+  }
 };
 </script>
 
