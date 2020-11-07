@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-row>
-      <v-col col="6">
+      <v-col cols="5">
         <v-alert type="info" class="">
           <h4>Upload a Paypal Sales Report:</h4>
           <input
@@ -80,7 +80,7 @@
           </div>
         </div>
       </v-col>
-      <v-col col="6">
+      <v-col cols="7">
         <TotalsBox
           :totalResults="results.length"
           :totalGross="Number(totalGross)"
@@ -147,8 +147,9 @@ export default {
     },
     totalGross() {
       return this.results
-        .reduce((sum, item) => {
-          sum = Number(sum) + Number(item.Gross);
+        .reduce((sum, item, index) => {
+          //console.log(typeof Number(item.Gross), typeof Number(sum));
+          sum = Number(sum) + Number(item.Gross.replace(",", ""));
           return sum;
         }, 0)
         .toFixed(2);
@@ -156,7 +157,7 @@ export default {
     totalNet() {
       return this.results
         .reduce((sum, item) => {
-          sum = Number(sum) + Number(item.Net);
+          sum = Number(sum) + Number(item.Net.replace(",", ""));
           return sum;
         }, 0)
         .toFixed(2);
@@ -164,7 +165,7 @@ export default {
     totalFee() {
       return this.results
         .reduce((sum, item) => {
-          sum = Number(sum) - Number(item.Fee);
+          sum = Number(sum) - Number(item.Fee.replace(",", ""));
           return sum;
         }, 0)
         .toFixed(2);
@@ -172,7 +173,7 @@ export default {
     totalTax() {
       return this.results
         .reduce((sum, item) => {
-          sum = Number(sum) + Number(item["Sales Tax"]);
+          sum = Number(sum) + Number(item["Sales Tax"].replace(",", ""));
           return sum;
         }, 0)
         .toFixed(2);
@@ -185,7 +186,8 @@ export default {
         if (!totalRow) {
           if (total > this.salesFloor) totalRow = index;
         }
-        if (total < this.salesFloor) total = Number(total) + Number(item.Net);
+        if (total < this.salesFloor)
+          total = Number(total) + Number(item.Net.replace(",", ""));
       });
 
       return {
