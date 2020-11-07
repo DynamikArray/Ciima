@@ -3,7 +3,6 @@
     <v-card>
       <v-card-title class="headline primary">
         <v-icon class="mr-2">fa-bullhorn</v-icon> What's New
-        <span class="ml-auto my-1 mx-3">11/5/2020</span>
       </v-card-title>
 
       <v-card-text class="pa-4">
@@ -28,7 +27,7 @@
 </template>
 
 <script>
-import Content from "./Content/Update.vue";
+import Content from "./Content/Update0003.vue";
 
 const UPDATE_NUMBER = "whatsNew-updateNumber";
 const SHOW_DIALOG = "whatsNew-showDialog";
@@ -51,7 +50,7 @@ export default {
   data: () => ({
     blnShowAgain: false,
     showDialog: false,
-    updateNumber: "0002"
+    updateNumber: "0003"
   }),
   methods: {
     handleOnClick() {
