@@ -1,5 +1,12 @@
 export const tableHeaders = [
   {
+    text: "Main Image",
+    value: "Image",
+    sortable: true,
+    align: "left",
+    width: 140
+  },
+  {
     text: "Title",
     value: "ItemTitle",
     sortable: true,
@@ -9,38 +16,42 @@ export const tableHeaders = [
     text: "Qty",
     value: "Quantity",
     sortable: true,
-    align: "left"
+    align: "left",
+    width: 70
   },
   {
     text: "Retail Price",
     value: "RetailPrice",
     sortable: true,
-    align: "center"
+    align: "center",
+    width: 120
   },
   {
     text: "Stock Item Price",
     value: "StockItemPrice",
     sortable: true,
-    align: "center"
+    align: "center",
+    width: 120
   },
   {
-    text: "Ebay Listed Price",
+    text: "Ebay Price",
     value: "eBayListingPrice",
     sortable: true,
-    align: "center"
+    align: "center",
+    width: 120
   },
   {
     text: "Ebay Start Time",
     value: "eBayStartTime",
     sortable: true,
     align: "center",
-    width: 130
+    width: 110
   },
   {
     text: "Ebay End Time",
     value: "eBayEndTime",
     sortable: true,
     align: "center",
-    width: 130
+    width: 110
   }
 ];

@@ -1,12 +1,14 @@
 const outOfSyncPrices = () => {
   const strSQL = `script=DECLARE @SETS VARCHAR(255) = 'EBAY-SETS';
                   DECLARE @SINGLES VARCHAR(255) = 'EBAY-SINGLES';
+                  DECLARE @url VARCHAR(255) = CONCAT('https://s3-eu-west-1.amazonaws.com/images.linnlive.com/', lower(CONVERT(VARCHAR(32),HASHBYTES('MD5', CONVERT(VARCHAR(32), DB_NAME())), 2)) , '/');
 
                   SELECT
                       si.pkStockItemID,
                       si.ItemNumber,
                       pc.CategoryName,
                       il.BinRackNumber as 'LocationCode',
+                      CONCAT(@url,LOWER(CONVERT(VARCHAR(40), sir.pkImageId)),'.jpg') AS 'Image',
                       si.ItemTitle,
                       sl.Quantity,
                       sl.InOrderBook,
@@ -25,6 +27,7 @@ const outOfSyncPrices = () => {
                       ItemLocation il,
                       StockLevel sl,
                       StockItem_Pricing sip,
+                      Stock_ImageReg sir,
                       Automation_eBayListing el
                   WHERE
                   (
@@ -32,6 +35,9 @@ const outOfSyncPrices = () => {
                       AND (il.fkStockItemId = si.pkStockItemID)
                       AND (si.pkStockItemId = sl.fkStockItemId)
                       AND (sip.fkStockItemId = si.pkStockItemID)
+
+                      AND (sir.fkStockItemId = si.pkStockItemID)
+                      AND (sir.IsMain = 1)
 
                       AND (el.fkStockItemId = si.pkStockItemID)
                       AND (el.Active = 1)

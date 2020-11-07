@@ -149,6 +149,9 @@ module.exports = {
                 LocationCode: {
                   type: "string",
                 },
+                Image: {
+                  type: "string",
+                },
                 ItemTitle: {
                   type: "string",
                 },
