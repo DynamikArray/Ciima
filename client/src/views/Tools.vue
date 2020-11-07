@@ -2,12 +2,6 @@
   <v-container fluid class="pa-0 h-100" style="min-height:100%">
     <v-row no-gutters>
       <v-col class="px-3 pt-3">
-        <router-view></router-view>
-      </v-col>
-    </v-row>
-
-    <v-row no-gutters>
-      <v-col class="px-3 pt-3">
         <h1><v-icon class="mr-2">fa fab fa-tools</v-icon>Tools:</h1>
         <v-divider />
       </v-col>
@@ -25,7 +19,7 @@
           <v-card-text>
             <v-divider class="mb-3" />
             <div class="subtitle-1">Sync Prices Across Linnworks/Ebay</div>
-            <v-btn to="priceSync" class="ma-3" color="primary">
+            <v-btn to="pricesync" class="ma-3" color="primary">
               <v-icon class="mr-2">fas fa-wrench</v-icon>Price Sync
             </v-btn>
           </v-card-text>

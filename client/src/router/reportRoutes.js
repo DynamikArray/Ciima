@@ -11,6 +11,16 @@ const reportRoutes = [
   },
 
   {
+    path: "/audit",
+    props: true,
+    name: "audit",
+    component: () => import(/*webpackChunkName: "audit"*/ "@/views/Audit.vue"),
+    meta: {
+      requiresAuth: true
+    }
+  },
+
+  {
     path: "/analytics",
     props: true,
     name: "analytics",
