@@ -16,7 +16,7 @@
         <div class="d-flex align-center justify-center">
           <v-img
             v-if="createThumbnailUrl"
-            :key="`thumb_${makeFileNameKey()}`"
+            :key="`thumb_${mainImageUrl}`"
             :src="createThumbnailUrl"
             :style="`max-width: 60px; max-height: 100px;`"
             contain
@@ -38,7 +38,7 @@
       <v-card-text class="text-center py-1">
         <v-img
           v-if="mainImageUrl"
-          :key="`main_${makeFileNameKey()}`"
+          :key="`main_${mainImageUrl}`"
           :src="mainImageUrl"
           :style="`max-width: 400px; max-height: 600px;`"
           class="mx-auto"
@@ -87,13 +87,6 @@ export default {
         image.length
       );
       return `${imagePath}tumbnail_${imageFileName}`;
-    }
-  },
-  methods: {
-    makeFileNameKey() {
-      const thumb = this.mainImageUrl;
-      const path = thumb.split("/").reverse();
-      return path[1] || Date.now();
     }
   }
 };
