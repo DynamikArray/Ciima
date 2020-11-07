@@ -7,31 +7,39 @@
     overlay-opacity=".7"
   >
     <template v-slot:activator="{ on, attrs }">
-      <div
-        v-bind="attrs"
-        v-on="on"
-        :style="`min-height: 100px;`"
-        class="d-flex justify-center mx-auto pa-1 hover"
-      >
-        <div class="d-flex align-center justify-center">
-          <v-img
-            v-if="createThumbnailUrl"
-            :key="`thumb_${mainImageUrl}`"
-            :src="createThumbnailUrl"
-            :style="`max-width: 60px; max-height: 100px;`"
-            contain
+      <v-slide-x-reverse-transition mode="out-in">
+        <div class="" :key="`activator_${mainImageUrl}`">
+          <div
+            v-bind="attrs"
+            v-on="on"
+            :style="`min-height: 100px;`"
+            class="d-flex justify-center mx-auto pa-1 hover"
           >
-            <template v-slot:placeholder>
-              <v-row class="fill-height ma-0" align="center" justify="center">
-                <v-progress-circular
-                  indeterminate
-                  color="blue darken-1"
-                ></v-progress-circular>
-              </v-row>
-            </template>
-          </v-img>
+            <div class="d-flex align-center justify-center">
+              <v-img
+                v-if="createThumbnailUrl"
+                :key="`thumb_${mainImageUrl}`"
+                :src="createThumbnailUrl"
+                :style="`max-width: 60px; max-height: 100px;`"
+                contain
+              >
+                <template v-slot:placeholder>
+                  <v-row
+                    class="fill-height ma-0"
+                    align="center"
+                    justify="center"
+                  >
+                    <v-progress-circular
+                      indeterminate
+                      color="blue darken-1"
+                    ></v-progress-circular>
+                  </v-row>
+                </template>
+              </v-img>
+            </div>
+          </div>
         </div>
-      </div>
+      </v-slide-x-reverse-transition>
     </template>
 
     <v-card class="">

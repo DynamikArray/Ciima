@@ -9,9 +9,11 @@
     :footer-props="footerProps"
   >
     <template v-slot:item.ItemTitle="{ item }">
-      <div class="body-1">
-        {{ item.ItemTitle }}
-      </div>
+      <v-slide-x-reverse-transition mode="out-in">
+        <div class="body-1" :key="`transition_${item.pkStockItemID}`">
+          {{ item.ItemTitle }}
+        </div>
+      </v-slide-x-reverse-transition>
     </template>
 
     <template v-slot:item.Image="{ item }">
@@ -19,18 +21,25 @@
     </template>
 
     <template v-slot:item.Quantity="{ item }">
-      <div class="body-1">
-        {{ item.Quantity }}
-      </div>
+      <v-slide-x-reverse-transition mode="out-in">
+        <div class="body-1" :key="`transition_${item.pkStockItemID}`">
+          {{ item.Quantity }}
+        </div>
+      </v-slide-x-reverse-transition>
     </template>
+
     <template v-slot:item.RetailPrice="{ item }">
-      <EditablePrice
-        :item="item"
-        priceField="RetailPrice"
-        :otherFields="['StockItemPrice']"
-        idField="pkStockItemID"
-        @itemUpdated="itemUpdated"
-      />
+      <v-slide-x-reverse-transition mode="out-in">
+        <div class="body-1" :key="`transition_${item.pkStockItemID}`">
+          <EditablePrice
+            :item="item"
+            priceField="RetailPrice"
+            :otherFields="['StockItemPrice']"
+            idField="pkStockItemID"
+            @itemUpdated="itemUpdated"
+          />
+        </div>
+      </v-slide-x-reverse-transition>
     </template>
     <template v-slot:item.StockItemPrice="{ item }">
       <StockItemPrice
@@ -39,24 +48,34 @@
       />
     </template>
     <template v-slot:item.eBayListingPrice="{ item }">
-      <div class="body-1">
-        {{ item.eBayListingPrice | currency }}
-      </div>
+      <v-slide-x-reverse-transition mode="out-in">
+        <div class="body-1" :key="`transition_${item.pkStockItemID}`">
+          {{ item.eBayListingPrice | currency }}
+        </div>
+      </v-slide-x-reverse-transition>
     </template>
     <template v-slot:item.eBayStartTime="{ item }">
-      <div class="caption">
-        {{ item.eBayStartTime | dateTime }}
-      </div>
+      <v-slide-x-reverse-transition mode="out-in">
+        <div class="caption" :key="`transition_${item.pkStockItemID}`">
+          {{ item.eBayStartTime | dateTime }}
+        </div>
+      </v-slide-x-reverse-transition>
     </template>
 
     <template v-slot:item.eBayEndTime="{ item }">
-      <div class="caption">
-        {{ item.eBayEndTime | dateTime }}
-      </div>
+      <v-slide-x-reverse-transition mode="out-in">
+        <div class="caption" :key="`transition_${item.pkStockItemID}`">
+          {{ item.eBayEndTime | dateTime }}
+        </div>
+      </v-slide-x-reverse-transition>
     </template>
 
     <template v-slot:item.eBayListingStatus="{ item }">
-      <ListingStatus :status="item.eBayListingStatus" />
+      <v-slide-x-reverse-transition mode="out-in">
+        <div class="" :key="`transition_${item.pkStockItemID}`">
+          <ListingStatus :status="item.eBayListingStatus" />
+        </div>
+      </v-slide-x-reverse-transition>
     </template>
   </v-data-table>
 </template>

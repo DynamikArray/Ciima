@@ -5,15 +5,9 @@
     @save="saveChanges(item, 'Price', editValue)"
     :key="item[idField]"
   >
-    <v-slide-x-reverse-transition mode="out-in">
-      <div
-        class="d-flex align-center w-100 body-1"
-        :class="alignValue"
-        :key="`price-${item[priceField]}`"
-      >
-        {{ Number(item[priceField]) | currency }}
-      </div>
-    </v-slide-x-reverse-transition>
+    <div class="d-flex align-center w-100 body-1" :class="alignValue">
+      {{ Number(item[priceField]) | currency }}
+    </div>
 
     <template v-slot:input>
       <v-text-field
