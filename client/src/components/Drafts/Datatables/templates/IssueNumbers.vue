@@ -1,8 +1,5 @@
 <template>
-  <div
-    id="issueNumbersWrapper"
-    class="d-flex justify-center align-center w-100"
-  >
+  <div id="issueNumbersWrapper" class="d-flex justify-start align-center w-100">
     <v-edit-dialog
       persistent
       large
