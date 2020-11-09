@@ -18,16 +18,6 @@ const toolRoutes = [
     meta: {
       requiresAuth: true
     }
-  },
-
-  {
-    path: "/ebay",
-    props: true,
-    name: "ebay",
-    component: () => import(/*webpackChunkName: "ebay"*/ "@/views/Ebay.vue"),
-    meta: {
-      requiresAuth: true
-    }
   }
 ];
 
