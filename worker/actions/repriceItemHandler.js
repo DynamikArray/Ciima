@@ -13,10 +13,16 @@ const {
   repriceItemStrategy,
 } = require("../../util/linnworks/helpers/repricing/repriceItemStrategy");
 
-const repriceItemHandler = async (message) => {
+/**
+ * [repriceItemHandler description]
+ * @param  {[type]}  message [description]
+ * @return {Promise}         [description]
+ */
+const repriceItemHandler = async ({ data }) => {
   let _result,
     _error = false;
-  const { pkStockItemID, ItemTitle } = message;
+  _newPrice = false;
+  const { pkStockItemID, ItemTitle } = data;
   try {
     if (!pkStockItemID) throw "No pkStockItemID on message";
     //get our prices
@@ -30,6 +36,7 @@ const repriceItemHandler = async (message) => {
         .shift();
       const newPrice = repriceItemStrategy(priceSet.Price);
       if (!newPrice) throw "repriceItemHandler() returned FALSE";
+      _newPrice = newPrice;
 
       //Handle Item Prices
       const { invPriceResult, invPriceError } = await handleInventoryItemPrice(
@@ -58,7 +65,12 @@ const repriceItemHandler = async (message) => {
       -1,
       pkStockItemID,
       LINNWORKS,
-      JSON.stringify({ _error, title: ItemTitle, _result })
+      JSON.stringify({
+        error: _error,
+        result: _result,
+        title: ItemTitle,
+        price: _newPrice,
+      })
     );
     if (_error) return false;
     return true;
