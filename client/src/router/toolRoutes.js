@@ -8,13 +8,23 @@ const toolRoutes = [
       requireAuth: true
     }
   },
-
   {
     path: "/pricesync",
     props: true,
     name: "pricesync",
     component: () =>
       import(/*webpackChunkName: "pricesync"*/ "@/views/PriceSync.vue"),
+    meta: {
+      requiresAuth: true
+    }
+  },
+
+  {
+    path: "/repricer",
+    props: true,
+    name: "repricer",
+    component: () =>
+      import(/*webpackChunkName: "pricesync"*/ "@/views/Repricer.vue"),
     meta: {
       requiresAuth: true
     }

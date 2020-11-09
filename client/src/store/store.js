@@ -32,6 +32,8 @@ import pricematch from "@/store/pricematch/pricematch";
 import pricelist from "@/store/pricelist/pricelist";
 import reports from "@/store/reports";
 
+import repricer from "@/store/repricer";
+
 export default new Vuex.Store({
   modules: {
     api,
@@ -54,7 +56,8 @@ export default new Vuex.Store({
     analytics,
     pricematch,
     pricelist,
-    reports
+    reports,
+    repricer
   },
   state: {},
   mutations: {}
