@@ -1,5 +1,6 @@
 const {
   repriceItemByIdSchema,
+  getItemsListSchema,
 } = require("../../../schemas/v1/repricingService");
 /**
  * Info routes endpoints
@@ -9,7 +10,16 @@ const {
 module.exports = function (fastify, opts, next) {
   const {
     repriceItemByIdHandler,
+    getItemsListHandler,
   } = require("../../../handlers/v1/repricingService")(fastify);
+
+  const getItemsList = {
+    //preValidation: fastify.authenticate,
+    schema: getItemsListSchema,
+    handler: getItemsListHandler,
+  };
+
+  fastify.post("/getItemsList", getItemsList);
 
   const repriceItemById = {
     preValidation: fastify.authenticate,
@@ -18,5 +28,6 @@ module.exports = function (fastify, opts, next) {
   };
 
   fastify.post("/repriceItemById", repriceItemById);
+
   next();
 };
