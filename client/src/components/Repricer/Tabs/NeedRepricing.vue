@@ -9,7 +9,7 @@
       <v-divider class="my-1" />
     </div>
     <div class="d-flex align-start justify-start w-100">
-      <Datatable :items="items" :loading="loading" />
+      <Datatable :items="items" :loading="loading" @submitItem="submitItem" />
     </div>
   </div>
 </template>
@@ -29,6 +29,11 @@ export default {
   },
   components: {
     Datatable
+  },
+  methods: {
+    submitItem(item) {
+      this.$emit("submitItem", item);
+    }
   }
 };
 </script>

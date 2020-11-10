@@ -24,7 +24,8 @@ const getRepricingItemsList = (repriced = false) => {
       extLastPriced.ProperyValue as 'LastPriced',
       si.CreationDate as 'ItemCreationDate',
       el.startTime as 'eBayStartTime',
-      el.endTime as 'eBayEndTime'
+      el.endTime as 'eBayEndTime',
+      et.ListingStatus as 'eBayListingStatus'
   FROM
       StockItem si,
       ProductCategories pc,
@@ -33,6 +34,7 @@ const getRepricingItemsList = (repriced = false) => {
       StockItem_Pricing sip,
       Stock_ImageReg sir,
       Automation_eBayListing el,
+      eBay_Templates2 et,
       StockItem_ExtendedProperties extLastPrice,
       StockItem_ExtendedProperties extLastPriced
   WHERE
@@ -53,13 +55,17 @@ const getRepricingItemsList = (repriced = false) => {
       AND (el.SiteId = 'US')
       AND (el.startTime BETWEEN @FromDate AND @ToDate)
 
+      AND (et.fkInventoryItemId = si.pkStockItemID)
+      AND (et.ListingStatus = 'Ok' OR et.ListingStatus = 'Updating')
+      AND (et.AccountId = 'EBAY1')
+
       AND (si.bLogicalDelete = 0 OR si.isVariationGroup = 1)
       AND (pc.CategoryName = @LOTS)
       AND (sl.Quantity > 0)
 
       AND (si.pkStockItemId = extLastPrice.fkStockItemId AND extLastPrice.ProperyName = 'LastPrice' )
       AND (si.pkStockItemId = extLastPriced.fkStockItemId AND extLastPriced.ProperyName = 'LastPriced' )
-      AND (CONVERT(datetime, extLastPriced.ProperyValue) ${compareOperator} CONVERT(datetime,  el.startTime))
+      AND (TODATETIMEOFFSET(CONVERT(datetime, extLastPriced.ProperyValue),-300) ${compareOperator} CONVERT(datetime,  el.startTime))
   )
   ORDER BY ItemCreationDate ASC`;
 

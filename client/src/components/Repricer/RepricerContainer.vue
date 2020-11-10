@@ -14,6 +14,7 @@
           <NeedRepricing
             :items="needRepricingItems"
             :loading="needRepricingLoading"
+            @submitItem="submitItem"
           />
         </v-tab-item>
         <v-tab-item key="BeenRepriced" class="pt-2">
@@ -38,6 +39,7 @@ import NeedRepricing from "./Tabs/NeedRepricing";
 import InProgress from "./Tabs/InProgress";
 
 import {
+  SUBMIT_NEED_REPRICING_ITEM,
   SEARCH_NEED_REPRICING_ITEMS,
   SEARCH_BEEN_REPRICED_ITEMS
 } from "@/store/action-types";
@@ -53,6 +55,13 @@ export default {
   },
   created() {
     this.getData();
+    let _this = this;
+    this.interval = setInterval(() => {
+      _this.checkIfHasItemsUpdating();
+    }, 10000);
+  },
+  beforeDestroy() {
+    clearInterval(this.interval);
   },
   props: {
     tab: {
@@ -67,17 +76,67 @@ export default {
       beenRepricedLoading: "repricer/beenRepriced/getLoading"
     })
   },
+  watch: {
+    beenRepricedItems(newVal) {
+      //console.log("beenRepricedItems changed");
+    }
+  },
+  data: () => ({
+    interval: false
+  }),
   methods: {
     getData() {
+      this.getNeedRepricing();
+      this.getBeenRepriced();
+    },
+    getNeedRepricing() {
       this.$store.dispatch(
         `repricer/needRepricing/${SEARCH_NEED_REPRICING_ITEMS}`,
         { repricedItems: false }
       );
-
+    },
+    getBeenRepriced() {
       this.$store.dispatch(
         `repricer/beenRepriced/${SEARCH_BEEN_REPRICED_ITEMS}`,
         { repricedItems: true }
       );
+    },
+    checkIfHasItemsUpdating() {
+      if (
+        this.beenRepricedItems.filter(
+          item => item.eBayListingStatus == "UPDATING"
+        ).length > 0
+      )
+        this.getBeenRepriced();
+
+      /*
+      if (
+        this.needRepricingItems.filter(
+          item => item.eBayListingStatus == "UPDATING"
+        ).length > 0
+      )
+        this.getNeedRepricing();
+      */
+    },
+    async submitItem({ pkStockItemID, ItemTitle }) {
+      const res = await this.$store.dispatch(
+        `repricer/needRepricing/${SUBMIT_NEED_REPRICING_ITEM}`,
+        { pkStockItemID, ItemTitle }
+      );
+      if (res.result) {
+        this.$toastr.Add({
+          name: "Success",
+          title: "Submitted!",
+          msg: res.result,
+          clickClose: true,
+          timeout: 750
+        });
+        //Small timeout to allow records to update?
+        setTimeout(() => {
+          this.getBeenRepriced();
+        }, 500);
+      }
+      if (res.error) this.$toastr.e(res.error);
     }
   }
 };

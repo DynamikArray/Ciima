@@ -78,4 +78,12 @@ export const repriceItemAction = {
   width: 120
 };
 
+export const eBayListingStatus = {
+  text: "Listing Status",
+  value: "eBayListingStatus",
+  sortable: true,
+  align: "center",
+  width: 120
+};
+
 export default headers;

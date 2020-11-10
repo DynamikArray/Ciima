@@ -5,6 +5,8 @@
       :headers="headers"
       :items="items"
       :loading="loading"
+      sort-by="LastPriced"
+      sort-desc
     >
       <template v-slot:item.Image="{ item }">
         <LinnworksImage :imageUrl="item.Image" />
@@ -43,12 +45,16 @@
       <template v-slot:item.ItemCreationDate="{ item }">
         <LinnworksItemCreationDate :item="item" />
       </template>
+
+      <template v-slot:item.eBayListingStatus="{ item }">
+        <LinnworksEbayListingStatus :item="item" />
+      </template>
     </v-data-table>
   </div>
 </template>
 
 <script>
-import headers from "./_headers";
+import headers, { eBayListingStatus } from "./_headers";
 import LinnworksImage from "@/components/Shared/Datatable/FieldTemplates/LinnworksImage";
 import LinnworksItemTitle from "@/components/Shared/Datatable/FieldTemplates/LinnworksItemTitle";
 import LinnworksQuantity from "@/components/Shared/Datatable/FieldTemplates/LinnworksQuantity";
@@ -61,6 +67,8 @@ import LinnworksLastPriced from "@/components/Shared/Datatable/FieldTemplates/Li
 import LinnworksEbayStartTime from "@/components/Shared/Datatable/FieldTemplates/LinnworksEbayStartTime";
 import LinnworksEbayEndTime from "@/components/Shared/Datatable/FieldTemplates/LinnworksEbayEndTime";
 import LinnworksItemCreationDate from "@/components/Shared/Datatable/FieldTemplates/LinnworksItemCreationDate";
+
+import LinnworksEbayListingStatus from "@/components/Shared/Datatable/FieldTemplates/LinnworksEbayListingStatus";
 
 export default {
   props: {
@@ -81,11 +89,14 @@ export default {
     LinnworksLastPriced,
     LinnworksEbayStartTime,
     LinnworksEbayEndTime,
-    LinnworksItemCreationDate
+    LinnworksItemCreationDate,
+    LinnworksEbayListingStatus
   },
-  data: () => ({
-    headers
-  })
+  data() {
+    return {
+      headers: [...headers, eBayListingStatus]
+    };
+  }
 };
 </script>
 

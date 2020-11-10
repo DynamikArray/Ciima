@@ -17,7 +17,8 @@ export default {
   },
   methods: {
     submitItem() {
-      this.$toastr.e(`Submit this item for repricing : ${this.item.ItemTitle}`);
+      const { pkStockItemID, ItemTitle } = this.item;
+      this.$emit("submitItem", { pkStockItemID, ItemTitle });
     }
   }
 };

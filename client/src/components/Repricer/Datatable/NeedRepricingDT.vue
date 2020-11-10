@@ -44,15 +44,19 @@
         <LinnworksItemCreationDate :item="item" />
       </template>
 
+      <template v-slot:item.eBayListingStatus="{ item }">
+        <LinnworksEbayListingStatus :item="item" />
+      </template>
+
       <template v-slot:item.action="{ item }">
-        <RepriceItemButton :item="item" />
+        <RepriceItemButton :item="item" @submitItem="submitItem" />
       </template>
     </v-data-table>
   </div>
 </template>
 
 <script>
-import headers, { repriceItemAction } from "./_headers";
+import headers, { repriceItemAction, eBayListingStatus } from "./_headers";
 
 import LinnworksImage from "@/components/Shared/Datatable/FieldTemplates/LinnworksImage";
 import LinnworksItemTitle from "@/components/Shared/Datatable/FieldTemplates/LinnworksItemTitle";
@@ -66,6 +70,7 @@ import LinnworksLastPriced from "@/components/Shared/Datatable/FieldTemplates/Li
 import LinnworksEbayStartTime from "@/components/Shared/Datatable/FieldTemplates/LinnworksEbayStartTime";
 import LinnworksEbayEndTime from "@/components/Shared/Datatable/FieldTemplates/LinnworksEbayEndTime";
 import LinnworksItemCreationDate from "@/components/Shared/Datatable/FieldTemplates/LinnworksItemCreationDate";
+import LinnworksEbayListingStatus from "@/components/Shared/Datatable/FieldTemplates/LinnworksEbayListingStatus";
 
 import RepriceItemButton from "./FieldTemplates/RepriceItemButton";
 
@@ -89,12 +94,18 @@ export default {
     LinnworksEbayStartTime,
     LinnworksEbayEndTime,
     LinnworksItemCreationDate,
+    LinnworksEbayListingStatus,
     RepriceItemButton
   },
   data() {
     return {
-      headers: [...headers, repriceItemAction]
+      headers: [...headers, eBayListingStatus, repriceItemAction]
     };
+  },
+  methods: {
+    submitItem(item) {
+      this.$emit("submitItem", item);
+    }
   }
 };
 </script>
