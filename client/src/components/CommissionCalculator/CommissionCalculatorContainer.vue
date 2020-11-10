@@ -163,6 +163,7 @@ export default {
         .toFixed(2);
     },
     totalFee() {
+      return 0;
       return this.results
         .reduce((sum, item) => {
           sum = Number(sum) - Number(item.Fee.replace(",", ""));
@@ -207,7 +208,9 @@ export default {
           header: true,
           complete: function(results) {
             _this.rawResults = results.data.filter(row => {
-              return row.Type === "eBay Auction Payment";
+              return (
+                row.Type === "eBay Auction Payment" && row.Status == "Completed"
+              );
             });
           }
         });

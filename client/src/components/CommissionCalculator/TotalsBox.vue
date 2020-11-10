@@ -25,26 +25,6 @@
 
         <div class="d-flex justify-space-between align-center">
           <h4>
-            Total Fees:
-          </h4>
-          <h3>
-            {{ Number(totalFee).toFixed(2) | currency }}
-          </h3>
-        </div>
-
-        <v-divider class="my-1"></v-divider>
-
-        <div class="d-flex justify-space-between align-center">
-          <h4>
-            Total Net:
-          </h4>
-          <h3>
-            {{ Number(totalNet).toFixed(2) | currency }}
-          </h3>
-        </div>
-
-        <div class="d-flex justify-space-between align-center">
-          <h4>
             Total Tax:
           </h4>
           <h3>
@@ -139,7 +119,7 @@
           <div class="text-center title">
             <div>(Actual - Starting# - Shipping)</div>
             <div>
-              {{ totalActual }} - {{ salesFloor }} -
+              {{ Number(totalActual).toFixed(2) }} - {{ salesFloor }} -
               {{ Number(shippingCosts).toFixed(2) }} =
               {{ Number(salesMinusShipping).toFixed(2) }}
             </div>
@@ -169,8 +149,8 @@
               <div class="text-center title">
                 <div>((Actual - Starting# - Shipping) * Commish % )</div>
                 <div>
-                  ({{ totalActual }} - {{ salesFloor }} - {{ shippingCosts }} )
-                  * {{ commishPercent }} =
+                  ({{ Number(totalActual).toFixed(2) }} - {{ salesFloor }} -
+                  {{ shippingCosts }} ) * {{ commishPercent }} =
                   {{ Number(commishResult).toFixed(2) }}
                 </div>
               </div>
@@ -209,7 +189,7 @@ export default {
       return this.salesMinusShipping * this.commishPercent;
     },
     totalActual() {
-      return this.totalNet - this.totalTax;
+      return this.totalGross - this.totalTax;
     }
   }
 };
