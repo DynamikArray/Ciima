@@ -85,6 +85,15 @@ module.exports = {
               eBayListingStatus: {
                 type: "string",
               },
+              hasErrorMsg: {
+                type: "boolean",
+              },
+              errorMessages: {
+                type: "array",
+                items: {
+                  type: "string",
+                },
+              },
             },
           },
         },

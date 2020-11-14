@@ -1,8 +1,30 @@
 <template>
   <v-slide-x-reverse-transition mode="out-in">
     <div class="caption" :key="`transition_${item.pkStockItemID}`">
-      <v-chip class="ma-2 textShadow" :color="statusColor">
-        <v-icon small v-if="isUpating" class="mr-2">fas fa-cog fa-spin</v-icon>
+      <v-chip
+        v-if="isUpating && hasError"
+        class="ma-2 textShadow"
+        color="error"
+      >
+        <v-icon small class="mr-2">fas fa-exclamation-triangle</v-icon>
+        <h3 class="">Error</h3>
+      </v-chip>
+
+      <v-chip
+        v-if="isUpating && !hasError"
+        class="ma-2 textShadow"
+        :color="statusColor"
+      >
+        <v-icon small class="mr-2">fas fa-cog fa-spin</v-icon>
+        <h3 class="">{{ item.eBayListingStatus }}</h3>
+      </v-chip>
+
+      <v-chip
+        v-if="!isUpating && !hasError"
+        class="ma-2 textShadow"
+        :color="statusColor"
+      >
+        <v-icon small class="mr-2">fa fa-check-circle</v-icon>
         <h3 class="">{{ item.eBayListingStatus }}</h3>
       </v-chip>
     </div>
@@ -19,6 +41,17 @@ export default {
   computed: {
     isUpating() {
       if (this.item.eBayListingStatus == "UPDATING") return true;
+      return false;
+    },
+    hasError() {
+      if (this.item.hasErrorMsg === true) return true;
+      return false;
+    },
+    errorMessages() {
+      if (this.item.errorMessages) {
+        let messages = errorMessages.split("+");
+        return messages;
+      }
       return false;
     },
     statusColor() {

@@ -58,7 +58,7 @@ export default {
     let _this = this;
     this.interval = setInterval(() => {
       _this.checkIfHasItemsUpdating();
-    }, 10000);
+    }, 30000);
   },
   beforeDestroy() {
     clearInterval(this.interval);
