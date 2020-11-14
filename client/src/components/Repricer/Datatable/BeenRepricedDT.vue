@@ -1,9 +1,11 @@
 <template>
   <div class="w-100">
+    <ListingStatusFilter @filterUpdate="handleFilterUpdate" />
+
     <v-data-table
       class="w-100"
       :headers="headers"
-      :items="items"
+      :items="filteredItems"
       :loading="loading"
       sort-by="LastPriced"
       sort-desc
@@ -54,6 +56,8 @@
 </template>
 
 <script>
+import ListingStatusFilter from "./ListingStatusFilter";
+
 import headers, { eBayListingStatus } from "./_headers";
 import LinnworksImage from "@/components/Shared/Datatable/FieldTemplates/LinnworksImage";
 import LinnworksItemTitle from "@/components/Shared/Datatable/FieldTemplates/LinnworksItemTitle";
@@ -80,6 +84,7 @@ export default {
     }
   },
   components: {
+    ListingStatusFilter,
     LinnworksImage,
     LinnworksItemTitle,
     LinnworksQuantity,
@@ -94,8 +99,26 @@ export default {
   },
   data() {
     return {
-      headers: [...headers, eBayListingStatus]
+      headers: [...headers, eBayListingStatus],
+      filterBy: false
     };
+  },
+  computed: {
+    filteredItems() {
+      if (this.filterBy) {
+        return this.items.filter(
+          item =>
+            item.eBayListingStatus.toLocaleLowerCase() ==
+            this.filterBy.toLowerCase()
+        );
+      }
+      return this.items;
+    }
+  },
+  methods: {
+    handleFilterUpdate(val) {
+      this.filterBy = val;
+    }
   }
 };
 </script>
