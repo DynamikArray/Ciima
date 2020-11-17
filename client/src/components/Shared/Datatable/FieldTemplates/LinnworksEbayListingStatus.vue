@@ -1,14 +1,26 @@
 <template>
   <v-slide-x-reverse-transition mode="out-in">
     <div class="caption" :key="`transition_${item.pkStockItemID}`">
-      <v-chip
-        v-if="isUpating && hasError"
-        class="ma-2 textShadow"
-        color="error"
-      >
-        <v-icon small class="mr-2">fas fa-exclamation-triangle</v-icon>
-        <h3 class="">Error</h3>
-      </v-chip>
+      <div v-if="isUpating && hasError">
+        <v-tooltip left>
+          <template v-slot:activator="{ on, attrs }">
+            <v-chip
+              class="ma-2 textShadow"
+              color="error"
+              v-bind="attrs"
+              v-on="on"
+            >
+              <v-icon small class="mr-2">fas fa-exclamation-triangle</v-icon>
+              <h3 class="">Error</h3>
+            </v-chip>
+          </template>
+          <v-alert type="error">
+            <div class="body-2">
+              {{ errorMessages }}
+            </div>
+          </v-alert>
+        </v-tooltip>
+      </div>
 
       <v-chip
         v-if="isUpating && !hasError"
@@ -49,8 +61,7 @@ export default {
     },
     errorMessages() {
       if (this.item.errorMessages) {
-        let messages = errorMessages.split("+");
-        return messages;
+        return JSON.stringify(this.item.errorMessages);
       }
       return false;
     },
