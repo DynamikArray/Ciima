@@ -6,6 +6,7 @@ const getRepricingItemsList = (repriced = false) => {
   DECLARE @LOTS VARCHAR(255) = 'EBAY-LOTS';
   DECLARE @FromDate DATETIME = DATEADD(day,-1,GETDATE());
   DECLARE @ToDate DATETIME = GETDATE();
+  DECLARE @ListedAfter DATETIME = DATEADD(day,-5,GETDATE());
 
   SELECT
       si.pkStockItemID,
@@ -68,6 +69,7 @@ const getRepricingItemsList = (repriced = false) => {
       AND (pc.CategoryName = @LOTS)
       AND (sl.Quantity > 0)
 
+      AND (si.CreationDate < @ListedAfter )
       AND (si.pkStockItemId = extLastPrice.fkStockItemId AND extLastPrice.ProperyName = 'LastPrice' )
       AND (si.pkStockItemId = extLastPriced.fkStockItemId AND extLastPriced.ProperyName = 'LastPriced' )
       AND (TODATETIMEOFFSET(CONVERT(datetime, extLastPriced.ProperyValue),-300) ${compareOperator} CONVERT(datetime,  el.startTime))
