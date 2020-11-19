@@ -14,10 +14,8 @@
               <h3 class="">Error</h3>
             </v-chip>
           </template>
-          <v-alert type="error">
-            <div class="body-2">
-              {{ errorMessages }}
-            </div>
+          <v-alert type="error" style="max-width:400px">
+            <div class="body-2" v-html="errorMessages" />
           </v-alert>
         </v-tooltip>
       </div>
@@ -61,7 +59,10 @@ export default {
     },
     errorMessages() {
       if (this.item.errorMessages) {
-        return JSON.stringify(this.item.errorMessages);
+        const strMsgs = JSON.stringify(this.item.errorMessages);
+        const formattedMsgs = strMsgs.replace(/\\r\\n/g, "<br /><br />");
+        if (!formattedMsgs) return strMsgs;
+        return formattedMsgs;
       }
       return false;
     },
