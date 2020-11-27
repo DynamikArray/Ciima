@@ -58,7 +58,9 @@ const getRepricingItemsList = (repriced = false) => {
       AND (el.Active = 1)
       AND (el.FixedPrice = 0)
       AND (el.SiteId = 'US')
-      AND (el.startTime BETWEEN @FromDate AND @ToDate)
+      AND (el.startTime BETWEEN @FromDate AND @ToDate)      
+      ${repriced ? "" : "AND (el.ListingPrice > 14.99)"}
+
 
       AND (et.fkInventoryItemId = si.pkStockItemID)
       AND (et.ListingStatus = 'Ok' OR et.ListingStatus = 'Updating')
