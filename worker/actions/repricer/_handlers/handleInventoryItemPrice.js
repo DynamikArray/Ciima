@@ -1,8 +1,8 @@
 const { format } = require("date-fns");
-const { linnworks } = require("../../../util/linnworks/linnworks.js");
+const { linnworks } = require("../../../../util/linnworks/linnworks.js");
 
-const getInventoryItemPrices = require("../../../util/linnworks/helpers/getInventoryItemPrices");
-const updateInventoryItemPrices = require("../../../util/linnworks/helpers/updateInventoryItemPrices");
+const getInventoryItemPrices = require("../../../../util/linnworks/helpers/getInventoryItemPrices");
+const updateInventoryItemPrices = require("../../../../util/linnworks/helpers/updateInventoryItemPrices");
 
 const handleInventoryItemPrice = async (pkStockItemID, newPrice) => {
   let _result,

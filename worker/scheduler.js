@@ -7,10 +7,13 @@ const {
 } = require("./scheduleJobs/ebayJobs");
 //linnworks jobs
 const { fetchLinnworksInventory } = require("./scheduleJobs/linnworksJobs");
+
+/*
 const {
   repriceLotsWithNoLastPrice,
   repriceLotsWithLastPrice,
 } = require("./scheduleJobs/repricer");
+*/
 
 const { soldItemsManager } = require("./scheduleJobs/soldItemsManager");
 
@@ -32,13 +35,13 @@ const scheduler = () => {
   schedule.scheduleJob(linnworksItemsRule, fetchLinnworksInventory);
 
   //reprice items no last price
-  const withNoLastPriceRule = new schedule.RecurrenceRule();
-  withNoLastPriceRule.minute = [39];
+  //const withNoLastPriceRule = new schedule.RecurrenceRule();
+  //withNoLastPriceRule.minute = [39];
   //schedule.scheduleJob(withNoLastPriceRule, repriceLotsWithNoLastPrice);
 
   //reprice items with last price
-  const withLastPriceRule = new schedule.RecurrenceRule();
-  withLastPriceRule.minute = [21];
+  //const withLastPriceRule = new schedule.RecurrenceRule();
+  //withLastPriceRule.minute = [21];
   //schedule.scheduleJob(withLastPriceRule, repriceLotsWithLastPrice);
 
   const soldItemsRule = new schedule.RecurrenceRule();

@@ -8,7 +8,6 @@ const toolRoutes = [
       requireAuth: true
     }
   },
-
   {
     path: "/pricesync",
     props: true,
@@ -21,10 +20,11 @@ const toolRoutes = [
   },
 
   {
-    path: "/ebay",
+    path: "/repricer",
     props: true,
-    name: "ebay",
-    component: () => import(/*webpackChunkName: "ebay"*/ "@/views/Ebay.vue"),
+    name: "repricer",
+    component: () =>
+      import(/*webpackChunkName: "pricesync"*/ "@/views/Repricer.vue"),
     meta: {
       requiresAuth: true
     }

@@ -88,10 +88,17 @@ fastify.register(require("./routes/v1/pricematch"), { prefix: "v1" });
 fastify.register(require("./routes/v1/pricelist"), { prefix: "v1" });
 //Reporting
 fastify.register(require("./routes/v1/reporting"), { prefix: "v1" });
-
+//Repricing Service
+fastify.register(require("./routes/v1/repricingService"), {
+  prefix: "v1/repricingService",
+});
+//
+//
 //catch all route for loading client application
 fastify.get("/*", (request, reply) => reply.sendFile("index.html"));
 
+//
+//
 // async start method thing!!!!
 const start = async () => {
   fastify.winston.info("Starting Fastify Server");

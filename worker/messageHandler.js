@@ -8,7 +8,9 @@ const logger = require("../util/winston/winston.js")({
 });
 
 const { submitDraftHandler } = require("./actions/submitDraftHandler.js");
-const { repriceItemHandler } = require("./actions/repriceItemHandler.js");
+const {
+  repriceItemHandler,
+} = require("./actions/repricer/repriceItemHandler.js");
 
 const messageHandler = async (message) => {
   logger.debug("Incoming message");

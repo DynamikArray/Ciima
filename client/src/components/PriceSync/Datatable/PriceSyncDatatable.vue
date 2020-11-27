@@ -82,7 +82,7 @@
 
 <script>
 import { tableHeaders } from "./tableHeaders.js";
-import LinnworksImage from "./fieldTemplates/LinnworksImage";
+import LinnworksImage from "@/components/Shared/Datatable/FieldTemplates/LinnworksImage";
 import EditablePrice from "./fieldTemplates/Price";
 import StockItemPrice from "./fieldTemplates/StockItemPrice";
 import ListingStatus from "./fieldTemplates/ListingStatus";
