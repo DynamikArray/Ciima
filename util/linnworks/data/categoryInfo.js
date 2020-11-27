@@ -20,7 +20,7 @@ const CategoryInfo = {
     CategoryName: "EBAY-LOTS",
   },
   gtcs: {
-    CategoryId: "6316baa5-5e56-49bb-8167-c82190a277ad",
+    CategoryId: "b8ce8c2d-aa75-438b-8e95-db0a894a96a8",
     CategoryName: "EBAY-GTCS",
   },
 };
