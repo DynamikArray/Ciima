@@ -15,13 +15,7 @@ const saveSoldItemsToDb = async (values) => {
     linnworksSKU,
     linnworksTitle,
     pricePerUnit
-  ) VALUES ? ON DUPLICATE KEY UPDATE orderId = VALUES(orderId),
-    processedOnDate = VALUES(processedOnDate),
-    categoryName = VALUES(categoryName),
-    linnworksCreationDate = VALUES(linnworksCreationDate),
-    linnworksSKU = VALUES(linnworksSKU),
-    linnworksTitle = VALUES(linnworksTitle),
-    pricePerUnit = VALUES(pricePerUnit) ;`;
+  ) VALUES ? ON DUPLICATE KEY UPDATE orderId = VALUES(orderId), processedOnDate = VALUES(processedOnDate), categoryName = VALUES(categoryName), linnworksCreationDate = VALUES(linnworksCreationDate), linnworksSKU = VALUES(linnworksSKU), linnworksTitle = VALUES(linnworksTitle),  pricePerUnit = VALUES(pricePerUnit) ;`;
   try {
     return await mysqlConnPool.query(strQuery, [values]);
   } catch (e) {
