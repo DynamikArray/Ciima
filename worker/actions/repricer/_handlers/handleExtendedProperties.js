@@ -1,12 +1,12 @@
 const { format } = require("date-fns");
-const { linnworks } = require("../../../util/linnworks/linnworks.js");
+const { linnworks } = require("../../../../util/linnworks/linnworks.js");
 
 const LASTPRICED = "LastPriced";
 const LASTPRICE = "LastPrice";
 
-const getInventoryItemExtendedProperties = require("../../../util/linnworks/helpers/getInventoryItemExtendedProperties");
-const createInventoryItemExtendedProperties = require("../../../util/linnworks/helpers/createInventoryItemExtendedProperties");
-const updateInventoryItemExtendedProperties = require("../../../util/linnworks/helpers/updateInventoryItemExtendedProperties");
+const getInventoryItemExtendedProperties = require("../../../../util/linnworks/helpers/getInventoryItemExtendedProperties");
+const createInventoryItemExtendedProperties = require("../../../../util/linnworks/helpers/createInventoryItemExtendedProperties");
+const updateInventoryItemExtendedProperties = require("../../../../util/linnworks/helpers/updateInventoryItemExtendedProperties");
 
 /**
  * [handleExtendedProperties description]

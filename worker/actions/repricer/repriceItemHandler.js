@@ -1,17 +1,18 @@
-const { linnworks } = require("../../util/linnworks/linnworks.js");
+const { linnworks } = require("../../../util/linnworks/linnworks.js");
 
-const getInventoryItemPrices = require("../../util/linnworks/helpers/getInventoryItemPrices");
-const handleInventoryItemPrice = require("./repricer/handleInventoryItemPrice");
-const handleExtendedProperties = require("./repricer/handleExtendedProperties");
-const adjustTemplatesInstant = require("../../util/linnworks/helpers/adjustTemplatesInstant");
+const getInventoryItemPrices = require("../../../util/linnworks/helpers/getInventoryItemPrices");
+const handleInventoryItemPrice = require("./_handlers/handleInventoryItemPrice");
+const handleExtendedProperties = require("./_handlers/handleExtendedProperties");
+const adjustTemplatesInstant = require("../../../util/linnworks/helpers/adjustTemplatesInstant");
+const handleSavingToLog = require("./_handlers/handleSavingToLog");
 
-const { REPRICE_ITEM } = require("../../util/auditLog/logActionTypes");
-const { LINNWORKS } = require("../../util/auditLog/logResourceTypes");
-const auditLogger = require("../../util/auditLog/auditLoggerWorker");
+const { REPRICE_ITEM } = require("../../../util/auditLog/logActionTypes");
+const { LINNWORKS } = require("../../../util/auditLog/logResourceTypes");
+const auditLogger = require("../../../util/auditLog/auditLoggerWorker");
 
 const {
   repriceItemStrategy,
-} = require("../../util/linnworks/helpers/repricing/repriceItemStrategy");
+} = require("../../../util/linnworks/helpers/repricing/repriceItemStrategy");
 
 /**
  * [repriceItemHandler description]
@@ -20,8 +21,10 @@ const {
  */
 const repriceItemHandler = async ({ data }) => {
   let _result,
-    _error = false;
-  _newPrice = false;
+    _error,
+    _newPrice,
+    _oldPrice = false;
+
   const { pkStockItemID, ItemTitle } = data;
   try {
     if (!pkStockItemID) throw "No pkStockItemID on message";
@@ -34,6 +37,11 @@ const repriceItemHandler = async ({ data }) => {
       const priceSet = prices.pricesResult
         .filter((item) => item.Tag == "Start")
         .shift();
+
+      //save old price
+      _oldPrice = priceSet.Price;
+
+      //calculate new price
       const newPrice = repriceItemStrategy(priceSet.Price);
       if (!newPrice) throw "repriceItemHandler() returned FALSE";
       _newPrice = newPrice;
@@ -53,8 +61,17 @@ const repriceItemHandler = async ({ data }) => {
         pkStockItemID
       );
       if (adjustError) throw adjustError;
-      if (adjustResult)
-        linnworks.logger.debug("Success: Item Repriced Completed!");
+      if (adjustResult) {
+        const item = {
+          pkStockItemID,
+          itemTitle: ItemTitle,
+          oldPrice: _oldPrice,
+          newPrice: _newPrice,
+        };
+        const result = await handleSavingToLog(item);
+        if (result) linnworks.logger.debug("Success: Item Repriced Completed!");
+        linnworks.logger.debug("Warning: Item may not have been logged");
+      }
     }
   } catch (e) {
     _error = e;
@@ -69,7 +86,8 @@ const repriceItemHandler = async ({ data }) => {
         error: _error,
         result: _result,
         title: ItemTitle,
-        price: _newPrice,
+        newPrice: _newPrice,
+        oldPrice: _oldPrice,
       })
     );
     if (_error) return false;
