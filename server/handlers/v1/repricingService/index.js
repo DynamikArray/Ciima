@@ -7,7 +7,15 @@ const {
   extractErrorMessages,
 } = require("../../../../util/linnworks/helpers/extractErrorMessages.js");
 
+const { buildSelectQueries, buildSelectQueriesParams } = require("./helper");
+
 module.exports = (fastify) => ({
+  /**
+   * [getItemsListHandler description]
+   * @param  {[type]}  req [description]
+   * @param  {[type]}  res [description]
+   * @return {Promise}     [description]
+   */
   getItemsListHandler: async (req, res) => {
     try {
       //send whatever params are required for the query to be built?
@@ -33,7 +41,12 @@ module.exports = (fastify) => ({
     }
   },
 
-  /* pkStockItemID */
+  /**
+   * [repriceItemByIdHandler description]
+   * @param  {[type]}  req [description]
+   * @param  {[type]}  res [description]
+   * @return {Promise}     [description]
+   */
   repriceItemByIdHandler: async (req, res) => {
     const { rabbit, winston } = fastify;
     const amqp = require("../../../util/amqpMsgHelper.js")(rabbit, winston);
@@ -51,6 +64,39 @@ module.exports = (fastify) => ({
       return result;
     } catch (e) {
       throw e;
+    }
+  },
+
+  /**
+   * [getRepricingLogHandler description]
+   * @param  {[type]}  req [description]
+   * @param  {[type]}  res [description]
+   * @return {Promise}     [description]
+   */
+  getRepricingLogHandler: async (req, res) => {
+    const page = Number(req.body.page) || 1;
+    const pageLimit = Number(req.body.limit) || 10;
+
+    const { selectQuery, totalQuery } = buildSelectQueries();
+    const { selectParams, totalParams } = buildSelectQueriesParams(
+      page - 1,
+      pageLimit
+    );
+
+    try {
+      const [rows, fields] = await fastify.mysql.query(
+        selectQuery,
+        selectParams
+      );
+      const [totalRows] = await fastify.mysql.query(totalQuery, totalParams);
+      //PAGING totals
+      const rowsTotal = totalRows[0].rowCount;
+      const pageCount = Math.ceil(rowsTotal / pageLimit);
+
+      return { result: { page, pageCount, pageLimit, rowsTotal, rows } };
+    } catch (error) {
+      fastify.winston.error(error);
+      res.send(error);
     }
   },
 });
