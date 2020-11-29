@@ -2,61 +2,68 @@ import Vue from "vue";
 import Vuex from "vuex";
 Vue.use(Vuex);
 
-/*
-import { SEARCH_IN_PROGRESS_REPRICING_ITEMS } from "@/store/action-types";
+import { SEARCH_REPRICING_LOG } from "@/store/action-types";
 import {
-  SEARCH_IN_PROGRESS_REPRICING_ITEMS_LOADING,
-  SEARCH_IN_PROGRESS_REPRICING_ITEMS_RESULTS,
-  SEARCH_IN_PROGRESS_REPRICING_ITEMS_CLEAR
+  SEARCH_REPRICING_LOG_LOADING,
+  SEARCH_REPRICING_LOG_RESULTS
 } from "@/store/mutation-types";
-*/
 
 const repricingLog = {
   namespaced: true,
 
   state: {
+    loading: false,
     items: [],
-    loading: false
+    page: 1,
+    pageCount: 0,
+    pageLimit: 10,
+    rowsTotal: 0
   },
 
   getters: {
-    /*
-      getSoldItems: state => {
-        return state.items;
-      }
-      */
+    getRepricingLog: state => {
+      return state.items;
+    },
+    getRepricingLogPager: state => {
+      return {
+        page: state.page,
+        count: state.pageCount,
+        limit: state.pageLimit,
+        total: state.rowsTotal
+      };
+    },
+    getRepricingLogLoading: state => {
+      return state.loading;
+    }
   },
 
   mutations: {
-    /*
-    [SEARCH_IN_PROGRESS_REPRICING_ITEMS_CLEAR](state) {
-      state.items = [];
+    [SEARCH_REPRICING_LOG_RESULTS](state, items) {
+      if (items.rows) state.items = items.rows;
+      if (items.page) state.page = items.page;
+      if (items.pageCount) state.pageCount = items.pageCount;
+      if (items.pageLimit) state.pageLimit = items.pageLimit;
+      if (items.rowsTotal) state.rowsTotal = items.rowsTotal;
     },
-    [SEARCH_IN_PROGRESS_REPRICING_ITEMS_RESULTS](state, items) {
-      state.items = items;
-    },
-    [SEARCH_IN_PROGRESS_REPRICING_ITEMS_LOADING](state, { loading }) {
+    [SEARCH_REPRICING_LOG_LOADING](state, { loading }) {
       state.loading = loading;
     }
-    */
   },
 
   actions: {
-    /*
-    [SEARCH_IN_PROGRESS_REPRICING_ITEMS]({ dispatch, commit }, params) {
+    [SEARCH_REPRICING_LOG]({ dispatch, commit }, params) {
       dispatch(
         "api/requestHandler",
         {
-          method: "get",
-          url: "/reporting/getSoldItems",
+          method: "post",
+          url: "/repricingService/getRepricingLog",
           params: params,
-          success: `reports/${SEARCH_IN_PROGRESS_REPRICING_ITEMS_RESULTS}`,
-          loading: `reports/${SEARCH_IN_PROGRESS_REPRICING_ITEMS_LOADING}`
+          success: `repricer/repricingLog/${SEARCH_REPRICING_LOG_RESULTS}`,
+          loading: `repricer/repricingLog/${SEARCH_REPRICING_LOG_LOADING}`
         },
         { root: true }
       );
     }
-    */
   }
 };
 

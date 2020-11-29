@@ -1,12 +1,5 @@
 const headers = [
   {
-    text: "Updated",
-    value: "dateUpdated",
-    sortable: true,
-    align: "center",
-    width: 110
-  },
-  {
     text: "Title",
     value: "itemTitle",
     sortable: true,
@@ -25,6 +18,13 @@ const headers = [
     sortable: true,
     align: "center",
     width: 120
+  },
+  {
+    text: "Updated",
+    value: "dateUpdated",
+    sortable: true,
+    align: "center",
+    width: 110
   }
 ];
 

@@ -29,6 +29,7 @@
             :items="repricingLog"
             :pager="repricingLogPager"
             :loading="repricingLogLoading"
+            :getData="getRepricingLog"
           />
         </v-tab-item>
       </v-tabs-items>
@@ -109,8 +110,11 @@ export default {
         { repricedItems: true }
       );
     },
-    getRepricingLog() {
-      this.$store.dispatch(`repricer/repricingLog/${SEARCH_REPRICING_LOG}`);
+    getRepricingLog(params = {}) {
+      this.$store.dispatch(
+        `repricer/repricingLog/${SEARCH_REPRICING_LOG}`,
+        params
+      );
     },
     checkIfHasItemsUpdating() {
       if (

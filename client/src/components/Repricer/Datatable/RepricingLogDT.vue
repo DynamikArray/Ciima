@@ -5,7 +5,14 @@
       :headers="headers"
       :items="items"
       :loading="loading"
+      hide-default-footer
     >
+      <template v-slot:item.oldPrice="{ item }">
+        <CimmaStaticPriceField :value="item.oldPrice" :itemId="item.id" />
+      </template>
+      <template v-slot:item.newPrice="{ item }">
+        <CimmaStaticPriceField :value="item.newPrice" :itemId="item.id" />
+      </template>
       <template v-slot:item.dateUpdated="{ item }">
         <CiimaDateTimeField :value="item.dateUpdated" :itemId="item.id" />
       </template>
@@ -16,6 +23,7 @@
 <script>
 import headers from "./_logHeaders";
 import CiimaDateTimeField from "@/components/Shared/Datatable/FieldTemplates/CiimaDateTimeField";
+import CimmaStaticPriceField from "@/components/Shared/Datatable/FieldTemplates/CimmaStaticPriceField";
 
 export default {
   props: {
@@ -24,18 +32,14 @@ export default {
     },
     loading: {
       type: [Boolean]
-    },
-    pager: {
-      type: [Object]
     }
   },
-  components: { CiimaDateTimeField },
+  components: { CiimaDateTimeField, CimmaStaticPriceField },
   data() {
     return {
       headers: [...headers]
     };
-  },
-  methods: {}
+  }
 };
 </script>
 
