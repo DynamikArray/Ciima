@@ -58,7 +58,7 @@
 <script>
 import ListingStatusFilter from "./ListingStatusFilter";
 
-import headers, { eBayListingStatus } from "./_headers";
+import headers, { eBayListingStatus } from "./_repricingHeaders";
 import LinnworksImage from "@/components/Shared/Datatable/FieldTemplates/LinnworksImage";
 import LinnworksItemTitle from "@/components/Shared/Datatable/FieldTemplates/LinnworksItemTitle";
 import LinnworksQuantity from "@/components/Shared/Datatable/FieldTemplates/LinnworksQuantity";

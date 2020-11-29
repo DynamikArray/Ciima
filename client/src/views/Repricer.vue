@@ -18,7 +18,7 @@
         >
           <v-tab> <v-icon left>fas fa-list-ul</v-icon>Need Repricing</v-tab>
           <v-tab> <v-icon left>fa fa-tasks</v-icon>Been Repriced</v-tab>
-          <!-- <v-tab> <v-icon left>fa fa-sync-alt</v-icon>In Progress</v-tab> -->
+          <v-tab> <v-icon left>fa fa-history</v-icon>Repricing Log</v-tab>
         </v-tabs>
       </div>
     </div>

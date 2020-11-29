@@ -4,14 +4,14 @@ Vue.use(Vuex);
 
 import beenRepriced from "./beenRepriced";
 import needRepricing from "./needRepricing";
-import inProgress from "./inProgress";
+import repricingLog from "./repricingLog";
 
 const pricing = {
   namespaced: true,
   modules: {
     beenRepriced,
     needRepricing,
-    inProgress
+    repricingLog
   }
 };
 

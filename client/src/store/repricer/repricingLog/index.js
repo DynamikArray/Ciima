@@ -11,7 +11,7 @@ import {
 } from "@/store/mutation-types";
 */
 
-const inProgess = {
+const repricingLog = {
   namespaced: true,
 
   state: {
@@ -60,4 +60,4 @@ const inProgess = {
   }
 };
 
-export default inProgess;
+export default repricingLog;

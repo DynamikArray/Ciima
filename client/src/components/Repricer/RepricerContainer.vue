@@ -24,8 +24,12 @@
           />
         </v-tab-item>
 
-        <v-tab-item key="InProgress" class="pt-2">
-          <InProgress />
+        <v-tab-item key="RepricingLog" class="pt-2">
+          <RepricingLog
+            :items="repricingLog"
+            :pager="repricingLogPager"
+            :loading="repricingLogLoading"
+          />
         </v-tab-item>
       </v-tabs-items>
     </div>
@@ -33,15 +37,15 @@
 </template>
 
 <script>
-/*import InProgress from "./Datatable/InProgress/InProgressContainer";*/
 import BeenRepriced from "./Tabs/BeenRepriced";
 import NeedRepricing from "./Tabs/NeedRepricing";
-import InProgress from "./Tabs/InProgress";
+import RepricingLog from "./Tabs/RepricingLog";
 
 import {
   SUBMIT_NEED_REPRICING_ITEM,
   SEARCH_NEED_REPRICING_ITEMS,
-  SEARCH_BEEN_REPRICED_ITEMS
+  SEARCH_BEEN_REPRICED_ITEMS,
+  SEARCH_REPRICING_LOG
 } from "@/store/action-types";
 
 import { mapGetters } from "vuex";
@@ -49,7 +53,7 @@ import { mapGetters } from "vuex";
 export default {
   name: "RepricerContainer",
   components: {
-    InProgress,
+    RepricingLog,
     BeenRepriced,
     NeedRepricing
   },
@@ -73,7 +77,10 @@ export default {
       needRepricingItems: "repricer/needRepricing/getItems",
       needRepricingLoading: "repricer/needRepricing/getLoading",
       beenRepricedItems: "repricer/beenRepriced/getItems",
-      beenRepricedLoading: "repricer/beenRepriced/getLoading"
+      beenRepricedLoading: "repricer/beenRepriced/getLoading",
+      repricingLog: "repricer/repricingLog/getRepricingLog",
+      repricingLogPager: "repricer/repricingLog/getRepricingLogPager",
+      repricingLogLoading: "repricer/repricingLog/getRepricingLogLoading"
     })
   },
   watch: {
@@ -88,6 +95,7 @@ export default {
     getData() {
       this.getNeedRepricing();
       this.getBeenRepriced();
+      this.getRepricingLog();
     },
     getNeedRepricing() {
       this.$store.dispatch(
@@ -100,6 +108,9 @@ export default {
         `repricer/beenRepriced/${SEARCH_BEEN_REPRICED_ITEMS}`,
         { repricedItems: true }
       );
+    },
+    getRepricingLog() {
+      this.$store.dispatch(`repricer/repricingLog/${SEARCH_REPRICING_LOG}`);
     },
     checkIfHasItemsUpdating() {
       if (
