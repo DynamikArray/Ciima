@@ -21,12 +21,7 @@
         :getData="fetchLogWithParams"
       ></LogPager>
 
-      <Datatable
-        :items="items"
-        :loading="loading"
-        :pager="pager"
-        :getData="getData"
-      />
+      <Datatable :items="items" :loading="loading" :pageLimit="filters.limit" />
 
       <LogPager
         key="bottomPager"
