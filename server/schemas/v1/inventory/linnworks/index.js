@@ -34,6 +34,71 @@ module.exports = {
     }*/
   },
 
+  inventorySearchSchema: {
+    description:
+      "inventorySearch - V2 - Improved Inventory Search in Linnworks for titles",
+    tags: ["Inventory"],
+    summary:
+      "inventorySearch - V2 - Improved Title searching through linnworks inventory",
+    security: [
+      {
+        token: [],
+      },
+    ],
+    body: {
+      type: "object",
+      properties: {
+        searchString: {
+          type: "string",
+        },
+        searchCategories: {
+          type: "array",
+          items: {
+            type: "string",
+          },
+        },
+      },
+    },
+
+    response: {
+      200: {
+        description: "Succesful response",
+        type: "object",
+        properties: {
+          result: {
+            type: "array",
+            items: {
+              type: "object",
+              properties: {
+                CreationDate: {
+                  type: "string",
+                },
+                ItemTitle: {
+                  type: "string",
+                },
+                CategoryName: {
+                  type: "string",
+                },
+                ItemNumber: {
+                  type: "string",
+                },
+                BinRackNumber: {
+                  type: "string",
+                },
+                Quantity: {
+                  type: "string",
+                },
+              },
+            },
+          },
+          total: {
+            type: "number",
+          },
+        },
+      },
+    },
+  },
+
   updateLocationOrQuantitySchema: {
     description: "Updates an Inventory items location or quantity values",
     tags: ["Inventory"],
