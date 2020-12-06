@@ -3,6 +3,7 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 import priceSync from "./priceSync/priceSync";
+import inventory from "./inventory/inventory";
 
 import {
   SEARCH_INVENTORY_RESULTS,
@@ -21,7 +22,8 @@ import {
 const linnworks = {
   namespaced: true,
   modules: {
-    priceSync
+    priceSync,
+    inventory
   },
 
   state: {

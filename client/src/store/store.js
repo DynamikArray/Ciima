@@ -18,7 +18,7 @@ import deleteDraft from "@/store/drafts/deleteDraft";
 import lots from "@/store/lots/lots";
 import gtcs from "@/store/gtcs/gtcs";
 
-import linnworks from "@/store/inventory/linnworks";
+import linnworks from "@/store/linnworks/linnworks";
 import ebay from "@/store/ebay/search";
 import user from "@/store/user/user";
 import pricing from "@/store/pricing/pricing";
