@@ -6,15 +6,13 @@ export const headers = [
     value: "CategoryName",
     width: "100px"
   },
-
   {
     text: "Image",
     align: "left",
     sortable: false,
-    value: "imgThumb",
+    value: "Image",
     width: "60px"
   },
-
   {
     text: "Title",
     align: "left",
@@ -25,28 +23,56 @@ export const headers = [
     text: "Issue #(s)",
     align: "center",
     sortable: true,
-    value: "extendedProperties.issueNumbers",
+    value: "IssueNumbers",
     width: "140px"
   },
   {
     text: "Qty",
     align: "center",
     sortable: true,
-    value: "location.qty",
+    value: "Quantity",
     width: "65px"
   },
   {
     text: "Bin/Rack",
     align: "center",
     sortable: true,
-    value: "location.name",
+    value: "BinRackNumber",
     width: "120px"
   },
   {
-    text: "Price",
+    text: "Retail Price",
     align: "center",
     sortable: true,
-    value: "price",
+    value: "RetailPrice",
+    width: "80px"
+  },
+  {
+    text: "Stock Price",
+    align: "center",
+    sortable: true,
+    value: "StockItemPrice",
+    width: "80px"
+  },
+  {
+    text: "Ebay Price",
+    align: "center",
+    sortable: true,
+    value: "eBayListingPrice",
+    width: "80px"
+  },
+  {
+    text: "eBay Start",
+    align: "center",
+    sortable: true,
+    value: "eBayStartTime",
+    width: "80px"
+  },
+  {
+    text: "eBay End",
+    align: "center",
+    sortable: true,
+    value: "eBayEndTime",
     width: "80px"
   }
 ];

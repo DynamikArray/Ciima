@@ -42,7 +42,8 @@ const searchInventory = (searchString, categoriesString = []) => {
   if (categoriesString) categoriesSQL = buildCategoriesString(categoriesString);
 
   const sqlQuery = `script=DECLARE @url VARCHAR(255) = CONCAT('https://s3-eu-west-1.amazonaws.com/images.linnlive.com/', lower(CONVERT(VARCHAR(32),HASHBYTES('MD5', CONVERT(VARCHAR(32), DB_NAME())), 2)) , '/');
-  SELECT
+    SELECT
+      si.pkStockItemId as 'pkStockItemID', 
       CONCAT(@url,LOWER(CONVERT(VARCHAR(40), sir.pkImageId)),'.jpg') AS 'Image',
       si.CreationDate,
       pc.CategoryName,

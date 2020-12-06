@@ -70,6 +70,9 @@ module.exports = {
             items: {
               type: "object",
               properties: {
+                pkStockItemID: {
+                  type: "string",
+                },
                 CreationDate: {
                   type: "string",
                 },
