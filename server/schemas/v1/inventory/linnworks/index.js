@@ -73,6 +73,9 @@ module.exports = {
                 CreationDate: {
                   type: "string",
                 },
+                Image: {
+                  type: "string",
+                },
                 ItemTitle: {
                   type: "string",
                 },
@@ -86,6 +89,27 @@ module.exports = {
                   type: "string",
                 },
                 Quantity: {
+                  type: "string",
+                },
+                RetailPrice: {
+                  type: "string",
+                },
+                StockItemPrice: {
+                  type: "string",
+                },
+                eBayListingPrice: {
+                  type: "string",
+                },
+                eBayStartTime: {
+                  type: "string",
+                },
+                eBayEndTime: {
+                  type: "string",
+                },
+                ExtraDescription: {
+                  type: "string",
+                },
+                IssueNumbers: {
                   type: "string",
                 },
               },
