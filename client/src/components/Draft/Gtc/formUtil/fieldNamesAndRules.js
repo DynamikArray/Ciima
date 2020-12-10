@@ -35,6 +35,20 @@ const fieldRules = {
     v => !!v || "Price is a required field",
     v => !!Number(v) > 0 || "Price must be greater than zero or is not a number"
   ],
+
+  declinePrice: [
+    v => {
+      if (v) {
+        return (
+          !!Number(v) > 0 ||
+          "Decline Price should be greater than zero or is not a number"
+        );
+      } else {
+        return false;
+      }
+    }
+  ],
+
   quantity: [
     v => !!v || "Quantity is a required field",
     v =>
@@ -61,6 +75,7 @@ const fieldNames = [
   "inventoryTitle",
   "locationCode",
   "price",
+  "declinePrice",
   "quantity",
   "ebaySiteCategoryId",
   "ebayStoreCategoryIdOne",

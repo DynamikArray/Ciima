@@ -45,6 +45,13 @@
           />
         </v-col>
         <v-col class="py-0">
+          <DeclinePrice
+            @update="updateLocalParams"
+            :value="declinePrice"
+            :rules="rules.declinePrice"
+          />
+        </v-col>
+        <v-col class="py-0">
           <InventoryQuantity
             @update="updateLocalParams"
             :value="quantity"
@@ -174,6 +181,7 @@ import GtcDraftImages from "./Images/GtcDraftImages";
 
 import LocationCode from "./formFields/LocationCode";
 import InventoryPrice from "./formFields/InventoryPrice";
+import DeclinePrice from "./formFields/DeclinePrice";
 import InventoryQuantity from "./formFields/InventoryQuantity";
 import EbayCategoryPicker from "./formFields/EbayCategoryDropdown";
 import EbayStoreCategory from "./formFields/EbayStoreCategory";
@@ -205,6 +213,7 @@ export default {
     LocationCode,
     InventoryTitle,
     InventoryPrice,
+    DeclinePrice,
     InventoryQuantity,
     EbayCategoryPicker,
     EbayStoreCategory,
