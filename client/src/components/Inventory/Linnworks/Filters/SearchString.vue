@@ -3,6 +3,7 @@
     outlined
     autocomplete="off"
     autofocus
+    dense
     hide-details
     persistent-hint
     :value="value"
@@ -29,11 +30,12 @@ export default {
   methods: {
     handleKeyDown({ key, keyCode, code }) {
       if (key === "Enter" || code === "Enter" || keyCode === 13) {
-        this.$emit("updateSearchString", this.searchString);
+        this.$emit("runSearch");
       }
     },
     handleInput(val) {
       this.searchString = val;
+      this.$emit("updateSearchString", this.searchString);
     }
   }
 };

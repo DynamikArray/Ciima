@@ -5,15 +5,16 @@
         :value="searchString"
         label="Search Linnworks"
         @updateSearchString="updateSearchString"
+        @runSearch="runSearch"
       />
-      <div class="d-flex align-start justify-space-between pt-1">
+      <div class="d-flex align-start justify-space-between pt-1 flex-wrap">
         <SearchCategories
           :value="searchCategories"
           label="Linnworks Categories"
           @updateSearchCategories="updateSearchCategories"
         />
         <div class="mt-2">
-          <v-btn class="primary"
+          <v-btn class="primary" @click="runSearch"
             ><v-icon small class="mr-2">fa fa-search</v-icon>Search</v-btn
           >
         </div>
@@ -43,12 +44,12 @@ export default {
   methods: {
     updateSearchString(searchString) {
       this.$emit("update:searchString", searchString);
-      this.$emit("runSearch");
     },
     updateSearchCategories(searchCategories) {
-      //
-      //updateSearchCategories
-      //
+      this.$emit("update:searchCategories", searchCategories);
+    },
+    runSearch() {
+      this.$emit("runSearch");
     }
   }
 };

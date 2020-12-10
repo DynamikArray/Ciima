@@ -100,15 +100,6 @@ module.exports = {
                 StockItemPrice: {
                   type: "string",
                 },
-                eBayListingPrice: {
-                  type: "string",
-                },
-                eBayStartTime: {
-                  type: "string",
-                },
-                eBayEndTime: {
-                  type: "string",
-                },
                 ExtraDescription: {
                   type: "string",
                 },

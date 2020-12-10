@@ -20,13 +20,6 @@ export const headers = [
     value: "ItemTitle"
   },
   {
-    text: "Issue #(s)",
-    align: "center",
-    sortable: true,
-    value: "IssueNumbers",
-    width: "140px"
-  },
-  {
     text: "Qty",
     align: "center",
     sortable: true,
@@ -38,7 +31,7 @@ export const headers = [
     align: "center",
     sortable: true,
     value: "BinRackNumber",
-    width: "120px"
+    width: "180px"
   },
   {
     text: "Retail Price",
@@ -52,27 +45,6 @@ export const headers = [
     align: "center",
     sortable: true,
     value: "StockItemPrice",
-    width: "80px"
-  },
-  {
-    text: "Ebay Price",
-    align: "center",
-    sortable: true,
-    value: "eBayListingPrice",
-    width: "80px"
-  },
-  {
-    text: "eBay Start",
-    align: "center",
-    sortable: true,
-    value: "eBayStartTime",
-    width: "80px"
-  },
-  {
-    text: "eBay End",
-    align: "center",
-    sortable: true,
-    value: "eBayEndTime",
     width: "80px"
   }
 ];

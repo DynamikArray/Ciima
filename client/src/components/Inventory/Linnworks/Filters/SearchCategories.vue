@@ -1,43 +1,56 @@
 <template>
-  <div class="d-flex align-center justify-center">
-    <div class="d-flex align-center justify-center">
-      <div class="title">Categories:</div>
-      <v-radio-group
-        outlined
-        :value="searchCategories"
-        row
-        multiple
+  <div class="d-flex align-center justify-center mt-3">
+    <div class="title">Categories:</div>
+    <div class="d-flex">
+      <v-checkbox
+        v-for="cat in CATEGORIES"
+        v-model="searchCategories"
+        :key="cat.value"
+        :value="cat.value"
+        :label="cat.name"
+        class="ma-0 py-0 px-3"
         dense
         hide-details
-        class="ma-0 pa-0 ml-4"
-        @change="handleChange"
-      >
-        <v-radio label="Sets" color="primary" value="EBAY-SETS" class="pa-2" />
-        <v-radio
-          label="Singles"
-          color="primary"
-          value="EBAY-SINGLES"
-          class="pa-2"
-        />
-        <v-radio label="Lots" color="primary" value="EBAY-LOTS" class="pa-2" />
-        <v-radio label="GTCs" color="primary" value="EBAY-GTCS" class="pa-2" />
-        <v-radio label="Default" color="primary" value="Default" class="pa-2" />
-      </v-radio-group>
+        color="primary"
+      ></v-checkbox>
     </div>
   </div>
 </template>
 
 <script>
-export default {
-  data: () => ({
-    searchCategories: ["EBAY-SETS", "EBAY-LOTS", "EBAY-SINGLES", "EBAY-GTCS"]
-  }),
-  methods: {
-    handleChange(val) {
-      this.searchCategories = val;
-      this.emit("updateSearchCategories", this.searchCategories);
-    }
+const CATEGORIES = [
+  {
+    name: "Sets",
+    value: "EBAY-SETS"
+  },
+  {
+    name: "Lots",
+    value: "EBAY-LOTS"
+  },
+  {
+    name: "Singles",
+    value: "EBAY-SINGLES"
+  },
+  {
+    name: "GTCs",
+    value: "EBAY-GTCS"
+  },
+  {
+    name: "Default",
+    value: "Default"
   }
+];
+
+export default {
+  watch: {
+    searchCategories(val) {
+      this.$emit("updateSearchCategories", val);
+    }
+  },
+  data: () => ({
+    CATEGORIES,
+    searchCategories: ["EBAY-SETS", "EBAY-LOTS", "EBAY-SINGLES", "EBAY-GTCS"]
+  })
 };
 </script>
 

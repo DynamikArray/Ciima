@@ -5,6 +5,7 @@
       :headers="headers"
       :items="items"
       :loading="loading"
+      @update:options="handleOptionsUpdated"
     >
       <template v-slot:item.CategoryName="{ item }">
         <LinnworksCategoryName
@@ -16,12 +17,6 @@
       <template v-slot:item.Image="{ item }">
         <LinnworksImage :imageUrl="item.Image" />
       </template>
-      <template v-slot:item.eBayStartTime="{ item }">
-        <LinnworksEbayStartTime :item="item" />
-      </template>
-      <template v-slot:item.eBayEndTime="{ item }">
-        <LinnworksEbayEndTime :item="item" />
-      </template>
     </v-data-table>
   </div>
 </template>
@@ -30,8 +25,6 @@
 import headers from "./headers";
 import LinnworksCategoryName from "@/components/Shared/Datatable/FieldTemplates/V2/LinnworksCategoryName";
 import LinnworksImage from "@/components/Shared/Datatable/FieldTemplates/LinnworksImage";
-import LinnworksEbayStartTime from "@/components/Shared/Datatable/FieldTemplates/LinnworksEbayStartTime";
-import LinnworksEbayEndTime from "@/components/Shared/Datatable/FieldTemplates/LinnworksEbayEndTime";
 
 export default {
   props: {
@@ -44,14 +37,17 @@ export default {
   },
   components: {
     LinnworksCategoryName,
-    LinnworksImage,
-    LinnworksEbayStartTime,
-    LinnworksEbayEndTime
+    LinnworksImage
   },
   data() {
     return {
       headers
     };
+  },
+  methods: {
+    handleOptionsUpdated(val) {
+      console.log("handleOptionsUpdated - got this new val", val);
+    }
   }
 };
 </script>

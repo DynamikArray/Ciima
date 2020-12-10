@@ -43,7 +43,7 @@ const searchInventory = (searchString, categoriesString = []) => {
 
   const sqlQuery = `script=DECLARE @url VARCHAR(255) = CONCAT('https://s3-eu-west-1.amazonaws.com/images.linnlive.com/', lower(CONVERT(VARCHAR(32),HASHBYTES('MD5', CONVERT(VARCHAR(32), DB_NAME())), 2)) , '/');
     SELECT
-      si.pkStockItemId as 'pkStockItemID', 
+      si.pkStockItemId as 'pkStockItemID',
       CONCAT(@url,LOWER(CONVERT(VARCHAR(40), sir.pkImageId)),'.jpg') AS 'Image',
       si.CreationDate,
       pc.CategoryName,
@@ -53,9 +53,6 @@ const searchInventory = (searchString, categoriesString = []) => {
       sl.Quantity,
       si.RetailPrice,
       sip.SalePrice as 'StockItemPrice',
-      el.ListingPrice as 'eBayListingPrice',
-      el.startTime as 'eBayStartTime',
-      el.endTime as 'eBayEndTime',
       extExtraDesc.ProperyValue as 'ExtraDescription',
       extIssueNumber.ProperyValue as 'IssueNumbers'
   FROM
@@ -66,7 +63,6 @@ const searchInventory = (searchString, categoriesString = []) => {
       StockLocation sLoc,
       ItemLocation il,
       Stock_ImageReg sir,
-      Automation_eBayListing el,
       StockItem_ExtendedProperties extExtraDesc,
       StockItem_ExtendedProperties extIssueNumber
   WHERE
@@ -83,10 +79,6 @@ const searchInventory = (searchString, categoriesString = []) => {
       AND (sir.IsMain = 1)
 
       AND (sip.fkStockItemId = si.pkStockItemID AND sip.SalePrice <> '' )
-
-      AND (el.fkStockItemId = si.pkStockItemID)
-      AND (el.Active = 1)
-      AND (el.SiteId = 'US')
 
       AND (si.pkStockItemId = extExtraDesc.fkStockItemId AND extExtraDesc.ProperyName = 'Extra Description' )
       AND (si.pkStockItemId = extIssueNumber.fkStockItemId AND extIssueNumber.ProperyName = 'Issue Number' )
