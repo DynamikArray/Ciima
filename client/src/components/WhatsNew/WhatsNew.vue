@@ -2,7 +2,14 @@
   <v-dialog v-model="showDialog" width="500">
     <v-card>
       <v-card-title class="headline primary">
-        <v-icon class="mr-2">fa-bullhorn</v-icon> What's New
+        <div class="d-flex justify-space-between align-center w-100">
+          <div class="d-flex">
+            <v-icon class="mr-2">fa-bullhorn</v-icon> What's New
+          </div>
+          <div class="d-flex align-center">
+            <h3 class="ml-auto my-1 mx-3">12/10/2020</h3>
+          </div>
+        </div>
       </v-card-title>
 
       <v-card-text class="pa-4">
@@ -27,7 +34,7 @@
 </template>
 
 <script>
-import Content from "./Content/Update0003.vue";
+import Content from "./Content/Update0004.vue";
 
 const UPDATE_NUMBER = "whatsNew-updateNumber";
 const SHOW_DIALOG = "whatsNew-showDialog";
@@ -50,7 +57,7 @@ export default {
   data: () => ({
     blnShowAgain: false,
     showDialog: false,
-    updateNumber: "0003"
+    updateNumber: "0004"
   }),
   methods: {
     handleOnClick() {
