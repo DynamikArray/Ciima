@@ -378,17 +378,20 @@ export default {
       this.$store
         .dispatch(`gtcs/draft/${CURRENT_GTC_DRAFT_SAVE}`, draft)
         .then(result => {
-          this.$store.commit(
-            `api/${UPDATE_API_STATUS}`,
-            `Saved | ${this.locationCode} | ${this.inventoryTitle}`
-          );
+          if (result.error) this.$toastr.e(`Error: ${result.error}`);
 
-          this.$toastr.s(`Draft Saved! ${JSON.stringify(result)}`);
-          //clear draft and start next one
-          this.clearDraft();
+          if (!result.error) {
+            this.$store.commit(
+              `api/${UPDATE_API_STATUS}`,
+              `Saved | ${this.locationCode} | ${this.inventoryTitle}`
+            );
+
+            this.$toastr.s(`Draft Saved! ${JSON.stringify(result)}`);
+            //clear draft and start next one
+            this.clearDraft();
+          }
         })
         .catch(e => {
-          console.log(e);
           this.$toastr.e(`Error: ${e.message}`);
         });
     },
