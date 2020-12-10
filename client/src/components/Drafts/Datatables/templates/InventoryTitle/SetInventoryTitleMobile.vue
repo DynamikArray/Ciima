@@ -16,11 +16,25 @@
               style="min-width:160px;"
             >
               <Price :label="true" :item="item"></Price>
+              <DeclinePrice
+                class="py-2"
+                :label="true"
+                :item="item"
+                v-if="item.draftType.toUpperCase() == 'GTCS'"
+              ></DeclinePrice>
               <Quantity :label="true" :item="item"></Quantity>
             </div>
             <div class="d-flex justify-start align-start flex-column mr-4">
-              <Grade :label="true" :item="item"></Grade>
-              <IssueNumbers :label="true" :item.sync="item"></IssueNumbers>
+              <Grade
+                :label="true"
+                :item="item"
+                v-if="item.draftType.toUpperCase() !== 'GTCS'"
+              ></Grade>
+              <IssueNumbers
+                :label="true"
+                :item.sync="item"
+                v-if="item.draftType.toUpperCase() !== 'GTCS'"
+              ></IssueNumbers>
             </div>
           </div>
 
@@ -52,6 +66,7 @@ import MainImage from "../MainImage";
 import Grade from "../Grade";
 import IssueNumbers from "../IssueNumbers";
 import Price from "../Price";
+import DeclinePrice from "../DeclinePrice";
 import OwnerId from "../OwnerId";
 import Quantity from "../Quantity";
 import CreatedDate from "../CreatedDate";
@@ -69,6 +84,7 @@ export default {
     IssueNumbers,
     Grade,
     Price,
+    DeclinePrice,
     OwnerId,
     CreatedDate,
     Quantity,
