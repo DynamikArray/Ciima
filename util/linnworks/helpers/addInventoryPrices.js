@@ -44,6 +44,7 @@ module.exports = (logger) => ({
       if (error) return { pricesError: error };
     }
 
+    return { pricesResult: true };
     /*
     //add listingDescriptions for auctions aka LOTS
     if (draft.draftType.toUpperCase() == "LOTS") {
