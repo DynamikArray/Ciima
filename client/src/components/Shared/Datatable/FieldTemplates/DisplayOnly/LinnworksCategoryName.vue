@@ -1,7 +1,7 @@
 <template>
   <v-slide-x-reverse-transition mode="out-in">
     <div class="" :key="`transition_${keyString}`" :class="fontClass">
-      {{ value }}
+      {{ removePrefix }}
     </div>
   </v-slide-x-reverse-transition>
 </template>
@@ -18,6 +18,11 @@ export default {
     fontClass: {
       type: [String],
       default: "body-1"
+    }
+  },
+  computed: {
+    removePrefix() {
+      return this.value.replace("EBAY-", "");
     }
   }
 };

@@ -13,7 +13,7 @@
     </div>
     <v-divider class="my-2"></v-divider>
     <div class="mb-10">
-      <LinnworksInventoryContainer />
+      <LinnworksInventoryContainer :isMobile="isMobile" />
     </div>
   </v-container>
 </template>
@@ -23,6 +23,16 @@ import LinnworksInventoryContainer from "@/components/Inventory/Linnworks/Linnwo
 export default {
   components: {
     LinnworksInventoryContainer
+  },
+  data() {
+    return {
+      isMobile: window.innerWidth <= 1024
+    };
+  },
+  created() {
+    addEventListener("resize", () => {
+      return (this.isMobile = window.innerWidth <= 1024);
+    });
   }
 };
 </script>

@@ -4,14 +4,14 @@ export const headers = [
     align: "center",
     sortable: true,
     value: "CategoryName",
-    width: "100px"
+    width: "95px"
   },
   {
     text: "Image",
     align: "left",
     sortable: false,
     value: "Image",
-    width: "60px"
+    width: "80px"
   },
   {
     text: "Title",
@@ -38,14 +38,14 @@ export const headers = [
     align: "center",
     sortable: true,
     value: "RetailPrice",
-    width: "80px"
+    width: "110px"
   },
   {
     text: "Listing Price",
     align: "center",
     sortable: true,
     value: "ListingPrice",
-    width: "80px"
+    width: "110px"
   }
 ];
 

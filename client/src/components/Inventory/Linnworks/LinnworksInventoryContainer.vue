@@ -12,7 +12,7 @@
       <h4>{{ items.length }} Results</h4>
     </div>
 
-    <Datatable :items="items" :loading="loading" />
+    <Datatable :items="items" :loading="loading" :isMobile="isMobile" />
   </div>
 </template>
 
@@ -25,6 +25,12 @@ import Filters from "./Filters/Filters";
 import Datatable from "./Datatable/Datatable";
 
 export default {
+  props: {
+    isMobile: {
+      type: [Boolean],
+      default: false
+    }
+  },
   components: {
     Filters,
     Datatable

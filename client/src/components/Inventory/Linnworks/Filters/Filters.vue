@@ -4,7 +4,7 @@
       <v-col cols="8" class="pb-0">
         <SearchTitle
           :value="searchTitle"
-          label="Search Linnworks"
+          label="Find Titles Matching"
           @updateSearchTitle="updateSearchTitle"
           @runSearch="runSearch"
         />
@@ -12,7 +12,7 @@
       <v-col cols="4" class="pb-0">
         <SearchLocation
           :value="searchLocation"
-          label="Search Bin/Rack"
+          label="Find Items in Bin/Rack"
           @updateSearchLocation="updateSearchLocation"
           @runSearch="runSearch"
         />
