@@ -1,6 +1,10 @@
 <template>
   <v-slide-x-reverse-transition mode="out-in">
-    <div class="" :key="`transition_${keyString}`" :class="fontClass">
+    <div
+      class=""
+      :key="`transition_category_name_${keyString}`"
+      :class="fontClass"
+    >
       {{ removePrefix }}
     </div>
   </v-slide-x-reverse-transition>

@@ -1,7 +1,14 @@
 <template>
   <v-slide-x-reverse-transition mode="out-in">
-    <div class="" :key="`transition_${keyString}`" :class="fontClass">
-      {{ value | currency }}
+    <div
+      class=""
+      :key="`transition_retailprice_${keyString}`"
+      :class="fontClass"
+    >
+      <div v-show="!isLotItem">
+        {{ value | currency }}
+      </div>
+      <div v-show="isLotItem">NA</div>
     </div>
   </v-slide-x-reverse-transition>
 </template>
@@ -14,6 +21,9 @@ export default {
     },
     value: {
       type: [String]
+    },
+    isLotItem: {
+      type: [Boolean]
     },
     fontClass: {
       type: [String],

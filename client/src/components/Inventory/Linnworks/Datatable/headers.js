@@ -46,6 +46,11 @@ export const headers = [
     sortable: true,
     value: "ListingPrice",
     width: "110px"
+  },
+  {
+    text: "View/Edit",
+    value: "action",
+    width: "110px"
   }
 ];
 

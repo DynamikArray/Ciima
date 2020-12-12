@@ -53,6 +53,7 @@
         <LinnworksRetailPrice
           :keyString="item.pkStockItemID"
           :value="item.RetailPrice"
+          :isLotItem="isLotItem(item.CategoryName)"
           fontClass="body-2"
         />
       </template>
@@ -63,6 +64,20 @@
           :value="item.ListingPrice"
           fontClass="body-2"
         />
+      </template>
+
+      <template v-slot:item.action="{ item }">
+        <v-slide-x-reverse-transition mode="out-in">
+          <div :key="`transition_bin_rack_number_${item.pkStockItemID}`">
+            <v-btn
+              color="success"
+              class="pr-3"
+              style="min-width:20px;"
+              @click="selectItem(item.pkStockItemID)"
+              ><v-icon class="">fa-edit</v-icon></v-btn
+            >
+          </div>
+        </v-slide-x-reverse-transition>
       </template>
     </v-data-table>
   </div>
@@ -77,7 +92,7 @@ import LinnworksQuantity from "@/components/Shared/Datatable/FieldTemplates/Disp
 import LinnworksBinRackNumber from "@/components/Shared/Datatable/FieldTemplates/DisplayOnly/LinnworksBinRackNumber";
 import LinnworksRetailPrice from "@/components/Shared/Datatable/FieldTemplates/DisplayOnly/LinnworksRetailPrice";
 import LinnworksListingPrice from "@/components/Shared/Datatable/FieldTemplates/DisplayOnly/LinnworksListingPrice";
-import LinnworksMobile from "./LinnworksMobile";
+import LinnworksMobile from "./Mobile/LinnworksMobile";
 
 import LinnworksImage from "@/components/Shared/Datatable/FieldTemplates/LinnworksImage";
 
@@ -122,8 +137,16 @@ export default {
           item => !this.mobileHeadersFilter.includes(item.value)
         );
       }
-
       return headers;
+    }
+  },
+  methods: {
+    isLotItem(categoryName) {
+      return categoryName.toUpperCase() == "EBAY-LOTS";
+    },
+    selectItem(pkStockItemID) {
+      //handle opening our dialog box
+      console.log("We need to dispatch the action that will handle this");
     }
   }
 };

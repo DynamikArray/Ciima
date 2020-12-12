@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <Filters
+    <FiltersContainer
       :searchTitle.sync="filters.searchTitle"
       :searchLocation.sync="filters.searchLocation"
       :searchCategories.sync="filters.searchCategories"
@@ -21,7 +21,7 @@
 import { mapGetters } from "vuex";
 import { SEARCH_LINNWORKS_INVENTORY } from "@/store/action-types";
 
-import Filters from "./Filters/Filters";
+import FiltersContainer from "./Filters/FiltersContainer";
 import Datatable from "./Datatable/Datatable";
 
 export default {
@@ -32,7 +32,7 @@ export default {
     }
   },
   components: {
-    Filters,
+    FiltersContainer,
     Datatable
   },
   data: () => ({

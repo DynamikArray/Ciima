@@ -4,7 +4,7 @@
       <v-col cols="8" class="pb-0">
         <SearchTitle
           :value="searchTitle"
-          label="Find Titles Matching"
+          label="Search Item Titles"
           @updateSearchTitle="updateSearchTitle"
           @runSearch="runSearch"
         />

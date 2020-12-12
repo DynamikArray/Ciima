@@ -15,10 +15,10 @@
             <div class="pa-2">Qty: {{ item.Quantity }}</div>
           </div>
           <div class="d-flex align-start justify-start mt-1">
-            <div class="pa-2">Retail: {{ item.RetailPrice }}</div>
+            <div class="pa-2">{{ showRetailPrice }}</div>
           </div>
           <div class="d-flex align-start justify-start mt-1">
-            <div class="pa-2">Listing: {{ item.ListingPrice }}</div>
+            <div class="pa-2">Listing: {{ item.ListingPrice | currency }}</div>
           </div>
         </div>
       </div>
@@ -34,6 +34,14 @@ export default {
     fontClass: {
       type: [String],
       default: "body-2"
+    }
+  },
+  computed: {
+    showRetailPrice() {
+      if (this.item.CategoryName.toUpperCase() == "EBAY-LOTS") {
+        return "Retail: N/A";
+      }
+      return `Retail: ${this.$options.filters.currency(this.item.RetailPrice)}`;
     }
   }
 };
