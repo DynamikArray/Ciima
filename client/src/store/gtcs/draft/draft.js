@@ -20,6 +20,7 @@ const defaultDraft = {
 
   quantity: null,
   price: null,
+  declinePrice: null,
 
   ebaySiteCategoryId: null,
   ebayStoreCategoryIdOne: null,
@@ -59,6 +60,8 @@ const draft = {
       state.inventoryTitle = defaultDraft.inventoryTitle;
 
       state.price = defaultDraft.price;
+      state.declinePrice = defaultDraft.declinePrice;
+
       state.quantity = defaultDraft.quantity;
 
       state.mainCharacter = defaultDraft.mainCharacter;

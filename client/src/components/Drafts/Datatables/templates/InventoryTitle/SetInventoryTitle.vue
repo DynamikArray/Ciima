@@ -19,16 +19,30 @@
               <Quantity :label="true" :item="item"></Quantity>
             </div>
             <div class="d-flex align-center justify-start mx-3">
-              <Grade :label="true" :item="item"></Grade>
+              <Grade
+                :label="true"
+                :item="item"
+                v-if="item.draftType.toUpperCase() !== 'GTCS'"
+              ></Grade>
             </div>
-            <div class="d-flex align-center justify-start ml-5">
+            <div class="d-flex flex-column align-center justify-start ml-5">
               <Price :label="true" :item="item"></Price>
+              <DeclinePrice
+                class="py-2"
+                :label="true"
+                :item="item"
+                v-if="item.draftType.toUpperCase() == 'GTCS'"
+              ></DeclinePrice>
             </div>
           </div>
 
           <div class="d-flex align-center w-100 justify-start">
             <div class="d-flex w-100">
-              <IssueNumbers :label="true" :item.sync="item"></IssueNumbers>
+              <IssueNumbers
+                :label="true"
+                :item.sync="item"
+                v-if="item.draftType.toUpperCase() !== 'GTCS'"
+              ></IssueNumbers>
             </div>
           </div>
         </div>
@@ -42,6 +56,7 @@ import SetInventoryTitleMobile from "./SetInventoryTitleMobile";
 import IssueNumbers from "../IssueNumbers";
 import Grade from "../Grade";
 import Price from "../Price";
+import DeclinePrice from "../DeclinePrice";
 import Quantity from "../Quantity";
 import InventoryTitleEditable from "./InventoryTitleEditable";
 
@@ -56,6 +71,7 @@ export default {
     IssueNumbers,
     Grade,
     Price,
+    DeclinePrice,
     Quantity
   }
 };

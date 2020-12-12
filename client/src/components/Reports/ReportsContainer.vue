@@ -28,6 +28,10 @@
       <v-tab-item key="singles" class="pt-2">
         <SinglesReport :items="soldItems" :loading="loading" />
       </v-tab-item>
+
+      <v-tab-item key="gtcs" class="pt-2">
+        <GtcsReport :items="soldItems" :loading="loading" />
+      </v-tab-item>
     </v-tabs-items>
   </div>
 </template>
@@ -37,6 +41,7 @@ import { mapState } from "vuex";
 import { SEARCH_SOLD_ITEMS } from "@/store/action-types";
 import LotsReport from "./Tabs/LotsReport/LotsReport";
 import SetsReport from "./Tabs/SetsReport/SetsReport";
+import GtcsReport from "./Tabs/GtcsReport/GtcsReport";
 import SinglesReport from "./Tabs/SinglesReport/SinglesReport";
 import ReportFilters from "./ReportFilters";
 
@@ -53,6 +58,7 @@ export default {
   components: {
     LotsReport,
     SetsReport,
+    GtcsReport,
     SinglesReport,
     ReportFilters
   },
@@ -81,6 +87,9 @@ export default {
           break;
         case 2:
           this.getData({ categoryName: "EBAY-SINGLES" });
+          break;
+        case 3:
+          this.getData({ categoryName: "EBAY-GTCS" });
           break;
       }
     }

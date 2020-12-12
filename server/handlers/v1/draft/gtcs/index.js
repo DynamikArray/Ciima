@@ -52,6 +52,10 @@ module.exports = (fastify) => ({
       ebayStoreCategoryIdTwo: req.body.ebayStoreCategoryIdTwo,
     };
 
+    if (req.body.declinePrice) {
+      draft.declinePrice = req.body.declinePrice;
+    }
+
     const query = "INSERT INTO slc_drafts SET ?";
 
     let successResult,
@@ -64,7 +68,7 @@ module.exports = (fastify) => ({
     } catch (error) {
       errorResult = error;
       fastify.winston.error(error);
-      res.send(error);
+      res.send(error).code(500);
     } finally {
       fastify.auditLogger.log(
         CREATE_DRAFT,

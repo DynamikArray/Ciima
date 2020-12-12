@@ -45,6 +45,13 @@
           />
         </v-col>
         <v-col class="py-0">
+          <DeclinePrice
+            @update="updateLocalParams"
+            :value="declinePrice"
+            :rules="rules.declinePrice"
+          />
+        </v-col>
+        <v-col class="py-0">
           <InventoryQuantity
             @update="updateLocalParams"
             :value="quantity"
@@ -174,6 +181,7 @@ import GtcDraftImages from "./Images/GtcDraftImages";
 
 import LocationCode from "./formFields/LocationCode";
 import InventoryPrice from "./formFields/InventoryPrice";
+import DeclinePrice from "./formFields/DeclinePrice";
 import InventoryQuantity from "./formFields/InventoryQuantity";
 import EbayCategoryPicker from "./formFields/EbayCategoryDropdown";
 import EbayStoreCategory from "./formFields/EbayStoreCategory";
@@ -205,6 +213,7 @@ export default {
     LocationCode,
     InventoryTitle,
     InventoryPrice,
+    DeclinePrice,
     InventoryQuantity,
     EbayCategoryPicker,
     EbayStoreCategory,
@@ -378,17 +387,20 @@ export default {
       this.$store
         .dispatch(`gtcs/draft/${CURRENT_GTC_DRAFT_SAVE}`, draft)
         .then(result => {
-          this.$store.commit(
-            `api/${UPDATE_API_STATUS}`,
-            `Saved | ${this.locationCode} | ${this.inventoryTitle}`
-          );
+          if (result.error) this.$toastr.e(`Error: ${result.error}`);
 
-          this.$toastr.s(`Draft Saved! ${JSON.stringify(result)}`);
-          //clear draft and start next one
-          this.clearDraft();
+          if (!result.error) {
+            this.$store.commit(
+              `api/${UPDATE_API_STATUS}`,
+              `Saved | ${this.locationCode} | ${this.inventoryTitle}`
+            );
+
+            this.$toastr.s(`Draft Saved! ${JSON.stringify(result)}`);
+            //clear draft and start next one
+            this.clearDraft();
+          }
         })
         .catch(e => {
-          console.log(e);
           this.$toastr.e(`Error: ${e.message}`);
         });
     },

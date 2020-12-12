@@ -6,6 +6,7 @@
       :items="items"
       :loading="loading"
       hide-default-footer
+      :items-per-page="pageLimit"
     >
       <template v-slot:item.oldPrice="{ item }">
         <CimmaStaticPriceField :value="item.oldPrice" :itemId="item.id" />
@@ -32,6 +33,9 @@ export default {
     },
     loading: {
       type: [Boolean]
+    },
+    pageLimit: {
+      type: [Number, String]
     }
   },
   components: { CiimaDateTimeField, CimmaStaticPriceField },

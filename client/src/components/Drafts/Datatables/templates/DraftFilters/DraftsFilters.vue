@@ -21,7 +21,11 @@
 
     <DraftTypeDropdown :draftType="draftType" :getData="getData" class="mx-3" />
 
-    <UserListDropdown :userId="userId" :getData="getData" />
+    <UserListDropdown
+      :userId="userId"
+      :getData="getData"
+      :updateParam="updateParam"
+    />
 
     <DraftSearchForm
       :getData="getData"
@@ -46,6 +50,10 @@ export default {
     },
     getData: {
       type: [Function]
+    },
+    updateParam: {
+      type: [Function],
+      default: () => ({})
     },
     draftStatus: {
       type: [String],

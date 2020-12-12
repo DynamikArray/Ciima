@@ -88,7 +88,7 @@ module.exports = (logger) => ({
    * [itemInventoryPrices description]
    * @return {[type]} [description]
    */
-  itemInventoryPrices: (StockItemId, ItemNumber, draft) => {
+  itemInventoryPrices: (StockItemId, ItemNumber, price, tag) => {
     const pkRowId = uuidv1();
 
     const props = [
@@ -97,8 +97,8 @@ module.exports = (logger) => ({
         StockItemId: StockItemId,
         Source: "EBAY",
         SubSource: "EBAY1_US",
-        Price: draft.price,
-        Tag: "Start",
+        Price: price,
+        Tag: tag,
         pkRowId: pkRowId,
       },
     ];
