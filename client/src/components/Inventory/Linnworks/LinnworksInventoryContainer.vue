@@ -1,18 +1,18 @@
 <template>
-  <div class="w-100">
+  <div class="">
     <Filters
-      :searchString.sync="filters.searchString"
+      :searchTitle.sync="filters.searchTitle"
+      :searchLocation.sync="filters.searchLocation"
       :searchCategories.sync="filters.searchCategories"
       @runSearch="fetchData"
     />
 
     <v-divider class="my-2"></v-divider>
+    <div class="d-flex align-start justify-end py-1">
+      <h4>{{ items.length }} Results</h4>
+    </div>
 
-    <Datatable
-      :items="items"
-      :loading="loading"
-      style="height:100%; min-height:100%"
-    />
+    <Datatable :items="items" :loading="loading" />
   </div>
 </template>
 
@@ -31,7 +31,8 @@ export default {
   },
   data: () => ({
     filters: {
-      searchString: "",
+      searchTitle: "",
+      searchLocation: "",
       searchCategories: []
     }
   }),
@@ -44,7 +45,10 @@ export default {
   methods: {
     fetchData() {
       const { filters } = this;
-      if (filters.searchString.length > 3) {
+      if (
+        (filters.searchTitle && filters.searchTitle.length > 2) ||
+        (filters.searchLocation && filters.searchLocation.length > 2)
+      ) {
         this.$store.dispatch(
           `linnworks/inventory/${SEARCH_LINNWORKS_INVENTORY}`,
           filters

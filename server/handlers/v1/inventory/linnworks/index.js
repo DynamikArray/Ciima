@@ -67,10 +67,13 @@ module.exports = (fastify) => ({
    * @return {Promise}     [description]
    */
   inventorySearchHandler: async (req, res) => {
-    const { searchString, searchCategories } = req.body;
-
+    const { searchTitle, searchCategories, searchLocation } = req.body;
     try {
-      const data = searchInventory(searchString, searchCategories);
+      const data = searchInventory(
+        searchTitle,
+        searchCategories,
+        searchLocation
+      );
 
       const { result, error } = await fastify.linnworks.makeApiCall({
         method: "POST",

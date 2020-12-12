@@ -41,10 +41,10 @@ export const headers = [
     width: "80px"
   },
   {
-    text: "Stock Price",
+    text: "Listing Price",
     align: "center",
     sortable: true,
-    value: "StockItemPrice",
+    value: "ListingPrice",
     width: "80px"
   }
 ];

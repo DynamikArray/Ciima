@@ -1,36 +1,54 @@
 <template>
-  <v-row class="grey darken-4 mx-0">
-    <v-col cols="12">
-      <SearchString
-        :value="searchString"
-        label="Search Linnworks"
-        @updateSearchString="updateSearchString"
-        @runSearch="runSearch"
-      />
-      <div class="d-flex align-start justify-space-between pt-1 flex-wrap">
-        <SearchCategories
-          :value="searchCategories"
-          label="Linnworks Categories"
-          @updateSearchCategories="updateSearchCategories"
+  <section>
+    <v-row class="grey darken-4 mx-0">
+      <v-col cols="8" class="pb-0">
+        <SearchTitle
+          :value="searchTitle"
+          label="Search Linnworks"
+          @updateSearchTitle="updateSearchTitle"
+          @runSearch="runSearch"
         />
-        <div class="mt-2">
-          <v-btn class="primary" @click="runSearch"
-            ><v-icon small class="mr-2">fa fa-search</v-icon>Search</v-btn
-          >
+      </v-col>
+      <v-col cols="4" class="pb-0">
+        <SearchLocation
+          :value="searchLocation"
+          label="Search Bin/Rack"
+          @updateSearchLocation="updateSearchLocation"
+          @runSearch="runSearch"
+        />
+      </v-col>
+    </v-row>
+    <v-row class="grey darken-4 mx-0 my-0">
+      <v-col cols="12" class="pt-0">
+        <div class="d-flex align-start justify-space-between pt-1 flex-wrap">
+          <SearchCategories
+            :value="searchCategories"
+            label="Linnworks Categories"
+            @updateSearchCategories="updateSearchCategories"
+          />
+          <div class="mt-2">
+            <v-btn class="primary" @click="runSearch"
+              ><v-icon small class="mr-2">fa fa-search</v-icon>Search</v-btn
+            >
+          </div>
         </div>
-      </div>
-    </v-col>
-  </v-row>
+      </v-col>
+    </v-row>
+  </section>
 </template>
 
 <script>
-import SearchString from "./SearchString";
+import SearchTitle from "./SearchTitle";
 import SearchCategories from "./SearchCategories";
+import SearchLocation from "./SearchLocation";
 
 export default {
   name: "LinnworksInventoryFilters",
   props: {
-    searchString: {
+    searchTitle: {
+      type: [String]
+    },
+    searchLocation: {
       type: [String]
     },
     searchCategories: {
@@ -38,12 +56,16 @@ export default {
     }
   },
   components: {
-    SearchString,
+    SearchTitle,
+    SearchLocation,
     SearchCategories
   },
   methods: {
-    updateSearchString(searchString) {
-      this.$emit("update:searchString", searchString);
+    updateSearchTitle(searchTitle) {
+      this.$emit("update:searchTitle", searchTitle);
+    },
+    updateSearchLocation(searchLocation) {
+      this.$emit("update:searchLocation", searchLocation);
     },
     updateSearchCategories(searchCategories) {
       this.$emit("update:searchCategories", searchCategories);

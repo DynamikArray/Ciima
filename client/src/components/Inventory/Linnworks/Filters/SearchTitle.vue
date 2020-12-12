@@ -12,6 +12,7 @@
     @input="handleInput"
     @keydown="handleKeyDown"
     full-width
+    clearable
   >
   </v-text-field>
 </template>
@@ -25,7 +26,7 @@ export default {
     value: [String]
   },
   data: () => ({
-    searchString: ""
+    searchTitle: ""
   }),
   methods: {
     handleKeyDown({ key, keyCode, code }) {
@@ -34,8 +35,8 @@ export default {
       }
     },
     handleInput(val) {
-      this.searchString = val;
-      this.$emit("updateSearchString", this.searchString);
+      this.searchTitle = val;
+      this.$emit("updateSearchTitle", this.searchTitle);
     }
   }
 };

@@ -5,7 +5,6 @@
       :headers="headers"
       :items="items"
       :loading="loading"
-      @update:options="handleOptionsUpdated"
     >
       <template v-slot:item.CategoryName="{ item }">
         <LinnworksCategoryName
@@ -43,11 +42,6 @@ export default {
     return {
       headers
     };
-  },
-  methods: {
-    handleOptionsUpdated(val) {
-      console.log("handleOptionsUpdated - got this new val", val);
-    }
   }
 };
 </script>

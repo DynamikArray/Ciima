@@ -34,12 +34,26 @@ const buildCategoriesString = (categoriesString) => {
   return "";
 };
 
-const searchInventory = (searchString, categoriesString = []) => {
+const buildBinRackString = (binRackString) => {
+  if (binRackString.length > 0) {
+    return `AND (il.BinRackNumber LIKE CONCAT('%','${binRackString}','%'))`;
+  }
+  return "";
+};
+
+const searchInventory = (
+  searchString,
+  categoriesString = [],
+  binRackString
+) => {
   let searchSQL = "";
   if (searchString) searchSQL = buildSearchString(searchString);
 
   let categoriesSQL = "";
   if (categoriesString) categoriesSQL = buildCategoriesString(categoriesString);
+
+  let binRackSQL = "";
+  if (binRackString) binRackSQL = buildBinRackString(binRackString);
 
   const sqlQuery = `script=DECLARE @url VARCHAR(255) = CONCAT('https://s3-eu-west-1.amazonaws.com/images.linnlive.com/', lower(CONVERT(VARCHAR(32),HASHBYTES('MD5', CONVERT(VARCHAR(32), DB_NAME())), 2)) , '/');
     SELECT
@@ -52,7 +66,7 @@ const searchInventory = (searchString, categoriesString = []) => {
       il.BinRackNumber,
       sl.Quantity,
       si.RetailPrice,
-      sip.SalePrice as 'StockItemPrice',
+      sip.SalePrice as 'ListingPrice',
       extExtraDesc.ProperyValue as 'ExtraDescription',
       extIssueNumber.ProperyValue as 'IssueNumbers'
   FROM
@@ -72,13 +86,14 @@ const searchInventory = (searchString, categoriesString = []) => {
       AND (pc.CategoryId = si.CategoryId)
 
       AND (il.fkStockItemId = si.pkStockItemID AND il.fkLocationId = sLoc.pkStockLocationId)
+      ${binRackSQL}
 
       AND (sl.fkStockLocationid = sLoc.pkStockLocationId)
 
       AND (sir.fkStockItemId = si.pkStockItemID)
       AND (sir.IsMain = 1)
 
-      AND (sip.fkStockItemId = si.pkStockItemID AND sip.SalePrice <> '' )
+      AND (sip.fkStockItemId = si.pkStockItemID AND sip.SalePrice <> '')
 
       AND (si.pkStockItemId = extExtraDesc.fkStockItemId AND extExtraDesc.ProperyName = 'Extra Description' )
       AND (si.pkStockItemId = extIssueNumber.fkStockItemId AND extIssueNumber.ProperyName = 'Issue Number' )

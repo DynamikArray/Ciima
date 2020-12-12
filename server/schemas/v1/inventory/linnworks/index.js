@@ -48,7 +48,10 @@ module.exports = {
     body: {
       type: "object",
       properties: {
-        searchString: {
+        searchTitle: {
+          type: "string",
+        },
+        searchLocation: {
           type: "string",
         },
         searchCategories: {
@@ -97,7 +100,7 @@ module.exports = {
                 RetailPrice: {
                   type: "string",
                 },
-                StockItemPrice: {
+                ListingPrice: {
                   type: "string",
                 },
                 ExtraDescription: {
