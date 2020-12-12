@@ -1,5 +1,6 @@
 const {
   searchInventorySchema,
+  inventorySearchSchema, //V2 Improved
   updateLocationOrQuantitySchema,
   updateInventoryItemFieldSchema,
   updateItemPricesSchema,
@@ -13,6 +14,7 @@ const {
 module.exports = function (fastify, opts, next) {
   const {
     searchInventoryHandler,
+    inventorySearchHandler, //V2 Improved Title Searching
     updateLocationOrQuantityHandler,
     updateItemFieldHandler,
     updateItemPricesHandler,
@@ -27,6 +29,15 @@ module.exports = function (fastify, opts, next) {
   };
   //http verbs
   fastify.post("/inventory/linnworks/search", linnworksSearch);
+
+  //IMPORVED Inventory Search
+  const inventorySearch = {
+    preValidation: fastify.authenticate,
+    schema: inventorySearchSchema,
+    handler: inventorySearchHandler,
+  };
+  //http verbs
+  fastify.post("/inventory/search", inventorySearch);
 
   //location/quantity update
   const linnworksUpdateLocationOrQuantity = {

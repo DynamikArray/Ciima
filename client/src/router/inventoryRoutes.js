@@ -10,6 +10,16 @@ const inventoryRoutes = [
     }
   },
   {
+    path: "/inventory-new",
+    props: true,
+    name: "LinnworksInventory",
+    component: () =>
+      import(/*webpackChunkName: "inventory"*/ "@/views/LinnworksInventory.vue"),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
     path: "/locations",
     props: true,
     name: "locations",

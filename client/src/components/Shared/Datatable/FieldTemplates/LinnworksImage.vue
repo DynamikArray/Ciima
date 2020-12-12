@@ -1,7 +1,7 @@
 <template>
   <v-dialog
     v-model="dialog"
-    width="620"
+    width="720"
     :scrollable="true"
     overlay-color="grey darken-4"
     overlay-opacity=".7"
@@ -48,7 +48,7 @@
           v-if="mainImageUrl"
           :key="`main_${mainImageUrl}`"
           :src="mainImageUrl"
-          :style="`max-width: 400px; max-height: 600px;`"
+          :style="`max-height: 600px;`"
           class="mx-auto"
           contain
         >
