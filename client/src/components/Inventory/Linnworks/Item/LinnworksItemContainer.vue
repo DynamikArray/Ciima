@@ -25,13 +25,14 @@
         </div>
       </v-card-title>
       <v-card-text class="ma-0 pa-0">
-        <ItemTabsContainer />
+        <ItemTabsContainer :item="selectedItem" />
       </v-card-text>
     </v-card>
   </v-dialog>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import { GET_SELECTED_LINNWORKS_ITEM } from "@/store/action-types";
 
 import ItemTabsContainer from "./ItemTabs/ItemTabsContainer";
@@ -60,6 +61,9 @@ export default {
     locked: true
   }),
   computed: {
+    ...mapGetters({
+      selectedItem: "linnworks/inventory/selectedItem/getItem"
+    }),
     recordLocked() {
       if (this.locked) return "fa fa-lock";
       return "fa fa-unlock";

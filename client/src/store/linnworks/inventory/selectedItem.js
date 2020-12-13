@@ -35,15 +35,13 @@ const selectedItem = {
   },
 
   actions: {
-    async [GET_SELECTED_LINNWORKS_ITEM](
-      { commit, dispatch },
-      { pkStockItemID }
-    ) {
+    async [GET_SELECTED_LINNWORKS_ITEM]({ commit, dispatch }, payload) {
       return await dispatch(
         "api/requestHandler",
         {
-          method: "get",
-          url: `/inventory/item/${pkStockItemID}`,
+          method: "post",
+          url: `/inventory/selectItem`,
+          params: payload,
           success: `linnworks/inventory/selectedItem/${SELECTED_LINNWORKS_ITEM_RESULT}`,
           loading: `linnworks/inventory/selectedItem/${SELECTED_LINNWORKS_ITEM_LOADING}`
         },

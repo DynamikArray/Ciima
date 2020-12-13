@@ -1,10 +1,12 @@
 const {
   searchInventorySchema,
-  inventorySearchSchema, //V2 Improved
   updateLocationOrQuantitySchema,
   updateInventoryItemFieldSchema,
   updateItemPricesSchema,
   getOutOfSyncPricesSchema,
+  //V2 Improved
+  inventorySearchSchema,
+  inventoryItemSchema,
 } = require("../../../../schemas/v1/inventory/linnworks");
 /**
  * Info routes endpoints
@@ -14,22 +16,16 @@ const {
 module.exports = function (fastify, opts, next) {
   const {
     searchInventoryHandler,
-    inventorySearchHandler, //V2 Improved Title Searching
     updateLocationOrQuantityHandler,
     updateItemFieldHandler,
     updateItemPricesHandler,
     getOutOfSyncPricesHandler,
+    //V2 Improved Title Searching
+    inventorySearchHandler,
+    inventoryItemHandler,
   } = require("../../../../handlers/v1/inventory/linnworks")(fastify);
 
-  //Inventory Search
-  const linnworksSearch = {
-    preValidation: fastify.authenticate,
-    schema: searchInventorySchema,
-    handler: searchInventoryHandler,
-  };
-  //http verbs
-  fastify.post("/inventory/linnworks/search", linnworksSearch);
-
+  //-----------------V2 IMPROVED START ------------------------
   //IMPORVED Inventory Search
   const inventorySearch = {
     preValidation: fastify.authenticate,
@@ -38,6 +34,30 @@ module.exports = function (fastify, opts, next) {
   };
   //http verbs
   fastify.post("/inventory/search", inventorySearch);
+
+  const inventoryItem = {
+    preValidation: fastify.authenticate,
+    schema: inventoryItemSchema,
+    handler: inventoryItemHandler,
+  };
+  //http verbs
+  fastify.post("/inventory/selectItem", inventoryItem);
+
+  //------------V2 IMPROVED END-----------------------------
+
+  // START OLD STUFF
+  //
+  //
+  //
+  //
+  //Inventory Search
+  const linnworksSearch = {
+    preValidation: fastify.authenticate,
+    schema: searchInventorySchema,
+    handler: searchInventoryHandler,
+  };
+  //http verbs
+  fastify.post("/inventory/linnworks/search", linnworksSearch);
 
   //location/quantity update
   const linnworksUpdateLocationOrQuantity = {

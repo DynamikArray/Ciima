@@ -20,7 +20,7 @@
         style="background-color:transparent"
       >
         <v-tab-item key="generalTab" class="">
-          <GeneralTab />
+          <GeneralTab :item="item" />
         </v-tab-item>
         <v-tab-item key="ebayTab" class="">
           <EbayTab />
@@ -35,7 +35,11 @@ import GeneralTab from "./General/GeneralTab";
 import EbayTab from "./Ebay/EbayTab";
 
 export default {
-  props: {},
+  props: {
+    item: {
+      type: [Boolean, Object]
+    }
+  },
   components: {
     GeneralTab,
     EbayTab
