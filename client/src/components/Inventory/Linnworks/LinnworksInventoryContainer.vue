@@ -12,7 +12,14 @@
       <h4>{{ items.length }} Results</h4>
     </div>
 
-    <Datatable :items="items" :loading="loading" :isMobile="isMobile" />
+    <Datatable
+      :items="items"
+      :loading="loading"
+      :isMobile="isMobile"
+      @itemSelected="itemSelected"
+    />
+
+    <LinnworksItemContainer :selectedId="selectedId" />
   </div>
 </template>
 
@@ -23,6 +30,7 @@ import { SEARCH_LINNWORKS_INVENTORY } from "@/store/action-types";
 
 import FiltersContainer from "./Filters/FiltersContainer";
 import Datatable from "./Datatable/Datatable";
+import LinnworksItemContainer from "./Item/LinnworksItemContainer";
 
 export default {
   props: {
@@ -33,14 +41,16 @@ export default {
   },
   components: {
     FiltersContainer,
-    Datatable
+    Datatable,
+    LinnworksItemContainer
   },
   data: () => ({
     filters: {
       searchTitle: "",
       searchLocation: "",
       searchCategories: []
-    }
+    },
+    selectedId: false
   }),
   computed: {
     ...mapGetters({
@@ -60,6 +70,9 @@ export default {
           filters
         );
       }
+    },
+    itemSelected(pkStockItemID) {
+      this.selectedId = pkStockItemID;
     }
   }
 };

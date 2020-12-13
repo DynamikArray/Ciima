@@ -1,0 +1,49 @@
+<template>
+  <div class="w-100">
+    <v-tabs
+      v-model="tab"
+      right
+      center-active
+      active-class="white--text"
+      color="primary"
+      id="inventoryItem-Tabs"
+    >
+      <v-tab> <v-icon left>fa fa-tasks</v-icon>General</v-tab>
+      <v-tab> <v-icon left>fa fa-tasks</v-icon>Ebay</v-tab>
+    </v-tabs>
+
+    <div class="w-100 pa-5">
+      <v-tabs-items
+        id="inventoryItem-TabsItems"
+        :value="tab"
+        class="w-100 d-flex flex-column align-self-stretch"
+        style="background-color:transparent"
+      >
+        <v-tab-item key="generalTab" class="pt-2">
+          <GeneralTab />
+        </v-tab-item>
+        <v-tab-item key="ebayTab" class="pt-2">
+          <EbayTab />
+        </v-tab-item>
+      </v-tabs-items>
+    </div>
+  </div>
+</template>
+
+<script>
+import GeneralTab from "./General/GeneralTab";
+import EbayTab from "./Ebay/EbayTab";
+
+export default {
+  props: {},
+  components: {
+    GeneralTab,
+    EbayTab
+  },
+  data: () => ({
+    tab: 0
+  })
+};
+</script>
+
+<style scoped></style>

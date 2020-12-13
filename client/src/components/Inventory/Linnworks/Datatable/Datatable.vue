@@ -145,8 +145,7 @@ export default {
       return categoryName.toUpperCase() == "EBAY-LOTS";
     },
     selectItem(pkStockItemID) {
-      //handle opening our dialog box
-      console.log("We need to dispatch the action that will handle this");
+      this.$emit("itemSelected", pkStockItemID);
     }
   }
 };
