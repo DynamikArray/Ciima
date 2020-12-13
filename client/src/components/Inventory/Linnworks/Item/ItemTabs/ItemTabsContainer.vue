@@ -12,17 +12,17 @@
       <v-tab> <v-icon left>fa fa-tasks</v-icon>Ebay</v-tab>
     </v-tabs>
 
-    <div class="w-100 pa-5">
+    <div class="w-100 px-2">
       <v-tabs-items
         id="inventoryItem-TabsItems"
         :value="tab"
         class="w-100 d-flex flex-column align-self-stretch"
         style="background-color:transparent"
       >
-        <v-tab-item key="generalTab" class="pt-2">
+        <v-tab-item key="generalTab" class="">
           <GeneralTab />
         </v-tab-item>
-        <v-tab-item key="ebayTab" class="pt-2">
+        <v-tab-item key="ebayTab" class="">
           <EbayTab />
         </v-tab-item>
       </v-tabs-items>

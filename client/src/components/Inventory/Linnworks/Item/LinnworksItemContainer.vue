@@ -3,6 +3,7 @@
     :value="visible"
     fullscreen
     hide-overlay
+    scrollable
     transition="dialog-bottom-transition"
   >
     <v-card elevation="2" class="secondary darken-1">
@@ -23,13 +24,16 @@
           </div>
         </div>
       </v-card-title>
-
-      <ItemTabsContainer />
+      <v-card-text class="ma-0 pa-0">
+        <ItemTabsContainer />
+      </v-card-text>
     </v-card>
   </v-dialog>
 </template>
 
 <script>
+import { GET_SELECTED_LINNWORKS_ITEM } from "@/store/action-types";
+
 import ItemTabsContainer from "./ItemTabs/ItemTabsContainer";
 
 export default {
@@ -43,12 +47,13 @@ export default {
   },
   components: { ItemTabsContainer },
   watch: {
-    selectedId(newVal, oldVal) {
-      //console.log("new val/old val", newVal, oldVal);
-      //this.visible = true;
-    },
-    visible(newVal, oldVal) {
-      //console.log("VISIBLE -new val/old val", newVal, oldVal);
+    selectedId(newVal) {
+      if (newVal) {
+        this.$store.dispatch(
+          `linnworks/inventory/selectedItem/${GET_SELECTED_LINNWORKS_ITEM}`,
+          { pkStockItemID: newVal }
+        );
+      }
     }
   },
   data: () => ({

@@ -8,9 +8,13 @@ import {
   SEARCH_LINNWORKS_INVENTORY_RESULTS
 } from "@/store/mutation-types";
 
-const priceSync = {
-  namespaced: true,
+import selectedItem from "./selectedItem";
 
+const inventory = {
+  namespaced: true,
+  modules: {
+    selectedItem
+  },
   state: {
     loading: false,
     items: []
@@ -51,4 +55,4 @@ const priceSync = {
   }
 };
 
-export default priceSync;
+export default inventory;
