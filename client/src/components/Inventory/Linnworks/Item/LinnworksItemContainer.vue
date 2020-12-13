@@ -1,6 +1,6 @@
 <template>
   <v-dialog
-    v-model="dialog"
+    :value="visible"
     fullscreen
     hide-overlay
     transition="dialog-bottom-transition"
@@ -17,7 +17,7 @@
             </h3>
           </div>
           <div class="d-flex align-start justify-end">
-            <v-btn icon @click="dialog = false" ripple class="mr-1 mt-1">
+            <v-btn icon @click="closeModal()" ripple class="mr-1 mt-1">
               <v-icon>fa fa-times</v-icon>
             </v-btn>
           </div>
@@ -34,24 +34,35 @@ import ItemTabsContainer from "./ItemTabs/ItemTabsContainer";
 
 export default {
   props: {
+    visible: {
+      type: [Boolean]
+    },
     selectedId: {
       type: [Boolean, String]
     }
   },
   components: { ItemTabsContainer },
   watch: {
-    selectedId(newVal) {
-      this.dialog = true;
+    selectedId(newVal, oldVal) {
+      //console.log("new val/old val", newVal, oldVal);
+      //this.visible = true;
+    },
+    visible(newVal, oldVal) {
+      //console.log("VISIBLE -new val/old val", newVal, oldVal);
     }
   },
   data: () => ({
-    dialog: false,
     locked: true
   }),
   computed: {
     recordLocked() {
       if (this.locked) return "fa fa-lock";
       return "fa fa-unlock";
+    }
+  },
+  methods: {
+    closeModal() {
+      this.$emit("closed");
     }
   }
 };

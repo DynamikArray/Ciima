@@ -19,7 +19,11 @@
       @itemSelected="itemSelected"
     />
 
-    <LinnworksItemContainer :selectedId="selectedId" />
+    <LinnworksItemContainer
+      :selectedId="selectedId"
+      :visible="visible"
+      @closed="modalClosed"
+    />
   </div>
 </template>
 
@@ -50,6 +54,7 @@ export default {
       searchLocation: "",
       searchCategories: []
     },
+    visible: false,
     selectedId: false
   }),
   computed: {
@@ -73,6 +78,11 @@ export default {
     },
     itemSelected(pkStockItemID) {
       this.selectedId = pkStockItemID;
+      this.visible = true;
+    },
+    modalClosed() {
+      this.visible = false;
+      this.selectedId = false;
     }
   }
 };
