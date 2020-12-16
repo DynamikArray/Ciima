@@ -15,15 +15,11 @@ const selectInventoryItemEbayListings = (pkStockItemID) => {
       el.fkStockItemId,
 
       et.ListingStatus,
-      et.IsErrorMsg as 'hasErrorMsg',
-
-      fi.ObjectXML,
-      fi.fkObjectId
+      et.IsErrorMsg as 'hasErrorMsg'
   FROM
       StockItem si,
       Automation_eBayListing el,
-      eBay_Templates2 et,
-      FlexSettings_Item fi
+      eBay_Templates2 et
   WHERE
   (
     si.pkStockItemID = '${pkStockItemID}'
@@ -31,7 +27,6 @@ const selectInventoryItemEbayListings = (pkStockItemID) => {
     AND (el.SiteId = 'US')
     AND (et.fkInventoryItemId = si.pkStockItemID)
     AND (et.AccountId = 'EBAY1')
-    AND (fi.pkObjectId = et.fkFlexItemId)
   )`;
 
   return sqlQuery;

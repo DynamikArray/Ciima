@@ -61,6 +61,7 @@ module.exports = {
             IssueNumbers: {
               type: "string",
             },
+
             prices: {
               type: "array",
               items: {
@@ -93,6 +94,7 @@ module.exports = {
                 },
               },
             },
+
             ebayHistory: {
               type: "array",
               items: {
@@ -146,7 +148,31 @@ module.exports = {
                   hasErrorMsg: {
                     type: "string",
                   },
-                  errorMessages: {
+                },
+              },
+            },
+
+            repricingLog: {
+              type: "array",
+              items: {
+                type: "object",
+                properties: {
+                  id: {
+                    type: "number",
+                  },
+                  pkStockItemID: {
+                    type: "string",
+                  },
+                  itemTitle: {
+                    type: "string",
+                  },
+                  oldPrice: {
+                    type: "string",
+                  },
+                  newPrice: {
+                    type: "string",
+                  },
+                  dateUpdated: {
                     type: "string",
                   },
                 },
