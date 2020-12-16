@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <Filters
+    <FiltersContainer
       :searchTitle.sync="filters.searchTitle"
       :searchLocation.sync="filters.searchLocation"
       :searchCategories.sync="filters.searchCategories"
@@ -12,7 +12,18 @@
       <h4>{{ items.length }} Results</h4>
     </div>
 
-    <Datatable :items="items" :loading="loading" :isMobile="isMobile" />
+    <Datatable
+      :items="items"
+      :loading="loading"
+      :isMobile="isMobile"
+      @itemSelected="itemSelected"
+    />
+
+    <LinnworksItemContainer
+      :selectedId="selectedId"
+      :visible="visible"
+      @closed="modalClosed"
+    />
   </div>
 </template>
 
@@ -21,8 +32,9 @@
 import { mapGetters } from "vuex";
 import { SEARCH_LINNWORKS_INVENTORY } from "@/store/action-types";
 
-import Filters from "./Filters/Filters";
+import FiltersContainer from "./Filters/FiltersContainer";
 import Datatable from "./Datatable/Datatable";
+import LinnworksItemContainer from "./Item/LinnworksItemContainer";
 
 export default {
   props: {
@@ -32,15 +44,18 @@ export default {
     }
   },
   components: {
-    Filters,
-    Datatable
+    FiltersContainer,
+    Datatable,
+    LinnworksItemContainer
   },
   data: () => ({
     filters: {
       searchTitle: "",
       searchLocation: "",
       searchCategories: []
-    }
+    },
+    visible: false,
+    selectedId: false
   }),
   computed: {
     ...mapGetters({
@@ -60,6 +75,14 @@ export default {
           filters
         );
       }
+    },
+    itemSelected(pkStockItemID) {
+      this.selectedId = pkStockItemID;
+      this.visible = true;
+    },
+    modalClosed() {
+      this.visible = false;
+      this.selectedId = false;
     }
   }
 };

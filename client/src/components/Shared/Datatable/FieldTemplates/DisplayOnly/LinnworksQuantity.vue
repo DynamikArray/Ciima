@@ -1,6 +1,6 @@
 <template>
   <v-slide-x-reverse-transition mode="out-in">
-    <div class="" :key="`transition_${keyString}`" :class="fontClass">
+    <div class="" :key="`transition_quantity_${keyString}`" :class="fontClass">
       {{ value }}
     </div>
   </v-slide-x-reverse-transition>

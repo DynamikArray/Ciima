@@ -2,10 +2,10 @@
   <v-slide-x-reverse-transition mode="out-in">
     <div
       class=""
-      :key="`transition_listing_price_${keyString}`"
+      :key="`transition_linnworks_time_${keyString}`"
       :class="fontClass"
     >
-      {{ value | currency }}
+      {{ value | dateTime }}
     </div>
   </v-slide-x-reverse-transition>
 </template>

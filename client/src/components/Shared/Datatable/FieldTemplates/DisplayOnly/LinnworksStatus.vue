@@ -1,11 +1,7 @@
 <template>
   <v-slide-x-reverse-transition mode="out-in">
-    <div
-      class=""
-      :key="`transition_listing_price_${keyString}`"
-      :class="fontClass"
-    >
-      {{ value | currency }}
+    <div class="" :key="`transition_linnworks_${keyString}`" :class="fontClass">
+      {{ value }}
     </div>
   </v-slide-x-reverse-transition>
 </template>
