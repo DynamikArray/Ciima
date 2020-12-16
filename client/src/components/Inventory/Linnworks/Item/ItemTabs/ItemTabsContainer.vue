@@ -9,7 +9,7 @@
       id="inventoryItem-Tabs"
     >
       <v-tab> <v-icon left>fa fa-tasks</v-icon>General</v-tab>
-      <v-tab> <v-icon left>fa fa-tasks</v-icon>Ebay</v-tab>
+      <!--<v-tab> <v-icon left>fa fa-tasks</v-icon>Ebay</v-tab>-->
     </v-tabs>
 
     <div class="w-100 px-2">
@@ -20,18 +20,20 @@
         style="background-color:transparent"
       >
         <v-tab-item key="generalTab" class="">
-          <GeneralTab :item="item" />
+          <OverviewTab :item="item" />
         </v-tab-item>
+        <!--
         <v-tab-item key="ebayTab" class="">
           <EbayTab />
         </v-tab-item>
+        -->
       </v-tabs-items>
     </div>
   </div>
 </template>
 
 <script>
-import GeneralTab from "./General/GeneralTab";
+import OverviewTab from "./Overview/OverviewTab";
 import EbayTab from "./Ebay/EbayTab";
 
 export default {
@@ -41,7 +43,7 @@ export default {
     }
   },
   components: {
-    GeneralTab,
+    OverviewTab,
     EbayTab
   },
   data: () => ({
