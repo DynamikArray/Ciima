@@ -178,11 +178,75 @@ module.exports = {
                 },
               },
             },
+            ordersHistory: {
+              type: "array",
+              items: {
+                type: "object",
+                properties: {
+                  cFullName: {
+                    type: "string",
+                  },
+                  cEmailAddress: {
+                    type: "string",
+                  },
+                  cShippingAddress: {
+                    type: "string",
+                  },
+                  cPostCode: {
+                    type: "string",
+                  },
+                  dReceievedDate: {
+                    type: "string",
+                  },
+                  dProcessedOn: {
+                    type: "string",
+                  },
+                  nOrderId: {
+                    type: "string",
+                  },
+                  Source: {
+                    type: "string",
+                  },
+                  ReferenceNum: {
+                    type: "string",
+                  },
+                  ExternalReference: {
+                    type: "string",
+                  },
+                  PostalTrackingNumber: {
+                    type: "string",
+                  },
+                  Address1: {
+                    type: "string",
+                  },
+                  Address2: {
+                    type: "string",
+                  },
+                  Town: {
+                    type: "string",
+                  },
+                  Region: {
+                    type: "string",
+                  },
+                  BuyerPhoneNumber: {
+                    type: "string",
+                  },
+                  SubTotal: {
+                    type: "string",
+                  },
+                  PostageCostExTax: {
+                    type: "string",
+                  },
+                },
+              },
+            },
           },
         },
+        /*
         total: {
           type: "number",
         },
+        */
       },
     },
   },

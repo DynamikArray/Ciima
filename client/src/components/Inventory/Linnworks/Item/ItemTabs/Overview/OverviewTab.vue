@@ -15,19 +15,12 @@
         <v-row dense>
           <v-col sm="12">
             <h2 class="white--text my-0">
-              <v-icon size="18" class="mr-1 mb-1">fas fa-newspaper</v-icon
-              >Details: {{ item.pkStockItemID }}
+              {{ item.ItemTitle }}
             </h2>
           </v-col>
 
           <v-col col="12">
             <v-divider class="my-0" />
-          </v-col>
-        </v-row>
-
-        <v-row dense class="mb-2">
-          <v-col sm="12">
-            <h3 class="">Title: {{ item.ItemTitle }}</h3>
           </v-col>
         </v-row>
 
@@ -118,9 +111,15 @@
       </v-col>
     </v-row>
 
-    <v-row no-gutters>
+    <v-row no-gutters v-if="includeLog">
       <v-col cols="12" class="grey darken-4 my-3 text-center">
         <RepricingLogDT :items="item.repricingLog" />
+      </v-col>
+    </v-row>
+
+    <v-row no-gutters>
+      <v-col cols="12" class="grey darken-4 my-3 text-center">
+        <OrdersHistoryDT :items="item.ordersHistory" />
       </v-col>
     </v-row>
   </v-container>
@@ -129,6 +128,7 @@
 <script>
 import EbayHistoryDT from "../Datatables/EbayHistory/EbayHistoryDT";
 import RepricingLogDT from "../Datatables/RepricingLog/RepricingLogDT";
+import OrdersHistoryDT from "../Datatables/OrdersHistory/OrdersHistoryDT";
 
 export default {
   props: {
@@ -138,9 +138,16 @@ export default {
   },
   components: {
     EbayHistoryDT,
-    RepricingLogDT
+    RepricingLogDT,
+    OrdersHistoryDT
   },
   computed: {
+    includeLog() {
+      const { CategoryName } = this.item;
+      if (CategoryName && CategoryName.toUpperCase() == "EBAY-LOTS")
+        return true;
+      return false;
+    },
     startPrice() {
       if (this.item.prices && this.item.prices.length) {
         const startPrice = this.item.prices.filter(

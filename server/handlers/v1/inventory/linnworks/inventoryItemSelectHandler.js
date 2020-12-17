@@ -1,6 +1,7 @@
 const selectItemQuery = require("../../../../../util/linnworks/queries/inventory/selectInventoryItemDetails");
 const getInventoryItemPrices = require("../../../../../util/linnworks/helpers/getInventoryItemPrices");
 const selectInventoryItemEbayListings = require("../../../../../util/linnworks/queries/inventory/selectInventoryItemEbayListings");
+const selectInventoryItemOrderHistory = require("../../../../../util/linnworks/queries/inventory/selectInventoryItemOrderHistory");
 
 //const { extractErrorMessages } = require("../../../../../util/linnworks/helpers/extractErrorMessages");
 
@@ -57,6 +58,19 @@ module.exports = (fastify) => ({
         return { result: [] };
       }
     }
+
+    async function getItemOrderHistory(pkStockItemID) {
+      const data = selectInventoryItemOrderHistory(pkStockItemID);
+      const { result, error } = await fastify.linnworks.makeApiCall({
+        method: "POST",
+        url: "Dashboards/ExecuteCustomScriptQuery",
+        headers:
+          "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
+        data,
+      });
+      if (result && !result.IsError) return { result: result.Results };
+      if (error) return { error: error };
+    }
     //
     /* -------- End Item Pieces Async Methods --------- */
 
@@ -69,6 +83,7 @@ module.exports = (fastify) => ({
       getItemPrices(pkStockItemID),
       getItemEbayListings(pkStockItemID),
       getItemRepricingLog(pkStockItemID),
+      getItemOrderHistory(pkStockItemID),
     ]);
     //Validate our response data better
     //
@@ -80,6 +95,7 @@ module.exports = (fastify) => ({
       prices: itemPieces[1].prices,
       ebayHistory: itemPieces[2].result,
       repricingLog: itemPieces[3].result,
+      ordersHistory: itemPieces[4].result,
     };
     return { result: inventoryItem, error: false };
   },
