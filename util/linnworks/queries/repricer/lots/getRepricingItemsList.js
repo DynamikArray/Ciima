@@ -9,7 +9,7 @@ const getRepricingItemsList = (repriced = false) => {
   DECLARE @ListedAfter DATETIME = DATEADD(day,-5,GETDATE());
 
   SELECT
-      si.pkStockItemID,
+      DISTINCT si.pkStockItemID,
       si.ItemNumber,
       pc.CategoryName,
       il.BinRackNumber as 'LocationCode',
@@ -27,8 +27,7 @@ const getRepricingItemsList = (repriced = false) => {
       el.startTime as 'eBayStartTime',
       el.endTime as 'eBayEndTime',
       et.ListingStatus as 'eBayListingStatus',
-      et.IsErrorMsg as 'hasErrorMsg',
-      fi.ObjectXML as 'ObjectXML'
+      et.IsErrorMsg as 'hasErrorMsg'
   FROM
       StockItem si,
       ProductCategories pc,
@@ -38,7 +37,6 @@ const getRepricingItemsList = (repriced = false) => {
       Stock_ImageReg sir,
       Automation_eBayListing el,
       eBay_Templates2 et,
-      FlexSettings_Item fi,
       StockItem_ExtendedProperties extLastPrice,
       StockItem_ExtendedProperties extLastPriced
   WHERE
@@ -58,14 +56,12 @@ const getRepricingItemsList = (repriced = false) => {
       AND (el.Active = 1)
       AND (el.FixedPrice = 0)
       AND (el.SiteId = 'US')
-      AND (el.startTime BETWEEN @FromDate AND @ToDate)      
+      AND (el.startTime BETWEEN @FromDate AND @ToDate)
       ${repriced ? "" : "AND (el.ListingPrice > 14.99)"}
-
 
       AND (et.fkInventoryItemId = si.pkStockItemID)
       AND (et.ListingStatus = 'Ok' OR et.ListingStatus = 'Updating')
       AND (et.AccountId = 'EBAY1')
-      AND (fi.pkObjectId = et.fkFlexItemId)
 
       AND (si.bLogicalDelete = 0 OR si.isVariationGroup = 1)
       AND (pc.CategoryName = @LOTS)

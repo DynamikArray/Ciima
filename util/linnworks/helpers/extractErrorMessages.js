@@ -1,3 +1,8 @@
+/*
+  WE DEPRECATED THIS USE ON FULL QUERY RESULTS as the inclusion of the
+  XML Field was causing issues with the DISTINCT portion.
+  This should be revisisted when we want to get an errors DETAILS on
+  an indvidual level
 /* Error Parser*/
 const xml2js = require("xml2js-es6-promise");
 

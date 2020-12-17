@@ -3,10 +3,6 @@ const {
   getRepricingItemsList,
 } = require("../../../../util/linnworks/queries/repricer/lots/getRepricingItemsList.js");
 
-const {
-  extractErrorMessages,
-} = require("../../../../util/linnworks/helpers/extractErrorMessages.js");
-
 const { buildSelectQueries, buildSelectQueriesParams } = require("./helper");
 
 module.exports = (fastify) => ({
@@ -31,8 +27,7 @@ module.exports = (fastify) => ({
       });
 
       if (result && !result.IsError) {
-        let formattedResults = extractErrorMessages(result.Results);
-        return { result: formattedResults, total: result.TotalResults };
+        return { result: result.Results, total: result.TotalResults };
       }
 
       if (error) return { error: error };
