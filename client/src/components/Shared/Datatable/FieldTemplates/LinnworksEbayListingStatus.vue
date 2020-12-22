@@ -1,7 +1,7 @@
 <template>
   <v-slide-x-reverse-transition mode="out-in">
     <div class="caption" :key="`transition_${item.pkStockItemID}`">
-      <div v-if="isUpating && hasError">
+      <div v-if="!isUpating && hasError">
         <v-tooltip left>
           <template v-slot:activator="{ on, attrs }">
             <v-chip
@@ -21,20 +21,16 @@
       </div>
 
       <v-chip
-        v-if="isUpating && !hasError"
-        class="ma-2 textShadow"
-        :color="statusColor"
-      >
-        <v-icon small class="mr-2">fas fa-cog fa-spin</v-icon>
-        <h3 class="">{{ item.eBayListingStatus }}</h3>
-      </v-chip>
-
-      <v-chip
         v-if="!isUpating && !hasError"
         class="ma-2 textShadow"
         :color="statusColor"
       >
         <v-icon small class="mr-2">fa fa-check-circle</v-icon>
+        <h3 class="">{{ item.eBayListingStatus }}</h3>
+      </v-chip>
+
+      <v-chip v-if="isUpating" class="ma-2 textShadow" :color="statusColor">
+        <v-icon small class="mr-2">fas fa-cog fa-spin</v-icon>
         <h3 class="">{{ item.eBayListingStatus }}</h3>
       </v-chip>
     </div>
