@@ -88,11 +88,8 @@ module.exports = {
               hasErrorMsg: {
                 type: "boolean",
               },
-              errorMessages: {
-                type: "array",
-                items: {
-                  type: "string",
-                },
+              errorMessage: {
+                type: "string",
               },
             },
           },

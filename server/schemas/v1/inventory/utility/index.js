@@ -1,4 +1,8 @@
+const updateTemplatesBatchSchema = require("./updateTemplatesBatchSchema");
+
 module.exports = {
+  updateTemplatesBatchSchema,
+
   checkLocationCodeSchema: {
     description: "Search Linnworks Inventory by the location code",
     tags: ["Utility"],

@@ -1,5 +1,6 @@
 const {
   checkLocationCodeSchema,
+  updateTemplatesBatchSchema,
 } = require("../../../../schemas/v1/inventory/utility");
 /**
  * Info routes endpoints
@@ -9,6 +10,7 @@ const {
 module.exports = function (fastify, opts, next) {
   const {
     checkLocationCodeHandler,
+    updateTemplatesBatchHandler,
   } = require("../../../../handlers/v1/inventory/utility")(fastify);
 
   const checkLocationCode = {
@@ -16,8 +18,14 @@ module.exports = function (fastify, opts, next) {
     schema: checkLocationCodeSchema,
     handler: checkLocationCodeHandler,
   };
-
-  //http verbs
   fastify.post("/inventory/utility/checkLocationCode", checkLocationCode);
+
+  const updateTemplatesBatch = {
+    //preValidation: fastify.authenticate,
+    schema: updateTemplatesBatchSchema,
+    handler: updateTemplatesBatchHandler,
+  };
+  fastify.post("/inventory/utility/updateTemplatesBatch", updateTemplatesBatch);
+
   next();
 };

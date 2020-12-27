@@ -27,7 +27,8 @@ const getRepricingItemsList = (repriced = false) => {
       el.startTime as 'eBayStartTime',
       el.endTime as 'eBayEndTime',
       et.ListingStatus as 'eBayListingStatus',
-      et.IsErrorMsg as 'hasErrorMsg'
+      et.IsErrorMsg as 'hasErrorMsg',
+      fi.ObjectXML.value('(/EbayListing/ErrorMessage)[1]','nvarchar(max)') as errorMessage
   FROM
       StockItem si,
       ProductCategories pc,
@@ -38,7 +39,8 @@ const getRepricingItemsList = (repriced = false) => {
       Automation_eBayListing el,
       eBay_Templates2 et,
       StockItem_ExtendedProperties extLastPrice,
-      StockItem_ExtendedProperties extLastPriced
+      StockItem_ExtendedProperties extLastPriced,
+      FlexSettings_Item fi
   WHERE
   (
       (pc.CategoryId = si.CategoryId)
@@ -62,6 +64,9 @@ const getRepricingItemsList = (repriced = false) => {
       AND (et.fkInventoryItemId = si.pkStockItemID)
       AND (et.ListingStatus = 'Ok' OR et.ListingStatus = 'Updating')
       AND (et.AccountId = 'EBAY1')
+
+      AND (fi.pkObjectId = et.fkFlexItemId)
+
 
       AND (si.bLogicalDelete = 0 OR si.isVariationGroup = 1)
       AND (pc.CategoryName = @LOTS)
