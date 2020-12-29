@@ -22,11 +22,11 @@
 
       <!--
       <v-chip
-        v-if="!isUpating && !hasError"
+        v-if="isUpating && !hasError"
         class="ma-2 textShadow"
         :color="statusColor"
       >
-        <v-icon small class="mr-2">fa fa-check-circle</v-icon>
+        <v-icon small class="mr-2">fa fa-cog fa-spin</v-icon>
         <h3 class="">{{ item.eBayListingStatus }}</h3>
       </v-chip>
       -->
@@ -56,7 +56,9 @@ export default {
       return false;
     },
     hasError() {
-      if (this.item.hasErrorMsg === true) return true;
+      if (this.item.hasErrorMsg === true && this.item.errorMessages != "") {
+        return true;
+      }
       return false;
     },
     errorMessages() {
