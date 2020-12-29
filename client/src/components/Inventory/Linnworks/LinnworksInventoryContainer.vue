@@ -8,9 +8,6 @@
     />
 
     <v-divider class="my-2"></v-divider>
-    <div class="d-flex align-start justify-end py-1">
-      <h4>{{ items.length }} Results</h4>
-    </div>
 
     <Datatable
       :items="items"

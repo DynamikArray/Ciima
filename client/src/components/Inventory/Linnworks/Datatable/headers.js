@@ -45,7 +45,7 @@ export const headers = [
     align: "center",
     sortable: true,
     value: "ListingPrice",
-    width: "110px"
+    width: "120px"
   },
   {
     text: "View/Edit",

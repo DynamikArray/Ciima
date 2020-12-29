@@ -1,9 +1,14 @@
 <template>
   <div class="w-100 h-100">
+    <DatatableHeader
+      :totalRows="filteredItems.length"
+      @inStockFilterUpdate="handleInStockFilterUpdate"
+    />
+
     <v-data-table
       class="w-100"
       :headers="headerList"
-      :items="items"
+      :items="filteredItems"
       :loading="loading"
     >
       <template v-slot:item.CategoryName="{ item }">
@@ -85,6 +90,7 @@
 
 <script>
 import headers from "./headers";
+import DatatableHeader from "./DatatableHeader";
 
 import LinnworksTitle from "@/components/Shared/Datatable/FieldTemplates/DisplayOnly/LinnworksTitle";
 import LinnworksCategoryName from "@/components/Shared/Datatable/FieldTemplates/DisplayOnly/LinnworksCategoryName";
@@ -110,6 +116,7 @@ export default {
     }
   },
   components: {
+    DatatableHeader,
     LinnworksCategoryName,
     LinnworksImage,
     LinnworksTitle,
@@ -127,7 +134,8 @@ export default {
         "RetailPrice",
         "Quantity",
         "BinRackNumber"
-      ]
+      ],
+      blnInStockOnly: false
     };
   },
   computed: {
@@ -138,6 +146,12 @@ export default {
         );
       }
       return headers;
+    },
+    filteredItems() {
+      if (this.blnInStockOnly)
+        return this.items.filter(item => item.Quantity > 0);
+
+      return this.items;
     }
   },
   methods: {
@@ -146,6 +160,9 @@ export default {
     },
     selectItem(pkStockItemID) {
       this.$emit("itemSelected", pkStockItemID);
+    },
+    handleInStockFilterUpdate(value) {
+      this.blnInStockOnly = value;
     }
   }
 };
