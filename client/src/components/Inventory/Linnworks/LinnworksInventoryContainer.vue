@@ -49,7 +49,7 @@ export default {
     filters: {
       searchTitle: "",
       searchLocation: "",
-      searchCategories: []
+      searchCategories: ["EBAY-SETS", "EBAY-LOTS", "EBAY-SINGLES", "EBAY-GTCS"]
     },
     visible: false,
     selectedId: false
