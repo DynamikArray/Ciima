@@ -66,42 +66,42 @@ const searchInventory = (
       il.BinRackNumber,
       sl.Quantity,
       si.RetailPrice,
-      sip.SalePrice as 'ListingPrice',
-      extExtraDesc.ProperyValue as 'ExtraDescription',
-      extIssueNumber.ProperyValue as 'IssueNumbers'
-  FROM
-      StockItem si,
-      StockItem_Pricing sip,
-      ProductCategories pc,
-      StockLevel sl,
-      StockLocation sLoc,
-      ItemLocation il,
-      Stock_ImageReg sir,
-      StockItem_ExtendedProperties extExtraDesc,
-      StockItem_ExtendedProperties extIssueNumber
-  WHERE
-  (
-      (si.pkStockItemId = sl.fkStockItemId)
+      lp.ListingPrice,
+      dp.DeclinePrice,
+      sp.StartPrice
+    FROM
+      StockItem si
+      LEFT JOIN ProductCategories pc on pc.CategoryId = si.CategoryId
+      LEFT JOIN Stock_ImageReg sir on ((sir.fkStockItemId = si.pkStockItemID) AND (sir.IsMain = 1))
+      LEFT JOIN StockLevel sl on sl.fkStockItemId = si.pkStockItemId
+      LEFT JOIN StockLocation sLoc on sLoc.pkStockLocationId = sl.fkStockLocationId
+      LEFT JOIN ItemLocation il on il.fkStockItemId = si.pkStockItemID
 
-      AND (pc.CategoryId = si.CategoryId)
+      LEFT OUTER JOIN (
+        SELECT si.ItemNumber, sip.SalePrice AS [ListingPrice]
+        FROM [StockItem] si
+        LEFT OUTER JOIN [StockItem_Pricing] sip ON si.pkStockItemID = sip.fkStockItemId AND sip.Tag is null
+      ) lp ON lp.ItemNumber = si.ItemNumber
 
-      AND (il.fkStockItemId = si.pkStockItemID AND il.fkLocationId = sLoc.pkStockLocationId)
-      ${binRackSQL}
+      LEFT OUTER JOIN (
+        SELECT si.ItemNumber, sip.SalePrice AS [DeclinePrice]
+        FROM [StockItem] si
+        LEFT OUTER JOIN [StockItem_Pricing] sip ON si.pkStockItemID = sip.fkStockItemId AND sip.Tag = 'DECLINE'
+      ) dp ON dp.ItemNumber = si.ItemNumber
 
-      AND (sl.fkStockLocationid = sLoc.pkStockLocationId)
+      LEFT OUTER JOIN (
+        SELECT si.ItemNumber, sip.SalePrice AS [StartPrice]
+        FROM [StockItem] si
+        LEFT OUTER JOIN [StockItem_Pricing] sip ON si.pkStockItemID = sip.fkStockItemId AND sip.Tag = 'START'
+      ) sp ON sp.ItemNumber = si.ItemNumber
 
-      AND (sir.fkStockItemId = si.pkStockItemID)
-      AND (sir.IsMain = 1)
-
-      AND (sip.fkStockItemId = si.pkStockItemID AND sip.SalePrice <> '')
-
-      AND (si.pkStockItemId = extExtraDesc.fkStockItemId AND extExtraDesc.ProperyName = 'Extra Description' )
-      AND (si.pkStockItemId = extIssueNumber.fkStockItemId AND extIssueNumber.ProperyName = 'Issue Number' )
-
-      ${searchSQL}
-
-      ${categoriesSQL}
-  );`;
+    WHERE
+    (
+        (pc.CategoryId = si.CategoryId)
+        ${binRackSQL}
+        ${searchSQL}
+        ${categoriesSQL}
+    );`;
 
   return sqlQuery;
 };

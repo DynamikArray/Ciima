@@ -55,18 +55,33 @@
       </template>
 
       <template v-slot:item.RetailPrice="{ item }">
-        <LinnworksRetailPrice
-          :keyString="item.pkStockItemID"
+        <LinnworksPrice
+          :keyString="`retailprice_${item.pkStockItemID}`"
           :value="item.RetailPrice"
-          :isLotItem="isLotItem(item.CategoryName)"
           fontClass="body-2"
         />
       </template>
 
       <template v-slot:item.ListingPrice="{ item }">
-        <LinnworksListingPrice
-          :keyString="item.pkStockItemID"
+        <LinnworksPrice
+          :keyString="`listingprice_${item.pkStockItemID}`"
           :value="item.ListingPrice"
+          fontClass="body-2"
+        />
+      </template>
+
+      <template v-slot:item.StartPrice="{ item }">
+        <LinnworksPrice
+          :keyString="`startprice_${item.pkStockItemID}`"
+          :value="item.StartPrice"
+          fontClass="body-2"
+        />
+      </template>
+
+      <template v-slot:item.DeclinePrice="{ item }">
+        <LinnworksPrice
+          :keyString="`declineprice_${item.pkStockItemID}`"
+          :value="item.DeclinePrice"
           fontClass="body-2"
         />
       </template>
@@ -96,8 +111,7 @@ import LinnworksTitle from "@/components/Shared/Datatable/FieldTemplates/Display
 import LinnworksCategoryName from "@/components/Shared/Datatable/FieldTemplates/DisplayOnly/LinnworksCategoryName";
 import LinnworksQuantity from "@/components/Shared/Datatable/FieldTemplates/DisplayOnly/LinnworksQuantity";
 import LinnworksBinRackNumber from "@/components/Shared/Datatable/FieldTemplates/DisplayOnly/LinnworksBinRackNumber";
-import LinnworksRetailPrice from "@/components/Shared/Datatable/FieldTemplates/DisplayOnly/LinnworksRetailPrice";
-import LinnworksListingPrice from "@/components/Shared/Datatable/FieldTemplates/DisplayOnly/LinnworksListingPrice";
+import LinnworksPrice from "@/components/Shared/Datatable/FieldTemplates/DisplayOnly/LinnworksPrice";
 import LinnworksMobile from "./Mobile/LinnworksMobile";
 
 import LinnworksImage from "@/components/Shared/Datatable/FieldTemplates/LinnworksImage";
@@ -122,8 +136,7 @@ export default {
     LinnworksTitle,
     LinnworksQuantity,
     LinnworksBinRackNumber,
-    LinnworksRetailPrice,
-    LinnworksListingPrice,
+    LinnworksPrice,
     LinnworksMobile
   },
   data() {
@@ -132,6 +145,8 @@ export default {
       mobileHeadersFilter: [
         "ListingPrice",
         "RetailPrice",
+        "DeclinePrice",
+        "StartPrice",
         "Quantity",
         "BinRackNumber"
       ],

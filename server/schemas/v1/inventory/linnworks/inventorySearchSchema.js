@@ -67,10 +67,10 @@ module.exports = {
               ListingPrice: {
                 type: "string",
               },
-              ExtraDescription: {
+              DeclinePrice: {
                 type: "string",
               },
-              IssueNumbers: {
+              StartPrice: {
                 type: "string",
               },
             },

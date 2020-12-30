@@ -34,18 +34,32 @@ export const headers = [
     width: "180px"
   },
   {
-    text: "Retail Price",
+    text: "Retail",
     align: "center",
     sortable: true,
     value: "RetailPrice",
-    width: "110px"
+    width: "100px"
   },
   {
-    text: "Listing Price",
+    text: "Listing",
     align: "center",
     sortable: true,
     value: "ListingPrice",
-    width: "120px"
+    width: "100px"
+  },
+  {
+    text: "Start",
+    align: "center",
+    sortable: true,
+    value: "StartPrice",
+    width: "100px"
+  },
+  {
+    text: "Decline",
+    align: "center",
+    sortable: true,
+    value: "DeclinePrice",
+    width: "100px"
   },
   {
     text: "View/Edit",
