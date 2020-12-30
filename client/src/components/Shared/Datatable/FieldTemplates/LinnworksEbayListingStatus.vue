@@ -20,7 +20,6 @@
         </v-tooltip>
       </div>
 
-      <!--
       <v-chip
         v-if="isUpating && !hasError"
         class="ma-2 textShadow"
@@ -29,7 +28,6 @@
         <v-icon small class="mr-2">fa fa-cog fa-spin</v-icon>
         <h3 class="">{{ item.eBayListingStatus }}</h3>
       </v-chip>
-      -->
 
       <v-chip
         v-if="!isUpating && !hasError"
@@ -56,7 +54,7 @@ export default {
       return false;
     },
     hasError() {
-      if (this.item.hasErrorMsg === true && this.item.errorMessages != "") {
+      if (this.item.hasErrorMsg === true && this.item.errorMessage != "") {
         return true;
       }
       return false;
