@@ -1,7 +1,8 @@
 <template>
-  <div class="w-100 grey darken-4 pa-1">
+  <div class="w-100 pa-1">
     <div class="d-flex align-center justify-end">
-      <div class="d-flex align-start justify-end py-1 pr-10">
+      <div class="d-flex align-start justify-end py-1">
+        <h3 class="ml-3">Hide Out Of Stock:</h3>
         <v-simple-checkbox
           label="Show In Stock Items Only"
           class="ma-0 py-0 px-3"
@@ -11,12 +12,7 @@
           :value="inStockOnlyFilter"
           @input="handleCheckBoxInput"
           :ripple="false"
-        ></v-simple-checkbox
-        >Hide Out Of Stock
-      </div>
-
-      <div class="d-flex align-start justify-end py-1 pl-10 pr-3">
-        <h3>{{ totalRows }} Results</h3>
+        ></v-simple-checkbox>
       </div>
     </div>
   </div>

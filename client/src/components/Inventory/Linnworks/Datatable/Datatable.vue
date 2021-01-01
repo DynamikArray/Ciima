@@ -1,16 +1,31 @@
 <template>
   <div class="w-100 h-100">
-    <DatatableHeader
-      :totalRows="filteredItems.length"
-      @inStockFilterUpdate="handleInStockFilterUpdate"
-    />
-
     <v-data-table
       class="w-100"
       :headers="headerList"
       :items="filteredItems"
       :loading="loading"
     >
+      <template v-slot:top="{ pagination, options, updateOptions }">
+        <div class="d-flex align-center justify-space-between">
+          <div class="d-flex align-center justify-space-between">
+            <DatatableHeader
+              :totalRows="filteredItems.length"
+              @inStockFilterUpdate="handleInStockFilterUpdate"
+            />
+          </div>
+          <div class="d-flex align-center justify-space-between">
+            <v-data-footer
+              :pagination="pagination"
+              :options="options"
+              @update:options="updateOptions"
+              items-per-page-text="$vuetify.dataTable.itemsPerPageText"
+            />
+          </div>
+        </div>
+        <v-divider></v-divider>
+      </template>
+
       <template v-slot:item.CategoryName="{ item }">
         <LinnworksCategoryName
           :keyString="item.pkStockItemID"
