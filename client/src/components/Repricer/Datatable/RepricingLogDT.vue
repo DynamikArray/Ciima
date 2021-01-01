@@ -7,6 +7,8 @@
       :loading="loading"
       hide-default-footer
       :items-per-page="pageLimit"
+      ref="dataTable"
+      @update:page="$vuetify.goTo($refs.dataTable)"
     >
       <template v-slot:item.oldPrice="{ item }">
         <CimmaStaticPriceField :value="item.oldPrice" :itemId="item.id" />

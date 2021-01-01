@@ -9,7 +9,18 @@
       :loading="loading"
       sort-by="LastPriced"
       sort-desc
+      ref="dataTable"
+      @update:page="$vuetify.goTo($refs.dataTable)"
     >
+      <template v-slot:top="{ pagination, options, updateOptions }">
+        <v-data-footer
+          :pagination="pagination"
+          :options="options"
+          @update:options="updateOptions"
+          items-per-page-text="$vuetify.dataTable.itemsPerPageText"
+        />
+      </template>
+
       <template v-slot:item.Image="{ item }">
         <LinnworksImage :imageUrl="item.Image" />
       </template>
