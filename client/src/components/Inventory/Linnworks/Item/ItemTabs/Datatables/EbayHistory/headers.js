@@ -38,6 +38,13 @@ const headers = [
     sortable: true,
     align: "center",
     width: 90
+  },
+  {
+    text: "Link",
+    value: "ItemNumber",
+    sortable: true,
+    align: "center",
+    width: 90
   }
   /*
   {

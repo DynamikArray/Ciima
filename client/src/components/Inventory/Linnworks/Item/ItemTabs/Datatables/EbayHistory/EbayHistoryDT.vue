@@ -57,6 +57,14 @@
           fontClass="caption"
         />
       </template>
+
+      <template v-slot:item.ItemNumber="{ item }">
+        <LinnworksEbayLink
+          :value="item.ItemNumber"
+          :keyString="item.pkListId"
+          fontClass="caption"
+        />
+      </template>
     </v-data-table>
   </div>
 </template>
@@ -69,6 +77,7 @@ import LinnworksTime from "@/components/Shared/Datatable/FieldTemplates/DisplayO
 import LinnworksQuantity from "@/components/Shared/Datatable/FieldTemplates/DisplayOnly/LinnworksQuantity";
 import LinnworksListingPrice from "@/components/Shared/Datatable/FieldTemplates/DisplayOnly/LinnworksListingPrice";
 import LinnworksStatus from "@/components/Shared/Datatable/FieldTemplates/DisplayOnly/LinnworksStatus";
+import LinnworksEbayLink from "@/components/Shared/Datatable/FieldTemplates/DisplayOnly/LinnworksEbayItemLink";
 
 export default {
   props: {
@@ -84,7 +93,8 @@ export default {
     LinnworksTime,
     LinnworksQuantity,
     LinnworksListingPrice,
-    LinnworksStatus
+    LinnworksStatus,
+    LinnworksEbayLink
   },
   data: () => ({
     headers,
