@@ -38,7 +38,8 @@ const headers = [
     sortable: true,
     align: "center",
     width: 90
-  },
+  }
+  /*
   {
     text: "Relisting",
     value: "RelistPending",
@@ -53,6 +54,7 @@ const headers = [
     align: "center",
     width: 90
   }
+  */
 ];
 
 export default headers;

@@ -146,6 +146,9 @@ module.exports = {
                     type: "string",
                   },
                   hasErrorMsg: {
+                    type: "boolean",
+                  },
+                  errorMessage: {
                     type: "string",
                   },
                 },

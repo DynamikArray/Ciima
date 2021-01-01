@@ -50,21 +50,9 @@
       </template>
       <template v-slot:item.ListingStatus="{ item }">
         <LinnworksStatus
-          :value="item.ListingStatus"
-          :keyString="item.pkListId"
-          fontClass="caption"
-        />
-      </template>
-      <template v-slot:item.RelistPending="{ item }">
-        <LinnworksBoolean
-          :value="item.RelistPending"
-          :keyString="item.pkListId"
-          fontClass="caption"
-        />
-      </template>
-      <template v-slot:item.hasErrorMsg="{ item }">
-        <LinnworksBoolean
-          :value="item.hasErrorMsg"
+          :listingStatus="item.ListingStatus"
+          :hasErrorMsg="item.hasErrorMsg"
+          :errorMessage="item.errorMessage"
           :keyString="item.pkListId"
           fontClass="caption"
         />
