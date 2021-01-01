@@ -10,6 +10,8 @@
       :sort-by.sync="sortBy"
       :sort-desc.sync="descending"
       :footer-props="footerProps"
+      ref="dataTable"
+      @update:page="$vuetify.goTo($refs.dataTable)"
     >
       <template v-slot:top="{ pagination, options, updateOptions }">
         <v-data-footer

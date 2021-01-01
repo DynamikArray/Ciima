@@ -18,6 +18,8 @@
       loading-text="Searching Database"
       :items-per-page="15"
       :footer-props="footerProps"
+      ref="dataTable"
+      @update:page="$vuetify.goTo($refs.dataTable)"
     >
       <template v-slot:top="{ pagination, options, updateOptions }">
         <IssuesTop
