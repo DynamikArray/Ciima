@@ -20,7 +20,7 @@
         style="background-color:transparent"
       >
         <v-tab-item key="generalTab" class="">
-          <OverviewTab :item="item" />
+          <OverviewTab :item="item" :loading="loading" />
         </v-tab-item>
         <!--
         <v-tab-item key="ebayTab" class="">
@@ -40,6 +40,9 @@ export default {
   props: {
     item: {
       type: [Boolean, Object]
+    },
+    loading: {
+      type: [Boolean]
     }
   },
   components: {

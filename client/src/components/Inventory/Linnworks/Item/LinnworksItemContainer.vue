@@ -25,7 +25,10 @@
         </div>
       </v-card-title>
       <v-card-text class="ma-0 pa-0">
-        <ItemTabsContainer :item="selectedItem" />
+        <ItemTabsContainer
+          :item="selectedItem"
+          :loading="selectedItemLoading"
+        />
       </v-card-text>
     </v-card>
   </v-dialog>
@@ -62,7 +65,8 @@ export default {
   }),
   computed: {
     ...mapGetters({
-      selectedItem: "linnworks/inventory/selectedItem/getItem"
+      selectedItem: "linnworks/inventory/selectedItem/getItem",
+      selectedItemLoading: "linnworks/inventory/selectedItem/getLoading"
     }),
     recordLocked() {
       if (this.locked) return "fa fa-lock";
