@@ -1,8 +1,5 @@
 <template>
   <div>
-    <h3 class="title white--text">
-      Orders History
-    </h3>
     <v-data-table
       :headers="headers"
       :items="items"
@@ -12,7 +9,18 @@
       :footer-props="footerProps"
       sort-by="endTime"
       :sort-desc="true"
+      :hide-default-footer="true"
     >
+      <template v-slot:top="{ pagination, options, updateOptions }">
+        <TitleAndPager
+          title="Orders History"
+          :pagination="pagination"
+          :options="options"
+          :updateOptions="updateOptions"
+          :footerProps="footerProps"
+        />
+      </template>
+
       <template v-slot:item.dProcessedOn="{ item }">
         <LinnworksTime
           :value="item.dProcessedOn"
@@ -35,6 +43,7 @@
 import headers from "./headers";
 
 import LinnworksTime from "@/components/Shared/Datatable/FieldTemplates/DisplayOnly/LinnworksTime";
+import TitleAndPager from "@/components/Shared/Datatable/SlotTemplates/TitleAndPager";
 
 export default {
   props: {
@@ -46,7 +55,8 @@ export default {
     }
   },
   components: {
-    LinnworksTime
+    LinnworksTime,
+    TitleAndPager
   },
   data: () => ({
     headers,

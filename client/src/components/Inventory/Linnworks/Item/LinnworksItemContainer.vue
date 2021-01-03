@@ -7,14 +7,20 @@
     transition="dialog-bottom-transition"
   >
     <v-card elevation="2" class="secondary darken-1">
-      <v-card-title class="primary pa-0">
+      <v-card-title class="pa-0" :class="locked ? 'primary' : 'warning'">
         <div class="d-flex align-center justify-space-between w-100">
           <div class="d-flex align-center justify-start pa-3">
             <h3 class="mr-2 textShadow">
-              <v-btn small fab @click="" color="warning" ripple>
+              <v-btn
+                small
+                fab
+                @click="locked = !locked"
+                :color="locked ? 'warning' : 'success'"
+                ripple
+              >
                 <v-icon v-text="recordLocked" class="mb-1 textShadow"></v-icon>
               </v-btn>
-              View/Edit Inventory Item
+              View/Edit Inventory Item {{ locked ? "" : "(Edit Mode)" }}
             </h3>
           </div>
           <div class="d-flex align-center justify-end">

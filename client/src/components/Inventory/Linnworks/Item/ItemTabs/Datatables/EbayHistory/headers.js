@@ -4,7 +4,7 @@ const headers = [
     value: "Active",
     sortable: true,
     align: "center",
-    width: 60
+    width: 90
   },
   {
     text: "Start Time",

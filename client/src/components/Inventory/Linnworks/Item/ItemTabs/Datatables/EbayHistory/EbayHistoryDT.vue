@@ -1,8 +1,5 @@
 <template>
   <div>
-    <h3 class="title white--text">
-      Ebay Listing History
-    </h3>
     <v-data-table
       :headers="headers"
       :items="items"
@@ -12,7 +9,18 @@
       :footer-props="footerProps"
       sort-by="endTime"
       :sort-desc="true"
+      :hide-default-footer="true"
     >
+      <template v-slot:top="{ pagination, options, updateOptions }">
+        <TitleAndPager
+          title="Ebay History"
+          :pagination="pagination"
+          :options="options"
+          :updateOptions="updateOptions"
+          :footerProps="footerProps"
+        />
+      </template>
+
       <template v-slot:item.Active="{ item }">
         <LinnworksBoolean
           :value="item.Active"
@@ -81,6 +89,7 @@ import LinnworksQuantity from "@/components/Shared/Datatable/FieldTemplates/Disp
 import LinnworksListingPrice from "@/components/Shared/Datatable/FieldTemplates/DisplayOnly/LinnworksListingPrice";
 import LinnworksStatus from "@/components/Shared/Datatable/FieldTemplates/DisplayOnly/LinnworksStatus";
 import LinnworksEbayLink from "@/components/Shared/Datatable/FieldTemplates/DisplayOnly/LinnworksEbayItemLink";
+import TitleAndPager from "@/components/Shared/Datatable/SlotTemplates/TitleAndPager";
 
 export default {
   props: {
@@ -97,7 +106,8 @@ export default {
     LinnworksQuantity,
     LinnworksListingPrice,
     LinnworksStatus,
-    LinnworksEbayLink
+    LinnworksEbayLink,
+    TitleAndPager
   },
   data: () => ({
     headers,

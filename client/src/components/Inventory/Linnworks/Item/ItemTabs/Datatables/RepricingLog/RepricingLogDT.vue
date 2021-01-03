@@ -1,8 +1,5 @@
 <template>
   <div>
-    <h3 class="title white--text">
-      Repricing Log History
-    </h3>
     <v-data-table
       :headers="headers"
       :items="items"
@@ -10,13 +7,25 @@
       :loading="loading"
       loading-text="Loading..."
       :footer-props="footerProps"
+      :hide-default-footer="true"
     >
+      <template v-slot:top="{ pagination, options, updateOptions }">
+        <TitleAndPager
+          title="Repricing Log History"
+          :pagination="pagination"
+          :options="options"
+          :updateOptions="updateOptions"
+          :footerProps="footerProps"
+        />
+      </template>
     </v-data-table>
   </div>
 </template>
 
 <script>
 import headers from "./headers";
+import TitleAndPager from "@/components/Shared/Datatable/SlotTemplates/TitleAndPager";
+
 export default {
   props: {
     items: {
@@ -25,6 +34,9 @@ export default {
     loading: {
       type: [Boolean]
     }
+  },
+  components: {
+    TitleAndPager
   },
   data: () => ({
     headers,
