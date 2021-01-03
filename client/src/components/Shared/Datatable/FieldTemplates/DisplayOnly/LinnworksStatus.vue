@@ -22,7 +22,7 @@
         </div>
 
         <v-chip
-          v-if="isUpating && !hasError"
+          v-if="isUpating && !hasError && isActive"
           class="ma-2 textShadow"
           :color="statusColor"
         >
@@ -51,6 +51,9 @@ export default {
     },
     listingStatus: {
       type: [String]
+    },
+    isActive: {
+      type: [Boolean, String]
     },
     hasErrorMsg: {
       type: [Boolean]

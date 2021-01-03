@@ -5,7 +5,11 @@
       :key="`transition_linnworks_boolean_${keyString}`"
       :class="fontClass"
     >
-      {{ value }}
+      <v-icon
+        class="textShadow"
+        :color="evaluateAsBoolean ? 'success' : 'primary'"
+        >{{ iconType }}</v-icon
+      >
     </div>
   </v-slide-x-reverse-transition>
 </template>
@@ -22,6 +26,14 @@ export default {
     fontClass: {
       type: [String],
       default: "body-2"
+    },
+    activeIcon: {
+      type: [String],
+      default: "fa fa-check-circle"
+    },
+    inActiveIcon: {
+      type: [String],
+      default: "fa fa-ban"
     }
   },
   computed: {
@@ -35,6 +47,10 @@ export default {
         return this.value;
       }
       return false;
+    },
+    iconType() {
+      if (this.evaluateAsBoolean) return this.activeIcon;
+      return this.inActiveIcon;
     }
   }
 };

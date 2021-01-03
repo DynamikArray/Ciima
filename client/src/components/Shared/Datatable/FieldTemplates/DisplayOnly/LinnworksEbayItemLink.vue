@@ -2,7 +2,9 @@
   <v-slide-x-reverse-transition mode="out-in">
     <div class="" :key="`transition_ebayLink_${keyString}`" :class="fontClass">
       <v-btn icon :href="`https://www.ebay.com/itm/${value}`" target="_blank">
-        <v-icon>fa fa-link</v-icon>
+        <v-icon color="primary" class="textShadow"
+          >fa fa-external-link-square-alt</v-icon
+        >
       </v-btn>
     </div>
   </v-slide-x-reverse-transition>

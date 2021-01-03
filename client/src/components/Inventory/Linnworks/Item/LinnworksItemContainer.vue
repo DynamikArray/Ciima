@@ -8,7 +8,7 @@
   >
     <v-card elevation="2" class="secondary darken-1">
       <v-card-title class="primary pa-0">
-        <div class="d-flex align-start justify-space-between w-100">
+        <div class="d-flex align-center justify-space-between w-100">
           <div class="d-flex align-center justify-start pa-3">
             <h3 class="mr-2 textShadow">
               <v-btn small fab @click="" color="warning" ripple>
@@ -17,9 +17,9 @@
               View/Edit Inventory Item
             </h3>
           </div>
-          <div class="d-flex align-start justify-end">
-            <v-btn icon @click="closeModal()" ripple class="mr-1 mt-1">
-              <v-icon>fa fa-times</v-icon>
+          <div class="d-flex align-center justify-end">
+            <v-btn color="error" @click="closeModal()" ripple class="mr-3">
+              <v-icon class="mr-2">fa fa-times-circle</v-icon>Close
             </v-btn>
           </div>
         </div>

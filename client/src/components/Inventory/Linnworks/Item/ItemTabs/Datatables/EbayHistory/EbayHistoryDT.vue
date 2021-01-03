@@ -18,6 +18,8 @@
           :value="item.Active"
           :keyString="item.pkListId"
           fontClass="caption"
+          activeIcon="fa fa-thumbs-up"
+          inActiveIcon="fa fa-calendar"
         />
       </template>
       <template v-slot:item.startTime="{ item }">
@@ -50,6 +52,7 @@
       </template>
       <template v-slot:item.ListingStatus="{ item }">
         <LinnworksStatus
+          :isActive="item.Active"
           :listingStatus="item.ListingStatus"
           :hasErrorMsg="item.hasErrorMsg"
           :errorMessage="item.errorMessage"
