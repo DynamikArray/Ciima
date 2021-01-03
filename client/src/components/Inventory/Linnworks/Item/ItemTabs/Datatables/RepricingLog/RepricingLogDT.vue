@@ -18,12 +18,29 @@
           :footerProps="footerProps"
         />
       </template>
+
+      <template v-slot:item.oldPrice="{ item }">
+        <CimmaStaticPriceField :value="item.oldPrice" :itemId="item.id" />
+      </template>
+      <template v-slot:item.newPrice="{ item }">
+        <CimmaStaticPriceField :value="item.newPrice" :itemId="item.id" />
+      </template>
+
+      <template v-slot:item.dateUpdated="{ item }">
+        <CiimaDateTimeField
+          :value="item.dateUpdated"
+          :keyString="`ciima_dte_update_${item.pkStockItemID}`"
+          fontClass="caption"
+        />
+      </template>
     </v-data-table>
   </div>
 </template>
 
 <script>
 import headers from "./headers";
+import CimmaStaticPriceField from "@/components/Shared/Datatable/FieldTemplates/CimmaStaticPriceField";
+import CiimaDateTimeField from "@/components/Shared/Datatable/FieldTemplates/CiimaDateTimeField";
 import TitleAndPager from "@/components/Shared/Datatable/SlotTemplates/TitleAndPager";
 
 export default {
@@ -36,7 +53,9 @@ export default {
     }
   },
   components: {
-    TitleAndPager
+    TitleAndPager,
+    CiimaDateTimeField,
+    CimmaStaticPriceField
   },
   data: () => ({
     headers,
