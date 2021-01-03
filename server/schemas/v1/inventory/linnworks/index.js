@@ -1,10 +1,12 @@
 const inventorySearchSchema = require("./inventorySearchSchema");
 const inventoryItemSchema = require("./inventoryItemSchema");
+const inventoryItemUpdateFieldSchema = require("./inventoryItemUpdateFieldSchema");
 
 module.exports = {
   //NEWER V2 Inventory Search and ItemTitle
   inventorySearchSchema: inventorySearchSchema,
   inventoryItemSchema: inventoryItemSchema,
+  inventoryItemUpdateFieldSchema: inventoryItemUpdateFieldSchema,
 
   searchInventorySchema: {
     description: "Search Linnworks Inventory by the 3 main attributes",

@@ -17,13 +17,17 @@ const outOfSyncPrices = require("../../../../../util/linnworks/queries/inventory
 module.exports = (fastify) => {
   /*v2 Inventory Search Handler Setup*/
   const { searchHandler } = require("./inventorySearchHandler")(fastify);
-  /*v2 Inventory Item Select Handler Setup*/
   const { selectHandler } = require("./inventoryItemSelectHandler")(fastify);
+  const { updateFieldHandler } = require("./inventoryItemUpdateFieldHandler")(
+    fastify
+  );
 
   return {
-    //V2 improved search handler and code design
+    //START V2 improved search handler and code design
     inventorySearchHandler: searchHandler,
     inventoryItemHandler: selectHandler,
+    inventoryItemUpdateFieldHandler: updateFieldHandler,
+    //END V2
 
     /**
      * [searchInventoryHandler description]

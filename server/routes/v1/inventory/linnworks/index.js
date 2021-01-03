@@ -7,12 +7,14 @@ const {
   //V2 Improved
   inventorySearchSchema,
   inventoryItemSchema,
+  inventoryItemUpdateFieldSchema,
 } = require("../../../../schemas/v1/inventory/linnworks");
 /**
  * Info routes endpoints
  *
  * @param {Fastify} fastify
  */
+
 module.exports = function (fastify, opts, next) {
   const {
     searchInventoryHandler,
@@ -23,25 +25,28 @@ module.exports = function (fastify, opts, next) {
     //V2 Improved Title Searching
     inventorySearchHandler,
     inventoryItemHandler,
+    inventoryItemUpdateFieldHandler,
   } = require("../../../../handlers/v1/inventory/linnworks")(fastify);
 
   //-----------------V2 IMPROVED START ------------------------
   //IMPORVED Inventory Search
-  const inventorySearch = {
+  fastify.post("/inventory/search", {
     preValidation: fastify.authenticate,
     schema: inventorySearchSchema,
     handler: inventorySearchHandler,
-  };
-  //http verbs
-  fastify.post("/inventory/search", inventorySearch);
+  });
 
-  const inventoryItem = {
+  fastify.post("/inventory/selectItem", {
     preValidation: fastify.authenticate,
     schema: inventoryItemSchema,
     handler: inventoryItemHandler,
-  };
-  //http verbs
-  fastify.post("/inventory/selectItem", inventoryItem);
+  });
+
+  fastify.post("/inventory/updateItemField", {
+    preValidation: fastify.authenticate,
+    schema: inventoryItemUpdateFieldSchema,
+    handler: inventoryItemUpdateFieldHandler,
+  });
 
   //------------V2 IMPROVED END-----------------------------
 
