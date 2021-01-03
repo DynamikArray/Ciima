@@ -21,7 +21,7 @@ export default {
       type: [String]
     },
     value: {
-      type: [String, Boolean]
+      type: [String, Boolean, Number]
     },
     fontClass: {
       type: [String],
@@ -45,6 +45,10 @@ export default {
 
       if (typeof this.value === "boolean") {
         return this.value;
+      }
+
+      if (typeof this.value === "number") {
+        return Boolean(this.value);
       }
       return false;
     },

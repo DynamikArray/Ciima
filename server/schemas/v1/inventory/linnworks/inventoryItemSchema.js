@@ -119,7 +119,7 @@ module.exports = {
                     type: "string",
                   },
                   Active: {
-                    type: "string",
+                    type: "number",
                   },
                   RelistPending: {
                     type: "string",

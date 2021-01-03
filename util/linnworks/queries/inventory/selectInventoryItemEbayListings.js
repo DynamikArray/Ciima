@@ -5,7 +5,7 @@ const selectInventoryItemEbayListings = (pkStockItemID) => {
       el.startTime,
       el.endTime,
       el.Qty,
-      el.Active,
+      CAST(el.Active as int) as Active,
       el.RelistPending,
       el.MappedBy,
       el.RelistedFromItemNumber,

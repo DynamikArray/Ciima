@@ -126,6 +126,13 @@
         </v-col>
       </v-row>
 
+      <v-row no-gutters>
+        <v-col cols="12" class="my-3 text-center">
+          <v-divider class="my-2"></v-divider>
+          <h5 class="caption">End Results</h5>
+        </v-col>
+      </v-row>
+
       <v-dialog v-model="loading" hide-overlay persistent width="300">
         <v-card color="primary" dark class="pt-2">
           <v-card-text>
