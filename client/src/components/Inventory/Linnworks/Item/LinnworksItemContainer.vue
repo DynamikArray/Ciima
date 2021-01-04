@@ -15,7 +15,7 @@
                 small
                 fab
                 @click="locked = !locked"
-                :color="locked ? 'warning' : 'success'"
+                :color="locked ? 'warning' : 'primary'"
                 ripple
               >
                 <v-icon v-text="recordLocked" class="mb-1 textShadow"></v-icon>
@@ -81,6 +81,7 @@ export default {
   },
   methods: {
     closeModal() {
+      this.locked = true;
       this.$emit("closed");
     }
   }

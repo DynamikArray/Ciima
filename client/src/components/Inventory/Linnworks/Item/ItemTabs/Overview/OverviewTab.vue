@@ -3,14 +3,7 @@
     <v-container fluid>
       <v-row dense>
         <v-col sm="4" md="3" lg="2" class="grey darken-4 ">
-          <div class="pa-2 mx-3">
-            <v-img
-              :key="item.pkStockItemID"
-              :src="item.Image"
-              contain
-              :maxHeight="300"
-            />
-          </div>
+          <ItemImage :imageUrl="item.Image" />
         </v-col>
         <v-col sm="8" md="9" lg="10" class="grey darken-3 px-4">
           <v-row dense>
@@ -157,6 +150,8 @@ import EbayHistoryDT from "../Datatables/EbayHistory/EbayHistoryDT";
 import RepricingLogDT from "../Datatables/RepricingLog/RepricingLogDT";
 import OrdersHistoryDT from "../Datatables/OrdersHistory/OrdersHistoryDT";
 
+import ItemImage from "./FieldTemplates/ItemImage";
+
 export default {
   props: {
     item: {
@@ -169,7 +164,8 @@ export default {
   components: {
     EbayHistoryDT,
     RepricingLogDT,
-    OrdersHistoryDT
+    OrdersHistoryDT,
+    ItemImage
   },
   computed: {
     includeLog() {
