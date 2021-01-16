@@ -1,6 +1,28 @@
 <template>
   <section>
     <v-container fluid>
+      <v-row dense class="grey darken-4">
+        <v-col sm="4" class="">
+          <div class="body-2 text-left ml-3">
+            <span class="white--text">Category Name: </span>
+            {{ item.CategoryName }}
+          </div>
+        </v-col>
+
+        <v-col sm="4" class="">
+          <div class="body-2 text-center mx-3">
+            <span class="white--text">Item Number: </span>
+            {{ item.ItemNumber }}
+          </div>
+        </v-col>
+        <v-col sm="4" class="">
+          <div class="body-2 text-right mr-3">
+            <span class="white--text">Created: </span>
+            {{ item.CreationDate | dateTime }}
+          </div>
+        </v-col>
+      </v-row>
+
       <v-row dense>
         <v-col sm="4" md="3" lg="2" class="grey darken-4 ">
           <ItemImage :imageUrl="item.Image" />
@@ -8,9 +30,21 @@
         <v-col sm="8" md="9" lg="10" class="grey darken-3 px-4">
           <v-row dense>
             <v-col sm="12">
-              <h2 class="white--text my-0">
-                {{ item.ItemTitle }}
-              </h2>
+              <ItemTextField
+                :itemValue="item.ItemTitle"
+                :itemId="item.pkStockItemID"
+                :unlocked="unlocked"
+                fieldName="ItemTitle"
+                fieldId="itemTitle"
+                fieldLabel="Inventory Title"
+                fieldHint="Inventory Title"
+              >
+                <div class="d-flex align-center justify-start">
+                  <h2 class="white--text textShadow  my-0">
+                    {{ item.ItemTitle }}
+                  </h2>
+                </div>
+              </ItemTextField>
             </v-col>
 
             <v-col col="12">
@@ -19,42 +53,45 @@
           </v-row>
 
           <v-row dense class="mb-2">
-            <v-col sm="8">
-              <h3 class="text-left">Location: {{ item.BinRackNumber }}</h3>
-            </v-col>
-            <v-col sm="4">
-              <div class="body-2 text-right">
-                Item Number: {{ item.ItemNumber }}
-              </div>
+            <v-col sm="12">
+              <ItemTextField
+                :itemValue="item.BinRackNumber"
+                :itemId="item.pkStockItemID"
+                :unlocked="unlocked"
+                fieldName="BinRackNumber"
+                fieldId="BinRackNumber"
+                fieldLabel="BinRackNumber"
+                fieldHint="BinRackNumber"
+              />
             </v-col>
           </v-row>
 
           <!--Top Level Info -->
           <v-row no-gutters class="my-3">
-            <v-col sm="6">
-              <h3 class="text-left">Quantity: {{ item.Quantity }}</h3>
-            </v-col>
-
-            <v-col sm="6">
-              <div class="body-2 text-right">
-                Category Name: {{ item.CategoryName }}
-              </div>
+            <v-col sm="12">
+              <ItemTextField
+                :itemValue="item.Quantity"
+                :itemId="item.pkStockItemID"
+                :unlocked="unlocked"
+                fieldName="Quantiy"
+                fieldId="quantiy"
+                fieldLabel="Quantity"
+                fieldHint="Quantity"
+              />
             </v-col>
           </v-row>
 
           <v-row dense>
-            <v-col sm="8">
-              <h3 class="text-left">
-                Extra Description:
-                <span class="body-2">
-                  {{ item.ExtraDescription }}
-                </span>
-              </h3>
-            </v-col>
-            <v-col sm="4">
-              <div class="body-2 text-right">
-                Created: {{ item.CreationDate | dateTime }}
-              </div>
+            <v-col sm="12">
+              <ItemTextArea
+                :itemValue="item.ExtraDescription"
+                :itemId="item.pkStockItemID"
+                :unlocked="unlocked"
+                fieldName="ExtraDescription"
+                fieldId="ExtraDescription"
+                fieldLabel="ExtraDescription"
+                fieldHint="ExtraDescription"
+              />
             </v-col>
           </v-row>
 
@@ -151,6 +188,8 @@ import RepricingLogDT from "../Datatables/RepricingLog/RepricingLogDT";
 import OrdersHistoryDT from "../Datatables/OrdersHistory/OrdersHistoryDT";
 
 import ItemImage from "./FieldTemplates/ItemImage";
+import ItemTextField from "./FieldTemplates/ItemTextField";
+import ItemTextArea from "./FieldTemplates/ItemTextArea";
 
 export default {
   props: {
@@ -159,13 +198,19 @@ export default {
     },
     loading: {
       type: [Boolean]
+    },
+    unlocked: {
+      type: [Boolean],
+      default: false
     }
   },
   components: {
     EbayHistoryDT,
     RepricingLogDT,
     OrdersHistoryDT,
-    ItemImage
+    ItemImage,
+    ItemTextField,
+    ItemTextArea
   },
   computed: {
     includeLog() {

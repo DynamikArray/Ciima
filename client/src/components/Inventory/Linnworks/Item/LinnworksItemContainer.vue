@@ -7,20 +7,24 @@
     transition="dialog-bottom-transition"
   >
     <v-card elevation="2" class="secondary darken-1">
-      <v-card-title class="pa-0" :class="locked ? 'primary' : 'warning'">
+      <v-card-title class="pa-0" :class="unlocked ? 'warning' : 'primary'">
         <div class="d-flex align-center justify-space-between w-100">
           <div class="d-flex align-center justify-start pa-3">
             <h3 class="mr-2 textShadow">
               <v-btn
                 small
                 fab
-                @click="locked = !locked"
-                :color="locked ? 'warning' : 'primary'"
+                @click="unlocked = !unlocked"
+                :color="!unlocked ? 'warning' : 'primary'"
                 ripple
               >
-                <v-icon v-text="recordLocked" class="mb-1 textShadow"></v-icon>
+                <v-icon
+                  v-text="recordUnlocked"
+                  class="mb-1 textShadow"
+                ></v-icon>
               </v-btn>
-              View/Edit Inventory Item {{ locked ? "" : "(Edit Mode)" }}
+              View/Edit Inventory Item {{ unlocked ? "(Edit Mode)" : "" }}
+              {{ unlocked }}
             </h3>
           </div>
           <div class="d-flex align-center justify-end">
@@ -34,6 +38,7 @@
         <ItemTabsContainer
           :item="selectedItem"
           :loading="selectedItemLoading"
+          :unlocked="unlocked"
         />
       </v-card-text>
     </v-card>
@@ -67,21 +72,21 @@ export default {
     }
   },
   data: () => ({
-    locked: true
+    unlocked: false
   }),
   computed: {
     ...mapGetters({
       selectedItem: "linnworks/inventory/selectedItem/getItem",
       selectedItemLoading: "linnworks/inventory/selectedItem/getLoading"
     }),
-    recordLocked() {
-      if (this.locked) return "fa fa-lock";
-      return "fa fa-unlock";
+    recordUnlocked() {
+      if (this.unlocked) return "fa fa-unlock";
+      return "fa fa-lock";
     }
   },
   methods: {
     closeModal() {
-      this.locked = true;
+      this.unlocked = false;
       this.$emit("closed");
     }
   }

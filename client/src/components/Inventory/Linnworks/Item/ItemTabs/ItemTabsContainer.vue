@@ -20,7 +20,7 @@
         style="background-color:transparent"
       >
         <v-tab-item key="generalTab" class="">
-          <OverviewTab :item="item" :loading="loading" />
+          <OverviewTab :item="item" :loading="loading" :unlocked="unlocked" />
         </v-tab-item>
         <!--
         <v-tab-item key="ebayTab" class="">
@@ -43,6 +43,10 @@ export default {
     },
     loading: {
       type: [Boolean]
+    },
+    unlocked: {
+      type: [Boolean],
+      default: false
     }
   },
   components: {
