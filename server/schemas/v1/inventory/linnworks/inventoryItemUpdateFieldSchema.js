@@ -16,9 +16,15 @@ module.exports = {
         type: "string",
       },
       fieldName: {
-        type: "number",
+        type: "string",
       },
       fieldValue: {
+        type: "string",
+      },
+      locationId: {
+        type: "string",
+      },
+      changeSource: {
         type: "string",
       },
     },

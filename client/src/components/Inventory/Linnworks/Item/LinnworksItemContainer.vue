@@ -1,30 +1,14 @@
 <template>
-  <v-dialog
-    :value="visible"
-    fullscreen
-    hide-overlay
-    scrollable
-    transition="dialog-bottom-transition"
-  >
+  <v-dialog :value="visible" fullscreen hide-overlay scrollable transition="dialog-bottom-transition">
     <v-card elevation="2" class="secondary darken-1">
       <v-card-title class="pa-0" :class="unlocked ? 'warning' : 'primary'">
         <div class="d-flex align-center justify-space-between w-100">
           <div class="d-flex align-center justify-start pa-3">
             <h3 class="mr-2 textShadow">
-              <v-btn
-                small
-                fab
-                @click="unlocked = !unlocked"
-                :color="!unlocked ? 'warning' : 'primary'"
-                ripple
-              >
-                <v-icon
-                  v-text="recordUnlocked"
-                  class="mb-1 textShadow"
-                ></v-icon>
+              <v-btn small fab @click="unlocked = true" :color="!unlocked ? 'warning' : 'primary'" ripple>
+                <v-icon v-text="recordUnlocked" class="mb-1 textShadow"></v-icon>
               </v-btn>
               View/Edit Inventory Item {{ unlocked ? "(Edit Mode)" : "" }}
-              {{ unlocked }}
             </h3>
           </div>
           <div class="d-flex align-center justify-end">
@@ -35,11 +19,7 @@
         </div>
       </v-card-title>
       <v-card-text class="ma-0 pa-0">
-        <ItemTabsContainer
-          :item="selectedItem"
-          :loading="selectedItemLoading"
-          :unlocked="unlocked"
-        />
+        <ItemTabsContainer :item="selectedItem" :loading="selectedItemLoading" :unlocked="unlocked" />
       </v-card-text>
     </v-card>
   </v-dialog>
@@ -64,10 +44,9 @@ export default {
   watch: {
     selectedId(newVal) {
       if (newVal) {
-        this.$store.dispatch(
-          `linnworks/inventory/selectedItem/${GET_SELECTED_LINNWORKS_ITEM}`,
-          { pkStockItemID: newVal }
-        );
+        this.$store.dispatch(`linnworks/inventory/selectedItem/${GET_SELECTED_LINNWORKS_ITEM}`, {
+          pkStockItemID: newVal
+        });
       }
     }
   },
@@ -86,6 +65,8 @@ export default {
   },
   methods: {
     closeModal() {
+      if (this.unlocked == true) this.$emit("refresh");
+
       this.unlocked = false;
       this.$emit("closed");
     }

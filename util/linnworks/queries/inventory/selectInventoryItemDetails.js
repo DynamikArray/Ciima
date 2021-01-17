@@ -47,6 +47,7 @@ const selectInventoryItemDetails = (pkStockItemID) => {
       si.ItemTitle,
       si.ItemNumber,
       il.BinRackNumber,
+      il.fkLocationId as 'LocationId',
       sl.Quantity,
       si.RetailPrice,
       lp.ListingPrice,
@@ -86,6 +87,7 @@ const selectInventoryItemDetails = (pkStockItemID) => {
       ) ed ON ed.ItemNumber = si.ItemNumber
 
   WHERE (si.pkStockItemId = '${pkStockItemID}');`;
+
   return sqlQuery;
 };
 

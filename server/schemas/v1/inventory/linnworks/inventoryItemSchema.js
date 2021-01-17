@@ -46,6 +46,9 @@ module.exports = {
             BinRackNumber: {
               type: "string",
             },
+            LocationId: {
+              type: "string",
+            },
             Quantity: {
               type: "string",
             },

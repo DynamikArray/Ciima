@@ -34,10 +34,10 @@
             filled
             :full-width="true"
             disabled
-            background-color="grey darken-4"
+            background-color="grey darken-3"
           >
             <template v-slot:append-outer>
-              <v-btn color="primary">Edit</v-btn>
+              <v-btn color="primary">edit N/A</v-btn>
             </template>
           </v-textarea>
         </div>

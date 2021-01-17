@@ -1,9 +1,6 @@
 <template>
   <v-slide-x-reverse-transition mode="out-in">
-    <div
-      class="d-flex align-center justify-space-between"
-      :key="`${fieldName}_${unlocked}_${itemId}`"
-    >
+    <div class="d-flex align-center justify-space-between" :key="`${fieldName}_${unlocked}_${itemId}`">
       <slot v-if="!unlocked">
         <div class="d-flex align-baseline justify-start">
           <h4 class="my-0 mr-2">
@@ -15,31 +12,58 @@
         </div>
       </slot>
 
-      <slot name="editField" v-if="unlocked">
-        <div
-          class="d-flex align-center justify-end w-100"
-          id="editFieldWrapper"
-        >
-          <h4 class="my-0 mr-2">
-            {{ fieldLabel }}
-          </h4>
-          <v-text-field
-            dense
-            hide-details
-            :value="itemValue"
-            :id="fieldId"
-            :name="fieldName"
-            :label="fieldLabel"
-            :hint="fieldHint"
-            filled
-            :full-width="true"
-            disabled
-            background-color="grey darken-4"
+      <slot name="editField" v-if="unlocked" class="w-100">
+        <div id="editFieldSlot" class="w-100">
+          <v-edit-dialog
+            persistent
+            large
+            @save="saveChanges(itemId, fieldName, editValue, editValue, locationId)"
+            @cancel="editValue = itemValue"
           >
-            <template v-slot:append-outer>
-              <v-btn color="primary">Edit</v-btn>
+            <div class="d-flex align-center justify-end w-100" id="editFieldWrapper">
+              <h4 class="my-0 mr-2">
+                {{ fieldLabel }}
+              </h4>
+
+              <v-text-field
+                dense
+                hide-details
+                :value="itemValue"
+                :id="fieldId"
+                :name="fieldName"
+                :label="fieldLabel"
+                :hint="fieldHint"
+                filled
+                :full-width="true"
+                disabled
+                background-color="grey darken-3"
+              >
+                <template v-slot:append-outer>
+                  <v-btn color="primary">
+                    <v-icon small>fa fa-edit</v-icon>
+                  </v-btn>
+                </template>
+              </v-text-field>
+            </div>
+
+            <template v-slot:input>
+              <div class="itemTextFieldInputSlot">
+                <h3 class="my-1 textShadow">Edit {{ fieldLabel }}</h3>
+                <v-text-field
+                  autocomplete="off"
+                  autofocus
+                  :full-width="true"
+                  filled
+                  background-color="grey darken-4"
+                  counter
+                  :label="fieldLabel"
+                  v-model="editValue"
+                  :rules="rules"
+                  @update:error="handleError"
+                />
+              </div>
             </template>
-          </v-text-field>
+          </v-edit-dialog>
         </div>
       </slot>
     </div>
@@ -47,15 +71,66 @@
 </template>
 
 <script>
+//import { UPDATE_API_STATUS } from "@/store/mutation-types.js";
+import { UPDATE_FIELD_SELECTED_LINNWORKS_ITEM } from "@/store/action-types.js";
+
 export default {
   props: {
     unlocked: { type: [Boolean], default: false },
     itemValue: { type: [String] },
     itemId: { type: [String] },
+    locationId: { type: [String, Boolean], default: false },
     fieldName: { type: [String] },
     fieldId: { type: [String] },
     fieldLabel: { type: [String] },
-    fieldHint: { type: [String] }
+    fieldHint: { type: [String] },
+    rules: { type: [Array] }
+  },
+  watch: {
+    itemValue(newVal, oldVal) {
+      if (newVal) this.editValue = this.itemValue;
+    }
+  },
+  data: () => ({
+    hasError: false,
+    editValue: ""
+  }),
+  methods: {
+    handleError(error) {
+      this.hasErrors = error;
+    },
+    async saveChanges(itemId, field, value, changeSource, locationId) {
+      if (this.hasErrors) {
+        this.$toastr.e("Field has errors, or is invalid!");
+      } else {
+        const resp = await this.$store.dispatch(
+          `linnworks/inventory/selectedItem/${UPDATE_FIELD_SELECTED_LINNWORKS_ITEM}`,
+          {
+            inventoryItemId: itemId,
+            fieldValue: value,
+            fieldName: field,
+            changeSource,
+            locationId
+          }
+        );
+
+        const { result, error } = resp;
+        if (result) {
+          /*
+          this.$store.commit(
+            `api/${UPDATE_API_STATUS}`,
+            `Saved ${field} value of ${value}`,
+            { root: true }
+          );
+          */
+          this.$toastr.s(`${field} update success!`, result);
+          //item.price = price;
+          //this.$emit("update:item", item);
+          this.$emit("update:itemValue", value);
+        }
+        if (!result && error) this.$toastr.e(`${field} not updated!`, error);
+      }
+    }
   }
 };
 </script>
@@ -63,5 +138,14 @@ export default {
 <style>
 #editFieldWrapper .v-input__append-outer {
   margin: 2px 0px 0px 10px !important;
+}
+
+#editFieldSlot .v-small-dialog__activator__content {
+  width: 100%;
+}
+
+.itemTextFieldInputSlot .v-messages__message {
+  font-size: 150% !important;
+  font-weight: bold !important;
 }
 </style>

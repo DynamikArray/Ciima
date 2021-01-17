@@ -9,17 +9,13 @@
 
     <v-divider class="my-2"></v-divider>
 
-    <Datatable
-      :items="items"
-      :loading="loading"
-      :isMobile="isMobile"
-      @itemSelected="itemSelected"
-    />
+    <Datatable :items="items" :loading="loading" :isMobile="isMobile" @itemSelected="itemSelected" />
 
     <LinnworksItemContainer
       :selectedId="selectedId"
       :visible="visible"
       @closed="modalClosed"
+      @refresh="fetchData"
     />
   </div>
 </template>
@@ -67,10 +63,7 @@ export default {
         (filters.searchTitle && filters.searchTitle.length > 2) ||
         (filters.searchLocation && filters.searchLocation.length > 2)
       ) {
-        this.$store.dispatch(
-          `linnworks/inventory/${SEARCH_LINNWORKS_INVENTORY}`,
-          filters
-        );
+        this.$store.dispatch(`linnworks/inventory/${SEARCH_LINNWORKS_INVENTORY}`, filters);
       }
     },
     itemSelected(pkStockItemID) {
