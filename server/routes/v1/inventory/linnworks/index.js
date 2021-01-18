@@ -8,6 +8,7 @@ const {
   inventorySearchSchema,
   inventoryItemSchema,
   inventoryItemUpdateFieldSchema,
+  inventoryItemUpdateExtendedPropertiesSchema,
 } = require("../../../../schemas/v1/inventory/linnworks");
 /**
  * Info routes endpoints
@@ -26,6 +27,7 @@ module.exports = function (fastify, opts, next) {
     inventorySearchHandler,
     inventoryItemHandler,
     inventoryItemUpdateFieldHandler,
+    inventoryItemUpdateExtendedPropertiesHandler,
   } = require("../../../../handlers/v1/inventory/linnworks")(fastify);
 
   //-----------------V2 IMPROVED START ------------------------
@@ -48,6 +50,11 @@ module.exports = function (fastify, opts, next) {
     handler: inventoryItemUpdateFieldHandler,
   });
 
+  fastify.post("/inventory/updateItemExtenedProperties", {
+    preValidation: fastify.authenticate,
+    schema: inventoryItemUpdateExtendedPropertiesSchema,
+    handler: inventoryItemUpdateExtendedPropertiesHandler,
+  });
   //------------V2 IMPROVED END-----------------------------
 
   // START OLD STUFF
@@ -71,10 +78,7 @@ module.exports = function (fastify, opts, next) {
     handler: updateLocationOrQuantityHandler,
   };
 
-  fastify.post(
-    "/inventory/linnworks/updateLocationField",
-    linnworksUpdateLocationOrQuantity
-  );
+  fastify.post("/inventory/linnworks/updateLocationField", linnworksUpdateLocationOrQuantity);
 
   //Retail Price / Title fields NON Location BASED updates
   const linnworksUpdateItemField = {
@@ -83,10 +87,7 @@ module.exports = function (fastify, opts, next) {
     handler: updateItemFieldHandler,
   };
 
-  fastify.post(
-    "/inventory/linnworks/updateItemField",
-    linnworksUpdateItemField
-  );
+  fastify.post("/inventory/linnworks/updateItemField", linnworksUpdateItemField);
 
   //ALL Price fields for an item
   const linnworksUpdateItemPrices = {
@@ -95,10 +96,7 @@ module.exports = function (fastify, opts, next) {
     handler: updateItemPricesHandler,
   };
 
-  fastify.post(
-    "/inventory/linnworks/updateItemPrices",
-    linnworksUpdateItemPrices
-  );
+  fastify.post("/inventory/linnworks/updateItemPrices", linnworksUpdateItemPrices);
 
   //ALL Price fields for an item
   const getOutOfSyncPrices = {

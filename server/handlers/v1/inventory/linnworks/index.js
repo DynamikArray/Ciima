@@ -1,10 +1,7 @@
 const queryString = require("query-string");
 const StockItemsBuilder = require("../../../../../util/linnworks/StockItemsBuilder");
 
-const {
-  UPDATE_ITEM_FIELD,
-  UPDATE_LOCATION_FIELD,
-} = require("../../../../../util/auditLog/logActionTypes");
+const { UPDATE_ITEM_FIELD, UPDATE_LOCATION_FIELD } = require("../../../../../util/auditLog/logActionTypes");
 const { LINNWORKS } = require("../../../../../util/auditLog/logResourceTypes");
 
 /*item repricing*/
@@ -18,15 +15,15 @@ module.exports = (fastify) => {
   /*v2 Inventory Search Handler Setup*/
   const { searchHandler } = require("./inventorySearchHandler")(fastify);
   const { selectHandler } = require("./inventoryItemSelectHandler")(fastify);
-  const { updateFieldHandler } = require("./inventoryItemUpdateFieldHandler")(
-    fastify
-  );
+  const { updateFieldHandler } = require("./inventoryItemUpdateFieldHandler")(fastify);
+  const { updateExtendedPropertiesHandler } = require("./inventoryItemUpdateExtendedPropertiesHandler")(fastify);
 
   return {
     //START V2 improved search handler and code design
     inventorySearchHandler: searchHandler,
     inventoryItemHandler: selectHandler,
     inventoryItemUpdateFieldHandler: updateFieldHandler,
+    inventoryItemUpdateExtendedPropertiesHandler: updateExtendedPropertiesHandler,
     //END V2
 
     /**
@@ -51,8 +48,7 @@ module.exports = (fastify) => {
           const { result, error } = await fastify.linnworks.makeApiCall({
             method: "POST",
             url: "Stock/GetStockItemsFull",
-            headers:
-              "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
+            headers: "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
             data: formattedData,
           });
 
@@ -78,13 +74,7 @@ module.exports = (fastify) => {
      * @return {Promise}     [description]
      */
     updateLocationOrQuantityHandler: async (req, res) => {
-      const {
-        changeSource,
-        fieldName,
-        fieldValue,
-        inventoryItemId,
-        locationId,
-      } = req.body;
+      const { changeSource, fieldName, fieldValue, inventoryItemId, locationId } = req.body;
 
       const formattedData = `inventoryItemId=${inventoryItemId}&fieldName=${fieldName}&fieldValue=${fieldValue}&locationId=${locationId}&changeSource=${changeSource}`;
 
@@ -92,8 +82,7 @@ module.exports = (fastify) => {
         const { result, error } = await fastify.linnworks.makeApiCall({
           method: "POST",
           url: "Inventory/UpdateInventoryItemLocationField",
-          headers:
-            "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
+          headers: "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
           data: formattedData,
         });
         if (result) return { result };
@@ -126,8 +115,7 @@ module.exports = (fastify) => {
         const { result, error } = await fastify.linnworks.makeApiCall({
           method: "POST",
           url: "Inventory/UpdateInventoryItemField",
-          headers:
-            "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
+          headers: "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
           data: formattedData,
         });
 
@@ -182,13 +170,11 @@ module.exports = (fastify) => {
       const { result, error } = await fastify.linnworks.makeApiCall({
         method: "POST",
         url: "Dashboards/ExecuteCustomScriptQuery",
-        headers:
-          "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
+        headers: "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
         data,
       });
 
-      if (!result.IsError)
-        return { result: result.Results, total: result.TotalResults };
+      if (!result.IsError) return { result: result.Results, total: result.TotalResults };
       if (error) return { error: error };
     },
   };

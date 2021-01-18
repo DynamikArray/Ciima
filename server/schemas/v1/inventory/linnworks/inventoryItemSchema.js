@@ -61,6 +61,9 @@ module.exports = {
             ExtraDescription: {
               type: "string",
             },
+            ExtraDescriptionId: {
+              type: "string",
+            },
             IssueNumbers: {
               type: "string",
             },

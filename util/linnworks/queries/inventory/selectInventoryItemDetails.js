@@ -53,7 +53,8 @@ const selectInventoryItemDetails = (pkStockItemID) => {
       lp.ListingPrice,
       dp.DeclinePrice,
       sp.StartPrice,
-      ed.ExtraDescription
+      ed.ExtraDescription,
+      ed.ExtraDescriptionId
   FROM
       StockItem si
       LEFT JOIN ProductCategories pc on pc.CategoryId = si.CategoryId
@@ -81,7 +82,7 @@ const selectInventoryItemDetails = (pkStockItemID) => {
       ) sp ON sp.ItemNumber = si.ItemNumber
 
       LEFT OUTER JOIN (
-        SELECT si.ItemNumber, siep.ProperyValue AS [ExtraDescription]
+        SELECT si.ItemNumber, siep.ProperyValue AS [ExtraDescription], siep.pkRowId as 'ExtraDescriptionId'
         FROM [StockItem] si
         LEFT OUTER JOIN [StockItem_ExtendedProperties] siep ON si.pkStockItemID = siep.fkStockItemID AND siep.ProperyName = 'Extra Description'
       ) ed ON ed.ItemNumber = si.ItemNumber

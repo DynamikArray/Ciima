@@ -1,13 +1,19 @@
 const inventorySearchSchema = require("./inventorySearchSchema");
 const inventoryItemSchema = require("./inventoryItemSchema");
 const inventoryItemUpdateFieldSchema = require("./inventoryItemUpdateFieldSchema");
+const inventoryItemUpdateExtendedPropertiesSchema = require("./inventoryItemUpdateExtendedPropertiesSchema");
 
 module.exports = {
   //NEWER V2 Inventory Search and ItemTitle
   inventorySearchSchema: inventorySearchSchema,
   inventoryItemSchema: inventoryItemSchema,
   inventoryItemUpdateFieldSchema: inventoryItemUpdateFieldSchema,
+  inventoryItemUpdateExtendedPropertiesSchema: inventoryItemUpdateExtendedPropertiesSchema,
+  //END V2 Inventory Search And Stuff
 
+  //
+  //  OLD STILL IN USE for inputting related item changes
+  //
   searchInventorySchema: {
     description: "Search Linnworks Inventory by the 3 main attributes",
     tags: ["Inventory"],
@@ -46,8 +52,7 @@ module.exports = {
   updateLocationOrQuantitySchema: {
     description: "Updates an Inventory items location or quantity values",
     tags: ["Inventory"],
-    summary:
-      "Update location and or quantity of Inventory items values in Linnworks",
+    summary: "Update location and or quantity of Inventory items values in Linnworks",
     security: [
       {
         token: [],
@@ -78,8 +83,7 @@ module.exports = {
   updateInventoryItemFieldSchema: {
     description: "Updates an Inventory items location or quantity values",
     tags: ["Inventory"],
-    summary:
-      "Update non Location Fields of Inventory items values in Linnworks ",
+    summary: "Update non Location Fields of Inventory items values in Linnworks ",
     security: [
       {
         token: [],
@@ -102,8 +106,7 @@ module.exports = {
   },
 
   updateItemPricesSchema: {
-    description:
-      "Updates an Inventory items prices, including any listing template prices",
+    description: "Updates an Inventory items prices, including any listing template prices",
     tags: ["Inventory"],
     summary:
       "This will update an inventory items prices, including any listing templates, and push that updated price to the template.",
