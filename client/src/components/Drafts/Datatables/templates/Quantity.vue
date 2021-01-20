@@ -1,6 +1,7 @@
 <template>
   <div class="">
     <v-edit-dialog
+      v-if="item.status.toLowerCase() != 'submitted'"
       ref="dialog"
       persistent
       large
@@ -23,6 +24,10 @@
         </v-form>
       </template>
     </v-edit-dialog>
+    <div v-else class="d-flex justify-start align-center" style="min-width:75px">
+      <span class="overline mr-2">Quantity:</span>
+      <span class="subtitle-1"> {{ item.quantity }}</span>
+    </div>
   </div>
 </template>
 
@@ -51,9 +56,7 @@ export default {
     getCorrectRuleType() {
       return [
         v => !!v || "Quantity is a required field",
-        v =>
-          !!Number(v) > 0 ||
-          "Quantity must be greater than zero or is not a number"
+        v => !!Number(v) > 0 || "Quantity must be greater than zero or is not a number"
       ];
     }
   },
@@ -75,10 +78,7 @@ export default {
           fieldValue
         })
         .then(results => {
-          if (
-            results.result.affectedRows == 1 &&
-            results.result.changedRows == 1
-          ) {
+          if (results.result.affectedRows == 1 && results.result.changedRows == 1) {
             const strMessage = `${fieldName} was updated to ${fieldValue}`;
             this.item[fieldName] = fieldValue;
             this.$toastr.s(strMessage);

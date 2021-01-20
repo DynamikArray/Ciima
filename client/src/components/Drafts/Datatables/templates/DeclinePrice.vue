@@ -1,34 +1,26 @@
 <template>
   <div id="declinePrice" class="d-flex justify-start align-center w-100">
-    <div
-      v-if="label"
-      class="d-flex justify-start align-center"
-      :style="`min-width:${minWidth}`"
-    >
+    <div v-if="label" class="d-flex justify-start align-center" :style="`min-width:${minWidth}`">
       <span class="overline mr-2">Decline:</span>
     </div>
 
     <v-edit-dialog
+      v-if="item.status.toLowerCase() != 'submitted'"
       persistent
       large
       @save="saveChanges(item.id, 'declinePrice', editValue)"
     >
       <div class="d-flex align-center w-100" :class="alignValue">
-        <span class="subtitle-1 ml-3">{{
-          Number(item.declinePrice) | currency
-        }}</span>
+        <span class="subtitle-1 ml-3">{{ Number(item.declinePrice) | currency }}</span>
       </div>
 
       <template v-slot:input>
-        <v-text-field
-          v-model="editValue"
-          label="Edit"
-          single-line
-          counter
-          :rules="fieldRule"
-        ></v-text-field>
+        <v-text-field v-model="editValue" label="Edit" single-line counter :rules="fieldRule"></v-text-field>
       </template>
     </v-edit-dialog>
+    <div v-else class="d-flex align-center w-100" :class="alignValue">
+      <span class="subtitle-1 ml-3">{{ Number(item.declinePrice) | currency }}</span>
+    </div>
   </div>
 </template>
 
@@ -70,10 +62,7 @@ export default {
           fieldValue
         })
         .then(results => {
-          if (
-            results.result.affectedRows == 1 &&
-            results.result.changedRows == 1
-          ) {
+          if (results.result.affectedRows == 1 && results.result.changedRows == 1) {
             const strMessage = `${fieldName} was updated to ${fieldValue}`;
             this.item.declinePrice = fieldValue;
             this.$toastr.s(strMessage);
