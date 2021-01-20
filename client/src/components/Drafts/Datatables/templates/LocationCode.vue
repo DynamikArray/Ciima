@@ -1,25 +1,17 @@
 <template>
-  <div
-    id="locationCodeWrapper"
-    class="d-flex justify-start align-center w-100 my-2"
-  >
-    <div
-      v-if="label"
-      class="d-flex justify-start align-center"
-      style="min-width:75px"
-    >
+  <div id="locationCodeWrapper" class="d-flex justify-start align-center w-100 my-2">
+    <div v-if="label" class="d-flex justify-start align-center" style="min-width:75px">
       <span class="overline mr-2">Location:</span>
     </div>
     <div class="d-flex justify-start align-center">
       <v-edit-dialog
+        v-if="item.status.toLowerCase() != 'submitted'"
         ref="dialog"
         persistent
         large
         @save="saveChanges(item.id, 'locationCode', editValue)"
       >
-        <div
-          class="d-flex locationCodeSpan subtitle-2 align-center text-center grey darken-4 py-1 px-2"
-        >
+        <div class="d-flex locationCodeSpan subtitle-2 align-center text-center grey darken-4 py-1 px-2">
           {{ item.locationCode }}
         </div>
 
@@ -40,6 +32,10 @@
           </v-form>
         </template>
       </v-edit-dialog>
+
+      <div v-else class="d-flex locationCodeSpan subtitle-2 align-center text-center grey darken-4 py-1 px-2">
+        {{ item.locationCode }}
+      </div>
     </div>
   </div>
 </template>
@@ -60,9 +56,7 @@ export default {
   },
 
   created() {
-    if (this.item) {
-      this.editValue = this.item.locationCode;
-    }
+    if (this.item) this.editValue = this.item.locationCode;
   },
 
   computed: {
@@ -76,8 +70,7 @@ export default {
       const locationCode = [
         v => !!v || "Location code is a required field",
         v => {
-          if (!v.startsWith(LOCATION_PREFIX))
-            return `Location code must begin ${LOCATION_PREFIX} `;
+          if (!v.startsWith(LOCATION_PREFIX)) return `Location code must begin ${LOCATION_PREFIX} `;
           return false;
         },
         v => {
@@ -108,10 +101,7 @@ export default {
           fieldValue
         })
         .then(results => {
-          if (
-            results.result.affectedRows == 1 &&
-            results.result.changedRows == 1
-          ) {
+          if (results.result.affectedRows == 1 && results.result.changedRows == 1) {
             const strMessage = `${fieldName} was updated to ${fieldValue}`;
             this.item.locationCode = fieldValue;
             this.$toastr.s(strMessage);

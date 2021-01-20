@@ -1,6 +1,7 @@
 <template>
   <div class="">
     <v-edit-dialog
+      v-if="item.status.toLowerCase() != 'submitted'"
       ref="dialog"
       persistent
       large
@@ -22,6 +23,7 @@
         </v-form>
       </template>
     </v-edit-dialog>
+    <span v-else class="subtitle-1">{{ item.inventoryTitle }} </span>
   </div>
 </template>
 
@@ -51,8 +53,7 @@ export default {
       const inventoryTitle = [
         v => !!v || "Inventory Title is a required field",
         v => {
-          if (v.toLowerCase().includes("mystery"))
-            return "Ebay does not allow the word Mystery, please change this word";
+          if (v.toLowerCase().includes("mystery")) return "Ebay does not allow the word Mystery, please change this word";
           return false;
         },
         v => v.length <= 80 || "inventoryTitle must be less than 80 characters"
@@ -79,10 +80,7 @@ export default {
           fieldValue
         })
         .then(results => {
-          if (
-            results.result.affectedRows == 1 &&
-            results.result.changedRows == 1
-          ) {
+          if (results.result.affectedRows == 1 && results.result.changedRows == 1) {
             const strMessage = `${fieldName} was updated to ${fieldValue}`;
             this.item.inventoryTitle = fieldValue;
             this.$toastr.s(strMessage);

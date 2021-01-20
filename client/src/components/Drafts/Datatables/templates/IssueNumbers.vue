@@ -1,21 +1,14 @@
 <template>
   <div id="issueNumbersWrapper" class="d-flex justify-start align-center w-100">
     <v-edit-dialog
+      v-if="item.status.toLowerCase() != 'submitted'"
       persistent
       large
       @save="saveChanges(item, 'issueNumbers', editValue)"
     >
       <v-slide-x-reverse-transition mode="out-in">
-        <div
-          class="d-flex align-center w-100"
-          :class="alignValue"
-          :key="`issueNumbers-${item.issueNumbers}`"
-        >
-          <div
-            v-if="label"
-            class="d-flex justify-start align-center"
-            style="min-width:75px"
-          >
+        <div class="d-flex align-center w-100" :class="alignValue" :key="`issueNumbers-${item.issueNumbers}`">
+          <div v-if="label" class="d-flex justify-start align-center" style="min-width:75px">
             <span class="overline mr-1">Issues:</span>
           </div>
           <div class="d-flex justify-start align-center w-100">
@@ -36,6 +29,15 @@
         ></v-text-field>
       </template>
     </v-edit-dialog>
+
+    <div v-else class="d-flex align-center w-100" :class="alignValue" :key="`issueNumbers-${item.issueNumbers}`">
+      <div v-if="label" class="d-flex justify-start align-center" style="min-width:75px">
+        <span class="overline mr-1">Issues:</span>
+      </div>
+      <div class="d-flex justify-start align-center w-100">
+        <span class="subtitle-1">{{ item.issueNumbers }}</span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -80,10 +82,7 @@ export default {
             fieldValue
           })
           .then(results => {
-            if (
-              results.result.affectedRows == 1 &&
-              results.result.changedRows == 1
-            ) {
+            if (results.result.affectedRows == 1 && results.result.changedRows == 1) {
               const strMessage = `${fieldName} was updated to ${fieldValue}`;
               this.item.price = fieldValue;
               this.$toastr.s(strMessage);
