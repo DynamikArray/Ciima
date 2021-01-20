@@ -14,7 +14,8 @@
 
       <slot name="editField" v-if="unlocked" class="w-100">
         <div id="editFieldSlot" class="w-100">
-          <v-edit-dialog
+          <EditDialog
+            dialogColor="grey darken-3"
             persistent
             large
             @save="saveChanges(itemId, fieldName, editValue, editValue, locationId)"
@@ -63,7 +64,7 @@
                 />
               </div>
             </template>
-          </v-edit-dialog>
+          </EditDialog>
         </div>
       </slot>
     </div>
@@ -73,6 +74,7 @@
 <script>
 //import { UPDATE_API_STATUS } from "@/store/mutation-types.js";
 import { UPDATE_FIELD_SELECTED_LINNWORKS_ITEM } from "@/store/action-types.js";
+import EditDialog from "./EditDialog";
 
 export default {
   props: {
@@ -85,6 +87,9 @@ export default {
     fieldLabel: { type: [String] },
     fieldHint: { type: [String] },
     rules: { type: [Array] }
+  },
+  components: {
+    EditDialog
   },
   watch: {
     itemValue(newVal, oldVal) {
@@ -103,16 +108,13 @@ export default {
       if (this.hasErrors) {
         this.$toastr.e("Field has errors, or is invalid!");
       } else {
-        const resp = await this.$store.dispatch(
-          `linnworks/inventory/selectedItem/${UPDATE_FIELD_SELECTED_LINNWORKS_ITEM}`,
-          {
-            inventoryItemId: itemId,
-            fieldValue: value,
-            fieldName: field,
-            changeSource,
-            locationId
-          }
-        );
+        const resp = await this.$store.dispatch(`linnworks/inventory/selectedItem/${UPDATE_FIELD_SELECTED_LINNWORKS_ITEM}`, {
+          inventoryItemId: itemId,
+          fieldValue: value,
+          fieldName: field,
+          changeSource,
+          locationId
+        });
 
         const { result, error } = resp;
         if (result) {

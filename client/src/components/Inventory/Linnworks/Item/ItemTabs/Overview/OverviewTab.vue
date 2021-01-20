@@ -94,7 +94,7 @@
 
           <v-row dense>
             <v-col sm="12">
-              <ItemTextArea
+              <ItemTextAreaExtendedProperty
                 :itemValue="item.ExtraDescription"
                 :itemId="item.pkStockItemID"
                 :unlocked="unlocked"
@@ -110,9 +110,7 @@
           <v-row no-gutters class="mt-3">
             <v-col cols="12">
               <div class="d-flex align-center justify-start">
-                <h2 class="white--text my-0">
-                  <v-icon size="18" class="mr-1 mb-1">fas fa-dollar-sign</v-icon>Prices:
-                </h2>
+                <h2 class="white--text my-0"><v-icon size="18" class="mr-1 mb-1">fas fa-dollar-sign</v-icon>Prices:</h2>
               </div>
             </v-col>
 
@@ -190,6 +188,7 @@ import OrdersHistoryDT from "../Datatables/OrdersHistory/OrdersHistoryDT";
 import ItemImage from "./FieldTemplates/ItemImage";
 import ItemTextField from "./FieldTemplates/ItemTextField";
 import ItemTextArea from "./FieldTemplates/ItemTextArea";
+import ItemTextAreaExtendedProperty from "./FieldTemplates/ItemTextAreaExtendedProperty";
 
 import { fieldRules } from "@/components/Shared/Datatable/FieldRules/fieldRules";
 
@@ -212,7 +211,8 @@ export default {
     OrdersHistoryDT,
     ItemImage,
     ItemTextField,
-    ItemTextArea
+    ItemTextArea,
+    ItemTextAreaExtendedProperty
   },
   data: () => ({
     fieldRules
