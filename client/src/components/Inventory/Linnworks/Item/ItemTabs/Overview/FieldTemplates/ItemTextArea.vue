@@ -15,6 +15,7 @@
       <slot name="editField" v-if="unlocked" class="w-100">
         <div id="editFieldSlot" class="w-100">
           <EditDialog
+            :key="`editdialog_${fieldName}_${itemId}`"
             persistent
             large
             @save="saveChanges(itemId, fieldName, editValue, editValue, locationId)"
@@ -26,6 +27,7 @@
               </h4>
 
               <v-textarea
+                :key="`textarea_disabled_${fieldName}_${itemId}`"
                 dense
                 hide-details
                 :value="itemValue"
@@ -48,14 +50,15 @@
               <div class="itemTextFieldInputSlot">
                 <h3 class="my-1 textShadow">Edit {{ fieldLabel }}</h3>
                 <v-textarea
+                  :key="`textarea_editable_${fieldName}_${itemId}`"
                   autocomplete="off"
                   autofocus
                   dense
                   hide-details
-                  :value="itemValue"
+                  v-model="editValue"
                   :id="fieldId"
-                  :name="fieldName"
                   :label="fieldLabel"
+                  :rules="rules"
                   :hint="fieldHint"
                   filled
                   :full-width="true"
@@ -124,6 +127,7 @@ export default {
             { root: true }
           );
           */
+
           this.$toastr.s(`${field} update success!`, result);
           //item.price = price;
           //this.$emit("update:item", item);

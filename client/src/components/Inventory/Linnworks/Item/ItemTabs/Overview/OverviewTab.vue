@@ -95,11 +95,11 @@
           <v-row dense>
             <v-col sm="12">
               <ItemTextAreaExtendedProperty
-                :itemValue="item.ExtraDescription"
+                :itemValue.sync="item.ExtraDescription"
                 :itemId="item.pkStockItemID"
                 :unlocked="unlocked"
-                fieldName="ExtraDescription"
-                fieldId="ExtraDescription"
+                fieldName="Extra Description"
+                fieldId="Extra Description"
                 fieldLabel="Extra Description"
                 fieldHint="Extra Description"
               />
@@ -170,7 +170,7 @@
           <v-card-text>
             <h3 class="text-center mb-2">
               <v-icon class="mr-2">fas fa-list-alt</v-icon>
-              Loading Issue Data
+              Talking to linnworks...
             </h3>
             <v-progress-linear indeterminate color="white" class="mt-1"></v-progress-linear>
           </v-card-text>
