@@ -12,19 +12,13 @@ module.exports = {
   body: {
     type: "object",
     properties: {
-      pkRowId: {
-        type: "string",
-      },
       fkStockItemId: {
         type: "string",
       },
       ProperyName: {
         type: "string",
       },
-      ProperyValue: {
-        type: "string",
-      },
-      ProperyType: {
+      PropertyValue: {
         type: "string",
       },
     },
