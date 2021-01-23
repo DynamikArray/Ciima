@@ -120,18 +120,10 @@ export default {
 
         const { result, error } = resp;
         if (result) {
-          /*
-          this.$store.commit(
-            `api/${UPDATE_API_STATUS}`,
-            `Saved ${field} value of ${value}`,
-            { root: true }
-          );
-          */
-
+          this.$toastr.defaultTimeout = 1500;
           this.$toastr.s(`${field} update success!`, result);
-          //item.price = price;
-          //this.$emit("update:item", item);
           this.$emit("update:itemValue", value);
+          this.$emit("hasChanges", true);
         }
         if (!result && error) this.$toastr.e(`${field} not updated!`, error);
       }

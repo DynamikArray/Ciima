@@ -45,6 +45,7 @@
                 fieldLabel="Inventory Title"
                 fieldHint="Inventory Title"
                 :rules="fieldRules.inventoryTitle"
+                @hasChanges="hasChanges"
               >
                 <div class="d-flex align-center justify-start">
                   <h2 class="white--text textShadow  my-0">
@@ -71,6 +72,7 @@
                 fieldLabel="Location Code"
                 fieldHint="Location Code"
                 :rules="fieldRules.locationCode"
+                @hasChanges="hasChanges"
               />
             </v-col>
           </v-row>
@@ -88,6 +90,7 @@
                 fieldLabel="Item Quantity"
                 fieldHint="Item Quantity"
                 :rules="fieldRules.quantity"
+                @hasChanges="hasChanges"
               />
             </v-col>
           </v-row>
@@ -102,6 +105,7 @@
                 fieldId="Extra Description"
                 fieldLabel="Extra Description"
                 fieldHint="Extra Description"
+                @hasChanges="hasChanges"
               />
             </v-col>
           </v-row>
@@ -240,6 +244,11 @@ export default {
         }
       }
       return false;
+    }
+  },
+  methods: {
+    hasChanges(bln) {
+      this.$emit("hasChanges", bln);
     }
   }
 };

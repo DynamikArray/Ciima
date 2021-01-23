@@ -24,6 +24,7 @@ export default {
           this.$toastr.defaultTimeout = 1500;
           this.$toastr.s(`${field} update success!`, result.toUpperCase());
           this.$emit("update:itemValue", value);
+          this.$emit("hasChanges", true);
         }
         if (!result && error) this.$toastr.e(`${field} not updated!`, error);
       }

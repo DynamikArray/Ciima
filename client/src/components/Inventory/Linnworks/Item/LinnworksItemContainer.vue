@@ -1,5 +1,5 @@
 <template>
-  <v-dialog :value="visible" fullscreen hide-overlay scrollable transition="dialog-bottom-transition">
+  <v-dialog :value="visible" fullscreen hide-overlay persistent scrollable transition="dialog-bottom-transition">
     <v-card elevation="2" class="secondary darken-1">
       <v-card-title class="pa-0" :class="unlocked ? 'warning' : 'primary'">
         <div class="d-flex align-center justify-space-between w-100">
@@ -19,7 +19,12 @@
         </div>
       </v-card-title>
       <v-card-text class="ma-0 pa-0">
-        <ItemTabsContainer :item="selectedItem" :loading="selectedItemLoading" :unlocked="unlocked" />
+        <ItemTabsContainer
+          :item="selectedItem"
+          :loading="selectedItemLoading"
+          :unlocked="unlocked"
+          @hasChanges="hasChanges"
+        />
       </v-card-text>
     </v-card>
   </v-dialog>
@@ -51,7 +56,8 @@ export default {
     }
   },
   data: () => ({
-    unlocked: false
+    unlocked: false,
+    blnHasChanges: false
   }),
   computed: {
     ...mapGetters({
@@ -65,10 +71,18 @@ export default {
   },
   methods: {
     closeModal() {
+      if (this.blnHasChanges) this.updateListingTemplates();
       if (this.unlocked == true) this.$emit("refresh");
 
       this.unlocked = false;
+      this.blnHasChanges = false;
       this.$emit("closed");
+    },
+    hasChanges(bln) {
+      this.blnHasChanges = bln;
+    },
+    updateListingTemplates() {
+      console.log("ITEM HAS CHANGES NEEDS TO BE PUSHED TO TEMPLATE");
     }
   }
 };
