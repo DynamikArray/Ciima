@@ -9,6 +9,7 @@ const {
   inventoryItemSchema,
   inventoryItemUpdateFieldSchema,
   inventoryItemUpdateExtendedPropertiesSchema,
+  inventoryItemUpdateTemplateInstantSchema,
 } = require("../../../../schemas/v1/inventory/linnworks");
 /**
  * Info routes endpoints
@@ -28,6 +29,7 @@ module.exports = function (fastify, opts, next) {
     inventoryItemHandler,
     inventoryItemUpdateFieldHandler,
     inventoryItemUpdateExtendedPropertiesHandler,
+    inventoryItemUpdateTemplateInstantHandler,
   } = require("../../../../handlers/v1/inventory/linnworks")(fastify);
 
   //-----------------V2 IMPROVED START ------------------------
@@ -54,6 +56,12 @@ module.exports = function (fastify, opts, next) {
     preValidation: fastify.authenticate,
     schema: inventoryItemUpdateExtendedPropertiesSchema,
     handler: inventoryItemUpdateExtendedPropertiesHandler,
+  });
+
+  fastify.post("/inventory/updateItemTemplateInstant", {
+    preValidation: fastify.authenticate,
+    schema: inventoryItemUpdateTemplateInstantSchema,
+    handler: inventoryItemUpdateTemplateInstantHandler,
   });
   //------------V2 IMPROVED END-----------------------------
 

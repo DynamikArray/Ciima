@@ -17,6 +17,7 @@ module.exports = (fastify) => {
   const { selectHandler } = require("./inventoryItemSelectHandler")(fastify);
   const { updateFieldHandler } = require("./inventoryItemUpdateFieldHandler")(fastify);
   const { updateExtendedPropertiesHandler } = require("./inventoryItemUpdateExtendedPropertiesHandler")(fastify);
+  const { updateTemplateInstantHandler } = require("./inventoryItemUpdateTemplateInstant")(fastify);
 
   return {
     //START V2 improved search handler and code design
@@ -24,6 +25,7 @@ module.exports = (fastify) => {
     inventoryItemHandler: selectHandler,
     inventoryItemUpdateFieldHandler: updateFieldHandler,
     inventoryItemUpdateExtendedPropertiesHandler: updateExtendedPropertiesHandler,
+    inventoryItemUpdateTemplateInstantHandler: updateTemplateInstantHandler,
     //END V2
 
     /**

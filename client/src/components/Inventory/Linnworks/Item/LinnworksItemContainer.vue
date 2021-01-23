@@ -32,7 +32,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { GET_SELECTED_LINNWORKS_ITEM } from "@/store/action-types";
+import { GET_SELECTED_LINNWORKS_ITEM, UPDATE_TEMPLATE_INSTANT_SELECTED_LINNWORKS_ITEM } from "@/store/action-types";
 
 import ItemTabsContainer from "./ItemTabs/ItemTabsContainer";
 
@@ -81,8 +81,20 @@ export default {
     hasChanges(bln) {
       this.blnHasChanges = bln;
     },
-    updateListingTemplates() {
-      console.log("ITEM HAS CHANGES NEEDS TO BE PUSHED TO TEMPLATE");
+    async updateListingTemplates() {
+      const { result, error } = await this.$store.dispatch(
+        `linnworks/inventory/selectedItem/${UPDATE_TEMPLATE_INSTANT_SELECTED_LINNWORKS_ITEM}`,
+        {
+          pkStockItemId: this.selectedId
+        }
+      );
+
+      this.$toastr.defaultTimeout = 1500;
+      if (result && !error) {
+        this.$toastr.s(`Channel Listings Being Updated`, result.toUpperCase());
+      } else if (error && !result) {
+        this.$toastr.e(`Unable to update channel listings`, error);
+      }
     }
   }
 };
