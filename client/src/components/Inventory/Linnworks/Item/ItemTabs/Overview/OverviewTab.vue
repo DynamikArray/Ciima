@@ -114,7 +114,7 @@
           <v-row no-gutters class="mt-3">
             <v-col cols="12">
               <div class="d-flex align-center justify-start">
-                <h2 class="white--text my-0"><v-icon size="18" class="mr-1 mb-1">fas fa-dollar-sign</v-icon>Prices:</h2>
+                <h2 class="white--text my-0 mb-1"><v-icon size="18" class="mr-1 mb-1">fas fa-dollar-sign</v-icon>Prices:</h2>
               </div>
             </v-col>
 
@@ -122,23 +122,8 @@
               <v-divider class="mb-1" />
             </v-col>
 
-            <v-col cols="3">
-              <div class="text-left">Retail : {{ item.RetailPrice | currency }}</div>
-            </v-col>
-            <v-col cols="3">
-              <div class="text-center">Listing : {{ item.ListingPrice | currency }}</div>
-            </v-col>
-            <v-col cols="3">
-              <div class="text-center">Start : {{ startPrice | currency }}</div>
-            </v-col>
-            <v-col cols="3">
-              <div class="text-right">Decline: {{ declinePrice | currency }}</div>
-            </v-col>
-          </v-row>
-
-          <v-row dense>
-            <v-col col="12">
-              <v-divider class="my-0" />
+            <v-col sm="12">
+              <PricesContainer :item="item" :unlocked="unlocked" @hasChanges="hasChanges" />
             </v-col>
           </v-row>
         </v-col>
@@ -193,6 +178,7 @@ import ItemImage from "./FieldTemplates/ItemImage";
 import ItemTextField from "./FieldTemplates/ItemTextField";
 import ItemTextArea from "./FieldTemplates/ItemTextArea";
 import ItemTextAreaExtendedProperty from "./FieldTemplates/ItemTextAreaExtendedProperty";
+import PricesContainer from "./FieldTemplates/Prices/PricesContainer";
 
 import { fieldRules } from "@/components/Shared/Datatable/FieldRules/fieldRules";
 
@@ -216,7 +202,8 @@ export default {
     ItemImage,
     ItemTextField,
     ItemTextArea,
-    ItemTextAreaExtendedProperty
+    ItemTextAreaExtendedProperty,
+    PricesContainer
   },
   data: () => ({
     fieldRules
@@ -225,24 +212,6 @@ export default {
     includeLog() {
       const { CategoryName } = this.item;
       if (CategoryName && CategoryName.toUpperCase() == "EBAY-LOTS") return true;
-      return false;
-    },
-    startPrice() {
-      if (this.item.prices && this.item.prices.length) {
-        const startPrice = this.item.prices.filter(price => price.Tag.toUpperCase() == "START");
-        if (startPrice && startPrice.length > 0) {
-          return startPrice[0].Price || false;
-        }
-      }
-      return false;
-    },
-    declinePrice() {
-      if (this.item.prices && this.item.prices.length) {
-        const declinePrice = this.item.prices.filter(price => price.Tag.toUpperCase() == "DECLINE");
-        if (declinePrice && declinePrice.length > 0) {
-          return declinePrice[0].Price || false;
-        }
-      }
       return false;
     }
   },

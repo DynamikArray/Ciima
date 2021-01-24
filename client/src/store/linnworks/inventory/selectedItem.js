@@ -5,6 +5,7 @@ Vue.use(Vuex);
 import {
   GET_SELECTED_LINNWORKS_ITEM,
   UPDATE_FIELD_SELECTED_LINNWORKS_ITEM,
+  UPDATE_PRICE_SELECTED_LINNWORKS_ITEM,
   UPDATE_EXTENDED_PROPERTY_SELECTED_LINNWORKS_ITEM,
   UPDATE_TEMPLATE_INSTANT_SELECTED_LINNWORKS_ITEM
 } from "@/store/action-types";
@@ -83,6 +84,19 @@ const selectedItem = {
         {
           method: "post",
           url: `/inventory/updateItemTemplateInstant`,
+          params: payload,
+          //success: `linnworks/inventory/selectedItem/${SELECTED_LINNWORKS_ITEM_RESULT}`,
+          loading: `linnworks/inventory/selectedItem/${SELECTED_LINNWORKS_ITEM_LOADING}`
+        },
+        { root: true }
+      );
+    },
+    async [UPDATE_PRICE_SELECTED_LINNWORKS_ITEM]({ commit, dispatch }, payload) {
+      return await dispatch(
+        "api/requestHandler",
+        {
+          method: "post",
+          url: `/inventory/updateItemPrice`,
           params: payload,
           //success: `linnworks/inventory/selectedItem/${SELECTED_LINNWORKS_ITEM_RESULT}`,
           loading: `linnworks/inventory/selectedItem/${SELECTED_LINNWORKS_ITEM_LOADING}`

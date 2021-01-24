@@ -1,8 +1,7 @@
 module.exports = {
   description: "inventoryItem - V2 - Improved Inventory Item Details",
   tags: ["Inventory"],
-  summary:
-    "inventoryItem - V2 - Improved Inventory Item Details with a more robust data set for editing values",
+  summary: "inventoryItem - V2 - Improved Inventory Item Details with a more robust data set for editing values",
   security: [
     {
       token: [],
@@ -56,6 +55,9 @@ module.exports = {
               type: "string",
             },
             ListingPrice: {
+              type: "string",
+            },
+            ListingPriceId: {
               type: "string",
             },
             ExtraDescription: {
