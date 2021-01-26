@@ -15,6 +15,22 @@
     />
 
     <ItemTextFieldPrice
+      v-if="declinePrice"
+      class="ml-2 d-flex"
+      :itemValue.sync="declinePrice"
+      :itemId="item.pkStockItemID"
+      :locationId="item.LocationId"
+      :unlocked="unlocked"
+      fieldName="DeclinePrice"
+      fieldId="DeclinePrice"
+      fieldLabel="Decline Price"
+      fieldHint="Decline Price"
+      @hasChanges="hasChanges"
+      :rules="rules.declinePrice"
+    />
+
+    <ItemTextFieldPriceAddNew
+      v-if="!declinePrice"
       class="ml-2 d-flex"
       :itemValue.sync="declinePrice"
       :itemId="item.pkStockItemID"
@@ -32,6 +48,7 @@
 
 <script>
 import ItemTextFieldPrice from "./ItemTextFieldPrice";
+import ItemTextFieldPriceAddNew from "./ItemTextFieldPriceAddNew";
 export default {
   props: {
     item: { type: [Boolean, Object] },
@@ -39,7 +56,8 @@ export default {
     rules: { type: [Boolean, Object, Array] }
   },
   components: {
-    ItemTextFieldPrice
+    ItemTextFieldPrice,
+    ItemTextFieldPriceAddNew
   },
   computed: {
     declinePrice: {
