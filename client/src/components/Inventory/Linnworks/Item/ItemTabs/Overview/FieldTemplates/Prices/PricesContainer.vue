@@ -1,10 +1,16 @@
 <template>
   <v-row dense>
     <v-col>
-      <LotPrices v-if="showLotPrices" :item="item" :unlocked="unlocked" @hasChanges="hasChanges" />
-      <SetPrices v-if="showSetPrices" :item="item" :unlocked="unlocked" @hasChanges="hasChanges" />
-      <SinglePrices v-if="showSinglesPrices" :item="item" :unlocked="unlocked" @hasChanges="hasChanges" />
-      <GtcPrices v-if="showGtcsPrices" :item="item" :unlocked="unlocked" @hasChanges="hasChanges" />
+      <LotPrices v-if="showLotPrices" :item="item" :unlocked="unlocked" @hasChanges="hasChanges" :rules="fieldRules" />
+      <SetPrices v-if="showSetPrices" :item="item" :unlocked="unlocked" @hasChanges="hasChanges" :rules="fieldRules" />
+      <SinglePrices
+        v-if="showSinglesPrices"
+        :item="item"
+        :unlocked="unlocked"
+        @hasChanges="hasChanges"
+        :rules="fieldRules"
+      />
+      <GtcPrices v-if="showGtcsPrices" :item="item" :unlocked="unlocked" @hasChanges="hasChanges" :rules="fieldRules" />
     </v-col>
   </v-row>
 </template>
@@ -14,6 +20,8 @@ import LotPrices from "./LotPrices";
 import SetPrices from "./SetPrices";
 import SinglePrices from "./SinglePrices";
 import GtcPrices from "./GtcPrices";
+
+import { fieldRules } from "@/components/Shared/Datatable/FieldRules/fieldRules";
 
 export default {
   props: {
@@ -44,6 +52,9 @@ export default {
       return false;
     }
   },
+  data: () => ({
+    fieldRules
+  }),
   methods: {
     hasChanges(bln) {
       this.$emit("hasChanges", bln);

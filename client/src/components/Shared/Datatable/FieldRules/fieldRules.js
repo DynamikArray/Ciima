@@ -13,5 +13,32 @@ export const fieldRules = {
       if (isNaN(Number(v))) return "Quantity must be a number.";
       return true;
     }
+  ],
+  retailPrice: [
+    v => {
+      if (v) {
+        return !!Number(v) > 0 || "Retail Price should be greater than zero or is not a number";
+      } else {
+        return false;
+      }
+    }
+  ],
+  declinePrice: [
+    v => {
+      if (v) {
+        return !!Number(v) > 0 || "Decline Price should be greater than zero or is not a number";
+      } else {
+        return false;
+      }
+    }
+  ],
+  startPrice: [
+    v => {
+      if (v) {
+        return !!Number(v) > 0 || "Start Price should be greater than zero or is not a number";
+      } else {
+        return false;
+      }
+    }
   ]
 };

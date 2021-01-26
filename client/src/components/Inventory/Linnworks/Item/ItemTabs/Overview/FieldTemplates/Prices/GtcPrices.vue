@@ -11,6 +11,7 @@
       fieldLabel="Retail Price"
       fieldHint="Retail Price"
       @hasChanges="hasChanges"
+      :rules="rules.retailPrice"
     />
 
     <ItemTextFieldPrice
@@ -24,6 +25,7 @@
       fieldLabel="Decline Price"
       fieldHint="Decline Price"
       @hasChanges="hasChanges"
+      :rules="rules.declinePrice"
     />
   </div>
 </template>
@@ -33,7 +35,8 @@ import ItemTextFieldPrice from "./ItemTextFieldPrice";
 export default {
   props: {
     item: { type: [Boolean, Object] },
-    unlocked: { type: [Boolean], default: false }
+    unlocked: { type: [Boolean], default: false },
+    rules: { type: [Boolean, Object, Array] }
   },
   components: {
     ItemTextFieldPrice

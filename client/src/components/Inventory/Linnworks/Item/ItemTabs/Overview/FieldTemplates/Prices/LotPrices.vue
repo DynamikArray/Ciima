@@ -11,6 +11,7 @@
       fieldLabel="Start Price"
       fieldHint="Start Price"
       @hasChanges="hasChanges"
+      :rules="rules.startPrice"
     />
   </div>
 </template>
@@ -21,7 +22,8 @@ import ItemTextFieldPrice from "./ItemTextFieldPrice";
 export default {
   props: {
     item: { type: [Boolean, Object] },
-    unlocked: { type: [Boolean], default: false }
+    unlocked: { type: [Boolean], default: false },
+    rules: { type: [Boolean, Object, Array] }
   },
   components: {
     ItemTextFieldPrice
