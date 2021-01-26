@@ -7,7 +7,12 @@
             {{ fieldLabel }}
           </h4>
           <h3 class="white--text textShadow my-0">
-            {{ itemValue | currency }}
+            <div v-if="itemValue">
+              {{ itemValue | currency }}
+            </div>
+            <div v-else>
+              <i>No {{ fieldLabel }} Found</i>
+            </div>
           </h3>
         </div>
       </slot>
@@ -15,6 +20,7 @@
       <slot name="editField" v-if="unlocked" class="w-100">
         <div id="editFieldSlot" class="w-100">
           <EditDialog
+            v-if="itemValue"
             dialogColor="grey darken-3"
             persistent
             large
@@ -65,6 +71,12 @@
               </div>
             </template>
           </EditDialog>
+
+          <div v-else class="">
+            <h3 class="white--text textShadow my-0">
+              <i>No {{ fieldLabel }} Found</i>
+            </h3>
+          </div>
         </div>
       </slot>
     </div>

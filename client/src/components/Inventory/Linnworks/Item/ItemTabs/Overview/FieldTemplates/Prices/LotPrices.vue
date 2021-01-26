@@ -1,10 +1,10 @@
 <template>
-  <div class="w-100 d-flex align-center justify-space-between">
+  <div>
     <ItemTextFieldPrice
       class="mr-2 d-flex"
       :itemValue.sync="startPrice"
       :itemId="item.pkStockItemID"
-      :locationId="item.LocationId"
+      :locationId="item.Location"
       :unlocked="unlocked"
       fieldName="StartPrice"
       fieldId="StartPrice"
@@ -17,6 +17,7 @@
 
 <script>
 import ItemTextFieldPrice from "./ItemTextFieldPrice";
+
 export default {
   props: {
     item: { type: [Boolean, Object] },
@@ -25,15 +26,27 @@ export default {
   components: {
     ItemTextFieldPrice
   },
+  data: () => ({}),
   computed: {
-    startPrice() {
-      if (this.item.prices && this.item.prices.length) {
-        const startPrice = this.item.prices.filter(price => price.Tag.toUpperCase() == "START");
-        if (startPrice && startPrice.length > 0) {
-          return startPrice[0].Price || false;
+    startPrice: {
+      get: function() {
+        if (this.item.prices && this.item.prices.length) {
+          const startPrice = this.item.prices.filter(price => price.Tag.toUpperCase() == "START");
+          if (startPrice && startPrice.length > 0) {
+            return startPrice[0].Price || false;
+          }
+        }
+        return false;
+      },
+      set: function(value) {
+        if (this.item.prices && this.item.prices.length) {
+          this.item.prices = this.item.prices.reduce((acc, price) => {
+            if (price.Tag.toUpperCase() == "START") price.Price = value;
+            acc.push(price);
+            return acc;
+          }, []);
         }
       }
-      return false;
     }
   },
   methods: {

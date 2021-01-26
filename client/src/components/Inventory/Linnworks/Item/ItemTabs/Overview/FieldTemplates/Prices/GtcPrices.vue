@@ -39,14 +39,25 @@ export default {
     ItemTextFieldPrice
   },
   computed: {
-    declinePrice() {
-      if (this.item.prices && this.item.prices.length) {
-        const declinePrice = this.item.prices.filter(price => price.Tag.toUpperCase() == "DECLINE");
-        if (declinePrice && declinePrice.length > 0) {
-          return declinePrice[0].Price || false;
+    declinePrice: {
+      get: function() {
+        if (this.item.prices && this.item.prices.length) {
+          const declinePrice = this.item.prices.filter(price => price.Tag.toUpperCase() == "DECLINE");
+          if (declinePrice && declinePrice.length > 0) {
+            return declinePrice[0].Price || false;
+          }
+        }
+        return false;
+      },
+      set: function(value) {
+        if (this.item.prices && this.item.prices.length) {
+          this.item.prices = this.item.prices.reduce((acc, price) => {
+            if (price.Tag.toUpperCase() == "DECLINE") price.Price = value;
+            acc.push(price);
+            return acc;
+          }, []);
         }
       }
-      return false;
     }
   },
   methods: {
