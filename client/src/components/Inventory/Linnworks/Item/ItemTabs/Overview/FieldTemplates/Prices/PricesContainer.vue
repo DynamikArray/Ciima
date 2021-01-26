@@ -1,10 +1,10 @@
 <template>
   <v-row dense>
     <v-col>
-      <LotPrices v-if="showLotPrices" :item="item" :unlocked="unlocked" />
-      <SetPrices v-if="showSetPrices" :item="item" :unlocked="unlocked" />
-      <SinglePrices v-if="showSinglesPrices" :item="item" :unlocked="unlocked" />
-      <GtcPrices v-if="showGtcsPrices" :item="item" :unlocked="unlocked" />
+      <LotPrices v-if="showLotPrices" :item="item" :unlocked="unlocked" @hasChanges="hasChanges" />
+      <SetPrices v-if="showSetPrices" :item="item" :unlocked="unlocked" @hasChanges="hasChanges" />
+      <SinglePrices v-if="showSinglesPrices" :item="item" :unlocked="unlocked" @hasChanges="hasChanges" />
+      <GtcPrices v-if="showGtcsPrices" :item="item" :unlocked="unlocked" @hasChanges="hasChanges" />
     </v-col>
   </v-row>
 </template>

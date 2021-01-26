@@ -30,15 +30,13 @@
 
 <script>
 import ItemTextFieldPrice from "./ItemTextFieldPrice";
-import ItemTextFieldPriceByTag from "./ItemTextFieldPriceByTag";
 export default {
   props: {
     item: { type: [Boolean, Object] },
     unlocked: { type: [Boolean], default: false }
   },
   components: {
-    ItemTextFieldPrice,
-    ItemTextFieldPriceByTag
+    ItemTextFieldPrice
   },
   computed: {
     declinePrice() {

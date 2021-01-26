@@ -1,6 +1,7 @@
 <template>
-  <div class="w-100">
-    <ItemTextFieldPriceByTag
+  <div class="w-100 d-flex align-center justify-space-between">
+    <ItemTextFieldPrice
+      class="mr-2 d-flex"
       :itemValue.sync="startPrice"
       :itemId="item.pkStockItemID"
       :locationId="item.LocationId"
@@ -15,14 +16,14 @@
 </template>
 
 <script>
-import ItemTextFieldPriceByTag from "./ItemTextFieldPriceByTag";
+import ItemTextFieldPrice from "./ItemTextFieldPrice";
 export default {
   props: {
     item: { type: [Boolean, Object] },
     unlocked: { type: [Boolean], default: false }
   },
   components: {
-    ItemTextFieldPriceByTag
+    ItemTextFieldPrice
   },
   computed: {
     startPrice() {
@@ -37,7 +38,7 @@ export default {
   },
   methods: {
     hasChanges(bln) {
-      this.$emite("hasChanges", bln);
+      this.$emit("hasChanges", bln);
     }
   }
 };
