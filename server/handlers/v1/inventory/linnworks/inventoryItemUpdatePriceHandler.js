@@ -65,9 +65,12 @@ module.exports = (fastify) => ({
     }
 
     async function updateListingPrice(itemId, value) {
+      /*
       const newPrices = await fetchPriceByTag(itemId, value, "");
       if (newPrices) return await updatePrice(itemId, newPrices[0]);
       return { error: "No Prices" };
+      */
+      return { error: "CANNOT UPDATE LISTING PRICE DUE TO LINNWORKS ERROR" };
     }
 
     /*
