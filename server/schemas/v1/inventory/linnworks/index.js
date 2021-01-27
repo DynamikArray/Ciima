@@ -4,6 +4,7 @@ const inventoryItemUpdateFieldSchema = require("./inventoryItemUpdateFieldSchema
 const inventoryItemUpdateExtendedPropertiesSchema = require("./inventoryItemUpdateExtendedPropertiesSchema");
 const inventoryItemUpdateTemplateInstantSchema = require("./inventoryItemUpdateTemplateInstantSchema");
 const inventoryItemUpdatePriceSchema = require("./inventoryItemUpdatePriceSchema");
+const inventoryItemAddPriceSchema = require("./inventoryItemAddPriceSchema");
 
 module.exports = {
   //NEWER V2 Inventory Search and ItemTitle
@@ -13,6 +14,7 @@ module.exports = {
   inventoryItemUpdateExtendedPropertiesSchema: inventoryItemUpdateExtendedPropertiesSchema,
   inventoryItemUpdateTemplateInstantSchema: inventoryItemUpdateTemplateInstantSchema,
   inventoryItemUpdatePriceSchema: inventoryItemUpdatePriceSchema,
+  inventoryItemAddPriceSchema: inventoryItemAddPriceSchema,
   //END V2 Inventory Search And Stuff
 
   //

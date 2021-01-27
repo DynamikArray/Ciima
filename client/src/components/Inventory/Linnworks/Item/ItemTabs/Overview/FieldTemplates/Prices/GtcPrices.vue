@@ -32,7 +32,7 @@
     <ItemTextFieldPriceAddNew
       v-if="!declinePrice"
       class="ml-2 d-flex"
-      :itemValue.sync="declinePrice"
+      :itemValue.sync="newPrice"
       :itemId="item.pkStockItemID"
       :locationId="item.LocationId"
       :unlocked="unlocked"
@@ -59,6 +59,9 @@ export default {
     ItemTextFieldPrice,
     ItemTextFieldPriceAddNew
   },
+  data: () => ({
+    newPrice: false
+  }),
   computed: {
     declinePrice: {
       get: function() {

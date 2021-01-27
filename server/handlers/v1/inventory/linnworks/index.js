@@ -19,6 +19,7 @@ module.exports = (fastify) => {
   const { updateExtendedPropertiesHandler } = require("./inventoryItemUpdateExtendedPropertiesHandler")(fastify);
   const { updateTemplateInstantHandler } = require("./inventoryItemUpdateTemplateInstant")(fastify);
   const { updatePriceHandler } = require("./inventoryItemUpdatePriceHandler")(fastify);
+  const { addPriceHandler } = require("./inventoryItemAddPriceHandler")(fastify);
 
   return {
     //START V2 improved search handler and code design
@@ -28,6 +29,7 @@ module.exports = (fastify) => {
     inventoryItemUpdateExtendedPropertiesHandler: updateExtendedPropertiesHandler,
     inventoryItemUpdateTemplateInstantHandler: updateTemplateInstantHandler,
     inventoryItemUpdatePriceHandler: updatePriceHandler,
+    inventoryItemAddPriceHandler: addPriceHandler,
     //END V2
 
     /**
