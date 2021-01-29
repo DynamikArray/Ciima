@@ -51,6 +51,7 @@ const selectInventoryItemDetails = (pkStockItemID) => {
       sl.Quantity,
       si.RetailPrice,
       lp.ListingPrice,
+      lp.ListingPriceId,
       dp.DeclinePrice,
       sp.StartPrice,
       ed.ExtraDescription,
@@ -64,7 +65,7 @@ const selectInventoryItemDetails = (pkStockItemID) => {
       LEFT JOIN ItemLocation il on il.fkStockItemId = si.pkStockItemID
 
       LEFT OUTER JOIN (
-        SELECT si.ItemNumber, sip.SalePrice AS [ListingPrice]
+        SELECT si.ItemNumber, sip.SalePrice AS [ListingPrice], sip.pkRowId as 'ListingPriceId'
         FROM [StockItem] si
         LEFT OUTER JOIN [StockItem_Pricing] sip ON si.pkStockItemID = sip.fkStockItemId AND sip.Tag is null
       ) lp ON lp.ItemNumber = si.ItemNumber

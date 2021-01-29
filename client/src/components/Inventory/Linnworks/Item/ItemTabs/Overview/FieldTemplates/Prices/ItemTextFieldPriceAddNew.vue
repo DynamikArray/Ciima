@@ -7,7 +7,12 @@
             {{ fieldLabel }}
           </h4>
           <h3 class="white--text textShadow my-0">
-            {{ itemValue }}
+            <div v-if="itemValue">
+              {{ itemValue | currency }}
+            </div>
+            <div v-else>
+              <i>No {{ fieldLabel }} Found</i>
+            </div>
           </h3>
         </div>
       </slot>
@@ -19,7 +24,7 @@
             persistent
             large
             @save="saveChanges(itemId, fieldName, editValue, editValue, locationId)"
-            @cancel="editValue = itemValue"
+            @cancel="editValue = itemValue || 0.0"
           >
             <div class="d-flex align-center justify-end w-100" id="editFieldWrapper">
               <h4 class="my-0 mr-2">
@@ -29,7 +34,7 @@
               <v-text-field
                 dense
                 hide-details
-                :value="itemValue"
+                :value="itemValue || 0.0"
                 :id="fieldId"
                 :name="fieldName"
                 :label="fieldLabel"
@@ -49,7 +54,7 @@
 
             <template v-slot:input>
               <div class="itemTextFieldInputSlot">
-                <h3 class="my-1 textShadow">Edit {{ fieldLabel }}</h3>
+                <h3 class="my-1 textShadow">Add {{ fieldLabel }}</h3>
                 <v-text-field
                   autocomplete="off"
                   autofocus
@@ -72,14 +77,13 @@
 </template>
 
 <script>
-//import { UPDATE_API_STATUS } from "@/store/mutation-types.js";
-import { UPDATE_FIELD_SELECTED_LINNWORKS_ITEM } from "@/store/action-types.js";
-import EditDialog from "./EditDialog";
+import { ADD_PRICE_SELECTED_LINNWORKS_ITEM } from "@/store/action-types.js";
+import EditDialog from "../EditDialog";
 
 export default {
   props: {
     unlocked: { type: [Boolean], default: false },
-    itemValue: { type: [String] },
+    itemValue: { type: [Number, Boolean, String] },
     itemId: { type: [String] },
     locationId: { type: [String, Boolean], default: false },
     fieldName: { type: [String] },
@@ -90,6 +94,9 @@ export default {
   },
   components: {
     EditDialog
+  },
+  created() {
+    if (this.itemValue) this.editValue = this.itemValue;
   },
   watch: {
     itemValue(newVal, oldVal) {
@@ -108,7 +115,7 @@ export default {
       if (this.hasErrors) {
         this.$toastr.e("Field has errors, or is invalid!");
       } else {
-        const resp = await this.$store.dispatch(`linnworks/inventory/selectedItem/${UPDATE_FIELD_SELECTED_LINNWORKS_ITEM}`, {
+        const resp = await this.$store.dispatch(`linnworks/inventory/selectedItem/${ADD_PRICE_SELECTED_LINNWORKS_ITEM}`, {
           inventoryItemId: itemId,
           fieldValue: value,
           fieldName: field,

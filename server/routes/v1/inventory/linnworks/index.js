@@ -9,6 +9,9 @@ const {
   inventoryItemSchema,
   inventoryItemUpdateFieldSchema,
   inventoryItemUpdateExtendedPropertiesSchema,
+  inventoryItemUpdateTemplateInstantSchema,
+  inventoryItemUpdatePriceSchema,
+  inventoryItemAddPriceSchema,
 } = require("../../../../schemas/v1/inventory/linnworks");
 /**
  * Info routes endpoints
@@ -28,6 +31,9 @@ module.exports = function (fastify, opts, next) {
     inventoryItemHandler,
     inventoryItemUpdateFieldHandler,
     inventoryItemUpdateExtendedPropertiesHandler,
+    inventoryItemUpdateTemplateInstantHandler,
+    inventoryItemUpdatePriceHandler,
+    inventoryItemAddPriceHandler,
   } = require("../../../../handlers/v1/inventory/linnworks")(fastify);
 
   //-----------------V2 IMPROVED START ------------------------
@@ -54,6 +60,24 @@ module.exports = function (fastify, opts, next) {
     preValidation: fastify.authenticate,
     schema: inventoryItemUpdateExtendedPropertiesSchema,
     handler: inventoryItemUpdateExtendedPropertiesHandler,
+  });
+
+  fastify.post("/inventory/updateItemTemplateInstant", {
+    preValidation: fastify.authenticate,
+    schema: inventoryItemUpdateTemplateInstantSchema,
+    handler: inventoryItemUpdateTemplateInstantHandler,
+  });
+
+  fastify.post("/inventory/updateItemPrice", {
+    preValidation: fastify.authenticate,
+    schema: inventoryItemUpdatePriceSchema,
+    handler: inventoryItemUpdatePriceHandler,
+  });
+
+  fastify.post("/inventory/addItemPrice", {
+    preValidation: fastify.authenticate,
+    schema: inventoryItemAddPriceSchema,
+    handler: inventoryItemAddPriceHandler,
   });
   //------------V2 IMPROVED END-----------------------------
 

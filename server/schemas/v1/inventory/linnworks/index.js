@@ -2,6 +2,9 @@ const inventorySearchSchema = require("./inventorySearchSchema");
 const inventoryItemSchema = require("./inventoryItemSchema");
 const inventoryItemUpdateFieldSchema = require("./inventoryItemUpdateFieldSchema");
 const inventoryItemUpdateExtendedPropertiesSchema = require("./inventoryItemUpdateExtendedPropertiesSchema");
+const inventoryItemUpdateTemplateInstantSchema = require("./inventoryItemUpdateTemplateInstantSchema");
+const inventoryItemUpdatePriceSchema = require("./inventoryItemUpdatePriceSchema");
+const inventoryItemAddPriceSchema = require("./inventoryItemAddPriceSchema");
 
 module.exports = {
   //NEWER V2 Inventory Search and ItemTitle
@@ -9,6 +12,9 @@ module.exports = {
   inventoryItemSchema: inventoryItemSchema,
   inventoryItemUpdateFieldSchema: inventoryItemUpdateFieldSchema,
   inventoryItemUpdateExtendedPropertiesSchema: inventoryItemUpdateExtendedPropertiesSchema,
+  inventoryItemUpdateTemplateInstantSchema: inventoryItemUpdateTemplateInstantSchema,
+  inventoryItemUpdatePriceSchema: inventoryItemUpdatePriceSchema,
+  inventoryItemAddPriceSchema: inventoryItemAddPriceSchema,
   //END V2 Inventory Search And Stuff
 
   //

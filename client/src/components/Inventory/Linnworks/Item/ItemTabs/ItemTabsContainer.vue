@@ -1,13 +1,6 @@
 <template>
   <div class="w-100">
-    <v-tabs
-      v-model="tab"
-      right
-      center-active
-      active-class="white--text"
-      color="primary"
-      id="inventoryItem-Tabs"
-    >
+    <v-tabs v-model="tab" right center-active active-class="white--text" color="primary" id="inventoryItem-Tabs">
       <v-tab> <v-icon left>fa fa-tasks</v-icon>General</v-tab>
       <!--<v-tab> <v-icon left>fa fa-tasks</v-icon>Ebay</v-tab>-->
     </v-tabs>
@@ -20,7 +13,7 @@
         style="background-color:transparent"
       >
         <v-tab-item key="generalTab" class="">
-          <OverviewTab :item="item" :loading="loading" :unlocked="unlocked" />
+          <OverviewTab :item="item" :loading="loading" :unlocked="unlocked" @hasChanges="hasChanges" />
         </v-tab-item>
         <!--
         <v-tab-item key="ebayTab" class="">
@@ -55,7 +48,12 @@ export default {
   },
   data: () => ({
     tab: 0
-  })
+  }),
+  methods: {
+    hasChanges(bln) {
+      this.$emit("hasChanges", bln);
+    }
+  }
 };
 </script>
 

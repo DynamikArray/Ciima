@@ -45,6 +45,7 @@
                 fieldLabel="Inventory Title"
                 fieldHint="Inventory Title"
                 :rules="fieldRules.inventoryTitle"
+                @hasChanges="hasChanges"
               >
                 <div class="d-flex align-center justify-start">
                   <h2 class="white--text textShadow  my-0">
@@ -71,6 +72,7 @@
                 fieldLabel="Location Code"
                 fieldHint="Location Code"
                 :rules="fieldRules.locationCode"
+                @hasChanges="hasChanges"
               />
             </v-col>
           </v-row>
@@ -88,20 +90,22 @@
                 fieldLabel="Item Quantity"
                 fieldHint="Item Quantity"
                 :rules="fieldRules.quantity"
+                @hasChanges="hasChanges"
               />
             </v-col>
           </v-row>
 
           <v-row dense>
             <v-col sm="12">
-              <ItemTextArea
-                :itemValue="item.ExtraDescription"
+              <ItemTextAreaExtendedProperty
+                :itemValue.sync="item.ExtraDescription"
                 :itemId="item.pkStockItemID"
                 :unlocked="unlocked"
-                fieldName="ExtraDescription"
-                fieldId="ExtraDescription"
+                fieldName="Extra Description"
+                fieldId="Extra Description"
                 fieldLabel="Extra Description"
                 fieldHint="Extra Description"
+                @hasChanges="hasChanges"
               />
             </v-col>
           </v-row>
@@ -110,9 +114,7 @@
           <v-row no-gutters class="mt-3">
             <v-col cols="12">
               <div class="d-flex align-center justify-start">
-                <h2 class="white--text my-0">
-                  <v-icon size="18" class="mr-1 mb-1">fas fa-dollar-sign</v-icon>Prices:
-                </h2>
+                <h2 class="white--text my-0 mb-1"><v-icon size="18" class="mr-1 mb-1">fas fa-dollar-sign</v-icon>Prices:</h2>
               </div>
             </v-col>
 
@@ -120,23 +122,11 @@
               <v-divider class="mb-1" />
             </v-col>
 
-            <v-col cols="3">
-              <div class="text-left">Retail : {{ item.RetailPrice | currency }}</div>
-            </v-col>
-            <v-col cols="3">
-              <div class="text-center">Listing : {{ item.ListingPrice | currency }}</div>
-            </v-col>
-            <v-col cols="3">
-              <div class="text-center">Start : {{ startPrice | currency }}</div>
-            </v-col>
-            <v-col cols="3">
-              <div class="text-right">Decline: {{ declinePrice | currency }}</div>
-            </v-col>
-          </v-row>
-
-          <v-row dense>
-            <v-col col="12">
-              <v-divider class="my-0" />
+            <v-col sm="12">
+              <!-- UNLOCK WHEN PRICES CHANGES WORK
+              <PricesContainer :item="item" :unlocked="unlocked" @hasChanges="hasChanges" />
+              -->
+              <PricesContainer :item="item" :unlocked="false" @hasChanges="hasChanges" />
             </v-col>
           </v-row>
         </v-col>
@@ -172,7 +162,7 @@
           <v-card-text>
             <h3 class="text-center mb-2">
               <v-icon class="mr-2">fas fa-list-alt</v-icon>
-              Loading Issue Data
+              Talking to linnworks...
             </h3>
             <v-progress-linear indeterminate color="white" class="mt-1"></v-progress-linear>
           </v-card-text>
@@ -190,6 +180,8 @@ import OrdersHistoryDT from "../Datatables/OrdersHistory/OrdersHistoryDT";
 import ItemImage from "./FieldTemplates/ItemImage";
 import ItemTextField from "./FieldTemplates/ItemTextField";
 import ItemTextArea from "./FieldTemplates/ItemTextArea";
+import ItemTextAreaExtendedProperty from "./FieldTemplates/ItemTextAreaExtendedProperty";
+import PricesContainer from "./FieldTemplates/Prices/PricesContainer";
 
 import { fieldRules } from "@/components/Shared/Datatable/FieldRules/fieldRules";
 
@@ -212,7 +204,9 @@ export default {
     OrdersHistoryDT,
     ItemImage,
     ItemTextField,
-    ItemTextArea
+    ItemTextArea,
+    ItemTextAreaExtendedProperty,
+    PricesContainer
   },
   data: () => ({
     fieldRules
@@ -222,24 +216,11 @@ export default {
       const { CategoryName } = this.item;
       if (CategoryName && CategoryName.toUpperCase() == "EBAY-LOTS") return true;
       return false;
-    },
-    startPrice() {
-      if (this.item.prices && this.item.prices.length) {
-        const startPrice = this.item.prices.filter(price => price.Tag.toUpperCase() == "START");
-        if (startPrice && startPrice.length > 0) {
-          return startPrice[0].Price || false;
-        }
-      }
-      return false;
-    },
-    declinePrice() {
-      if (this.item.prices && this.item.prices.length) {
-        const declinePrice = this.item.prices.filter(price => price.Tag.toUpperCase() == "DECLINE");
-        if (declinePrice && declinePrice.length > 0) {
-          return declinePrice[0].Price || false;
-        }
-      }
-      return false;
+    }
+  },
+  methods: {
+    hasChanges(bln) {
+      this.$emit("hasChanges", bln);
     }
   }
 };

@@ -11,11 +11,8 @@ if (process.env.NODE_ENV == "production") {
   console.log("Sentry Enabled!");
 
   Sentry.init({
-    dsn:
-      "https://c239a0d730584cbea513baf394a8d470@o437408.ingest.sentry.io/5399968",
-    integrations: [
-      new VueIntegration({ Vue, attachProps: true, logErrors: true })
-    ]
+    dsn: "https://c239a0d730584cbea513baf394a8d470@o437408.ingest.sentry.io/5399968",
+    integrations: [new VueIntegration({ Vue, attachProps: true, logErrors: true })]
   });
 }
 
@@ -62,7 +59,7 @@ import VueToastr from "vue-toastr";
 Vue.use(VueToastr, {
   defaultPosition: "toast-top-right",
   progressbar: true,
-  timeout: 2500,
+  defaultTimeout: 3000,
   classNames: "ourToast"
 });
 
