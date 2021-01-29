@@ -3,8 +3,8 @@ const getInventoryItemAuditTrail = (pkStockItemId) => {
 			u.displayname as userName,
 			a.resource_type as resourceType,
 			a.action as resourceAction,
-			a.meta as resourceMeta,
-			a.created_date 
+      CAST(a.meta AS CHAR) as resourceMeta,
+			a.created_date
 		FROM
 			slc_audit_log a
 		LEFT JOIN slc_users u ON a.user_id = u.id

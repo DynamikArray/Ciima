@@ -151,6 +151,12 @@
       </v-row>
 
       <v-row no-gutters>
+        <v-col cols="12" class="grey darken-4 my-3 text-center">
+          <AuditTrailDT :items="item.auditTrail" />
+        </v-col>
+      </v-row>
+
+      <v-row no-gutters>
         <v-col cols="12" class="my-3 text-center">
           <v-divider class="my-2"></v-divider>
           <h5 class="caption">End Results</h5>
@@ -176,6 +182,7 @@
 import EbayHistoryDT from "../Datatables/EbayHistory/EbayHistoryDT";
 import RepricingLogDT from "../Datatables/RepricingLog/RepricingLogDT";
 import OrdersHistoryDT from "../Datatables/OrdersHistory/OrdersHistoryDT";
+import AuditTrailDT from "../Datatables/AuditTrail/AuditTrailDT";
 
 import ItemImage from "./FieldTemplates/ItemImage";
 import ItemTextField from "./FieldTemplates/ItemTextField";
@@ -202,6 +209,7 @@ export default {
     EbayHistoryDT,
     RepricingLogDT,
     OrdersHistoryDT,
+    AuditTrailDT,
     ItemImage,
     ItemTextField,
     ItemTextArea,

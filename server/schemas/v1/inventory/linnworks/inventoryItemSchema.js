@@ -189,15 +189,13 @@ module.exports = {
                 },
               },
             },
+
             auditTrail: {
               type: "array",
               items: {
                 type: "object",
                 properties: {
                   userName: {
-                    type: "string",
-                  },
-                  displayname: {
                     type: "string",
                   },
                   resourceType: {
@@ -209,12 +207,13 @@ module.exports = {
                   resourceMeta: {
                     type: "string",
                   },
-                  created_data: {
+                  created_date: {
                     type: "string",
                   },
                 },
               },
             },
+
             ordersHistory: {
               type: "array",
               items: {
