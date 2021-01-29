@@ -123,7 +123,10 @@
             </v-col>
 
             <v-col sm="12">
+              <!-- UNLOCK WHEN PRICES CHANGES WORK
               <PricesContainer :item="item" :unlocked="unlocked" @hasChanges="hasChanges" />
+              -->
+              <PricesContainer :item="item" :unlocked="false" @hasChanges="hasChanges" />
             </v-col>
           </v-row>
         </v-col>
