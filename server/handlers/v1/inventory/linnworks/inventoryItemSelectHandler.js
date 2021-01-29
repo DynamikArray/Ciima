@@ -3,6 +3,7 @@ const getInventoryItemPrices = require("../../../../../util/linnworks/helpers/ge
 const selectInventoryItemEbayListings = require("../../../../../util/linnworks/queries/inventory/selectInventoryItemEbayListings");
 const selectInventoryItemOrderHistory = require("../../../../../util/linnworks/queries/inventory/selectInventoryItemOrderHistory");
 
+const getInventoryItemAuditTrail = require("../../../../../util/ciima/queries/inventory/inventoryItemAuditTrail");
 //const { extractErrorMessages } = require("../../../../../util/linnworks/helpers/extractErrorMessages");
 
 module.exports = (fastify) => ({
@@ -13,8 +14,7 @@ module.exports = (fastify) => ({
       const { result, error } = await fastify.linnworks.makeApiCall({
         method: "POST",
         url: "Dashboards/ExecuteCustomScriptQuery",
-        headers:
-          "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
+        headers: "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
         data,
       });
       if (!result.IsError) return { result: result.Results[0] };
@@ -22,14 +22,10 @@ module.exports = (fastify) => ({
     }
 
     async function getItemPrices(pkStockItemID) {
-      const { pricesResult, pricesError } = await getInventoryItemPrices(
-        pkStockItemID
-      );
+      const { pricesResult, pricesError } = await getInventoryItemPrices(pkStockItemID);
 
-      if (pricesError && !pricesResult)
-        return { prices: [], error: pricesError };
-      if (pricesResult && !pricesError)
-        return { prices: pricesResult, error: false };
+      if (pricesError && !pricesResult) return { prices: [], error: pricesError };
+      if (pricesResult && !pricesError) return { prices: pricesResult, error: false };
     }
 
     async function getItemEbayListings(pkStockItemID) {
@@ -37,8 +33,7 @@ module.exports = (fastify) => ({
       const { result, error } = await fastify.linnworks.makeApiCall({
         method: "POST",
         url: "Dashboards/ExecuteCustomScriptQuery",
-        headers:
-          "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
+        headers: "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
         data,
       });
       if (result && !result.IsError) return { result: result.Results };
@@ -46,8 +41,7 @@ module.exports = (fastify) => ({
     }
 
     async function getItemRepricingLog(pkStockItemID) {
-      const query =
-        "SELECT * FROM slc_repricing_log WHERE pkStockItemID = ? ORDER BY dateUpdated DESC";
+      const query = "SELECT * FROM slc_repricing_log WHERE pkStockItemID = ? ORDER BY dateUpdated DESC";
       try {
         const [rows, fields] = await fastify.mysql.query(query, pkStockItemID);
 
@@ -64,12 +58,24 @@ module.exports = (fastify) => ({
       const { result, error } = await fastify.linnworks.makeApiCall({
         method: "POST",
         url: "Dashboards/ExecuteCustomScriptQuery",
-        headers:
-          "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
+        headers: "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
         data,
       });
       if (result && !result.IsError) return { result: result.Results };
       if (error) return { error: error };
+    }
+
+    async function getItemAuditTrail(pkStockItemID) {
+      const query = getInventoryItemAuditTrail(pkStockItemID);
+      try {
+        const [rows, fields] = await fastify.mysql.query(query);
+
+        if (rows) return { result: rows };
+        if (!rows) return { result: [] };
+      } catch (e) {
+        if (e) fastify.winston.error(e);
+        return { result: [] };
+      }
     }
     //
     /* -------- End Item Pieces Async Methods --------- */
@@ -84,6 +90,7 @@ module.exports = (fastify) => ({
       getItemEbayListings(pkStockItemID),
       getItemRepricingLog(pkStockItemID),
       getItemOrderHistory(pkStockItemID),
+      getItemAuditTrail(pkStockItemID),
     ]);
     //Validate our response data better
     //
@@ -96,6 +103,7 @@ module.exports = (fastify) => ({
       ebayHistory: itemPieces[2].result,
       repricingLog: itemPieces[3].result,
       ordersHistory: itemPieces[4].result,
+      auditTrail: itemPieces[5].result,
     };
     return { result: inventoryItem, error: false };
   },

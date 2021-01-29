@@ -189,6 +189,32 @@ module.exports = {
                 },
               },
             },
+            auditTrail: {
+              type: "array",
+              items: {
+                type: "object",
+                properties: {
+                  userName: {
+                    type: "string",
+                  },
+                  displayname: {
+                    type: "string",
+                  },
+                  resourceType: {
+                    type: "string",
+                  },
+                  resourceAction: {
+                    type: "string",
+                  },
+                  resourceMeta: {
+                    type: "string",
+                  },
+                  created_data: {
+                    type: "string",
+                  },
+                },
+              },
+            },
             ordersHistory: {
               type: "array",
               items: {
