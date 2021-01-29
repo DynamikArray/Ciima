@@ -3,11 +3,9 @@
     <v-card>
       <v-card-title class="headline primary">
         <div class="d-flex justify-space-between align-center w-100">
-          <div class="d-flex">
-            <v-icon class="mr-2">fa-bullhorn</v-icon> What's New
-          </div>
+          <div class="d-flex"><v-icon class="mr-2">fa-bullhorn</v-icon> What's New</div>
           <div class="d-flex align-center">
-            <h3 class="ml-auto my-1 mx-3">12/10/2020</h3>
+            <h3 class="ml-auto my-1 mx-3">01/28/2020</h3>
           </div>
         </div>
       </v-card-title>
@@ -18,12 +16,7 @@
 
       <v-divider></v-divider>
       <v-card-actions>
-        <v-checkbox
-          v-model="blnShowAgain"
-          :label="`Don't Show this again`"
-          color="primary"
-          class="mx-3"
-        ></v-checkbox>
+        <v-checkbox v-model="blnShowAgain" :label="`Don't Show this again`" color="primary" class="mx-3"></v-checkbox>
         <v-spacer></v-spacer>
         <v-btn class="primary mx-3" text @click="handleOnClick">
           Ok, Got It.
@@ -34,7 +27,7 @@
 </template>
 
 <script>
-import Content from "./Content/Update0004.vue";
+import Content from "./Content/Update0005.vue";
 
 const UPDATE_NUMBER = "whatsNew-updateNumber";
 const SHOW_DIALOG = "whatsNew-showDialog";
@@ -57,7 +50,7 @@ export default {
   data: () => ({
     blnShowAgain: false,
     showDialog: false,
-    updateNumber: "0004"
+    updateNumber: "0005"
   }),
   methods: {
     handleOnClick() {
