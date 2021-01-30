@@ -30,6 +30,7 @@ module.exports = {
           displaycolor: { type: "string" },
           email: { type: "string" },
           token: { type: "string" },
+          roles: { type: "string" },
         },
       },
       403: {
@@ -95,6 +96,7 @@ module.exports = {
           displaycolor: { type: "string" },
           email: { type: "string" },
           token: { type: "string" },
+          roles: { type: "string" },
         },
       },
     },

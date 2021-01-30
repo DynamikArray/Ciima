@@ -29,10 +29,7 @@ module.exports = (fastify) => ({
     );
 
     try {
-      const [rows, fields] = await fastify.mysql.query(
-        selectQuery,
-        selectParams
-      );
+      const [rows, fields] = await fastify.mysql.query(selectQuery, selectParams);
       const [totalRows] = await fastify.mysql.query(totalQuery, totalParams);
 
       //PAGING totals
@@ -55,7 +52,7 @@ module.exports = (fastify) => ({
    */
   userListHandler: async (req, res) => {
     const userListQuery =
-      "SELECT u.id as value, u.displayName as text, u.displaycolor as color FROM slc_users u ORDER BY displayName ASC";
+      "SELECT u.id as value, u.displayName as text, u.displaycolor as color FROM slc_users u WHERE u.inactive = 0 ORDER BY displayName ASC";
     try {
       const [rows, fields] = await fastify.mysql.query(userListQuery);
       return { result: rows };
