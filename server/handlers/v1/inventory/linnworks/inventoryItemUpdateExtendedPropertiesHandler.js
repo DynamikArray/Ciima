@@ -1,7 +1,4 @@
-const {
-  CREATE_ITEM_EXTENDED_PROPERTIES,
-  UPDATE_ITEM_EXTENDED_PROPERTIES,
-} = require("../../../../../util/auditLog/logActionTypes");
+const { UPDATE_ITEM_EXTENDED_PROPERTIES } = require("../../../../../util/auditLog/logActionTypes");
 const { LINNWORKS } = require("../../../../../util/auditLog/logResourceTypes");
 
 const getInventoryItemExtendedProperties = require("../../../../../util/linnworks/helpers/getInventoryItemExtendedProperties");
@@ -20,7 +17,7 @@ module.exports = (fastify) => ({
       if (getPropsResult) {
         const propToUpdate = getPropsResult.filter((prop) => prop.ProperyName == ProperyName);
         propToUpdate[0].PropertyValue = PropertyValue;
-        const { result, error } = await updateInventoryItemExtendedProperties(propToUpdate, fkStockItemId);
+        const { result, error } = await updateInventoryItemExtendedProperties(propToUpdate, fkStockItemId, req.user.id);
 
         if (result) {
           _result = result;
@@ -35,17 +32,6 @@ module.exports = (fastify) => ({
       return { error: "No extended property found" };
     } catch (e) {
       fastify.winston.error(e);
-    } finally {
-      fastify.auditLogger.log(
-        UPDATE_ITEM_EXTENDED_PROPERTIES,
-        -1,
-        fkStockItemId,
-        LINNWORKS,
-        JSON.stringify({
-          _result,
-          _error,
-        })
-      );
     }
   },
 });

@@ -1,7 +1,4 @@
-const {
-  CREATE_ITEM_EXTENDED_PROPERTIES,
-  UPDATE_ITEM_EXTENDED_PROPERTIES,
-} = require("../../auditLog/logActionTypes");
+const { CREATE_ITEM_EXTENDED_PROPERTIES, UPDATE_ITEM_EXTENDED_PROPERTIES } = require("../../auditLog/logActionTypes");
 const { LINNWORKS } = require("../../auditLog/logResourceTypes");
 const auditLogger = require("../../auditLog/auditLoggerWorker");
 
@@ -13,7 +10,7 @@ const { linnworks } = require("../linnworks.js");
  * @param  Number  pkStockItemID - the linnworks pkStockItemID of the item
  * @return {Promise}               [description]
  */
-const updateInventoryItemExtendedProperties = async (props, pkStockItemID) => {
+const updateInventoryItemExtendedProperties = async (props, pkStockItemID, userId = false) => {
   let _result,
     _error = false;
 
@@ -39,7 +36,7 @@ const updateInventoryItemExtendedProperties = async (props, pkStockItemID) => {
   } finally {
     await auditLogger.log(
       UPDATE_ITEM_EXTENDED_PROPERTIES,
-      -1,
+      userId || -1,
       pkStockItemID,
       LINNWORKS,
       JSON.stringify({
