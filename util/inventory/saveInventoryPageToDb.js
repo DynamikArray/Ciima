@@ -1,6 +1,6 @@
-const mysqlConnPool = require("../mysql/mysqlConnPool.js");
+const mysqlConnPool = require("../mysql/mysqlConnPool");
 
-const saveInventoryPageToDb = async values => {
+const saveInventoryPageToDb = async (values) => {
   const strQuery = `INSERT into slc_inventory (
     itemId,
     itemTitle,
