@@ -1,10 +1,7 @@
 //scheduler
 const schedule = require("node-schedule");
 //ebay jobs
-const {
-  fetchEbayStartedToday,
-  fetchEbayEndedToday,
-} = require("./scheduleJobs/ebayJobs");
+const { fetchEbayStartedToday, fetchEbayEndedToday } = require("./scheduleJobs/ebayJobs");
 //linnworks jobs
 const { fetchLinnworksInventory } = require("./scheduleJobs/linnworksJobs");
 
@@ -19,20 +16,23 @@ const { soldItemsManager } = require("./scheduleJobs/soldItemsManager");
 
 //main schdule method
 const scheduler = () => {
+  /*
   //Fetch new items listed today
   const newItemsRule = new schedule.RecurrenceRule();
   newItemsRule.minute = [30];
   schedule.scheduleJob(newItemsRule, fetchEbayStartedToday);
-
   //Fetch new items ended today
   const endedItemsRule = new schedule.RecurrenceRule();
   endedItemsRule.minute = [40];
   schedule.scheduleJob(endedItemsRule, fetchEbayEndedToday);
+  */
 
+  /*
   //fetch linnworks items to map ids to locations
   const linnworksItemsRule = new schedule.RecurrenceRule();
   linnworksItemsRule.minute = [35, 45];
   schedule.scheduleJob(linnworksItemsRule, fetchLinnworksInventory);
+  */
 
   //reprice items no last price
   //const withNoLastPriceRule = new schedule.RecurrenceRule();
