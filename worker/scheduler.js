@@ -13,6 +13,7 @@ const {
 */
 
 const { soldItemsManager } = require("./scheduleJobs/soldItemsManager");
+const { repricingManager } = require("./scheduleJobs/repricingManager");
 
 //main schdule method
 const scheduler = () => {
@@ -45,8 +46,12 @@ const scheduler = () => {
   //schedule.scheduleJob(withLastPriceRule, repriceLotsWithLastPrice);
 
   const soldItemsRule = new schedule.RecurrenceRule();
-  soldItemsRule.minute = [8];
+  soldItemsRule.minute = [01];
   schedule.scheduleJob(soldItemsRule, soldItemsManager);
+
+  const repricingRule = new schedule.RecurrenceRule();
+  repricingRule.minute = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
+  schedule.scheduleJob(repricingRule, repricingManager);
 };
 
 module.exports = scheduler;

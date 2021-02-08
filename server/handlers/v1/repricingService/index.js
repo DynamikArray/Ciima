@@ -1,7 +1,5 @@
 const { REPRICE_ITEM } = require("../../../../util/amqp/queueActionsList.js");
-const {
-  getRepricingItemsList,
-} = require("../../../../util/linnworks/queries/repricer/lots/getRepricingItemsList.js");
+const { getRepricingItemsList } = require("../../../../util/linnworks/queries/repricer/lots/getRepricingItemsList.js");
 
 const { buildSelectQueries, buildSelectQueriesParams } = require("./helper");
 
@@ -21,8 +19,7 @@ module.exports = (fastify) => ({
       const { result, error } = await fastify.linnworks.makeApiCall({
         method: "POST",
         url: "Dashboards/ExecuteCustomScriptQuery",
-        headers:
-          "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
+        headers: "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
         data,
       });
 
@@ -73,16 +70,10 @@ module.exports = (fastify) => ({
     const pageLimit = Number(req.body.limit) || 10;
 
     const { selectQuery, totalQuery } = buildSelectQueries();
-    const { selectParams, totalParams } = buildSelectQueriesParams(
-      page - 1,
-      pageLimit
-    );
+    const { selectParams, totalParams } = buildSelectQueriesParams(page - 1, pageLimit);
 
     try {
-      const [rows, fields] = await fastify.mysql.query(
-        selectQuery,
-        selectParams
-      );
+      const [rows, fields] = await fastify.mysql.query(selectQuery, selectParams);
       const [totalRows] = await fastify.mysql.query(totalQuery, totalParams);
       //PAGING totals
       const rowsTotal = totalRows[0].rowCount;

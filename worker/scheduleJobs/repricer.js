@@ -1,3 +1,12 @@
+/*
+
+
+  THIS IS NOT BEING USED
+
+
+
+*/
+
 const { linnworks } = require("../../util/linnworks/linnworks.js");
 const executeCustomScriptQuery = require("../../util/linnworks/helpers/executeCustomScriptQuery.js");
 
@@ -21,7 +30,7 @@ const repriceLotsWithNoLastPrice = async () => {
       const fetchedPage = await executeCustomScriptQuery(sql);
       //get items and loop
       const items = fetchedPage.result.Results;
-      items.forEach(item => {
+      items.forEach((item) => {
         publishItemToQueue(item);
       });
       //Handle record paging
@@ -35,9 +44,7 @@ const repriceLotsWithNoLastPrice = async () => {
   } catch (e) {
     linnworks.logger.error(e);
   } finally {
-    linnworks.logger.debug(
-      "Finally - Ending Repricer (Lots With No Last Price)"
-    );
+    linnworks.logger.debug("Finally - Ending Repricer (Lots With No Last Price)");
   }
 };
 
@@ -54,7 +61,7 @@ const repriceLotsWithLastPrice = async () => {
       const fetchedPage = await executeCustomScriptQuery(sql);
       //get items and loop
       const items = fetchedPage.result.Results;
-      items.forEach(item => {
+      items.forEach((item) => {
         publishItemToQueue(item);
       });
       //Handle record paging
@@ -77,14 +84,14 @@ const repriceLotsWithLastPrice = async () => {
  * @param  {[type]} item [description]
  * @return {[type]}      [description]
  */
-const publishItemToQueue = item => {
+const publishItemToQueue = (item) => {
   const payload = {
     action: REPRICE_ITEM,
     pkStockItemID: item.pkStockItemID,
     CreationDate: item.CreationDate,
     ItemTitle: item.ItemTitle,
     BinRackNumber: item.BinRackNumber,
-    AvailableQty: item.AvailableQty
+    AvailableQty: item.AvailableQty,
   };
   linnworks.logger.debug(`SUBMIT REPRICE JOB ${JSON.stringify(payload)}`);
   //call our publisher helper
