@@ -10,7 +10,7 @@ const repricingManager = async () => {
   const { result, error } = await getItems();
   if (error && !result) return error;
   if (result && !error) {
-    logger.debug(`Items needing repricing count ${items.length} `);
+    logger.debug(`Items needing repricing count ${result.length} `);
 
     const items = result.map((item, x) => {
       try {
