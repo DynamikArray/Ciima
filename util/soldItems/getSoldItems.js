@@ -1,9 +1,7 @@
 const { linnworks } = require("../../util/linnworks/linnworks.js");
 const { format, subDays } = require("date-fns");
 
-const {
-  dailySoldItems,
-} = require("../../util/linnworks/queries/orders/dailySoldItems");
+const { dailySoldItems } = require("../../util/linnworks/queries/orders/dailySoldItems");
 
 const getSoldItems = async () => {
   const today = Date.now();
@@ -21,8 +19,7 @@ const getSoldItems = async () => {
     data,
   });
 
-  if (!result.IsError)
-    return { result: result.Results, total: result.TotalResults };
+  if (result && !result.IsError) return { result: result.Results, total: result.TotalResults };
   if (error) return { error: error };
 };
 

@@ -14,13 +14,18 @@ const saveSoldItemsToDb = require("../../util/soldItems/saveSoldItemsToDb");
 const soldItemsManager = async () => {
   logger.info("START getSoldItems()");
   const results = await getSoldItems();
+
   if (results.result) {
     const valuesOnly = results.result.map((item) => {
       return Object.values(item);
     });
 
-    const saved = await saveSoldItemsToDb(valuesOnly);
-    logger.info(saved);
+    if (valuesOnly.length > 0) {
+      const saved = await saveSoldItemsToDb(valuesOnly);
+      logger.info(saved);
+    } else {
+      logger.info("getSoldItems - No Values to send to db");
+    }
   }
   logger.info("END getSoldItems()");
 };
