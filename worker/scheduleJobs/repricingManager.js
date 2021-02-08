@@ -10,6 +10,8 @@ const repricingManager = async () => {
   const { result, error } = await getItems();
   if (error && !result) return error;
   if (result && !error) {
+    logger.debug(`Items needing repricing count ${items.length} `);
+
     const items = result.map((item, x) => {
       try {
         const { pkStockItemID, ItemTitle } = item;
@@ -18,7 +20,9 @@ const repricingManager = async () => {
           data: { pkStockItemID, ItemTitle },
         });
         publishMessage(payload);
+
         logger.debug("Published Payload", JSON.stringify(payload));
+
         return result;
       } catch (e) {
         throw e;
