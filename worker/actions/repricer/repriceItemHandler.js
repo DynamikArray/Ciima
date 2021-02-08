@@ -60,8 +60,11 @@ const repriceItemHandler = async ({ data }) => {
           newPrice: _newPrice,
         };
         const result = await handleSavingToLog(item);
-        if (result) linnworks.logger.debug("Success: Item Repriced Completed!");
-        linnworks.logger.debug("Warning: Item may not have been logged");
+        if (result) {
+          linnworks.logger.debug("Success: Item Repriced Completed!");
+        } else {
+          linnworks.logger.debug("Warning: Item may not have been logged");
+        }
       }
     }
   } catch (e) {
