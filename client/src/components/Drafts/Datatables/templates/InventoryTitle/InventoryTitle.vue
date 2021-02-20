@@ -1,16 +1,8 @@
 <template>
   <div class="d-flex justify-start align-center w-100">
-    <LotInventoryTitle
-      v-if="isLot"
-      :isMobile="isMobile"
-      :item="item"
-    ></LotInventoryTitle>
+    <LotInventoryTitle v-if="isLot" :isMobile="isMobile" :item="item"></LotInventoryTitle>
 
-    <SetInventoryTitle
-      v-if="!isLot"
-      :isMobile="isMobile"
-      :item="item"
-    ></SetInventoryTitle>
+    <SetInventoryTitle v-if="!isLot" :isMobile="isMobile" :item="item" :getData="getData"></SetInventoryTitle>
   </div>
 </template>
 
@@ -21,7 +13,8 @@ import SetInventoryTitle from "./SetInventoryTitle";
 export default {
   props: {
     isMobile: [Boolean],
-    item: [Object]
+    item: [Object],
+    getData: [Function]
   },
   computed: {
     isLot() {
