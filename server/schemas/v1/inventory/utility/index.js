@@ -6,8 +6,7 @@ module.exports = {
   checkLocationCodeSchema: {
     description: "Search Linnworks Inventory by the location code",
     tags: ["Utility"],
-    summary:
-      "Search Linnworks Inventory by the location code and see if it has inventory in it",
+    summary: "Search Linnworks Inventory by the location code and see if it has inventory in it",
     security: [
       {
         token: [],
