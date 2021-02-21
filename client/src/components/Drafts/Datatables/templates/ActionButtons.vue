@@ -1,17 +1,41 @@
 <template>
   <div class="d-flex justify-center align-center mx-0">
     <!--OPEN DRAFT OPTIONS -->
-    <div
-      v-if="item.status === 'Open'"
-      class="d-flex justify-space-around align-center"
-    >
-      <v-btn xSmall color="warning" @click="editItem(item.id)" class="mx-1">
-        <v-icon xSmall>fa-edit</v-icon>
-      </v-btn>
+    <div v-if="item.status === 'Open'" class="d-flex justify-space-around align-center">
+      <!--GTC DUPLICATE BUTTON -->
+      <div class="d-flex flex-column" v-if="item.draftType === 'gtcs'">
+        <div>
+          <v-btn xSmall color="green" @click="duplicateGTC(item)" class="mx-2">
+            <v-icon xSmall>fa-clone</v-icon>
+          </v-btn>
+        </div>
+        <div class="caption">
+          Clone
+        </div>
+      </div>
+      <!--GTC DUPLICATE BUTTON -->
 
-      <v-btn xSmall color="red" @click="deleteItem(item.id)" class="mx-1">
-        <v-icon xSmall>fa-times-circle</v-icon>
-      </v-btn>
+      <div class="d-flex flex-column">
+        <div>
+          <v-btn xSmall color="warning" @click="editItem(item.id)" class="mx-2">
+            <v-icon xSmall>fa-edit</v-icon>
+          </v-btn>
+        </div>
+        <div class="caption">
+          Edit
+        </div>
+      </div>
+
+      <div class="d-flex flex-column">
+        <div>
+          <v-btn xSmall color="red" @click="deleteItem(item.id)" class="mx-2">
+            <v-icon xSmall>fa-times-circle</v-icon>
+          </v-btn>
+        </div>
+        <div class="caption">
+          Delete
+        </div>
+      </div>
     </div>
     <!--END OPEN DRAFT OPTIONS -->
 
@@ -42,23 +66,13 @@
           </template>
           <div v-if="item.statusNotes">
             <h3>Notes:</h3>
-            <h4
-              :key="makeStatusNotesKey()"
-              v-html="makeNoteText(item.statusNotes)"
-            ></h4>
+            <h4 :key="makeStatusNotesKey()" v-html="makeNoteText(item.statusNotes)"></h4>
           </div>
         </v-tooltip>
 
         <v-tooltip left :max-width="420" color="red">
           <template v-slot:activator="{ on }">
-            <v-chip
-              small
-              v-on="on"
-              class="mx-5"
-              label
-              color="red"
-              @click="deleteItem(item.id)"
-            >
+            <v-chip small v-on="on" class="mx-5" label color="red" @click="deleteItem(item.id)">
               <v-icon small>fa-times-circle</v-icon>
             </v-chip>
           </template>
@@ -74,7 +88,7 @@
 </template>
 
 <script>
-import { DELETE_DRAFT, OPEN_DRAFTS_SUBMIT_DRAFT } from "@/store/action-types";
+import { DELETE_DRAFT, OPEN_DRAFTS_SUBMIT_DRAFT, NEW_GTC_DRAFT_LOAD } from "@/store/action-types";
 export default {
   props: {
     getData: [Function],
@@ -91,14 +105,28 @@ export default {
     editItem(id) {
       switch (this.item.draftType) {
         case "lots":
-          this.$toastr.s(
-            "You can inline Edit the Price and Location values by clicking on them"
-          );
+          this.$toastr.s("You can inline Edit the Price and Location values by clicking on them");
           break;
         default:
           this.$router.push({ name: "draft.edit", params: { id } });
           break;
       }
+    },
+
+    async duplicateGTC(item) {
+      //add confirm
+      const confirm = await this.$confirm(
+        `<h3 class="text-center py-3">Duplicate this current draft?</h3>
+        <p>This will duplicate all possible values, and take you to the GTC Draft form</p>`,
+        {
+          title: "  Duplcate this draft?"
+        }
+      );
+      if (confirm) this.duplicateGTCDraft(item);
+    },
+
+    async duplicateGTCDraft(item) {
+      await this.$store.dispatch(`gtcs/draft/${NEW_GTC_DRAFT_LOAD}`, item);
     },
 
     async deleteItem(id) {

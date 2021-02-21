@@ -5,11 +5,7 @@
       <b>{{ categoryLabel.name }} {{ categoryLabel.id }}</b>
     </div>
     <div class="d-flex flex-wrap mt-2">
-      <div
-        style=""
-        class="d-flex flex-wrap justify-start mr-4 align-baseline"
-        v-for="(level, index) in ebaySiteCategories"
-      >
+      <div style="" class="d-flex flex-wrap justify-start mr-4 align-baseline" v-for="(level, index) in ebaySiteCategories">
         <v-select
           hide-details
           :label="`Category Level L${index + 1}`"
@@ -76,10 +72,7 @@ export default {
       if (value.LeafCategory) {
         this.saveToParent(value);
       } else {
-        this.ebaySiteCategories = this.ebaySiteCategories.slice(
-          0,
-          parseInt(value.CategoryLevel)
-        );
+        this.ebaySiteCategories = this.ebaySiteCategories.slice(0, parseInt(value.CategoryLevel));
 
         this.fetchCategory({
           CategoryParent: value.CategoryID,

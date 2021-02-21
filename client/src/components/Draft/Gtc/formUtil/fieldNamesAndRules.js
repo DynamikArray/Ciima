@@ -4,8 +4,7 @@ const fieldRules = {
   inventoryTitle: [
     v => !!v || "Inventory Title is a required field",
     v => {
-      if (v.toLowerCase().includes("mystery"))
-        return "Ebay does not allow the word Mystery, please change this word";
+      if (v.toLowerCase().includes("mystery")) return "Ebay does not allow the word Mystery, please change this word";
       return false;
     },
     v => v.length <= 80 || "inventoryTitle must be less than 80 characters"
@@ -20,8 +19,7 @@ const fieldRules = {
   locationCode: [
     v => !!v || "Location code is a required field",
     v => {
-      if (!v.startsWith(LOCATION_PREFIX))
-        return `Location code must begin ${LOCATION_PREFIX} `;
+      if (!v.startsWith(LOCATION_PREFIX)) return `Location code must begin ${LOCATION_PREFIX} `;
       return false;
     },
     v => {
@@ -39,10 +37,7 @@ const fieldRules = {
   declinePrice: [
     v => {
       if (v) {
-        return (
-          !!Number(v) > 0 ||
-          "Decline Price should be greater than zero or is not a number"
-        );
+        return !!Number(v) > 0 || "Decline Price should be greater than zero or is not a number";
       } else {
         return false;
       }
@@ -51,16 +46,11 @@ const fieldRules = {
 
   quantity: [
     v => !!v || "Quantity is a required field",
-    v =>
-      !!Number(v) > 0 || "Quantity must be greater than zero or is not a number"
+    v => !!Number(v) > 0 || "Quantity must be greater than zero or is not a number"
   ],
   ebaySiteCategoryId: [v => !!v || "Ebay Site Category is a required field"],
-  ebayStoreCategoryIdOne: [
-    v => !!v || "Ebay Store Category 1 is a required field"
-  ],
-  ebayStoreCategoryIdTwo: [
-    v => !!v || "Ebay Store Category 2 is a required field"
-  ],
+  ebayStoreCategoryIdOne: [v => !!v || "Ebay Store Category 1 is a required field"],
+  ebayStoreCategoryIdTwo: [v => !!v || "Ebay Store Category 2 is a required field"],
   mainCharacter: [
     v => !!v || "Main Character is a required field",
     v => v.length <= 50 || "Main Character must be less than 50 characters"

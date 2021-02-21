@@ -1,7 +1,7 @@
 <template>
   <v-row>
-    <v-col class="py-0 grey darken-4 mx-3">
-      <div class="my-1" v-if="images.length == 0">
+    <v-col class="py-0 grey darken-4 mx-3 my-1">
+      <div class="my-2" v-if="images.length == 0">
         <h4><em>No Images Selected</em></h4>
       </div>
 
@@ -21,26 +21,16 @@
           class="d-flex align-center mx-4 my-3 pa-2 grey darken-3"
         >
           <div class="d-flex flex-column align-center">
-            <img
-              :src="optimizedImageUrl(image.src)"
-              height="90"
-              max-width="140"
-              contain
-              :key="image.name + Date.now()"
-            />
+            <img :src="optimizedImageUrl(image.src)" height="90" max-width="140" contain :key="image.name + Date.now()" />
             <div class="d-flex align-center justify-space-around w-100 mt-1">
               <div class="">
-                <v-btn xSmall @click="deleteImage(index)" color="red"
-                  ><v-icon xSmall class="">fa fa-trash</v-icon></v-btn
-                >
+                <v-btn xSmall @click="deleteImage(index)" color="red"><v-icon xSmall class="">fa fa-trash</v-icon></v-btn>
               </div>
               <div class="overline mx-1">
                 {{ index === 0 ? `Main (${index})` : `Other(${index})` }}
               </div>
               <div class="">
-                <v-btn xSmall @click="editImage(index)" color="info"
-                  ><v-icon xSmall class="">fa fa-edit</v-icon></v-btn
-                >
+                <v-btn xSmall @click="editImage(index)" color="info"><v-icon xSmall class="">fa fa-edit</v-icon></v-btn>
               </div>
             </div>
           </div>
@@ -52,10 +42,7 @@
 
 <script>
 import { mapState } from "vuex";
-import {
-  UPDATE_GTC_DRAFT_IMAGES,
-  GTC_SET_IMAGE_TO_CROP
-} from "@/store/mutation-types";
+import { UPDATE_GTC_DRAFT_IMAGES, GTC_SET_IMAGE_TO_CROP } from "@/store/mutation-types";
 
 import draggable from "vuedraggable";
 

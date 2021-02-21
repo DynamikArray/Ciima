@@ -1,10 +1,5 @@
 <template>
-  <v-form
-    ref="GtcDraftForm"
-    v-model="blnValidForm"
-    lazy-validation
-    class="pa-3"
-  >
+  <v-form ref="GtcDraftForm" v-model="blnValidForm" lazy-validation class="pa-3">
     <v-container fluid style="min-height:100%; height: 100%" class="pa-0">
       <v-row>
         <v-col class="py-0">
@@ -14,16 +9,12 @@
 
       <v-row>
         <v-col class="py-0">
-          <InventoryTitle
-            @update="updateLocalParams"
-            :value="inventoryTitle"
-            :rules="rules.inventoryTitle"
-          />
+          <InventoryTitle @update="updateLocalParams" :value="inventoryTitle" :rules="rules.inventoryTitle" />
         </v-col>
       </v-row>
 
       <v-divider class="mb-3"></v-divider>
-      <ImageCropper :imageToCrop="imageToCrop" />
+      <ImageCropper :imageToCrop="imageToCrop" class="my-1" />
       <GtcDraftImages :imageToCrop="imageToCrop" class="my-1" />
       <v-divider class="my-3"></v-divider>
 
@@ -38,33 +29,28 @@
           />
         </v-col>
         <v-col class="py-0">
-          <InventoryPrice
-            @update="updateLocalParams"
-            :value="price"
-            :rules="rules.price"
-          />
+          <InventoryPrice @update="updateLocalParams" :value="price" :rules="rules.price" />
         </v-col>
         <v-col class="py-0">
-          <DeclinePrice
-            @update="updateLocalParams"
-            :value="declinePrice"
-            :rules="rules.declinePrice"
-          />
+          <DeclinePrice @update="updateLocalParams" :value="declinePrice" :rules="rules.declinePrice" />
         </v-col>
         <v-col class="py-0">
-          <InventoryQuantity
-            @update="updateLocalParams"
-            :value="quantity"
-            :rules="rules.quantity"
-          />
+          <InventoryQuantity @update="updateLocalParams" :value="quantity" :rules="rules.quantity" />
         </v-col>
       </v-row>
 
       <v-divider class="mb-3"></v-divider>
 
       <v-row>
-        <v-col class="py-0">
-          <EbayCategoryPicker
+        <v-col class="py-0" cols="12" v-if="isCloned">
+          <ClonedEbayCategory
+            @categorySelected="updateLocalParams"
+            :value="ebaySiteCategoryId"
+            :rules="rules.ebaySiteCategoryId"
+          />
+        </v-col>
+        <v-col class="py-0" cols="12" v-if="!isCloned">
+          <EbayCategoryDropdown
             @categorySelected="updateLocalParams"
             :value="ebaySiteCategoryId"
             :rules="rules.ebaySiteCategoryId"
@@ -99,18 +85,10 @@
 
       <v-row>
         <v-col>
-          <MainCharacter
-            @update="updateLocalParams"
-            :value="mainCharacter"
-            :rules="rules.mainCharacter"
-          />
+          <MainCharacter @update="updateLocalParams" :value="mainCharacter" :rules="rules.mainCharacter" />
         </v-col>
         <v-col>
-          <Publisher
-            @update="updateLocalParams"
-            :value="publisher"
-            :rules="rules.publisher"
-          />
+          <Publisher @update="updateLocalParams" :value="publisher" :rules="rules.publisher" />
         </v-col>
       </v-row>
 
@@ -118,10 +96,7 @@
 
       <v-row>
         <v-col>
-          <ExtraDescription
-            @update="updateLocalParams"
-            :value="extraDescription"
-          />
+          <ExtraDescription @update="updateLocalParams" :value="extraDescription" />
         </v-col>
       </v-row>
 
@@ -156,14 +131,9 @@
       <v-card color="primary" dark class="pt-2">
         <v-card-text>
           <h4 class="text-center mb-2">
-            <v-icon class="mr-2">fas fa-cloud-upload-alt</v-icon
-            >{{ savingGtcDraftMessage || "Saving ..." }}
+            <v-icon class="mr-2">fas fa-cloud-upload-alt</v-icon>{{ savingGtcDraftMessage || "Saving ..." }}
           </h4>
-          <v-progress-linear
-            indeterminate
-            color="white"
-            class="mt-1"
-          ></v-progress-linear>
+          <v-progress-linear indeterminate color="white" class="mt-1"></v-progress-linear>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -183,7 +153,8 @@ import LocationCode from "./formFields/LocationCode";
 import InventoryPrice from "./formFields/InventoryPrice";
 import DeclinePrice from "./formFields/DeclinePrice";
 import InventoryQuantity from "./formFields/InventoryQuantity";
-import EbayCategoryPicker from "./formFields/EbayCategoryDropdown";
+import EbayCategoryDropdown from "./formFields/EbayCategoryDropdown";
+import ClonedEbayCategory from "./formFields/ClonedEbayCategory";
 import EbayStoreCategory from "./formFields/EbayStoreCategory";
 import MainCharacter from "./formFields/MainCharacter";
 import Publisher from "./formFields/Publisher";
@@ -199,11 +170,7 @@ const { mapFields } = createHelpers({
 });
 
 import { CURRENT_GTC_DRAFT_SAVE } from "@/store/action-types";
-import {
-  CURRENT_GTC_DRAFT_SAVING,
-  UPDATE_API_STATUS,
-  RESET_GTC_DRAFT
-} from "@/store/mutation-types";
+import { CURRENT_GTC_DRAFT_SAVING, UPDATE_API_STATUS, RESET_GTC_DRAFT } from "@/store/mutation-types";
 
 export default {
   components: {
@@ -215,7 +182,8 @@ export default {
     InventoryPrice,
     DeclinePrice,
     InventoryQuantity,
-    EbayCategoryPicker,
+    EbayCategoryDropdown,
+    ClonedEbayCategory,
     EbayStoreCategory,
     MainCharacter,
     Publisher,
@@ -224,18 +192,14 @@ export default {
   data: () => ({
     blnValidForm: false,
     rules: fieldRules,
-    locationCodeErrorMessages: []
+    locationCodeErrorMessages: [],
+    showCategoryLookup: false
   }),
   computed: {
     ...mapState({
       defaultProductType: state => state.settings.defaultProductType
     }),
-    ...mapFields([
-      ...fieldNames,
-      "imageToCrop",
-      "savingGtcDraft",
-      "savingGtcDraftMessage"
-    ])
+    ...mapFields([...fieldNames, "isCloned", "imageToCrop", "savingGtcDraft", "savingGtcDraftMessage"])
   },
   methods: {
     updateLocalParams(params) {
@@ -246,9 +210,7 @@ export default {
 
     validateForm() {
       if (this.locationCodeErrorMessages.length) {
-        this.$toastr.e(
-          "Its look like there is already an item in that location!"
-        );
+        this.$toastr.e("Its look like there is already an item in that location!");
         return false;
       }
       //check for images
@@ -314,10 +276,7 @@ export default {
     },
 
     async handleImageUploading() {
-      this.updateLoadingStatus(
-        true,
-        "Preparing images for upload to remote server."
-      );
+      this.updateLoadingStatus(true, "Preparing images for upload to remote server.");
 
       var unsignedUploadPreset = "ciima_lot_photos";
       var cloudName = "ciima"; //FPVLink rebrand
@@ -333,10 +292,7 @@ export default {
         fd.append("folder", "lotPhotos");
 
         try {
-          this.updateLoadingStatus(
-            true,
-            `Uploading image ${i + 1} of ${imagesLength} to remote server`
-          );
+          this.updateLoadingStatus(true, `Uploading image ${i + 1} of ${imagesLength} to remote server`);
 
           const resp = await axios({
             method: "post",
@@ -347,10 +303,7 @@ export default {
           if (resp.data && resp.data.secure_url) {
             this.images[i].src = this.optimizedImageUrl(resp.data.secure_url);
             this.images[i].saved = true;
-            this.updateLoadingStatus(
-              true,
-              ` SAVED image ${i} of ${imagesLength}!`
-            );
+            this.updateLoadingStatus(true, ` SAVED image ${i} of ${imagesLength}!`);
           }
         } catch (e) {
           console.log(e.message);
@@ -390,10 +343,7 @@ export default {
           if (result.error) this.$toastr.e(`Error: ${result.error}`);
 
           if (!result.error) {
-            this.$store.commit(
-              `api/${UPDATE_API_STATUS}`,
-              `Saved | ${this.locationCode} | ${this.inventoryTitle}`
-            );
+            this.$store.commit(`api/${UPDATE_API_STATUS}`, `Saved | ${this.locationCode} | ${this.inventoryTitle}`);
 
             this.$toastr.s(`Draft Saved! ${JSON.stringify(result)}`);
             //clear draft and start next one

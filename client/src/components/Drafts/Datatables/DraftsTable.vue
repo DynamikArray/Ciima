@@ -24,7 +24,7 @@
       <!--DETAIL COLUMN-->
 
       <template v-slot:item.inventoryTitle="{ item }">
-        <InventoryTitle :isMobile="isMobile" :item="item"></InventoryTitle>
+        <InventoryTitle :isMobile="isMobile" :item="item" :getData="getData"></InventoryTitle>
       </template>
 
       <template v-slot:item.quantity="{ item }">
@@ -61,10 +61,7 @@
     <div v-if="status.toUpperCase() === 'OPEN'" class="my-3">
       <div class="d-flex justify-start">
         <div class="d-flex align-center">
-          <v-btn class="warning" @click="withSelected"
-            ><v-icon class="mr-2">fa-cloud-upload-alt</v-icon>Submit
-            Drafts</v-btn
-          >
+          <v-btn class="warning" @click="withSelected"><v-icon class="mr-2">fa-cloud-upload-alt</v-icon>Submit Drafts</v-btn>
         </div>
       </div>
     </div>
@@ -76,11 +73,7 @@
             <v-icon class="mr-2">fas fa-cloud-upload-alt</v-icon>
             Submitting Drafts ...
           </h4>
-          <v-progress-linear
-            indeterminate
-            color="white"
-            class="mt-1"
-          ></v-progress-linear>
+          <v-progress-linear indeterminate color="white" class="mt-1"></v-progress-linear>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -195,9 +188,7 @@ export default {
 
       submitList
         .reduce((promiseChain, currentTask) => {
-          return promiseChain.then(chainResults =>
-            currentTask.then(currentResult => [...chainResults, currentResult])
-          );
+          return promiseChain.then(chainResults => currentTask.then(currentResult => [...chainResults, currentResult]));
         }, Promise.resolve([]))
         .then(arrResults => {
           console.log(arrResults);
@@ -230,13 +221,10 @@ export default {
       let toastr = false;
       if (toast) toastr = this.$toastr || false;
 
-      return await this.$store.dispatch(
-        `openDrafts/${OPEN_DRAFTS_SUBMIT_DRAFT}`,
-        {
-          draftId,
-          toastr
-        }
-      );
+      return await this.$store.dispatch(`openDrafts/${OPEN_DRAFTS_SUBMIT_DRAFT}`, {
+        draftId,
+        toastr
+      });
     }
   }
 };

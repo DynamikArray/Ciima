@@ -1,15 +1,9 @@
 <template>
   <div class="d-flex justify-start align-center w-100">
     <div class="d-flex justify-start align-center w-100">
-      <SetInventoryTitleMobile
-        v-if="isMobile"
-        :item="item"
-      ></SetInventoryTitleMobile>
+      <SetInventoryTitleMobile v-if="isMobile" :item="item" :getData="getData"></SetInventoryTitleMobile>
 
-      <div
-        v-if="!isMobile"
-        class="d-flex align-center grow mx-3 long-and-truncated"
-      >
+      <div v-if="!isMobile" class="d-flex align-center grow mx-3 long-and-truncated">
         <div class="d-flex flex-column w-100">
           <div class="d-flex justify-start align-center w-100 my-1">
             <InventoryTitleEditable :item="item" />
@@ -19,11 +13,7 @@
               <Quantity :label="true" :item="item"></Quantity>
             </div>
             <div class="d-flex align-center justify-start mx-3">
-              <Grade
-                :label="true"
-                :item="item"
-                v-if="item.draftType.toUpperCase() !== 'GTCS'"
-              ></Grade>
+              <Grade :label="true" :item="item" v-if="item.draftType.toUpperCase() !== 'GTCS'"></Grade>
             </div>
             <div class="d-flex flex-column align-center justify-start ml-5">
               <Price :label="true" :item="item"></Price>
@@ -38,11 +28,7 @@
 
           <div class="d-flex align-center w-100 justify-start">
             <div class="d-flex w-100">
-              <IssueNumbers
-                :label="true"
-                :item.sync="item"
-                v-if="item.draftType.toUpperCase() !== 'GTCS'"
-              ></IssueNumbers>
+              <IssueNumbers :label="true" :item.sync="item" v-if="item.draftType.toUpperCase() !== 'GTCS'"></IssueNumbers>
             </div>
           </div>
         </div>
@@ -63,7 +49,8 @@ import InventoryTitleEditable from "./InventoryTitleEditable";
 export default {
   props: {
     isMobile: [Boolean],
-    item: [Object]
+    item: [Object],
+    getData: [Function]
   },
   components: {
     InventoryTitleEditable,

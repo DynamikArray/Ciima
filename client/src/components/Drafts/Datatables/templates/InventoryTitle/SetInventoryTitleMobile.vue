@@ -11,10 +11,7 @@
       <div class="d-flex justify-start align-start w-100 mt-1">
         <div class="d-flex flex-column justify-space-around align-start w-100">
           <div class="d-flex justify-space-between align-start w-100">
-            <div
-              class="d-flex justify-end align-start flex-column mr-5"
-              style="min-width:160px;"
-            >
+            <div class="d-flex justify-end align-start flex-column mr-5" style="min-width:160px;">
               <Price :label="true" :item="item"></Price>
               <DeclinePrice
                 class="py-2"
@@ -25,16 +22,8 @@
               <Quantity :label="true" :item="item"></Quantity>
             </div>
             <div class="d-flex justify-start align-start flex-column mr-4">
-              <Grade
-                :label="true"
-                :item="item"
-                v-if="item.draftType.toUpperCase() !== 'GTCS'"
-              ></Grade>
-              <IssueNumbers
-                :label="true"
-                :item.sync="item"
-                v-if="item.draftType.toUpperCase() !== 'GTCS'"
-              ></IssueNumbers>
+              <Grade :label="true" :item="item" v-if="item.draftType.toUpperCase() !== 'GTCS'"></Grade>
+              <IssueNumbers :label="true" :item.sync="item" v-if="item.draftType.toUpperCase() !== 'GTCS'"></IssueNumbers>
             </div>
           </div>
 
@@ -44,13 +33,12 @@
         </div>
       </div>
 
-      <div class="d-flex flex-column justify-end align-center ml-10">
+      <div class="d-flex flex-column justify-space-between align-center ml-10">
         <OwnerId class="mb-2" :size="35" :item="item"></OwnerId>
-        <CreatedDate
-          class="my-3"
-          :item="item"
-          style="max-width:130px"
-        ></CreatedDate>
+        <CreatedDate class="my-3" :item="item" style="max-width:130px"></CreatedDate>
+        <div class="text-center">
+          <ActionButtons :getData="getData" :item="item"></ActionButtons>
+        </div>
       </div>
     </div>
   </div>
@@ -72,11 +60,13 @@ import Quantity from "../Quantity";
 import CreatedDate from "../CreatedDate";
 import LocationCode from "../LocationCode";
 import InventoryTitleEditable from "./InventoryTitleEditable";
+import ActionButtons from "../ActionButtons";
 
 export default {
   props: {
     isMobile: [Boolean],
-    item: [Object]
+    item: [Object],
+    getData: [Function]
   },
   components: {
     InventoryTitleEditable,
@@ -88,7 +78,8 @@ export default {
     OwnerId,
     CreatedDate,
     Quantity,
-    LocationCode
+    LocationCode,
+    ActionButtons
   }
 };
 </script>
