@@ -7,6 +7,10 @@ const fieldRules = {
       if (v.toLowerCase().includes("mystery")) return "Ebay does not allow the word Mystery, please change this word";
       return false;
     },
+    v => {
+      if (v.toLowerCase().includes('"')) return "Please remove your Quotation Marks.";
+      return false;
+    },
     v => v.length <= 80 || "inventoryTitle must be less than 80 characters"
   ],
   /*

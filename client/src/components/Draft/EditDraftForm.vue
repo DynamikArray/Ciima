@@ -8,10 +8,7 @@
         <v-img :src="main_image" width="300" class="ma-1" contain>
           <template v-slot:placeholder>
             <v-row class="fill-height ma-0" align="center" justify="center">
-              <v-progress-circular
-                indeterminate
-                color="blue darken-1"
-              ></v-progress-circular>
+              <v-progress-circular indeterminate color="blue darken-1"></v-progress-circular>
             </v-row>
           </template>
         </v-img>
@@ -21,28 +18,19 @@
         <h3 class="text-center">
           Other Images
         </h3>
-        <div
-          class="d-flex flex-wrap justify-start"
-          v-if="other_images && other_images.length > 0"
-        >
+        <div class="d-flex flex-wrap justify-start" v-if="other_images && other_images.length > 0">
           <div class="d-flex flex-shrink-1" v-for="image in other_images">
-            <v-img
-              :src="makeImageUrl(image)"
-              width="90"
-              height="120"
-              class="ma-1"
-              contain
-            >
+            <v-img :src="makeImageUrl(image)" width="90" height="120" class="ma-1" contain>
               <template v-slot:placeholder>
                 <v-row class="fill-height ma-0" align="center" justify="center">
-                  <v-progress-circular
-                    indeterminate
-                    color="blue darken-1"
-                  ></v-progress-circular>
+                  <v-progress-circular indeterminate color="blue darken-1"></v-progress-circular>
                 </v-row>
               </template>
             </v-img>
           </div>
+        </div>
+        <div v-else>
+          No Other Images
         </div>
       </div>
     </div>
@@ -125,11 +113,7 @@
               :rules="fieldRules.inventoryTitle"
             >
               <template v-slot:append-outer>
-                <v-btn
-                  style="margin-top:-5px"
-                  color="primary"
-                  @click="toggleExtraDescriptionDetails"
-                >
+                <v-btn style="margin-top:-5px" color="primary" @click="toggleExtraDescriptionDetails">
                   <v-icon class="mr-1">{{ extraDescriptionIcon() }}</v-icon
                   >More
                 </v-btn>
@@ -261,11 +245,7 @@
               :rules="fieldRules.ebaySiteCategoryId"
             >
             </v-text-field>
-            <v-btn
-              color="primary"
-              class="mx-2"
-              @click="showCategoryLookup = true"
-            >
+            <v-btn color="primary" class="mx-2" @click="showCategoryLookup = true">
               <v-icon class="mr-1">fa fa-search</v-icon>Change
             </v-btn>
           </div>
@@ -324,9 +304,7 @@
       <!--END ROW -->
 
       <v-card-actions class="justify-center">
-        <EditFormActionButtons
-          :validateForm="validateForm"
-        ></EditFormActionButtons>
+        <EditFormActionButtons :validateForm="validateForm"></EditFormActionButtons>
       </v-card-actions>
     </v-form>
   </div>
@@ -340,10 +318,7 @@ const { mapFields } = createHelpers({
   getterType: "editDraft/getField",
   mutationType: "editDraft/updateField"
 });
-import {
-  EDIT_DRAFT_FETCH,
-  SEARCH_EBAY_CATEGORIES
-} from "@/store/action-types.js";
+import { EDIT_DRAFT_FETCH, SEARCH_EBAY_CATEGORIES } from "@/store/action-types.js";
 
 import { ebayStoreCategories } from "@/util/ebay/ebayStoreCategories.js";
 import { fieldNames, fieldRules } from "./fieldNamesAndRules.js";
@@ -356,7 +331,7 @@ import settings from "@/util/settings.js";
 export default {
   props: {
     id: {
-      type: [Number, Boolean]
+      type: [Number, Boolean, String]
     }
   },
   components: {
@@ -397,7 +372,7 @@ export default {
   },
   methods: {
     makeImageUrl(item) {
-      return `${settings.MEDIA_URL}${item.imageUrl}`;
+      return item.imageUrl;
     },
     validateForm() {
       const valid = this.$refs.draftForm.validate();

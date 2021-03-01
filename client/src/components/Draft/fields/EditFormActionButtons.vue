@@ -36,10 +36,7 @@ export default {
 
         try {
           //make the calls
-          const result = await this.$store.dispatch(
-            `editDraft/${EDIT_DRAFT_SAVE}`,
-            draft
-          );
+          const result = await this.$store.dispatch(`editDraft/${EDIT_DRAFT_SAVE}`, draft);
 
           if (result) {
             this.$toastr.s("Draft Updated!");
@@ -64,10 +61,7 @@ export default {
         const location = draft.locationCode;
         const price = this.$options.filters.currency(draft.price);
 
-        this.$store.commit(
-          `api/${UPDATE_API_STATUS}`,
-          `Qty(${qty}) @ ${price} | ${location} | ${title} - UPDATED!`
-        );
+        this.$store.commit(`api/${UPDATE_API_STATUS}`, `Qty(${qty}) @ ${price} | ${location} | ${title} - UPDATED!`);
       }
     },
     /* -- */
@@ -79,7 +73,10 @@ export default {
           title: " Are you sure?"
         }
       );
-      if (confirm) this.$store.commit(`editDraft/${EDIT_DRAFT_CLEAR}`);
+      if (confirm) {
+        this.$store.commit(`editDraft/${EDIT_DRAFT_CLEAR}`);
+        this.$router.push("/drafts");
+      }
     }
   }
 };
