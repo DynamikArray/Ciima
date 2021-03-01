@@ -11,10 +11,7 @@
       <template v-slot:top="{ pagination, options, updateOptions }">
         <div class="d-flex align-center justify-space-between">
           <div class="d-flex align-center justify-space-between">
-            <DatatableHeader
-              :totalRows="filteredItems.length"
-              @inStockFilterUpdate="handleInStockFilterUpdate"
-            />
+            <DatatableHeader :totalRows="filteredItems.length" @inStockFilterUpdate="handleInStockFilterUpdate" />
           </div>
           <div class="d-flex align-center justify-space-between">
             <v-data-footer
@@ -29,11 +26,7 @@
       </template>
 
       <template v-slot:item.CategoryName="{ item }">
-        <LinnworksCategoryName
-          :keyString="item.pkStockItemID"
-          :value="item.CategoryName"
-          fontClass="caption"
-        />
+        <LinnworksCategoryName :keyString="item.pkStockItemID" :value="item.CategoryName" fontClass="caption" />
       </template>
 
       <template v-slot:item.Image="{ item }">
@@ -41,76 +34,39 @@
       </template>
 
       <template v-slot:item.ItemTitle="{ item }">
-        <LinnworksTitle
-          v-if="!isMobile"
-          :keyString="item.pkStockItemID"
-          :value="item.ItemTitle"
-          fontClass="body-1"
-        />
+        <LinnworksTitle v-if="!isMobile" :keyString="item.pkStockItemID" :value="item.ItemTitle" fontClass="body-1" />
 
-        <LinnworksMobile
-          v-if="isMobile"
-          :item="item"
-          :keyString="item.pkStockItemID"
-        />
+        <LinnworksMobile v-if="isMobile" :item="item" :keyString="item.pkStockItemID" />
       </template>
 
       <template v-slot:item.Quantity="{ item }">
-        <LinnworksQuantity
-          :keyString="item.pkStockItemID"
-          :value="item.Quantity"
-          fontClass="caption"
-        />
+        <LinnworksQuantity :keyString="item.pkStockItemID" :value="item.Quantity" fontClass="caption" />
       </template>
 
       <template v-slot:item.BinRackNumber="{ item }">
-        <LinnworksBinRackNumber
-          :keyString="item.pkStockItemID"
-          :value="item.BinRackNumber"
-          fontClass="caption"
-        />
+        <LinnworksBinRackNumber :keyString="item.pkStockItemID" :value="item.BinRackNumber" fontClass="caption" />
       </template>
 
       <template v-slot:item.RetailPrice="{ item }">
-        <LinnworksPrice
-          :keyString="`retailprice_${item.pkStockItemID}`"
-          :value="item.RetailPrice"
-          fontClass="body-2"
-        />
+        <LinnworksPrice :keyString="`retailprice_${item.pkStockItemID}`" :value="item.RetailPrice" fontClass="body-2" />
       </template>
 
       <template v-slot:item.ListingPrice="{ item }">
-        <LinnworksPrice
-          :keyString="`listingprice_${item.pkStockItemID}`"
-          :value="item.ListingPrice"
-          fontClass="body-2"
-        />
+        <LinnworksPrice :keyString="`listingprice_${item.pkStockItemID}`" :value="item.ListingPrice" fontClass="body-2" />
       </template>
 
       <template v-slot:item.StartPrice="{ item }">
-        <LinnworksPrice
-          :keyString="`startprice_${item.pkStockItemID}`"
-          :value="item.StartPrice"
-          fontClass="body-2"
-        />
+        <LinnworksPrice :keyString="`startprice_${item.pkStockItemID}`" :value="item.StartPrice" fontClass="body-2" />
       </template>
 
       <template v-slot:item.DeclinePrice="{ item }">
-        <LinnworksPrice
-          :keyString="`declineprice_${item.pkStockItemID}`"
-          :value="item.DeclinePrice"
-          fontClass="body-2"
-        />
+        <LinnworksPrice :keyString="`declineprice_${item.pkStockItemID}`" :value="item.DeclinePrice" fontClass="body-2" />
       </template>
 
       <template v-slot:item.action="{ item }">
         <v-slide-x-reverse-transition mode="out-in">
           <div :key="`transition_bin_rack_number_${item.pkStockItemID}`">
-            <v-btn
-              color="success"
-              class="pr-3"
-              style="min-width:20px;"
-              @click="selectItem(item.pkStockItemID)"
+            <v-btn color="success" class="pr-3" style="min-width:20px;" @click="selectItem(item.pkStockItemID)"
               ><v-icon class="">fa-edit</v-icon></v-btn
             >
           </div>
@@ -159,31 +115,30 @@ export default {
   data() {
     return {
       headers,
-      mobileHeadersFilter: [
-        "ListingPrice",
-        "RetailPrice",
-        "DeclinePrice",
-        "StartPrice",
-        "Quantity",
-        "BinRackNumber"
-      ],
+      mobileHeadersFilter: ["ListingPrice", "RetailPrice", "DeclinePrice", "StartPrice", "Quantity", "BinRackNumber"],
       blnInStockOnly: false
     };
   },
   computed: {
     headerList() {
       if (this.isMobile) {
-        return headers.filter(
-          item => !this.mobileHeadersFilter.includes(item.value)
-        );
+        return headers.filter(item => !this.mobileHeadersFilter.includes(item.value));
       }
       return headers;
     },
     filteredItems() {
-      if (this.blnInStockOnly)
-        return this.items.filter(item => item.Quantity > 0);
+      const raw = this.items;
+      const formatted = raw.reduce((acc, item) => {
+        const location = item.BinRackNumber.split("-");
+        location[location.length - 1] = location[location.length - 1].padStart(2, "0");
+        item.BinRackNumber = location.join("-");
+        acc.push(item);
+        return acc;
+      }, []);
 
-      return this.items;
+      if (this.blnInStockOnly) return formatted.filter(item => item.Quantity > 0);
+
+      return formatted;
     }
   },
   methods: {

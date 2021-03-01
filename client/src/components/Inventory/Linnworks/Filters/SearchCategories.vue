@@ -20,24 +20,28 @@
 <script>
 const CATEGORIES = [
   {
-    name: "Sets",
-    value: "EBAY-SETS"
+    name: "Adult",
+    value: "EBAY-ADULT"
   },
   {
-    name: "Lots",
-    value: "EBAY-LOTS"
-  },
-  {
-    name: "Singles",
-    value: "EBAY-SINGLES"
+    name: "Default",
+    value: "Default"
   },
   {
     name: "GTCs",
     value: "EBAY-GTCS"
   },
   {
-    name: "Default",
-    value: "Default"
+    name: "Lots",
+    value: "EBAY-LOTS"
+  },
+  {
+    name: "Sets",
+    value: "EBAY-SETS"
+  },
+  {
+    name: "Singles",
+    value: "EBAY-SINGLES"
   }
 ];
 
