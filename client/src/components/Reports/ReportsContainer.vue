@@ -32,6 +32,10 @@
       <v-tab-item key="gtcs" class="pt-2">
         <GtcsReport :items="soldItems" :loading="loading" />
       </v-tab-item>
+
+      <v-tab-item key="adult" class="pt-2">
+        <AdultsReport :items="soldItems" :loading="loading" />
+      </v-tab-item>
     </v-tabs-items>
   </div>
 </template>
@@ -43,6 +47,7 @@ import LotsReport from "./Tabs/LotsReport/LotsReport";
 import SetsReport from "./Tabs/SetsReport/SetsReport";
 import GtcsReport from "./Tabs/GtcsReport/GtcsReport";
 import SinglesReport from "./Tabs/SinglesReport/SinglesReport";
+import AdultsReport from "./Tabs/AdultsReport/AdultsReport";
 import ReportFilters from "./ReportFilters";
 
 const { format, subDays } = require("date-fns");
@@ -60,6 +65,7 @@ export default {
     SetsReport,
     GtcsReport,
     SinglesReport,
+    AdultsReport,
     ReportFilters
   },
   created() {
@@ -91,6 +97,9 @@ export default {
         case 3:
           this.getData({ categoryName: "EBAY-GTCS" });
           break;
+        case 4:
+          this.getData({ categoryName: "EBAY-ADULT" });
+          break;
       }
     }
   },
@@ -118,9 +127,7 @@ export default {
       const _this = this;
 
       //Sort Ascending Title
-      const soldItems = this.soldItems.sort((a, b) =>
-        a.linnworksTitle > b.linnworksTitle ? 1 : -1
-      );
+      const soldItems = this.soldItems.sort((a, b) => (a.linnworksTitle > b.linnworksTitle ? 1 : -1));
 
       //main method handling
       var dd = {
@@ -146,9 +153,7 @@ export default {
 
       if (currentPage == 1) {
         return {
-          text: `Sold Items Report: ${categoryName} from ${dateFilter(
-            startDate
-          )} through ${dateFilter(endDate)}`,
+          text: `Sold Items Report: ${categoryName} from ${dateFilter(startDate)} through ${dateFilter(endDate)}`,
           fontSize: 16,
           alignment: "center"
         };

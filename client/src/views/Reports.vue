@@ -1,5 +1,5 @@
 <template>
-  <div class="w-100 pa-3" style="height:100%; min-height:100%">
+  <div class="w-100 pa-3 h-100">
     <div class="d-flex flex-row justify-space-between align-self-center">
       <div class="d-flex grow align-center">
         <h1 class="text-center my-0">
@@ -7,18 +7,12 @@
         </h1>
       </div>
       <div class="d-flex flex-column align-self-center mr-4">
-        <v-tabs
-          v-model="tab"
-          right
-          center-active
-          active-class="white--text"
-          color="primary"
-          id="analyticsTabs"
-        >
+        <v-tabs v-model="tab" right center-active active-class="white--text" color="primary" id="analyticsTabs">
           <v-tab> <v-icon left>fab fa-stack-overflow</v-icon>Lots</v-tab>
           <v-tab> <v-icon left>fa fa-images</v-icon>Sets</v-tab>
           <v-tab> <v-icon left>fa fa-image</v-icon>Singles</v-tab>
           <v-tab> <v-icon left>fa fa-images</v-icon>GTCs</v-tab>
+          <v-tab> <v-icon left>fa fa-user-shield</v-icon>Adults</v-tab>
         </v-tabs>
       </div>
     </div>
