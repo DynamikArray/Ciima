@@ -7,7 +7,7 @@
         </h1>
       </div>
       <div class="d-flex flex-column align-self-center mr-4">
-        <v-tabs v-model="tab" right center-active active-class="white--text" color="primary" id="analyticsTabs">
+        <v-tabs v-model="tab" right center-active active-class="white--text" color="primary" id="soldItemsTabs">
           <v-tab> <v-icon left>fab fa-stack-overflow</v-icon>Lots</v-tab>
           <v-tab> <v-icon left>fa fa-images</v-icon>Sets</v-tab>
           <v-tab> <v-icon left>fa fa-image</v-icon>Singles</v-tab>
