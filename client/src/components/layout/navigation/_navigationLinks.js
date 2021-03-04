@@ -12,7 +12,8 @@ module.exports = [
   { menuDivider: true },
   { icon: "fa fa-chart-bar", text: "Analytics", to: "analytics" },
   { menuDivider: true },
-  { icon: "fa fa-file-invoice-dollar", text: "Sold Reports", to: "reports" },
+  { icon: "fa fa-file-invoice-dollar", text: "Sold Items Report", to: "sold.items.report" },
+  { icon: "fa fa-database", text: "Category Sales Report", to: "category.sales.report" },
   { menuDivider: true },
   { icon: "fa fab fa-tools", text: "Tools & Utilities", to: "tools" }
 ];

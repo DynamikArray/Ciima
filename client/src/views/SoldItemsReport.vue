@@ -3,7 +3,7 @@
     <div class="d-flex flex-row justify-space-between align-self-center">
       <div class="d-flex grow align-center">
         <h1 class="text-center my-0">
-          Reports
+          Sold Items Reports
         </h1>
       </div>
       <div class="d-flex flex-column align-self-center mr-4">

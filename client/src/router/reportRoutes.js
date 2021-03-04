@@ -1,10 +1,19 @@
 const reportRoutes = [
   {
-    path: "/reports",
+    path: "/sold-items-report",
     props: true,
-    name: "reports",
-    component: () =>
-      import(/*webpackChunkName: "reports"*/ "@/views/Reports.vue"),
+    name: "sold.items.report",
+    component: () => import(/*webpackChunkName: "reports"*/ "@/views/SoldItemsReport.vue"),
+    meta: {
+      requiresAuth: true
+    }
+  },
+
+  {
+    path: "/category-sales-report",
+    props: true,
+    name: "category.sales.report",
+    component: () => import(/*webpackChunkName: "reports"*/ "@/views/CategorySalesReport.vue"),
     meta: {
       requiresAuth: true
     }
@@ -24,8 +33,7 @@ const reportRoutes = [
     path: "/analytics",
     props: true,
     name: "analytics",
-    component: () =>
-      import(/*webpackChunkName: "analytics"*/ "@/views/Analytics.vue"),
+    component: () => import(/*webpackChunkName: "analytics"*/ "@/views/Analytics.vue"),
     meta: {
       requiresAuth: true
     }
@@ -35,8 +43,7 @@ const reportRoutes = [
     path: "/commish",
     props: true,
     name: "commish",
-    component: () =>
-      import(/*webpackChunkName: "commish"*/ "@/views/Commish.vue"),
+    component: () => import(/*webpackChunkName: "commish"*/ "@/views/Commish.vue"),
     meta: {
       requiresAuth: true
     }
