@@ -1,17 +1,19 @@
-const { getSoldItemsSchema } = require("../../../schemas/v1/reporting");
-/**
- * Info routes endpoints
- *
- * @param {Fastify} fastify
- */
+const schema = require("../../../schemas/v1/reporting");
+
 module.exports = function (fastify, opts, next) {
   const handler = require("../../../handlers/v1/reporting")(fastify);
-  const getSoldItems = {
-    preValidation: fastify.authenticate,
-    schema: getSoldItemsSchema,
-    handler: handler.getSoldItems,
-  };
 
-  fastify.get("/reporting/getSoldItems", getSoldItems);
+  fastify.get("/reporting/getSoldItems", {
+    preValidation: fastify.authenticate,
+    schema: schema.getSoldItemsSchema,
+    handler: handler.getSoldItems,
+  });
+
+  fastify.get("/reporting/getCategorySales", {
+    //preValidation: fastify.authenticate,
+    schema: schema.getCategorySalesSchema,
+    handler: handler.getCategorySales,
+  });
+
   next();
 };
