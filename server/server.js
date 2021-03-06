@@ -19,13 +19,11 @@ const { auditLogger } = require("../util/auditLog/auditLoggerServer.js");
 fastify.decorate("auditLogger", auditLogger);
 
 //add morgan for when heroku router dont work
-if (process.env.NODE_ENV !== "production")
-  fastify.use(require("morgan")("short", { stream: logger.stream }));
+if (process.env.NODE_ENV !== "production") fastify.use(require("morgan")("short", { stream: logger.stream }));
 
 //proper mysql connection string if prod
 let connectionString = process.env.MYSQL_CONN;
-if (process.env.NODE_ENV === "production")
-  connectionString = process.env.JAWSDB_URL;
+if (process.env.NODE_ENV === "production") connectionString = process.env.JAWSDB_URL;
 
 //register mystl
 fastify.register(require("fastify-mysql"), {
@@ -95,7 +93,12 @@ fastify.register(require("./routes/v1/repricingService"), {
 //
 //
 //catch all route for loading client application
-fastify.get("/*", (request, reply) => reply.sendFile("index.html"));
+fastify.get("/*", (request, reply) => {
+  reply.header("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
+  reply.header("Pragma", "no-cache"); // HTTP 1.0
+  reply.header("Expires", "0"); // Proxies
+  reply.sendFile("index.html");
+});
 
 //
 //
