@@ -11,8 +11,8 @@ const categorySalesByDate = (startDate, endDate, categoryName) => {
       SELECT
         CAST(CAST(o.dReceievedDate AS DATE)  AS  VARCHAR(11)) AS 'ReceievedDate',
         c.CategoryName,
-        COUNT(si.pkStockItemID)as 'Items Sold',
-        SUM(oi.fPricePerUnit) as 'Order Items Value'
+        COUNT(si.pkStockItemID)as 'ItemsSold',
+        SUM(oi.fPricePerUnit) as 'OrderItemsValue'
       FROM [OrderItem] oi
         INNER JOIN [Order] o on o.pkOrderID = oi.fkOrderID
         LEFT OUTER JOIN [StockItem] si on si.pkStockItemID = oi.fkStockItemId

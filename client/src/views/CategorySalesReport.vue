@@ -8,11 +8,7 @@
       </div>
       <div class="d-flex flex-column align-self-center mr-4">
         <v-tabs v-model="tab" right center-active active-class="white--text" color="primary" id="CategorySalesReports">
-          <v-tab> <v-icon left>fab fa-stack-overflow</v-icon>Lots</v-tab>
-          <v-tab> <v-icon left>fa fa-images</v-icon>Sets</v-tab>
-          <v-tab> <v-icon left>fa fa-image</v-icon>Singles</v-tab>
-          <v-tab> <v-icon left>fa fa-images</v-icon>GTCs</v-tab>
-          <v-tab> <v-icon left>fa fa-user-shield</v-icon>Adults</v-tab>
+          <v-tab> <v-icon left>fa fa-calendar-day</v-icon>Daily</v-tab>
         </v-tabs>
       </div>
     </div>

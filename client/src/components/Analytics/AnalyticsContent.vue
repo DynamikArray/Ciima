@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="d-flex flex-grow justify-start align-center w-100 flex-column"
-    v-if="!loading"
-  >
+  <div class="d-flex flex-grow justify-start align-center w-100 flex-column" v-if="!loading">
     <div class="d-flex">
       <h2>{{ title }}</h2>
     </div>
@@ -171,9 +168,7 @@ export default {
         datasets.push({
           label: key,
           data: data,
-          backgroundColor:
-            this.usersColorsLists[key].color ||
-            `#${Math.floor(Math.random() * 16777215).toString(16)}`,
+          backgroundColor: this.usersColorsLists[key].color || `#${Math.floor(Math.random() * 16777215).toString(16)}`,
           barThickness: "flex",
           minBarLength: 5
         });
@@ -268,6 +263,8 @@ export default {
     summaryItemCounts() {
       const results = [];
       const groupedData = this.groupedData;
+
+      console.log(groupedData);
 
       for (const [user, count] of Object.entries(groupedData)) {
         let userTotal = 0;

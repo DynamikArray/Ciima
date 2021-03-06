@@ -3,14 +3,16 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 import { SEARCH_SOLD_ITEMS } from "@/store/action-types";
-import {
-  SEARCH_SOLD_ITEMS_LOADING,
-  SEARCH_SOLD_ITEMS_RESULTS,
-  SEARCH_SOLD_ITEMS_CLEAR
-} from "@/store/mutation-types";
+import { SEARCH_SOLD_ITEMS_LOADING, SEARCH_SOLD_ITEMS_RESULTS, SEARCH_SOLD_ITEMS_CLEAR } from "@/store/mutation-types";
+
+import categorySales from "./categorySales/categorySales";
 
 const pricing = {
   namespaced: true,
+
+  modules: {
+    categorySales
+  },
 
   state: {
     loading: false,
