@@ -5,6 +5,7 @@ const inventoryItemUpdateExtendedPropertiesSchema = require("./inventoryItemUpda
 const inventoryItemUpdateTemplateInstantSchema = require("./inventoryItemUpdateTemplateInstantSchema");
 const inventoryItemUpdatePriceSchema = require("./inventoryItemUpdatePriceSchema");
 const inventoryItemAddPriceSchema = require("./inventoryItemAddPriceSchema");
+const inventoryItemSelectToCloneSchema = require("./inventoryItemSelectToCloneSchema");
 
 module.exports = {
   //NEWER V2 Inventory Search and ItemTitle
@@ -15,6 +16,7 @@ module.exports = {
   inventoryItemUpdateTemplateInstantSchema: inventoryItemUpdateTemplateInstantSchema,
   inventoryItemUpdatePriceSchema: inventoryItemUpdatePriceSchema,
   inventoryItemAddPriceSchema: inventoryItemAddPriceSchema,
+  inventoryItemSelectToCloneSchema: inventoryItemSelectToCloneSchema,
   //END V2 Inventory Search And Stuff
 
   //

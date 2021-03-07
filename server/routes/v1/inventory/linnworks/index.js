@@ -12,6 +12,7 @@ const {
   inventoryItemUpdateTemplateInstantSchema,
   inventoryItemUpdatePriceSchema,
   inventoryItemAddPriceSchema,
+  inventoryItemSelectToCloneSchema,
 } = require("../../../../schemas/v1/inventory/linnworks");
 /**
  * Info routes endpoints
@@ -34,6 +35,7 @@ module.exports = function (fastify, opts, next) {
     inventoryItemUpdateTemplateInstantHandler,
     inventoryItemUpdatePriceHandler,
     inventoryItemAddPriceHandler,
+    inventoryItemSelectToCloneHandler,
   } = require("../../../../handlers/v1/inventory/linnworks")(fastify);
 
   //-----------------V2 IMPROVED START ------------------------
@@ -79,6 +81,13 @@ module.exports = function (fastify, opts, next) {
     schema: inventoryItemAddPriceSchema,
     handler: inventoryItemAddPriceHandler,
   });
+
+  fastify.post("/inventory/selectItemToClone", {
+    preValidation: fastify.authenticate,
+    schema: inventoryItemSelectToCloneSchema,
+    handler: inventoryItemSelectToCloneHandler,
+  });
+
   //------------V2 IMPROVED END-----------------------------
 
   // START OLD STUFF
@@ -115,7 +124,7 @@ module.exports = function (fastify, opts, next) {
 
   //ALL Price fields for an item
   const linnworksUpdateItemPrices = {
-    //preValidation: fastify.authenticate,
+    preValidation: fastify.authenticate,
     schema: updateItemPricesSchema,
     handler: updateItemPricesHandler,
   };
@@ -124,7 +133,7 @@ module.exports = function (fastify, opts, next) {
 
   //ALL Price fields for an item
   const getOutOfSyncPrices = {
-    //preValidation: fastify.authenticate,
+    preValidation: fastify.authenticate,
     schema: getOutOfSyncPricesSchema,
     handler: getOutOfSyncPricesHandler,
   };
