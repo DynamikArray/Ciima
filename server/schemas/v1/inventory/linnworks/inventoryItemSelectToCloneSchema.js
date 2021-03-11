@@ -29,13 +29,7 @@ module.exports = {
               pkStockItemID: {
                 type: "string",
               },
-              CreationDate: {
-                type: "string",
-              },
-              Image: {
-                type: "string",
-              },
-              ItemTitle: {
+              inventoryTitle: {
                 type: "string",
               },
               CategoryName: {
@@ -44,31 +38,34 @@ module.exports = {
               ItemNumber: {
                 type: "string",
               },
-              BinRackNumber: {
+              locationCode: {
                 type: "string",
               },
-              Quantity: {
+              quantity: {
                 type: "string",
               },
-              RetailPrice: {
+              price: {
                 type: "string",
               },
-              ListingPrice: {
+              declinePrice: {
                 type: "string",
               },
-              DeclinePrice: {
+              extraDescription: {
                 type: "string",
               },
-              StartPrice: {
+              mainCharacter: {
                 type: "string",
               },
-              ExtraDescription: {
+              publisher: {
                 type: "string",
               },
-              MainCharacter: {
+              ebaySiteCategoryId: {
                 type: "string",
               },
-              Publisher: {
+              ebayStoreCategoryIdOne: {
+                type: "string",
+              },
+              ebayStoreCategoryIdTwo: {
                 type: "string",
               },
             },

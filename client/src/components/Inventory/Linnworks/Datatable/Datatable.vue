@@ -64,13 +64,7 @@
       </template>
 
       <template v-slot:item.action="{ item }">
-        <v-slide-x-reverse-transition mode="out-in">
-          <div :key="`transition_bin_rack_number_${item.pkStockItemID}`">
-            <v-btn color="success" class="pr-3" style="min-width:20px;" @click="selectItem(item.pkStockItemID)"
-              ><v-icon class="">fa-edit</v-icon></v-btn
-            >
-          </div>
-        </v-slide-x-reverse-transition>
+        <ActionButtons :item="item" @itemSelected="selectItem" />
       </template>
     </v-data-table>
   </div>
@@ -86,6 +80,7 @@ import LinnworksQuantity from "@/components/Shared/Datatable/FieldTemplates/Disp
 import LinnworksBinRackNumber from "@/components/Shared/Datatable/FieldTemplates/DisplayOnly/LinnworksBinRackNumber";
 import LinnworksPrice from "@/components/Shared/Datatable/FieldTemplates/DisplayOnly/LinnworksPrice";
 import LinnworksMobile from "./Mobile/LinnworksMobile";
+import ActionButtons from "./ActionButtons";
 
 import LinnworksImage from "@/components/Shared/Datatable/FieldTemplates/LinnworksImage";
 
@@ -110,7 +105,8 @@ export default {
     LinnworksQuantity,
     LinnworksBinRackNumber,
     LinnworksPrice,
-    LinnworksMobile
+    LinnworksMobile,
+    ActionButtons
   },
   data() {
     return {

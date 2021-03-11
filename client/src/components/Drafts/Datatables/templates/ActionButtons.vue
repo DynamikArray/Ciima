@@ -119,7 +119,7 @@ export default {
         `<h3 class="text-center py-3">Duplicate this current draft?</h3>
         <p>This will duplicate all possible values, and take you to the GTC Draft form</p>`,
         {
-          title: "  Duplcate this draft?"
+          title: "  Duplicate this draft?"
         }
       );
       if (confirm) this.duplicateGTCDraft(item);

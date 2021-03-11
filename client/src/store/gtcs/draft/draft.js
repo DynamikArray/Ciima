@@ -4,7 +4,7 @@ Vue.use(Vuex);
 
 import { getField, updateField } from "vuex-map-fields";
 
-import { CURRENT_GTC_DRAFT_SAVE, NEW_GTC_DRAFT_LOAD } from "@/store/action-types";
+import { CURRENT_GTC_DRAFT_SAVE, NEW_GTC_DRAFT_LOAD, NEW_GTC_DRAFT_FROM_INVENTORY } from "@/store/action-types";
 
 import {
   RESET_GTC_DRAFT,
@@ -96,9 +96,9 @@ const draft = {
       state.inventoryTitle = item.inventoryTitle;
 
       state.price = item.price.toString();
-      state.declinePrice = item.declinePrice.toString();
+      state.declinePrice = item.declinePrice.toString() || defaultDraft.declinePrice;
 
-      state.quantity = item.quantity.toString();
+      state.quantity = item.quantity.toString() || defaultDraft.quantity;
 
       state.mainCharacter = item.mainCharacter;
       state.publisher = item.publisher;
@@ -139,6 +139,31 @@ const draft = {
       commit(`${CURRENT_GTC_DRAFT_LOAD}`, item);
       commit(`settings/${SET_DEFAULT_PRODUCT_TYPE}`, "gtc", { root: true });
       router.push({ name: "draft" });
+    },
+    async [NEW_GTC_DRAFT_FROM_INVENTORY]({ dispatch, commit }, pkStockItemID) {
+      try {
+        const resp = await dispatch(
+          "api/requestHandler",
+          {
+            method: "post",
+            url: "/inventory/selectItemToClone",
+            params: { pkStockItemID },
+            success: `gtcs/draft/${CURRENT_GTC_DRAFT_UPDATE}`,
+            loading: `gtcs/draft/${CURRENT_GTC_DRAFT_SAVING}`
+          },
+          { root: true }
+        );
+
+        if (resp.result.length == 1) {
+          commit(`${RESET_GTC_DRAFT}`);
+          commit(`${CURRENT_GTC_DRAFT_LOAD}`, resp.result[0]);
+          commit(`settings/${SET_DEFAULT_PRODUCT_TYPE}`, "gtc", { root: true });
+          router.push({ name: "draft" });
+          return true;
+        }
+      } catch (err) {
+        throw err;
+      }
     }
   }
 };
