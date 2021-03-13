@@ -13,7 +13,8 @@
     </div>
     <v-divider class="my-2"></v-divider>
     <div class="mb-10">
-      <LinnworksInventoryContainer :isMobile="isMobile" />
+      SOMETHING HERE
+      <!-- <LinnworksInventoryContainer :isMobile="isMobile" /> -->
     </div>
   </v-container>
 </template>
