@@ -13,8 +13,7 @@
     </div>
     <v-divider class="my-2"></v-divider>
     <div class="mb-10">
-      SOMETHING HERE
-      <!-- <LinnworksInventoryContainer :isMobile="isMobile" /> -->
+      <LinnworksInventoryContainer :isMobile="isMobile" />
     </div>
   </v-container>
 </template>
@@ -27,7 +26,7 @@ export default {
   },
   data() {
     return {
-      isMobile: window.innerWidth <= 1024
+      isMobile: false //window.innerWidth <= 1024
     };
   },
   created() {
