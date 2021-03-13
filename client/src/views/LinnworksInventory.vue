@@ -26,7 +26,7 @@ export default {
   },
   data() {
     return {
-      isMobile: false //window.innerWidth <= 1024
+      isMobile: window.innerWidth <= 1024
     };
   },
   created() {

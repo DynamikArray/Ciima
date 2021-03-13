@@ -1,5 +1,6 @@
 <template>
   <div class="">
+    <!--
     <FiltersContainer
       :searchTitle.sync="filters.searchTitle"
       :searchLocation.sync="filters.searchLocation"
@@ -17,6 +18,8 @@
       @closed="modalClosed"
       @refresh="fetchData"
     />
+    -->
+    CONTAINER
   </div>
 </template>
 
