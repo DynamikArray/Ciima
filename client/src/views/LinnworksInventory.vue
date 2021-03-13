@@ -27,16 +27,15 @@ export default {
   },
   data() {
     return {
-      isMobile: false
       //isMobile: document.documentElement.clientWidth <= 1024
-      //isMobile: window.innerWidth <= 1024
+      isMobile: window.innerWidth <= 1024
     };
   },
   created() {
     addEventListener("resize", () => {
       //console.log("resized");
       //return (this.isMobile = document.documentElement.clientWidth <= 1024);
-      //return (this.isMobile = window.innerWidth <= 1024);
+      return (this.isMobile = window.innerWidth <= 1024);
     });
   }
 };
