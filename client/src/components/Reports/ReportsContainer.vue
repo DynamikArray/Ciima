@@ -71,7 +71,7 @@ export default {
   created() {
     //Set our defaults
     this.filters.categoryName = "EBAY-LOTS";
-    this.filters.startDate = format(subDays(Date.now(), 5), "YYYY-MM-DD");
+    this.filters.startDate = format(subDays(Date.now(), 1), "YYYY-MM-DD");
     this.filters.endDate = format(Date.now(), "YYYY-MM-DD");
     this.getData();
   },

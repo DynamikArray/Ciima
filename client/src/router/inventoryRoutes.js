@@ -15,7 +15,7 @@ const inventoryRoutes = [
     path: "/inventory",
     props: true,
     name: "inventory",
-    component: () => import(/*webpackChunkName: "inventory"*/ "@/views/LinnworksInventory.vue"),
+    component: () => import(/*webpackChunkName: "LinnworksInventory"*/ "@/views/LinnworksInventory.vue"),
     meta: {
       requiresAuth: true
     }
@@ -24,7 +24,7 @@ const inventoryRoutes = [
     path: "/locations",
     props: true,
     name: "locations",
-    component: () => import(/*webpackChunkName: "inventory"*/ "@/views/Locations.vue"),
+    component: () => import(/*webpackChunkName: "Locations"*/ "@/views/Locations.vue"),
     meta: {
       requiresAuth: true
     }
