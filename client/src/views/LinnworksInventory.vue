@@ -26,12 +26,14 @@ export default {
   },
   data() {
     return {
-      isMobile: window.innerWidth <= 1024
+      isMobile: document.documentElement.clientWidth <= 1024
+      //isMobile: window.innerWidth <= 1024
     };
   },
   created() {
     addEventListener("resize", () => {
-      return (this.isMobile = window.innerWidth <= 1024);
+      return (this.isMobile = document.documentElement.clientWidth <= 1024);
+      //return (this.isMobile = window.innerWidth <= 1024);
     });
   }
 };

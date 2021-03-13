@@ -1,10 +1,6 @@
 <template>
   <v-app>
-    <NavigationDrawer
-      ref="navigationDrawerWrapper"
-      :loggedIn="isLoggedIn && user"
-      :drawer="navigationDrawer"
-    />
+    <NavigationDrawer ref="navigationDrawerWrapper" :loggedIn="isLoggedIn && user" :drawer="navigationDrawer" />
 
     <UtilityDrawer />
 
@@ -16,7 +12,7 @@
     </v-content>
 
     <Footer v-if="isLoggedIn && user" />
-    <WhatsNew v-if="isLoggedIn && user" />
+    <!--<WhatsNew v-if="isLoggedIn && user" />-->
   </v-app>
 </template>
 
@@ -25,7 +21,7 @@ import { INIT_SETTINGS } from "@/store/mutation-types";
 import { mapGetters } from "vuex";
 
 import UtilityDrawer from "@/components/layout/navigation/UtilityDrawer/UtilityDrawer";
-import WhatsNew from "@/components/WhatsNew/WhatsNew";
+//import WhatsNew from "@/components/WhatsNew/WhatsNew";
 
 import NavigationDrawer from "@/components/layout/navigation/NavigationDrawer";
 import AppBar from "@/components/layout/navigation/AppBar";
@@ -39,7 +35,7 @@ export default {
     NavigationDrawer,
     //DraftsDrawer,
     UtilityDrawer,
-    WhatsNew,
+    //WhatsNew,
     TransitionPage,
     Footer
   },
@@ -63,12 +59,10 @@ export default {
     created: function() {},
 
     toggleNavigationDrawer() {
-      const navBar = this.$refs.navigationDrawerWrapper.$refs
-        .mainNavigationDrawer;
+      const navBar = this.$refs.navigationDrawerWrapper.$refs.mainNavigationDrawer;
 
       if (navBar.miniVariant) {
-        const isActive = this.$refs.navigationDrawerWrapper.$refs
-          .mainNavigationDrawer.isActive;
+        const isActive = this.$refs.navigationDrawerWrapper.$refs.mainNavigationDrawer.isActive;
 
         if (isActive) {
           this.navigationDrawer = !this.navigationDrawer;
