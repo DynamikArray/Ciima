@@ -1,18 +1,40 @@
 <template>
-  <div :key="`transition_action_field_${item.pkStockItemID}`">
-    <v-btn color="success" class="my-2 pr-3" style="min-width:20px;" @click="selectItem(item.pkStockItemID)"
-      ><v-icon class="">fa-edit</v-icon></v-btn
-    >
+  <v-slide-x-reverse-transition mode="out-in">
+    <div class="d-flex flex-column align-center justify-space-around" :key="`transition_action_field_${item.pkStockItemID}`">
+      <div class="d-flex flex-column align-center justify-start my-3">
+        <div class="align-center">
+          <v-btn
+            small
+            color="success"
+            class="mb-1"
+            style="min-width:20px; padding:10px"
+            @click="selectItem(item.pkStockItemID)"
+            ><v-icon small class="">fa-edit</v-icon></v-btn
+          >
+        </div>
+        <div class="caption">
+          (View/Edit)
+        </div>
+      </div>
 
-    <v-btn
-      v-if="item.CategoryName == 'EBAY-GTCS'"
-      color="success"
-      class="my-2 pr-3"
-      style="min-width:20px;"
-      @click="duplicateGTC(item.pkStockItemID)"
-      ><v-icon class="">fa-clone</v-icon></v-btn
-    >
-  </div>
+      <div class="d-flex flex-column align-center justify-start my-3" v-if="item.CategoryName == 'EBAY-GTCS'">
+        <div class="align-center">
+          <v-btn
+            small
+            color="warning"
+            class="mb-1"
+            style="min-width:20px; padding:10px"
+            @click="duplicateGTC(item.pkStockItemID)"
+          >
+            <v-icon small class="">fa-clone</v-icon>
+          </v-btn>
+        </div>
+        <div class="caption">
+          (Clone)
+        </div>
+      </div>
+    </div>
+  </v-slide-x-reverse-transition>
 </template>
 
 <script>
