@@ -1,13 +1,11 @@
 <template>
   <div class="">
-    <!--
     <FiltersContainer
       :searchTitle.sync="filters.searchTitle"
       :searchLocation.sync="filters.searchLocation"
       :searchCategories.sync="filters.searchCategories"
       @runSearch="fetchData"
     />
-  -->
 
     <v-divider class="my-2"></v-divider>
 
