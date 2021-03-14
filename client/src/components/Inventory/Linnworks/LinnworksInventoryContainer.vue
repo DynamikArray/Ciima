@@ -1,5 +1,6 @@
 <template>
   <div class="">
+    <!--
     <FiltersContainer
       :searchTitle.sync="filters.searchTitle"
       :searchLocation.sync="filters.searchLocation"
@@ -12,6 +13,9 @@
     <Datatable :items="items" :loading="loading" :isMobile="isMobile" @itemSelected="itemSelected" />
 
     <LinnworksItemContainer :selectedId="selectedId" :visible="visible" @closed="modalClosed" @refresh="fetchData" />
+    -->
+
+    Contianer
   </div>
 </template>
 

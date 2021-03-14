@@ -14,7 +14,6 @@
     <v-divider class="my-2"></v-divider>
     <div class="mb-10">
       <!--<LinnworksInventoryContainer :isMobile="isMobile" />-->
-      WORK
     </div>
   </v-container>
 </template>
