@@ -12,7 +12,29 @@
             label="Search Titles"
             prepend-icon="fa-search"
             @input="handleSearchInput"
-          />
+          >
+            <template v-slot:append-outer>
+              <div class="d-flex flex-column grey darken-4 outlined pa-2" style="margin-top:-20px; border-radius:6px">
+                <div class="d-flex">
+                  <v-checkbox
+                    v-model="treatNumbersAsText"
+                    key="blnNumberAsText"
+                    label="As Text"
+                    class="ma-0 py-0 px-1"
+                    dense
+                    hide-details
+                    color="primary"
+                  >
+                    <template v-slot:label>
+                      <div class=" text-center body-1 text-wrap" style="max-width:250px; line-height:1.2em;">
+                        Treat Numbers Like Text, NOT UPC.
+                      </div>
+                    </template>
+                  </v-checkbox>
+                </div>
+              </div>
+            </template>
+          </v-text-field>
         </v-form>
       </v-card-text>
     </v-card>
@@ -21,16 +43,13 @@
 
 <script>
 import debounce from "lodash.debounce";
-import {
-  SEARCH_TITLES,
-  SEARCH_TITLES_RESULTS_CLEAR,
-  SEARCH_UPC
-} from "@/store/action-types.js";
+import { SEARCH_TITLES, SEARCH_TITLES_RESULTS_CLEAR, SEARCH_UPC } from "@/store/action-types.js";
 
 export default {
   data: () => ({
     searchTitleString: "",
-    validTitleSearch: false
+    validTitleSearch: false,
+    treatNumbersAsText: false
   }),
   methods: {
     handleSearchInput: debounce(function(event) {
@@ -40,7 +59,7 @@ export default {
       if (event.type === "submit" || search.length > 3) {
         //when submit is prssed make sure its not empty
         if (!search.length == 0) {
-          if (!Number.isNaN(Number(search))) {
+          if (!Number.isNaN(Number(search)) && this.treatNumbersAsText == false) {
             //is numeric should be upc
             if (search.length == 17) {
               this.fetchTitlesByUpc(search);
