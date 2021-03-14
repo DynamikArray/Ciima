@@ -15,7 +15,9 @@
     <LinnworksItemContainer :selectedId="selectedId" :visible="visible" @closed="modalClosed" @refresh="fetchData" />
     -->
 
-    Contianer
+    <p>
+      Container
+    </p>
   </div>
 </template>
 
