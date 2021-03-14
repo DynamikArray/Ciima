@@ -1,25 +1,23 @@
 <template>
-  <!--
-  <v-text-field
-    outlined
-    autocomplete="off"
-    autofocus
-    dense
-    hide-details
-    persistent-hint
-    :value="value"
-    :label="label"
-    prepend-inner-icon="fa-cube"
-    @input="handleInput"
-    @keydown="handleKeyDown"
-    full-width
-    clearable
-  >
-  </v-text-field>
--->
-  <p>
-    TEST SEARCH LOCATION
-  </p>
+  <div class="w-100">
+    <v-text-field
+      id="locationSearch"
+      outlined
+      autocomplete="off"
+      autofocus
+      dense
+      hide-details
+      persistent-hint
+      :value="value"
+      :label="label"
+      prepend-inner-icon="fa-cube"
+      @input="handleInput"
+      @keydown="handleKeyDown"
+      full-width
+      clearable
+    >
+    </v-text-field>
+  </div>
 </template>
 
 <script>
