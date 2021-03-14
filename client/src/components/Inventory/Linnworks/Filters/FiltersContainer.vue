@@ -23,13 +23,11 @@
     <v-row class="grey darken-4 mx-0 my-0">
       <v-col cols="12" class="pt-0">
         <div class="d-flex align-start justify-space-between pt-1 flex-wrap">
-          <!--
           <SearchCategories
             :value="searchCategories"
             label="Linnworks Categories"
             @updateSearchCategories="updateSearchCategories"
           />
-            -->
           <div class="mt-2">
             <v-btn class="primary" @click="runSearch"><v-icon small class="mr-2">fa fa-search</v-icon>Search</v-btn>
           </div>
