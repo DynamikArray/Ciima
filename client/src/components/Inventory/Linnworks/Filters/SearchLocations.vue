@@ -1,5 +1,6 @@
 <template>
   <div class="w-100">
+    <!--
     <v-text-field
       id="locationSearch"
       outlined
@@ -17,6 +18,7 @@
       clearable
     >
     </v-text-field>
+    -->
   </div>
 </template>
 

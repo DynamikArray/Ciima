@@ -2,14 +2,12 @@
   <section>
     <v-row class="grey darken-4 mx-0">
       <v-col cols="8" class="pb-0">
-        <!--
         <SearchTitle
           :value="searchTitle"
           label="Search Item Titles"
           @updateSearchTitle="updateSearchTitle"
           @runSearch="runSearch"
         />
-      -->
       </v-col>
       <v-col cols="4" class="pb-0">
         <SearchLocations
@@ -40,7 +38,7 @@
 <script>
 import SearchTitle from "./SearchTitle";
 import SearchCategories from "./SearchCategories";
-import SearchLocations from "./SearchLocation";
+import SearchLocations from "./SearchLocations";
 
 export default {
   name: "LinnworksInventoryFilters",
