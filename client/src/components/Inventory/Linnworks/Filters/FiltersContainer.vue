@@ -10,7 +10,7 @@
         />
       </v-col>
       <v-col cols="4" class="pb-0">
-        <SearchLocation
+        <SearchLocations
           :value="searchLocation"
           label="Find Items in Bin/Rack"
           @updateSearchLocation="updateSearchLocation"
@@ -38,7 +38,7 @@
 <script>
 import SearchTitle from "./SearchTitle";
 import SearchCategories from "./SearchCategories";
-import SearchLocation from "./SearchLocation";
+import SearchLocations from "./SearchLocation";
 
 export default {
   name: "LinnworksInventoryFilters",
@@ -55,7 +55,7 @@ export default {
   },
   components: {
     SearchTitle,
-    SearchLocation,
+    SearchLocations,
     SearchCategories
   },
   methods: {

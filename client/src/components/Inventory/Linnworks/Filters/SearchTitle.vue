@@ -21,6 +21,7 @@
 import debounce from "lodash.debounce";
 
 export default {
+  name: "searchTitleTextField",
   props: {
     label: [String],
     value: [String]

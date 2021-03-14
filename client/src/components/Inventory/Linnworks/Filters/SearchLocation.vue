@@ -24,6 +24,7 @@
 import debounce from "lodash.debounce";
 
 export default {
+  name: "searchLocationTextField",
   props: {
     label: [String],
     value: [String]
