@@ -1,4 +1,5 @@
 <template>
+  <!--
   <v-text-field
     outlined
     autocomplete="off"
@@ -15,6 +16,10 @@
     clearable
   >
   </v-text-field>
+-->
+  <p>
+    TEST SEARCH LOCATION
+  </p>
 </template>
 
 <script>

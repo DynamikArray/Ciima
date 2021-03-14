@@ -10,14 +10,12 @@
         />
       </v-col>
       <v-col cols="4" class="pb-0">
-        <!--
         <SearchLocation
           :value="searchLocation"
           label="Find Items in Bin/Rack"
           @updateSearchLocation="updateSearchLocation"
           @runSearch="runSearch"
         />
-      -->
       </v-col>
     </v-row>
     <v-row class="grey darken-4 mx-0 my-0">
