@@ -12,14 +12,7 @@
     <v-divider class="my-2"></v-divider>
 
     <Datatable :items="items" :loading="loading" :isMobile="isMobile" @itemSelected="itemSelected" />
-
-    <!--
     <LinnworksItemContainer :selectedId="selectedId" :visible="visible" @closed="modalClosed" @refresh="fetchData" />
-    -->
-
-    <p>
-      Container
-    </p>
   </div>
 </template>
 
