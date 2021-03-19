@@ -14,16 +14,33 @@
     </div>
     <v-divider class="my-1"></v-divider>
     <div class="mb-10">
-      <CategorySalesReportContainer :tab="tab" />
+      <CategorySalesReportContainer :tab="tab" v-if="isManager" />
+      <div v-else class="w-100">
+        <div class="d-flex flex-column align-center justify-center w-100">
+          <div class="mt-10">
+            <v-icon size="150">fa fa-exclamation-circle</v-icon>
+          </div>
+          <div>
+            <div class="display-3 mt-2">Not Authorized</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 import CategorySalesReportContainer from "@/components/ReportsCategorySales/CategorySalesReportContainer.vue";
 export default {
   components: {
     CategorySalesReportContainer
+  },
+  computed: {
+    ...mapGetters({
+      isManager: "user/isManager"
+    })
   },
   data: () => ({
     tab: 0

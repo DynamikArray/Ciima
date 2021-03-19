@@ -15,7 +15,8 @@ const user = {
     status: "",
     errMsg: false,
     token: localStorage.getItem("token") || "",
-    user: false
+    user: false,
+    roles: []
   },
   getters: {
     getField,
@@ -24,6 +25,7 @@ const user = {
       if (state.user) return true;
       return false;
     },
+
     token: state => state.token,
     user: state => state.user,
     authStatus: state => state.status,
@@ -31,7 +33,14 @@ const user = {
     userName: state => state.user.username,
     displayName: state => state.user.displayname,
     displayColor: state => state.user.displaycolor,
-    email: state => state.user.email
+    email: state => state.user.email,
+    roles: state => state.user.roles,
+
+    isManager: state => {
+      if (!state.user.roles) return false;
+      if (state.user.roles.includes("manager")) return true;
+      return false;
+    }
   },
   mutations: {
     updateField,
@@ -51,6 +60,11 @@ const user = {
         displayname: user.displayname,
         displaycolor: user.displaycolor
       };
+
+      if (state.user && user.roles) {
+        const roles = user.roles.split(",");
+        if (roles) state.user.roles = roles;
+      }
     },
     auth_error(state, errMsg = false) {
       state.status = "error";
@@ -95,24 +109,18 @@ const user = {
             method: "POST",
             headers: { Authorization: `Bearer ${token}` }
           }).catch(e => {
-            if (e.response && e.response.status === 401)
-              console.log("You are not logged in!");
+            if (e.response && e.response.status === 401) console.log("You are not logged in!");
           });
 
           if (userResp && userResp.data) {
-            const {
-              id,
-              username,
-              email,
-              displayname,
-              displaycolor
-            } = userResp.data;
+            const { id, username, email, displayname, displaycolor, roles } = userResp.data;
             commit("auth_success", {
               id,
               username,
               email,
               displayname,
-              displaycolor
+              displaycolor,
+              roles
             });
 
             dispatch(
@@ -144,25 +152,17 @@ const user = {
           method: "POST"
         })
           .then(resp => {
-            const {
-              id,
-              username,
-              displayname,
-              displaycolor,
-              email,
-              token
-            } = resp.data;
+            const { id, username, displayname, displaycolor, email, token, roles } = resp.data;
             localStorage.setItem("token", token);
-            axiosInstance.defaults.headers.common[
-              "Authorization"
-            ] = `Bearer ${token}`;
+            axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
             commit("auth_success", {
               id,
               username,
               displayname,
               displaycolor,
               email,
-              token
+              token,
+              roles
             });
             dispatch(`api/updateStatus`, `Logged in user ${username}`, {
               root: true
@@ -194,25 +194,17 @@ const user = {
           method: "POST"
         })
           .then(resp => {
-            const {
-              id,
-              username,
-              displayname,
-              displaycolor,
-              email,
-              token
-            } = resp.data;
+            const { id, username, displayname, displaycolor, email, token, roles } = resp.data;
             localStorage.setItem("token", token);
-            axiosInstance.defaults.headers.common[
-              "Authorization"
-            ] = `Bearer ${token}`;
+            axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
             commit("auth_success", {
               id,
               username,
               displayname,
               displaycolor,
               email,
-              token
+              token,
+              roles
             });
             dispatch(`api/updateStatus`, `Logged in user ${username}`, {
               root: true
@@ -220,6 +212,7 @@ const user = {
             resolve(resp);
           })
           .catch(err => {
+            console.error("ERROR is:", err);
             const { response, message } = err;
             if (response.status === 403) {
               commit("auth_error", response.data);
@@ -249,19 +242,14 @@ const user = {
           method: "POST"
         })
           .then(resp => {
-            const {
-              id,
-              username,
-              displayname,
-              displaycolor,
-              email
-            } = resp.data;
+            const { id, username, displayname, displaycolor, email, roles } = resp.data;
             commit("auth_success", {
               id,
               username,
               displayname,
               displaycolor,
-              email
+              email,
+              roles
             });
             dispatch(`api/updateStatus`, `Logged in user ${username}`, {
               root: true
