@@ -1,8 +1,6 @@
 const bcrypt = require("bcryptjs");
 
-const {
-  queryUpdateUser,
-} = require("../../../../util/ciima/queries/user/updateUser");
+const { queryUpdateUser } = require("../../../../util/ciima/queries/user/updateUser");
 
 module.exports = (fastify) => ({
   /**
@@ -43,13 +41,7 @@ module.exports = (fastify) => ({
 
     //try to add this user into the db
     try {
-      const [result] = await fastify.mysql.query(query, [
-        email,
-        username,
-        hashPassword,
-        displayname,
-        displaycolor,
-      ]);
+      const [result] = await fastify.mysql.query(query, [email, username, hashPassword, displayname, displaycolor]);
 
       //pull of the props we care about
       const { affectedRows, insertId } = result;
@@ -76,11 +68,7 @@ module.exports = (fastify) => ({
     //see if username exists
     const userExists = await checkIfUsernameExists(fastify, username);
     if (userExists) {
-      const { user } = await getUserByUsernamePassword(
-        fastify,
-        username,
-        password
-      );
+      const { user } = await getUserByUsernamePassword(fastify, username, password);
       if (user) {
         const token = fastify.jwt.sign({ ...user }, { expiresIn: "5d" });
         res.send({ token, ...user });
@@ -128,7 +116,7 @@ module.exports = (fastify) => ({
  * @return {Promise}            User if found or error:msg
  */
 const getUserById = async (fastify, id) => {
-  const query = `SELECT id, email, username, displayname, displaycolor FROM slc_users WHERE id = ? `;
+  const query = `SELECT id, email, username, displayname, displaycolor, roles FROM slc_users WHERE id = ? `;
   try {
     const [rows, fields] = await fastify.mysql.query(query, [id]);
 
