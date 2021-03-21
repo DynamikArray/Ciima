@@ -1,5 +1,7 @@
 <template>
   <v-text-field
+    name="titleSearch"
+    id="titleSearchTextField"
     outlined
     autocomplete="off"
     autofocus
