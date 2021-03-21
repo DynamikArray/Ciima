@@ -1,11 +1,10 @@
 <template>
   <div class="w-100">
     <v-text-field
-      name="locationSearch_txtField"
+      name="locationSearch"
       id="locationSearchTextField"
       outlined
       autocomplete="off"
-      autofocus
       dense
       hide-details
       persistent-hint
