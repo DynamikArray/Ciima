@@ -1,5 +1,7 @@
 <template>
   <div class="w-100">
+    locations placeholder
+    <!--
     <v-text-field
       name="locationSearch"
       id="locationSearchTextField"
@@ -18,7 +20,7 @@
       clearable
     >
     </v-text-field>
-  </div>
+  --></div>
 </template>
 
 <script>
