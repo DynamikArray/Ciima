@@ -1,9 +1,7 @@
 <template>
   <div class="w-100">
-    locations placeholder
-    <!--
     <v-text-field
-      name="locationSearch"
+      name="locationSearch_txtField"
       id="locationSearchTextField"
       outlined
       autocomplete="off"
@@ -18,9 +16,8 @@
       @keydown="handleKeyDown"
       full-width
       clearable
-    >
-    </v-text-field>
-  --></div>
+    />
+  </div>
 </template>
 
 <script>
