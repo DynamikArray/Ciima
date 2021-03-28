@@ -21,6 +21,7 @@ module.exports = (fastify) => {
   const { updatePriceHandler } = require("./inventoryItemUpdatePriceHandler")(fastify);
   const { addPriceHandler } = require("./inventoryItemAddPriceHandler")(fastify);
   const { selectToCloneHandler } = require("./inventoryItemSelectToCloneHandler")(fastify);
+  const { deleteDeclinePriceHandler } = require("./inventoryItemDeleteDeclinePriceHandler")(fastify);
 
   return {
     //START V2 improved search handler and code design
@@ -32,6 +33,7 @@ module.exports = (fastify) => {
     inventoryItemUpdatePriceHandler: updatePriceHandler,
     inventoryItemAddPriceHandler: addPriceHandler,
     inventoryItemSelectToCloneHandler: selectToCloneHandler,
+    inventoryItemDeleteDeclinePriceHandler: deleteDeclinePriceHandler,
     //END V2
 
     /**
