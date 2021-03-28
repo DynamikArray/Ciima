@@ -158,25 +158,26 @@ export default {
         if (!result && error) this.$toastr.e(`${field} not updated!`, error);
       }
     },
-    async deletePrice(priceRowId) {
+    async deletePrice(inventoryItemPriceId) {
       const confirm = await this.$confirm(
         `<h3 class="text-center py-3">Delete this ${this.fieldLabel}?</h3>
         <p>This will remove the ${this.fieldLabel}. You cannot undo this operation. Are you sure you want to delete it?</p>`,
         { title: `Delete this ${this.fieldLabel}?` }
       );
-      if (confirm) this.callDeletePrice(priceRowId);
+      if (confirm) this.callDeletePrice(inventoryItemPriceId);
     },
-    async callDeletePrice(priceRowId) {
+    async callDeletePrice(inventoryItemPriceId) {
+      const pkStockItemID = this.itemId;
       const resp = await this.$store.dispatch(
         `linnworks/inventory/selectedItem/${DELETE_DECLINE_PRICE_SELECTED_LINNWORKS_ITEM}`,
-        { priceRowId }
+        { inventoryItemPriceId, pkStockItemID }
       );
 
       const { result, error } = resp;
       if (result) {
         this.$toastr.defaultTimeout = 1500;
         this.$toastr.s(`${this.fieldLabel} update success!`, result);
-        this.$emit("update:itemValue", value);
+        this.$emit("update:itemValue", "0.00");
         this.$emit("hasChanges", true);
       }
       if (!result && error) this.$toastr.e(`${this.fieldLabel} not updated!`, error);
