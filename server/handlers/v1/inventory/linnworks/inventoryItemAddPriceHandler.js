@@ -3,6 +3,9 @@ const { LINNWORKS } = require("../../../../../util/auditLog/logResourceTypes");
 
 module.exports = (fastify) => ({
   addPriceHandler: async (req, res) => {
+    let _result,
+      _error = false;
+
     const { itemInventoryPrices } = fastify.linnworks.formatters;
     const { inventoryItemId, fieldValue, fieldName } = req.body;
     let inventoryPrice = false;
@@ -25,15 +28,22 @@ module.exports = (fastify) => ({
           data: inventoryPrice,
         });
 
-        if (result) return { result, error: false };
-        if (error) return { error, result: false };
+        if (result) {
+          _result = result;
+          return { result, error: false };
+        }
+
+        if (error) {
+          _error = error;
+          return { error, result: false };
+        }
       } catch (error) {
         fastify.winston.error(error);
       } finally {
         fastify.auditLogger.log(
           ADD_PRICE_FIELD,
           req.user.id,
-          fkStockItemId,
+          inventoryItemId,
           LINNWORKS,
           JSON.stringify({
             _result,

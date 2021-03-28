@@ -13,6 +13,7 @@ const {
   inventoryItemUpdatePriceSchema,
   inventoryItemAddPriceSchema,
   inventoryItemSelectToCloneSchema,
+  inventoryItemDeleteDeclinePriceSchema,
 } = require("../../../../schemas/v1/inventory/linnworks");
 /**
  * Info routes endpoints
@@ -36,6 +37,7 @@ module.exports = function (fastify, opts, next) {
     inventoryItemUpdatePriceHandler,
     inventoryItemAddPriceHandler,
     inventoryItemSelectToCloneHandler,
+    inventoryItemDeleteDeclinePriceHandler,
   } = require("../../../../handlers/v1/inventory/linnworks")(fastify);
 
   //-----------------V2 IMPROVED START ------------------------
@@ -86,6 +88,12 @@ module.exports = function (fastify, opts, next) {
     preValidation: fastify.authenticate,
     schema: inventoryItemSelectToCloneSchema,
     handler: inventoryItemSelectToCloneHandler,
+  });
+
+  fastify.post("/inventory/deleteDeclinePrice", {
+    preValidation: fastify.authenticate,
+    schema: inventoryItemDeleteDeclinePriceSchema,
+    handler: inventoryItemDeleteDeclinePriceHandler,
   });
 
   //------------V2 IMPROVED END-----------------------------
