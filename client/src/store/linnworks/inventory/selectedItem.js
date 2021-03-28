@@ -8,7 +8,8 @@ import {
   UPDATE_PRICE_SELECTED_LINNWORKS_ITEM,
   UPDATE_EXTENDED_PROPERTY_SELECTED_LINNWORKS_ITEM,
   UPDATE_TEMPLATE_INSTANT_SELECTED_LINNWORKS_ITEM,
-  ADD_PRICE_SELECTED_LINNWORKS_ITEM
+  ADD_PRICE_SELECTED_LINNWORKS_ITEM,
+  DELETE_DECLINE_PRICE_SELECTED_LINNWORKS_ITEM
 } from "@/store/action-types";
 
 import { SELECTED_LINNWORKS_ITEM_LOADING, SELECTED_LINNWORKS_ITEM_RESULT } from "@/store/mutation-types";
@@ -111,6 +112,19 @@ const selectedItem = {
         {
           method: "post",
           url: `/inventory/addItemPrice`,
+          params: payload,
+          //success: `linnworks/inventory/selectedItem/${SELECTED_LINNWORKS_ITEM_RESULT}`,
+          loading: `linnworks/inventory/selectedItem/${SELECTED_LINNWORKS_ITEM_LOADING}`
+        },
+        { root: true }
+      );
+    },
+    async [DELETE_DECLINE_PRICE_SELECTED_LINNWORKS_ITEM]({ commit, dispatch }, payload) {
+      return await dispatch(
+        "api/requestHandler",
+        {
+          method: "post",
+          url: `/inventory/deleteDeclinePrice`,
           params: payload,
           //success: `linnworks/inventory/selectedItem/${SELECTED_LINNWORKS_ITEM_RESULT}`,
           loading: `linnworks/inventory/selectedItem/${SELECTED_LINNWORKS_ITEM_LOADING}`

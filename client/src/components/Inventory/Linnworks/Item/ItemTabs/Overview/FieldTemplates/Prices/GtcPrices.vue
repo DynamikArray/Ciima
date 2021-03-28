@@ -14,20 +14,26 @@
       :rules="rules.retailPrice"
     />
 
-    <ItemTextFieldPrice
-      v-if="declinePrice"
-      class="ml-2 d-flex"
-      :itemValue.sync="declinePrice"
-      :itemId="item.pkStockItemID"
-      :locationId="item.LocationId"
-      :unlocked="unlocked"
-      fieldName="DeclinePrice"
-      fieldId="DeclinePrice"
-      fieldLabel="Decline Price"
-      fieldHint="Decline Price"
-      @hasChanges="hasChanges"
-      :rules="rules.declinePrice"
-    />
+    <div class="d-flex">
+      <div class="d-flex">
+        <ItemTextFieldPrice
+          v-if="declinePrice"
+          class="ml-2 d-flex"
+          :itemValue.sync="declinePrice"
+          :itemId="item.pkStockItemID"
+          :locationId="item.LocationId"
+          :unlocked="unlocked"
+          fieldName="DeclinePrice"
+          fieldId="DeclinePrice"
+          fieldLabel="Decline Price"
+          fieldHint="Decline Price"
+          @hasChanges="hasChanges"
+          :rules="rules.declinePrice"
+          :includeDeleteButton="true"
+          :itemPriceId="declinePriceId"
+        />
+      </div>
+    </div>
 
     <ItemTextFieldPriceAddNew
       v-if="!declinePrice"
@@ -63,6 +69,26 @@ export default {
     newPrice: false
   }),
   computed: {
+    declinePriceId: {
+      get: function() {
+        if (this.item.prices && this.item.prices.length) {
+          const declinePrice = this.item.prices.filter(price => price.Tag.toUpperCase() == "DECLINE");
+          if (declinePrice && declinePrice.length > 0) {
+            return declinePrice[0].pkRowId || false;
+          }
+        }
+        return false;
+      },
+      set: function(value) {
+        if (this.item.prices && this.item.prices.length) {
+          this.item.prices = this.item.prices.reduce((acc, price) => {
+            if (price.Tag.toUpperCase() == "DECLINE") price.pkRowId = value;
+            acc.push(price);
+            return acc;
+          }, []);
+        }
+      }
+    },
     declinePrice: {
       get: function() {
         if (this.item.prices && this.item.prices.length) {
