@@ -1,11 +1,6 @@
 <template>
   <section id="lotDraftFrom" style="min-height:100%">
-    <v-form
-      ref="lotDraftForm"
-      v-model="blnValidForm"
-      lazy-validation
-      class="pa-3"
-    >
+    <v-form ref="lotDraftForm" v-model="blnValidForm" lazy-validation class="pa-3">
       <div class="d-flex justify-center align-center w-100">
         <div class="align-center justify-start">
           <h4 class="mr-2">Step 1:</h4>
@@ -111,9 +106,7 @@
         <v-col cols="12" sm="6" md="6">
           <div class="d-flex justify-center align-center">
             <v-btn color="grey darken-1" @click="toggleExtraFields">
-              Extra Info<v-icon class="ml-2">{{
-                blnShowExtra ? `fa-caret-up` : `fa-caret-down`
-              }}</v-icon>
+              Extra Info<v-icon class="ml-2">{{ blnShowExtra ? `fa-caret-up` : `fa-caret-down` }}</v-icon>
             </v-btn>
           </div>
         </v-col>
@@ -139,9 +132,7 @@
       <div class="align-center justify-start">
         <h4 class="mr-2 mb-1">
           Generated Ebay Title
-          <span class="overline italic ml-1">
-            (Character Publisher Issuecount Extra Comic Terms)</span
-          >
+          <span class="overline italic ml-1"> (Character Publisher Issuecount Extra Comic Terms)</span>
         </h4>
       </div>
       <div class="d-flex justify-center align-center w-100">
@@ -168,14 +159,9 @@
         <v-card color="primary" dark class="pt-2">
           <v-card-text>
             <h4 class="text-center mb-2">
-              <v-icon class="mr-2">fas fa-cloud-upload-alt</v-icon
-              >{{ savingLotDraftMessage || "Saving ..." }}
+              <v-icon class="mr-2">fas fa-cloud-upload-alt</v-icon>{{ savingLotDraftMessage || "Saving ..." }}
             </h4>
-            <v-progress-linear
-              indeterminate
-              color="white"
-              class="mt-1"
-            ></v-progress-linear>
+            <v-progress-linear indeterminate color="white" class="mt-1"></v-progress-linear>
           </v-card-text>
         </v-card>
       </v-dialog>
@@ -193,24 +179,13 @@ const { mapFields } = createHelpers({
   mutationType: "lots/draft/updateField"
 });
 
-import {
-  CURRENT_LOT_DRAFT_SAVE,
-  LOTS_DRAFT_TITLE_CHECK
-} from "@/store/action-types";
-import {
-  RESET_LOT_DRAFT,
-  CURRENT_LOT_DRAFT_SAVING,
-  UPDATE_API_STATUS
-} from "@/store/mutation-types";
+import { CURRENT_LOT_DRAFT_SAVE, LOTS_DRAFT_TITLE_CHECK } from "@/store/action-types";
+import { RESET_LOT_DRAFT, CURRENT_LOT_DRAFT_SAVING, UPDATE_API_STATUS } from "@/store/mutation-types";
 
 import charactersList from "./formUtil/listCharacters.js";
 import publishersList from "./formUtil/listPublishers.js";
 
-import {
-  fieldNames,
-  fieldRules,
-  formatTitleFromDraft
-} from "./formUtil/formHelpers.js";
+import { fieldNames, fieldRules, formatTitleFromDraft } from "./formUtil/formHelpers.js";
 
 import InventoryTitle from "./formFields/InventoryTitle";
 import IssuesCount from "./formFields/IssuesCount";
@@ -242,12 +217,7 @@ export default {
     ...mapState({
       defaultProductType: state => state.settings.defaultProductType
     }),
-    ...mapFields([
-      ...fieldNames,
-      "imageToCrop",
-      "savingLotDraft",
-      "savingLotDraftMessage"
-    ])
+    ...mapFields([...fieldNames, "imageToCrop", "savingLotDraft", "savingLotDraftMessage"])
   },
   created() {
     switch (this.defaultProductType) {
@@ -267,10 +237,7 @@ export default {
       if (val <= 14) this.price = 19.99;
       if (val > 14 && val < 20) this.price = 24.99;
       if (val >= 20 && val < 30) this.price = 29.99;
-      if (val >= 30 && val < 40) this.price = 39.99;
-      if (val >= 40 && val < 50) this.price = 49.99;
-      if (val >= 50 && val < 60) this.price = 59.99;
-      if (val >= 60) this.price = val * 1.25;
+      if (val >= 30) this.price = val * 1.25;
       this.updateTitleWithFormValues();
     }
   },
@@ -344,10 +311,7 @@ export default {
       this.blnDuplicateTitleCheckError = false;
 
       const title = this.inventoryTitle;
-      const { result } = await this.$store.dispatch(
-        `lots/draft/${LOTS_DRAFT_TITLE_CHECK}`,
-        { title }
-      );
+      const { result } = await this.$store.dispatch(`lots/draft/${LOTS_DRAFT_TITLE_CHECK}`, { title });
 
       //success - no duplicates
       if (result.passed && !result.failed) return true;
@@ -356,9 +320,7 @@ export default {
         this.blnValidForm = false;
         this.blnDuplicateTitleCheckError = true;
         this.blnDuplicateTitleCheckListings = result.items;
-        this.$toastr.e(
-          "This appears to be a Duplicate Title, please change your title and try saving again."
-        );
+        this.$toastr.e("This appears to be a Duplicate Title, please change your title and try saving again.");
         return false;
       }
       return false;
@@ -405,10 +367,7 @@ export default {
     },
     //
     async handleImageUploading() {
-      this.updateLoadingStatus(
-        true,
-        "Preparing images for upload to remote server."
-      );
+      this.updateLoadingStatus(true, "Preparing images for upload to remote server.");
 
       var unsignedUploadPreset = "ciima_lot_photos";
       var cloudName = "ciima"; //FPVLink rebrand
@@ -424,10 +383,7 @@ export default {
         fd.append("folder", "lotPhotos");
 
         try {
-          this.updateLoadingStatus(
-            true,
-            `Uploading image ${i + 1} of ${imagesLength} to remote server`
-          );
+          this.updateLoadingStatus(true, `Uploading image ${i + 1} of ${imagesLength} to remote server`);
 
           const resp = await axios({
             method: "post",
@@ -438,10 +394,7 @@ export default {
           if (resp.data && resp.data.secure_url) {
             this.images[i].src = this.optimizedImageUrl(resp.data.secure_url);
             this.images[i].saved = true;
-            this.updateLoadingStatus(
-              true,
-              ` SAVED image ${i} of ${imagesLength}!`
-            );
+            this.updateLoadingStatus(true, ` SAVED image ${i} of ${imagesLength}!`);
           }
         } catch (e) {
           console.log(e.message);
@@ -478,10 +431,7 @@ export default {
       this.$store
         .dispatch(`lots/draft/${CURRENT_LOT_DRAFT_SAVE}`, draft)
         .then(result => {
-          this.$store.commit(
-            `api/${UPDATE_API_STATUS}`,
-            `Saved | ${this.locationCode} | ${this.inventoryTitle}`
-          );
+          this.$store.commit(`api/${UPDATE_API_STATUS}`, `Saved | ${this.locationCode} | ${this.inventoryTitle}`);
 
           this.$toastr.s(`Draft Saved! ${JSON.stringify(result)}`);
           //clear draft and start next one
