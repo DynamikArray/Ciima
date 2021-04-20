@@ -3,9 +3,7 @@
     <!--Start Page Heading -->
     <div class="d-flex flex-wrap justify-space-between align-center">
       <div class="d-flex flex-shrink">
-        <h1 class="ma-0">
-          <v-icon large class="mr-1">fa-chart-bar</v-icon>Analytics
-        </h1>
+        <h1 class="ma-0"><v-icon large class="mr-1">fa-chart-bar</v-icon>Analytics</h1>
       </div>
       <div class="d-flex flex-grow flex-wrap m-3">
         <v-tabs
@@ -26,11 +24,7 @@
 
     <v-divider class="mt-1 mb-2"></v-divider>
 
-    <v-tabs-items
-      v-model="tab"
-      class="w-100 d-flex flex-column align-self-stretch"
-      style="background-color:transparent"
-    >
+    <v-tabs-items v-model="tab" class="w-100 d-flex flex-column align-self-stretch" style="background-color:transparent">
       <v-tab-item key="weekly" class="mx-2 pb-3">
         <WeeklyCharts />
       </v-tab-item>
@@ -69,23 +63,14 @@
         <v-divider class="my-1"></v-divider>
 
         <div class="d-flex flex-grow justify-start align-center">
-          <v-dialog
-            v-model="analyticsLoading"
-            hide-overlay
-            persistent
-            width="300"
-          >
+          <v-dialog v-model="analyticsLoading" hide-overlay persistent width="300">
             <v-card color="primary" dark class="pt-2">
               <v-card-text>
                 <h4 class="text-center mb-2">
                   <v-icon class="mr-2">fas fa-calculator</v-icon>
                   Crunching the Number ...
                 </h4>
-                <v-progress-linear
-                  indeterminate
-                  color="white"
-                  class="mt-1"
-                ></v-progress-linear>
+                <v-progress-linear indeterminate color="white" class="mt-1"></v-progress-linear>
               </v-card-text>
             </v-card>
           </v-dialog>
@@ -109,6 +94,7 @@
 </template>
 
 <script>
+/*COMMENT*/
 import { mapState } from "vuex";
 import { ANALYTICS_FETCH } from "@/store/action-types";
 

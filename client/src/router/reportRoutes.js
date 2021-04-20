@@ -33,7 +33,7 @@ const reportRoutes = [
     path: "/analytics",
     props: true,
     name: "analytics",
-    component: () => import(/*webpackChunkName: "analytics"*/ "@/views/Analytics.vue"),
+    component: () => import(/*webpackChunkName: "analytics-view"*/ "@/views/Analytics.vue"),
     meta: {
       requiresAuth: true
     }
