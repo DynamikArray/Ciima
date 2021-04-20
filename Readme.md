@@ -57,5 +57,6 @@ Remove ?'s from the image urls so they match the file structure on the server.
 
 ```
 ADDING inventory table???
-
 ```
+
+### Changes
