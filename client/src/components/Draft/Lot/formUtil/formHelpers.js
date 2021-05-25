@@ -15,8 +15,7 @@ const fieldRules = {
   inventoryTitle: [
     v => !!v || "Inventory Title is a required field",
     v => {
-      if (v.toLowerCase().includes("mystery"))
-        return "Ebay does not allow the word Mystery, please change this word";
+      if (v.toLowerCase().includes("mystery")) return "Ebay does not allow the word Mystery, please change this word";
       return false;
     },
     v => v.length <= 80 || "inventoryTitle must be less than 80 characters"
@@ -36,8 +35,7 @@ const fieldRules = {
   locationCode: [
     v => !!v || "Location code is a required field",
     v => {
-      if (!v.startsWith("EBAY-LOTS-"))
-        return "Location code must start with EBAY-LOTS-";
+      if (!v.startsWith("EBAY-LOTS-")) return "Location code must start with EBAY-LOTS-";
       return false;
     },
     v => {
@@ -48,11 +46,12 @@ const fieldRules = {
   ],
   issuesCount: [
     v => !!v || "Issues Count is a required field",
-    v =>
-      !!Number(v) > 0 ||
-      "Issues Count must be greater than zero or is not a number"
+    v => !!Number(v) > 0 || "Issues Count must be greater than zero or is not a number"
   ],
-  price: [v => !!v || "Price is a required field"]
+  price: [
+    v => !!v || "Price is a required field",
+    v => !!Number(v) > 0 || "Price must be greater than zero or is not a number"
+  ]
 };
 
 const formatTitleFromDraft = draft => {
