@@ -12,7 +12,9 @@ const adjustTemplatesInstant = async (pkStockItemID) => {
     const adjustOpts = `inventoryItemIds=${JSON.stringify([
       pkStockItemID,
     ])}&source=EBAY&subSource=EBAY1&adjustmentOptions=${JSON.stringify({
+      Title: true,
       Price: true,
+      Description: true,
     })}`;
 
     const { result, error } = await linnworks.makeApiCall({
@@ -27,13 +29,7 @@ const adjustTemplatesInstant = async (pkStockItemID) => {
     _error = e;
     linnworks.logger.error(e);
   } finally {
-    await auditLogger.log(
-      ADJUST_TEMPLATE_INSTANT,
-      -1,
-      pkStockItemID,
-      LINNWORKS,
-      JSON.stringify({ _result, _error })
-    );
+    await auditLogger.log(ADJUST_TEMPLATE_INSTANT, -1, pkStockItemID, LINNWORKS, JSON.stringify({ _result, _error }));
     //send back our results finally
     return { adjustResult: _result, adjustError: _error };
   }
