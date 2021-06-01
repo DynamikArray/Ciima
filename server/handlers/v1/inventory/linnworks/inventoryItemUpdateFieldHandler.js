@@ -1,6 +1,9 @@
 const { LINNWORKS } = require("../../../../../util/auditLog/logResourceTypes");
 const { UPDATE_ITEM_FIELD } = require("../../../../../util/auditLog/logActionTypes");
 
+const getInventoryItemTitles = require("../../../../../util/linnworks/helpers/getInventoryItemTitles");
+const updateInventoryItemTitles = require("../../../../../util/linnworks/helpers/updateInventoryItemTitles");
+
 module.exports = (fastify) => ({
   updateFieldHandler: async (req, res) => {
     let urlEndpoint = false;
@@ -35,13 +38,21 @@ module.exports = (fastify) => ({
         data: formattedData,
       });
 
-      if (result && !error) return { result };
+      if (result && !error) {
+        if (fieldName == "ItemTitle") {
+          const { updateTitlesResult, updateTitlesError } = await updateItemTitles(inventoryItemId, fieldValue);
+          if (updateTitlesResult && !updateTitlesError) return { result };
+          if (!updateTitlesResult && updateTitlesError) return { error: updateTitlesError };
+        }
+        return { result };
+      }
+
       if (error && !result) {
-        localErrorHandler(error);
+        localErrorHandler("updateFieldHandler", error);
         return { error };
       }
     } catch (error) {
-      localErrorHandler(error);
+      localErrorHandler("updateFieldHandler", error);
     } finally {
       fastify.auditLogger.log(
         UPDATE_ITEM_FIELD,
@@ -52,8 +63,31 @@ module.exports = (fastify) => ({
       );
     }
 
-    function localErrorHandler(error) {
-      fastify.winston.error(JSON.stringify({ method: "updateFieldHandler", error: error }));
+    async function updateItemTitles(inventoryItemId, itemTitle) {
+      try {
+        const { titlesResult, titlesError } = await getInventoryItemTitles(inventoryItemId);
+        if (titlesResult && !titlesError) {
+          if (titlesResult.length > 1) {
+            localErrorHandler("updateItemTitles", "More than 1 title in updateItemTitles for ebay listing titles.");
+            return { error: "More than 1 title in updateItemTitles for ebay listing titles." };
+          }
+
+          if (titlesResult.length == 1) {
+            titlesResult[0].Title = itemTitle;
+            return await updateInventoryItemTitles(titlesResult[0], inventoryItemId);
+          }
+
+          return { error: "No Listing Titles matched" };
+        }
+      } catch (updateItemTitlesExeception) {
+        console.log("ERROR->", updateItemTitlesExeception);
+        localErrorHandler("updateItemTitles", updateItemTitlesExeception);
+        return { error: JSON.stringify(updateItemTitlesExeception.message) };
+      }
+    }
+
+    function localErrorHandler(method, error) {
+      fastify.winston.error(JSON.stringify({ method: method, error: error }));
     }
   },
 });
