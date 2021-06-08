@@ -1,7 +1,7 @@
 <template>
   <v-slide-x-reverse-transition mode="out-in">
     <div class="caption" :key="`transition_${item.pkStockItemID}`">
-      {{ item.LastPriced | dateTime }}
+      {{ lastPricedDateTime | dateTime }}
     </div>
   </v-slide-x-reverse-transition>
 </template>
@@ -11,6 +11,11 @@ export default {
   props: {
     item: {
       type: [Object]
+    }
+  },
+  computed: {
+    lastPricedDateTime() {
+      return this.item.LastPriced + " UTC";
     }
   }
 };
