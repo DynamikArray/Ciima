@@ -15,9 +15,9 @@
           color="primary"
           id="analyticsTabs"
         >
-          <v-tab> <v-icon left>fa fa-calendar-week</v-icon>Weekly</v-tab>
-          <v-tab> <v-icon left>fa fa-calendar-day</v-icon>Daily</v-tab>
           <v-tab> <v-icon left>fa fa-calendar-alt</v-icon>Detailed</v-tab>
+          <v-tab> <v-icon left>fa fa-calendar-day</v-icon>Daily</v-tab>
+          <v-tab> <v-icon left>fa fa-calendar-week</v-icon>Weekly</v-tab>
         </v-tabs>
       </div>
     </div>
@@ -25,14 +25,6 @@
     <v-divider class="mt-1 mb-2"></v-divider>
 
     <v-tabs-items v-model="tab" class="w-100 d-flex flex-column align-self-stretch" style="background-color:transparent">
-      <v-tab-item key="weekly" class="mx-2 pb-3">
-        <WeeklyCharts />
-      </v-tab-item>
-
-      <v-tab-item key="daily" class="pt-2">
-        <DailyCharts />
-      </v-tab-item>
-
       <v-tab-item key="detailed" class="pt-2">
         <div class="d-flex align-center justify-center">
           <AnalyticsGrandTotal
@@ -88,6 +80,14 @@
           />
         </div>
         <!--Page Content-->
+      </v-tab-item>
+
+      <v-tab-item key="daily" class="pt-2">
+        <DailyCharts />
+      </v-tab-item>
+
+      <v-tab-item key="weekly" class="mx-2 pb-3">
+        <WeeklyCharts />
       </v-tab-item>
     </v-tabs-items>
   </div>

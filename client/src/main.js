@@ -42,6 +42,11 @@ Vue.filter("daysAsString", days => {
   return `Last ${days} Days`;
 });
 
+Vue.filter("upperCase", value => {
+  if (!value && typeof value !== "string") return value;
+  return value.toUpperCase();
+});
+
 //for handling currencys
 import VueCurrencyFilter from "vue-currency-filter";
 Vue.use(VueCurrencyFilter, {
@@ -51,6 +56,11 @@ Vue.use(VueCurrencyFilter, {
   fractionSeparator: ".",
   symbolPosition: "front",
   symbolSpacing: true
+});
+
+//for handling numbers that arent currency
+Vue.filter("commaNumber", value => {
+  return value.toLocaleString();
 });
 
 // import plugin
