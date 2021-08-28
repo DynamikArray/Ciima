@@ -35,6 +35,8 @@ import reports from "@/store/reports";
 import repricer from "@/store/repricer";
 import pricingService from "@/store/pricingService/pricingService";
 
+import dashboard from "@/store/dashboard/dashboard";
+
 export default new Vuex.Store({
   modules: {
     api,
@@ -59,7 +61,8 @@ export default new Vuex.Store({
     pricelist,
     reports,
     repricer,
-    pricingService
+    pricingService,
+    dashboard
   },
   state: {},
   mutations: {}

@@ -33,6 +33,7 @@ const user = {
     userName: state => state.user.username,
     displayName: state => state.user.displayname,
     displayColor: state => state.user.displaycolor,
+    userId: state => state.user.id,
     email: state => state.user.email,
     roles: state => state.user.roles,
 

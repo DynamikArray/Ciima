@@ -51,8 +51,14 @@ module.exports = (fastify) => ({
    * @return {Promise}     [description]
    */
   userListHandler: async (req, res) => {
-    const userListQuery =
+    let userListQuery =
       "SELECT u.id as value, u.displayName as text, u.displaycolor as color FROM slc_users u WHERE u.inactive = 0 ORDER BY displayName ASC";
+
+    if (req.query.role) {
+      userListQuery =
+        "SELECT u.id as value, u.displayName as text, u.displaycolor as color FROM slc_users u WHERE u.inactive = 0 AND u.roles LIKE '%inputter%' ORDER BY displayName ASC";
+    }
+
     try {
       const [rows, fields] = await fastify.mysql.query(userListQuery);
       return { result: rows };
