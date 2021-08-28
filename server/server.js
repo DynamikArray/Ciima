@@ -90,6 +90,13 @@ fastify.register(require("./routes/v1/reporting"), { prefix: "v1" });
 fastify.register(require("./routes/v1/repricingService"), {
   prefix: "v1/repricingService",
 });
+//Pricing Service
+fastify.register(require("./routes/v1/pricingService"), {
+  prefix: "v1/pricingService",
+});
+//
+//
+//
 //
 //
 //catch all route for loading client application

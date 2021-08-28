@@ -3,19 +3,20 @@ const toolRoutes = [
     path: "/tools",
     props: true,
     name: "tools",
-    component: () => import(/*webpackChunkName: "tools" */ "@/views/Tools.vue"),
+    component: () => import(/*webpackChunkName: "tools" */ "@/views/Tools/Tools.vue"),
     meta: {
-      requireAuth: true
+      requiresAuth: true,
+      requiresManager: true
     }
   },
   {
     path: "/pricesync",
     props: true,
     name: "pricesync",
-    component: () =>
-      import(/*webpackChunkName: "pricesync"*/ "@/views/PriceSync.vue"),
+    component: () => import(/*webpackChunkName: "pricesync"*/ "@/views/Tools/PriceSync.vue"),
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      requiresManager: true
     }
   },
 
@@ -23,10 +24,21 @@ const toolRoutes = [
     path: "/repricer",
     props: true,
     name: "repricer",
-    component: () =>
-      import(/*webpackChunkName: "pricesync"*/ "@/views/Repricer.vue"),
+    component: () => import(/*webpackChunkName: "pricesync"*/ "@/views/Tools/Repricer.vue"),
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      requiresManager: true
+    }
+  },
+
+  {
+    path: "/pricingService",
+    props: true,
+    name: "pricingService",
+    component: () => import(/*webpackChunkName: "pricingService"*/ "@/views/Tools/PricingService.vue"),
+    meta: {
+      requiresAuth: true,
+      requiresManager: true
     }
   }
 ];

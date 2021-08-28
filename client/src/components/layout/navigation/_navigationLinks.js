@@ -9,13 +9,13 @@ module.exports = [
   { menuDivider: true },
   { icon: "fa fa-boxes", text: "Search Inventory", to: "inventory" },
   { icon: "fa fa-cube", text: "Locations", to: "locations" },
-  { menuDivider: true },
-  { icon: "fa fa-chart-bar", text: "Analytics", to: "analytics" },
-  { menuDivider: true },
-  { icon: "fa fa-file-invoice", text: "Sold Items Report", to: "sold.items.report" },
-  { icon: "fa fa-file-invoice-dollar", text: "Category Sales Report", to: "category.sales.report" },
-  { menuDivider: true },
-  { icon: "fa fab fa-tools", text: "Tools & Utilities", to: "tools" }
+  { menuDivider: true, roles: ["isManager"] },
+  { icon: "fa fa-chart-bar", text: "Analytics", to: "analytics", roles: ["isManager"] },
+  { menuDivider: true, roles: ["isManager"] },
+  { icon: "fa fa-file-invoice", text: "Sold Items Report", to: "sold.items.report", roles: ["isManager"] },
+  { icon: "fa fa-file-invoice-dollar", text: "Category Sales Report", to: "category.sales.report", roles: ["isManager"] },
+  { menuDivider: true, roles: ["isManager"] },
+  { icon: "fa fab fa-tools", text: "Tools & Utilities", to: "tools", roles: ["isManager"] }
 ];
 /*
 MOVED TO BUTTONS IN TOOLS

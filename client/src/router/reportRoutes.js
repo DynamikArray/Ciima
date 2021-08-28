@@ -5,7 +5,8 @@ const reportRoutes = [
     name: "sold.items.report",
     component: () => import(/*webpackChunkName: "reports"*/ "@/views/SoldItemsReport.vue"),
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      requiresManager: true
     }
   },
 
@@ -15,7 +16,8 @@ const reportRoutes = [
     name: "category.sales.report",
     component: () => import(/*webpackChunkName: "reports"*/ "@/views/CategorySalesReport.vue"),
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      requiresManager: true
     }
   },
 
@@ -25,7 +27,8 @@ const reportRoutes = [
     name: "audit",
     component: () => import(/*webpackChunkName: "audit"*/ "@/views/Audit.vue"),
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      requiresManager: true
     }
   },
 
@@ -35,7 +38,8 @@ const reportRoutes = [
     name: "analytics",
     component: () => import(/*webpackChunkName: "analytics-view"*/ "@/views/Analytics.vue"),
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      requiresManager: true
     }
   },
 
@@ -45,7 +49,8 @@ const reportRoutes = [
     name: "commish",
     component: () => import(/*webpackChunkName: "commish"*/ "@/views/Commish.vue"),
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      requiresManager: true
     }
   }
 ];

@@ -9,6 +9,7 @@ import inventoryRoutes from "./inventoryRoutes";
 import priceMatchRoutes from "./priceMatchRoutes";
 import reportRoutes from "./reportRoutes";
 import toolRoutes from "./toolRoutes";
+import utilityRoutes from "./utilityRoutes";
 
 let router = new Router({
   mode: "history",
@@ -20,15 +21,7 @@ let router = new Router({
     ...priceMatchRoutes,
     ...reportRoutes,
     ...toolRoutes,
-    {
-      path: "*",
-      props: true,
-      name: "404",
-      component: () => import(/*webpackChunkName: "404"*/ "@/views/404.vue"),
-      meta: {
-        requiresAuth: false
-      }
-    }
+    ...utilityRoutes
   ]
 });
 
@@ -37,7 +30,15 @@ router.beforeEach((to, from, next) => {
     store
       .dispatch("user/loginCheck", false)
       .then(resp => {
-        if (resp) next(); //proceed
+        if (resp) {
+          /* Check for our isManger flag */
+          if (to.matched.some(record => record.meta.requiresManager)) {
+            /* if not manager deny this route */
+            if (!store.getters["user/isManager"]) next("/denied");
+          }
+          /*Made it through, let em continue*/
+          next();
+        }
         if (!resp) next("/login"); //fail to login
       })
       .catch(err => {
