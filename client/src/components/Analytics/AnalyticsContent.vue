@@ -264,8 +264,6 @@ export default {
       const results = [];
       const groupedData = this.groupedData;
 
-      console.log(groupedData);
-
       for (const [user, count] of Object.entries(groupedData)) {
         let userTotal = 0;
         for (const [day, items] of Object.entries(count)) {
