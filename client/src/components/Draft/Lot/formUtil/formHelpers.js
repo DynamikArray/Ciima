@@ -61,8 +61,7 @@ const formatTitleFromDraft = draft => {
   if (draft.publisher) titleString.push(draft.publisher.join(" "));
   if (draft.issuesCount) titleString.push(draft.issuesCount);
   titleString.push(terms.join(" "));
-  return shorten(titleString.join(" "), 80);
-  // return toTitleCase(shorten(titleString.join(" "), 80));
+  return toTitleCase(shorten(titleString.join(" "), 80));
 };
 
 // Shorten a string to less than maxLen characters without truncating words.
