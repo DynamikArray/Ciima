@@ -8,6 +8,12 @@ const checkLocationCodeSql = (locationCode) => {
                   DECLARE @ebayAdults NVARCHAR(MAX);
                   SET @ebayAdults = 'EBAY-ADULTS';
 
+                  DECLARE @ebayLots NVARCHAR(MAX);
+                  SET @ebayLots = 'EBAY-LOTS';
+
+                  DECLARE @ebayGtcs NVARCHAR(MAX);
+                  SET @ebayGtcs = 'EBAY-GTCS';
+
                   DECLARE @locationCode NVARCHAR(MAX);
                   SET @locationCode = '${locationCode}';
 
@@ -25,7 +31,7 @@ const checkLocationCodeSql = (locationCode) => {
                   LEFT OUTER JOIN ItemLocation il on il.fkStockItemId = si.pkStockItemID AND il.fkLocationId = sLoc.pkStockLocationId
                   WHERE
                       (
-                      (pc.CategoryName = @ebaySets OR pc.CategoryName = @ebaySingles OR pc.CategoryName = @ebayAdults)
+                      (pc.CategoryName = @ebaySets OR pc.CategoryName = @ebaySingles OR pc.CategoryName = @ebayAdults OR pc.CategoryName = @ebayLots OR pc.CategoryName = @ebayGtcs)
                       AND
                       (il.BinRackNumber = @locationCode)
                       AND

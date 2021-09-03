@@ -19,11 +19,7 @@
         </v-col>
 
         <v-col cols="3">
-          <Grade
-            :value="grade"
-            :input="handleInputGrade"
-            :rules="fieldRules.grade"
-          />
+          <Grade :value="grade" :input="handleInputGrade" :rules="fieldRules.grade" />
         </v-col>
 
         <v-col cols="2">
@@ -90,11 +86,7 @@
                   :rules="fieldRules.inventoryTitle"
                 >
                   <template v-slot:append-outer>
-                    <v-btn
-                      style="margin-top:-5px"
-                      color="primary"
-                      @click="toggleExtraDescriptionDetails"
-                    >
+                    <v-btn style="margin-top:-5px" color="primary" @click="toggleExtraDescriptionDetails">
                       <v-icon class="mr-1">{{ extraDescriptionIcon() }}</v-icon
                       >More
                     </v-btn>
@@ -235,11 +227,7 @@
               :rules="fieldRules.ebaySiteCategoryId"
             >
             </v-text-field>
-            <v-btn
-              color="primary"
-              class="mx-2"
-              @click="showCategoryLookup = true"
-            >
+            <v-btn color="primary" class="mx-2" @click="showCategoryLookup = true">
               <v-icon class="mr-1">fa fa-search</v-icon>Search
             </v-btn>
           </div>
@@ -262,11 +250,7 @@
             :rules="fieldRules.ebaySiteCategoryId"
           >
             <template v-slot:append-outer>
-              <v-btn
-                color="primary"
-                class="mx-2"
-                @click="showCategoryLookup = false"
-              >
+              <v-btn color="primary" class="mx-2" @click="showCategoryLookup = false">
                 <v-icon class="mr-1">fa fa-times-circle</v-icon>Cancel
               </v-btn>
             </template>

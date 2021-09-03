@@ -14,11 +14,13 @@
           id="locationCode"
           @input="handleInputLocationCode"
           @focus="handleFocusLocationCode"
+          @blur="checkLocationCode"
           name="locationCode"
           outlined
           label="Location"
           hint="Location code for the item"
           :rules="fieldRules.locationCode"
+          :errorMessages="locationCodeErrorMessages"
           counter
         ></v-text-field>
       </div>
@@ -211,7 +213,8 @@ export default {
     //title: "25 Comic Book Lot Comics Collection Set Run Box",
     fieldRules,
     charactersList,
-    publishersList
+    publishersList,
+    locationCodeErrorMessages: []
   }),
   computed: {
     ...mapState({
@@ -324,6 +327,35 @@ export default {
         return false;
       }
       return false;
+    },
+
+    //
+    //
+    //
+    async checkLocationCode(e) {
+      const locationCode = e.target.value;
+
+      const res = await this.$store
+        .dispatch(`api/requestHandler`, {
+          method: "post",
+          url: "inventory/utility/checkLocationCode",
+          params: { locationCode }
+        })
+        .catch(err => {
+          this.$toastr.e("Couldnt verify location");
+        });
+
+      if (res.result && !res.error) {
+        if (res.result.length) {
+          this.locationCodeErrorMessages = ["Items exist in location already"];
+        } else {
+          this.locationCodeErrorMessages = [];
+        }
+      }
+
+      if (res.error && !res.result) {
+        this.$toastr.e(res.error);
+      }
     },
 
     //
