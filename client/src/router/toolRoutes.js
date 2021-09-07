@@ -32,10 +32,10 @@ const toolRoutes = [
   },
 
   {
-    path: "/pricingService",
+    path: "/repackingService",
     props: true,
-    name: "pricingService",
-    component: () => import(/*webpackChunkName: "pricingService"*/ "@/views/Tools/PricingService.vue"),
+    name: "repackingService",
+    component: () => import(/*webpackChunkName: "repackingService"*/ "@/views/Tools/RepackingService.vue"),
     meta: {
       requiresAuth: true,
       requiresManager: true

@@ -33,6 +33,7 @@
 <script>
 import { mapGetters } from "vuex";
 import { GET_SELECTED_LINNWORKS_ITEM, UPDATE_TEMPLATE_INSTANT_SELECTED_LINNWORKS_ITEM } from "@/store/action-types";
+import { SELECTED_LINNWORKS_ITEM_CLEAR } from "@/store/mutation-types";
 
 import ItemTabsContainer from "./ItemTabs/ItemTabsContainer";
 
@@ -77,6 +78,8 @@ export default {
       this.unlocked = false;
       this.blnHasChanges = false;
       this.$emit("closed");
+
+      this.$store.commit(`linnworks/inventory/selectedItem/${SELECTED_LINNWORKS_ITEM_CLEAR}`);
     },
     hasChanges(bln) {
       this.blnHasChanges = bln;

@@ -78,7 +78,7 @@ import VuetifyConfirm from "vuetify-confirm";
 Vue.use(VuetifyConfirm, {
   vuetify,
   buttonTrueText: "Ok",
-  buttonTrueColor: "success",
+  buttonTrueColor: "green",
   buttonFalseText: "Cancel",
   buttonFalseColor: "red",
   color: "red",

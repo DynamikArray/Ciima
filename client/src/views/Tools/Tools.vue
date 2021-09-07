@@ -13,17 +13,17 @@
           <v-card-title>
             <h4 class="subtitle">
               <v-icon class="mr-2">fa fa-funnel-dollar</v-icon>
-              Pricing Service (Per Comic Price)
+              Repacking Service (Pull For Amazon)
             </h4>
           </v-card-title>
           <v-card-text>
             <v-divider class="mb-3" />
             <div class="subtitle-1">
-              Service to handle unstocking items as they meet a Per Comic Price. Query existing items with extended Per Comic
-              Price metrics and perform needed unstocking actions.
+              Repacking Service to handle pulling items to send to Amazon instead. Handles searching for items using a Per
+              Comic Price, allowing to be marked for unstocking. Price metrics and perform needed unstocking actions.
             </div>
-            <v-btn :to="{ name: 'pricingService' }" class="ma-3" color="primary">
-              <v-icon class="mr-2">fa fa-funnel-dollar</v-icon>Pricing Service
+            <v-btn :to="{ name: 'repackingService' }" class="ma-3" color="primary">
+              <v-icon class="mr-2">fa fa-archive</v-icon>Repacking Service
             </v-btn>
           </v-card-text>
         </v-card>

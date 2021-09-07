@@ -33,7 +33,7 @@ import pricelist from "@/store/pricelist/pricelist";
 import reports from "@/store/reports";
 
 import repricer from "@/store/repricer";
-import pricingService from "@/store/pricingService/pricingService";
+import repackingService from "@/store/repackingService/repackingService";
 
 import dashboard from "@/store/dashboard/dashboard";
 
@@ -62,7 +62,8 @@ export default new Vuex.Store({
     reports,
     repricer,
     pricingService,
-    dashboard
+    dashboard,
+    repackingService
   },
   state: {},
   mutations: {}
