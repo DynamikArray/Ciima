@@ -73,7 +73,7 @@ export default {
     },
     saveChanges(item, fieldName, fieldValue) {
       if (this.hasErrors) {
-        this.$toastr.e("Price has errors, or is invalid!");
+        this.$toastr.e("Issue Numbers has errors, or is invalid!");
       } else {
         this.$store
           .dispatch(`openDrafts/${OPEN_DRAFTS_UPDATE_DRAFT}`, {
@@ -84,12 +84,11 @@ export default {
           .then(results => {
             if (results.result.affectedRows == 1 && results.result.changedRows == 1) {
               const strMessage = `${fieldName} was updated to ${fieldValue}`;
-              this.item.price = fieldValue;
               this.$toastr.s(strMessage);
               this.$store.commit(`api/${UPDATE_API_STATUS}`, strMessage, {
                 root: true
               });
-              item.issueNumbers = fieldValue;
+              this.item.issueNumbers = fieldValue;
               this.$emit("update:item", item);
             }
           })
