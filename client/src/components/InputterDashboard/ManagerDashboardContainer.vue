@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container fluid class="ManagerDashboardContainer">
     <v-row no-gutters>
       <v-col>
         <div class="d-flex align-center justify-start">
@@ -17,15 +17,22 @@
     <v-row>
       <v-col>
         <div class="d-flex justify-space-around align-center grey darken-4 px-2 pt-3 pb-1 flex-wrap">
-          <UserSelect
-            @userSelected="userSelected"
-            :selectedUserId="selectedUserId"
-            lableText=""
-            componentClass="align-center"
-            roleToSelect="inputter"
-            lableText="Select User:"
-            class="mx-2"
-          />
+          <div class="d-flex align-center justify-start">
+            <UserSelect
+              @userSelected="userSelected"
+              :selectedUserId="selectedUserId"
+              lableText=""
+              componentClass="align-center"
+              roleToSelect="inputter"
+              lableText="Select User:"
+              class="mx-2"
+            />
+            <div class="d-flex align-start" v-if="!selectedUserId">
+              <h3 class="blink warning--text">
+                <v-icon class="warning--text mr-1 mb-2">far fa-hand-point-left</v-icon>Select An Inputter
+              </h3>
+            </div>
+          </div>
 
           <WeekSelect class="mx-2 mb-2" :startDate="getStartDate" :endDate="getEndDate" @changeWeek="weekSelected" />
         </div>
@@ -62,7 +69,7 @@
       </v-col>
     </v-row>
 
-    <SelectUserDialog :selectedUserId="selectedUserId" @userSelected="userSelected" />
+    <!-- <SelectUserDialog :selectedUserId="selectedUserId" @userSelected="userSelected" /> -->
   </v-container>
 </template>
 
@@ -87,7 +94,7 @@ import CurrentWeekGoals from "./CurrentWeek/CurrentWeekGoals";
 
 import GridDraftsSummary from "./GridDraftsSummary/GridDraftsSummary";
 
-import SelectUserDialog from "./SelectUserDialog";
+// import SelectUserDialog from "./SelectUserDialog";
 
 export default {
   name: "ManagerDashboardContainer",
@@ -98,8 +105,8 @@ export default {
     CurrentWeekGoals,
     CurrentWeekResults,
     CurrentWeekProgress,
-    GridDraftsSummary,
-    SelectUserDialog
+    GridDraftsSummary
+    // SelectUserDialog
   },
   data: () => ({
     userDialog: false,
@@ -109,7 +116,7 @@ export default {
     endingDate: false
   }),
   mounted() {
-    this.userDialog = true;
+    this.userDialog = false;
   },
   beforeDestroy() {
     this.$store.commit(`dashboard/${DASHBOARD_DAILY_RESULTS_CLEAR}`);
@@ -172,4 +179,25 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.blink {
+  animation: blink 2.5s linear infinite;
+}
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 50;
+  }
+  50% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 50;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+</style>
