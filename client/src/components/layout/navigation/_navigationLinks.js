@@ -1,4 +1,6 @@
 module.exports = [
+  { icon: "fas fa-chart-line", text: "Dashboard", to: "homepage" },
+  { menuDivider: true },
   //{ icon: "fa fa-home", text: "Home", to: "home" },
   { icon: "fa fa-search", text: "Title Search", to: "titles" },
   { icon: "fa fa-list-ol", text: "Issue Lookup", to: "issues" },
@@ -8,7 +10,7 @@ module.exports = [
   { icon: "fa fa-list-alt", text: "View Drafts", to: "drafts" },
   { menuDivider: true },
   { icon: "fa fa-boxes", text: "Search Inventory", to: "inventory" },
-  { icon: "fa fa-cube", text: "Locations", to: "locations" },
+  { icon: "fa fa-cube", text: "Locations", to: "locations", roles: ["isManager"] },
   { menuDivider: true, roles: ["isManager"] },
   { icon: "fa fa-chart-bar", text: "Analytics", to: "analytics", roles: ["isManager"] },
   { menuDivider: true, roles: ["isManager"] },

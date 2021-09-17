@@ -26,7 +26,8 @@ const inventoryRoutes = [
     name: "locations",
     component: () => import(/*webpackChunkName: "Locations"*/ "@/views/Locations.vue"),
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      requiresManager: true
     }
   }
 ];
