@@ -10,11 +10,13 @@ const dashboard = {
   state: {
     loading: false,
     dailyResults: [],
-    userDraftsSummary: []
+    userDraftsSummary: [],
+    userTargetDollars: 0
   },
   getters: {
     dailyResults: state => state.dailyResults,
     userDraftsSummary: state => state.userDraftsSummary,
+    targetInDollars: state => state.userTargetDollars,
     percentComplete: state => {
       return state.dailyResults.reduce((acc, item) => {
         return acc + item.percentOfTarget;
@@ -28,10 +30,12 @@ const dashboard = {
     [DASHBOARD_DAILY_RESULTS](state, data) {
       state.dailyResults = data.userTotals;
       state.userDraftsSummary = data.userDrafts;
+      state.userTargetDollars = data.userTarget.targetValue;
     },
     [DASHBOARD_DAILY_RESULTS_CLEAR](state) {
       state.dailyResults = [];
       state.userDraftsSummary = [];
+      state.userTargetDollars = 0;
     }
   },
   actions: {

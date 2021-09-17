@@ -16,7 +16,7 @@
         </div>
         <div class="d-flex align-center justify-start">
           <h3 v-if="!isManager">{{ getTargetScore | commaNumber }}</h3>
-          <h3 v-if="isManager">{{ targetAmountInDollars | currency }}</h3>
+          <h3 v-if="isManager">{{ targetInDollars | currency }}</h3>
         </div>
       </div>
     </div>
@@ -33,18 +33,18 @@ export default {
     results: [Boolean, Array]
   },
   data: () => ({
-    targetScore: config.targetScore,
-    targetAmountInDollars: config.targetAmountInDollars
+    targetScore: config.targetScore
   }),
   computed: {
     ...mapGetters({
-      isManager: "user/isManager"
+      isManager: "user/isManager",
+      targetInDollars: "dashboard/targetInDollars"
     }),
     getTargetScore() {
       return this.targetScore;
     },
     getDollarConversion() {
-      return this.targetScore / this.targetAmountInDollars;
+      return this.targetScore / this.targetInDollars;
     },
     getCurrentScore() {
       return Math.round(this.getCurrentDollars * this.getDollarConversion);

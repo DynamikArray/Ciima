@@ -5,7 +5,6 @@ export const dashboard = {
   formatDatePlain: "MMM DD, YYYY",
   formatDateTitleString: "MMM Do",
   targetScore: 1000000,
-  targetAmountInDollars: 8000,
   chartOptions: {
     colors: {
       white: "#FFFFFF",

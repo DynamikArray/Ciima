@@ -1,4 +1,3 @@
-const { analytics } = require("../../../config/appConstants");
 const {
   buildUserDailyTotalsQuery,
   buildUserDraftsInputtedForWeekQuery,
@@ -11,12 +10,16 @@ module.exports = (fastify) => ({
     const { userId, startDate, endDate } = req.query;
     const targetValue = await getTargetValueForUser(fastify.mysql, userId);
 
+    const userTarget = {
+      targetValue: targetValue,
+    };
+
     const userDailyTotals = buildUserDailyTotalsQuery({ userId, targetValue, startDate, endDate });
     const userDraftsForWeek = buildUserDraftsInputtedForWeekQuery({ userId, startDate, endDate });
 
     const [userTotals] = await fastify.mysql.query(userDailyTotals.query);
     const [userDrafts] = await fastify.mysql.query(userDraftsForWeek.query);
 
-    return { result: { userTotals, userDrafts } };
+    return { result: { userTotals, userDrafts, userTarget } };
   },
 });
