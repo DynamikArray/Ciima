@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { format, addDays } from "date-fns";
+import { format, addDays, parse } from "date-fns";
 import { dashboard as config } from "@/config";
 
 import BarChartWrapper from "../Chart/BarChartWrapper";
@@ -32,6 +32,7 @@ export default {
     BarChartWrapper
   },
   data: () => ({
+    testVar: "",
     colors: config.chartOptions.colors,
     chartOptions: {
       title: {
@@ -70,7 +71,8 @@ export default {
   computed: {
     getAllDatesInWeek() {
       const weekDates = [];
-      const parsedDate = Date.parse(this.startDate);
+      const parsedDate = parse(this.startDate);
+
       for (let x = 0; x < 5; x++) {
         weekDates.push(format(addDays(parsedDate, x), config.formatDatePlain));
       }
