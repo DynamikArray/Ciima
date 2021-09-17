@@ -9,7 +9,7 @@ const buildUserDraftsInputtedForWeekQuery = ({ userId, startDate, endDate }) => 
       	d.draftType
       FROM
       	slc_audit_log l
-      LEFT JOIN
+      INNER JOIN
       	slc_drafts d
       ON
       	l.resource_id = d.id

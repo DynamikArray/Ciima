@@ -13,6 +13,10 @@
       <template v-slot:item.draftType="{ item }">
         {{ item.draftType | upperCase }}
       </template>
+
+      <template v-slot:item.price="{ item }">
+        {{ item.price | currency }}
+      </template>
     </v-data-table>
   </div>
 </template>
