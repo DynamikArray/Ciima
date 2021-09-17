@@ -17,7 +17,7 @@
     </v-row>
     <v-row>
       <v-col cols="12" md="5" lg="4">
-        <CurrentWeekScore :results="currentWeek" />
+        <!-- <CurrentWeekScore :results="currentWeek" /> -->
         <CurrentWeekGoals :percentComplete="totalPercentCompleted" />
       </v-col>
       <v-col cols="12" md="7" lg="8">
