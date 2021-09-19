@@ -61,7 +61,6 @@ export default new Vuex.Store({
     pricelist,
     reports,
     repricer,
-    pricingService,
     dashboard,
     repackingService
   },
