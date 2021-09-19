@@ -12,7 +12,11 @@ import {
   DELETE_DECLINE_PRICE_SELECTED_LINNWORKS_ITEM
 } from "@/store/action-types";
 
-import { SELECTED_LINNWORKS_ITEM_LOADING, SELECTED_LINNWORKS_ITEM_RESULT } from "@/store/mutation-types";
+import {
+  SELECTED_LINNWORKS_ITEM_LOADING,
+  SELECTED_LINNWORKS_ITEM_RESULT,
+  SELECTED_LINNWORKS_ITEM_CLEAR
+} from "@/store/mutation-types";
 
 const selectedItem = {
   namespaced: true,
@@ -28,6 +32,9 @@ const selectedItem = {
     },
     [SELECTED_LINNWORKS_ITEM_LOADING](state, data) {
       state.loading = data.loading;
+    },
+    [SELECTED_LINNWORKS_ITEM_CLEAR](state) {
+      state.item = {};
     }
   },
 

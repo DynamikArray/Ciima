@@ -90,9 +90,9 @@ fastify.register(require("./routes/v1/reporting"), { prefix: "v1" });
 fastify.register(require("./routes/v1/repricingService"), {
   prefix: "v1/repricingService",
 });
-//Pricing Service
-fastify.register(require("./routes/v1/pricingService"), {
-  prefix: "v1/pricingService",
+//Repacking Service
+fastify.register(require("./routes/v1/repackingService"), {
+  prefix: "v1/repackingService",
 });
 //
 //
