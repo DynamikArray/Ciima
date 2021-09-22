@@ -1,4 +1,11 @@
+const { getUserTargetsSchema, postUserTargetsSchema, putUserTargetsSchema, deleteUserTargetsSchema } = require("./manager");
+
 module.exports = {
+  getUserTargetsSchema,
+  postUserTargetsSchema,
+  putUserTargetsSchema,
+  deleteUserTargetsSchema,
+
   analyticsSearchSchema: {
     description: "Search audit logs and creats analytics data",
     tags: ["Analytics"],

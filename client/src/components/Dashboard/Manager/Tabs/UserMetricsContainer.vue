@@ -1,19 +1,5 @@
 <template>
-  <v-container fluid class="ManagerDashboardContainer">
-    <v-row no-gutters>
-      <v-col>
-        <div class="d-flex align-center justify-start">
-          <div class="d-flex align-center justify-start">
-            <h2 class="mb-2"><v-icon class="mr-2 mb-1">fa fa-user</v-icon>Manager Dashboard</h2>
-          </div>
-        </div>
-      </v-col>
-    </v-row>
-
-    <v-row no-gutters>
-      <v-col><v-divider /></v-col>
-    </v-row>
-
+  <v-container fluid class="UserMetricsContainer">
     <v-row>
       <v-col>
         <div class="d-flex justify-space-around align-center grey darken-4 px-2 pt-3 pb-1 flex-wrap">
@@ -21,10 +7,10 @@
             <UserSelect
               @userSelected="userSelected"
               :selectedUserId="selectedUserId"
-              lableText=""
+              labelText=""
               componentClass="align-center"
               roleToSelect="inputter"
-              lableText="Select User:"
+              labelText="Select User:"
               class="mx-2"
             />
             <div class="d-flex align-start" v-if="!selectedUserId">
@@ -74,11 +60,7 @@
 </template>
 
 <script>
-import { format, startOfWeek, endOfWeek } from "date-fns";
-import { dashboard as config } from "@/config";
-const today = new Date();
-//use this for testing new dates against the ui
-//const today = new Date("2021", "02", "01");
+import { weekStartDate, weekEndDate, weekDateRangeAsString } from "../../DashboardHelpers";
 
 import { mapGetters } from "vuex";
 import { DASHBOARD_DAILY_FETCH } from "@/store/action-types";
@@ -87,17 +69,23 @@ import { DASHBOARD_DAILY_RESULTS_CLEAR } from "@/store/mutation-types";
 import UserSelect from "@/components/Shared/Fields/UserSelect";
 import WeekSelect from "@/components/Shared/Fields/WeekSelect";
 
-import CurrentWeekResults from "./CurrentWeek/CurrentWeekResults";
-import CurrentWeekProgress from "./CurrentWeek/CurrentWeekProgress";
-import CurrentWeekScore from "./CurrentWeek/CurrentWeekScore";
-import CurrentWeekGoals from "./CurrentWeek/CurrentWeekGoals";
+import CurrentWeekResults from "../../CurrentWeek/CurrentWeekResults";
+import CurrentWeekProgress from "../../CurrentWeek/CurrentWeekProgress";
+import CurrentWeekScore from "../../CurrentWeek/CurrentWeekScore";
+import CurrentWeekGoals from "../../CurrentWeek/CurrentWeekGoals";
 
-import GridDraftsSummary from "./GridDraftsSummary/GridDraftsSummary";
+import GridDraftsSummary from "../../GridDraftsSummary/GridDraftsSummary";
 
 // import SelectUserDialog from "./SelectUserDialog";
 
 export default {
-  name: "ManagerDashboardContainer",
+  name: "UserMetricsContainer",
+  props: {
+    hasFocus: {
+      type: [Boolean],
+      default: false
+    }
+  },
   components: {
     UserSelect,
     WeekSelect,
@@ -115,11 +103,15 @@ export default {
     startingDate: false,
     endingDate: false
   }),
-  mounted() {
-    this.userDialog = false;
-  },
   beforeDestroy() {
     this.$store.commit(`dashboard/${DASHBOARD_DAILY_RESULTS_CLEAR}`);
+  },
+  watch: {
+    hasFocus: function(val) {
+      if (this.selectedUserId) {
+        this.loadData();
+      }
+    }
   },
   computed: {
     ...mapGetters({
@@ -129,24 +121,13 @@ export default {
       userDraftsSummary: "dashboard/userDraftsSummary"
     }),
     getStartDate() {
-      if (!this.startingDate) {
-        return format(startOfWeek(today, { weekStartsOn: 1 }), config.formatTimestampStartOfDay);
-      } else {
-        return format(startOfWeek(this.startingDate, { weekStartsOn: 1 }), config.formatTimestampStartOfDay);
-      }
+      return weekStartDate(this.startingDate);
     },
     getEndDate() {
-      if (!this.endingDate) {
-        return format(endOfWeek(today, { weekStartsOn: 1 }), config.formatTimestampEndOfDay);
-      } else {
-        return format(endOfWeek(this.endingDate, { weekStartsOn: 1 }), config.formatTimestampEndOfDay);
-      }
+      return weekEndDate(this.endingDate);
     },
     dateRangeAsString() {
-      return `${format(this.getStartDate, config.formatDateTitleString)} - ${format(
-        this.getEndDate,
-        config.formatDateTitleString
-      )}`;
+      return weekDateRangeAsString(this.getStartDate, this.getEndDate);
     }
   },
   methods: {

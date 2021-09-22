@@ -4,12 +4,7 @@ Vue.use(Vuex);
 
 import { axiosInstance, createInterceptor } from "@/util/axios/axiosInstance";
 
-import {
-  ADD_API_CALL,
-  REMOVE_API_CALL,
-  UPDATE_LOADING_SCREEN_FLAG,
-  UPDATE_API_STATUS
-} from "../mutation-types";
+import { ADD_API_CALL, REMOVE_API_CALL, UPDATE_LOADING_SCREEN_FLAG, UPDATE_API_STATUS } from "../mutation-types";
 
 const api = {
   namespaced: true,
@@ -63,16 +58,7 @@ const api = {
       axiosInstance.interceptors.response.use(undefined, expired);
 
       //pull of payload params
-      const {
-        headers,
-        method,
-        url,
-        params,
-        success,
-        loading,
-        toastr,
-        asParams
-      } = payload;
+      const { headers, method, url, params, success, loading, toastr, asParams } = payload;
 
       //handle loading indicator
       //see if we passed a callback function with the payload,
@@ -83,15 +69,15 @@ const api = {
         delete params.callback;
       }
 
-      if (loading)
-        commit(loading, { loading: true, items: false }, { root: true });
+      if (loading) commit(loading, { loading: true, items: false }, { root: true });
 
       //config requests
       let config = { headers, method, url: `${url}`, success };
 
       //set params for request
-      if (method === "post") config.data = { ...params };
       if (method === "get") config.params = { ...params };
+      if (method === "post") config.data = { ...params };
+      if (method === "delete") config.data = { ...params };
 
       //special handler to transform PUT requests querystring
       if (method === "put" && asParams) config.params = { ...params };
@@ -114,8 +100,7 @@ const api = {
           if (success) commit(success, data.result, { root: true });
           if (toastr) {
             let resp = `Success!`;
-            if (typeof data.result === "string")
-              resp = `<h4>${resp}</h4><p>${data.result}</p>`;
+            if (typeof data.result === "string") resp = `<h4>${resp}</h4><p>${data.result}</p>`;
             toastr.s(resp);
           }
           return { result: data.result };
@@ -145,8 +130,7 @@ const api = {
         let resp = `An Error Occured!`;
         if (toastr) {
           if (data) {
-            resp = `<h4>${data.error || `Error`}</h4><p>${data.message ||
-              data}</p>`;
+            resp = `<h4>${data.error || `Error`}</h4><p>${data.message || data}</p>`;
           } else {
             resp = `<h4>${resp}</h4><p>${error}</p>`;
           }
