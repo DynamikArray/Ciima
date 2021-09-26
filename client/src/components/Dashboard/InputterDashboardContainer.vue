@@ -31,17 +31,12 @@
 </template>
 
 <script>
-import { format, startOfWeek, endOfWeek } from "date-fns";
-import { dashboard as config } from "@/config";
-const today = new Date();
-//use this for testing new dates against the ui
-//const today = new Date("2021", "02", "01");
+import { weekStartDate, weekEndDate, weekDateRangeAsString } from "./DashboardHelpers";
 
 import { mapGetters } from "vuex";
 import { DASHBOARD_DAILY_FETCH } from "@/store/action-types";
 
 import WeekSelect from "@/components/Shared/Fields/WeekSelect";
-
 import CurrentWeekResults from "./CurrentWeek/CurrentWeekResults";
 import CurrentWeekProgress from "./CurrentWeek/CurrentWeekProgress";
 import CurrentWeekScore from "./CurrentWeek/CurrentWeekScore";
@@ -72,24 +67,13 @@ export default {
       totalPercentCompleted: "dashboard/percentComplete"
     }),
     getStartDate() {
-      if (!this.startingDate) {
-        return format(startOfWeek(today, { weekStartsOn: 1 }), config.formatTimestampStartOfDay);
-      } else {
-        return format(startOfWeek(this.startingDate, { weekStartsOn: 1 }), config.formatTimestampStartOfDay);
-      }
+      return weekStartDate(this.startingDate);
     },
     getEndDate() {
-      if (!this.endingDate) {
-        return format(endOfWeek(today, { weekStartsOn: 1 }), config.formatTimestampEndOfDay);
-      } else {
-        return format(endOfWeek(this.endingDate, { weekStartsOn: 1 }), config.formatTimestampEndOfDay);
-      }
+      return weekEndDate(this.endingDate);
     },
     dateRangeAsString() {
-      return `${format(this.getStartDate, config.formatDateTitleString)} - ${format(
-        this.getEndDate,
-        config.formatDateTitleString
-      )}`;
+      return weekDateRangeAsString(this.getStartDate, this.getEndDate);
     }
   },
   methods: {

@@ -4,9 +4,13 @@ Vue.use(Vuex);
 
 import { DASHBOARD_DAILY_FETCH } from "@/store/action-types";
 import { DASHBOARD_LOADING, DASHBOARD_DAILY_RESULTS, DASHBOARD_DAILY_RESULTS_CLEAR } from "@/store/mutation-types";
+import manager from "./manager";
 
 const dashboard = {
   namespaced: true,
+  modules: {
+    manager
+  },
   state: {
     loading: false,
     dailyResults: [],

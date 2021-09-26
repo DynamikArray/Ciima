@@ -22,10 +22,10 @@
           <div class="d-flex">
             <UserSelect
               @userSelected="userSelected"
-              lableText=""
+              labelText=""
               componentClass="align-center"
               roleToSelect="inputter"
-              lableText=""
+              labelText=""
               class="mx-2"
             />
           </div>

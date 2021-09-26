@@ -8,7 +8,8 @@ const { getTargetValueForUser } = require("../../../../util/ciima/getTargetValue
 module.exports = (fastify) => ({
   analyticsDashboardHandler: async (req, reply) => {
     const { userId, startDate, endDate } = req.query;
-    const targetValue = await getTargetValueForUser(fastify.mysql, userId);
+
+    const targetValue = await getTargetValueForUser(fastify.mysql, userId, startDate, endDate);
 
     const userTarget = {
       targetValue: targetValue,

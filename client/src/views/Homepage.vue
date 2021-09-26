@@ -9,8 +9,8 @@
 
 <script>
 import { mapGetters } from "vuex";
-import InputterDashboard from "@/components/InputterDashboard/InputterDashboardContainer";
-import ManagerDashboard from "@/components/InputterDashboard/ManagerDashboardContainer";
+import InputterDashboard from "@/components/Dashboard/InputterDashboardContainer";
+import ManagerDashboard from "@/components/Dashboard/Manager/ManagerDashboardContainer";
 
 import LoginForm from "@/components/LoginForm/LoginForm";
 export default {

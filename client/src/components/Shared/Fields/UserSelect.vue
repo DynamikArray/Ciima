@@ -1,8 +1,8 @@
 <template>
   <div class="d-flex flex-row mb-2" :class="componentClass">
-    <div class="d-flex" :class="lableWrapperClass">
-      <div class="mt-0 mr-2" :class="lableClass">
-        <b>{{ lableText }}</b>
+    <div class="d-flex" :class="labelWrapperClass">
+      <div class="mt-0 mr-2" :class="labelClass">
+        <b>{{ labelText }}</b>
       </div>
     </div>
 
@@ -21,12 +21,12 @@ export default {
       type: [String],
       default: "align-center"
     },
-    lableText: {
+    labelText: {
       type: [String],
       default: "User"
     },
-    lableClass: [String],
-    lableWrapperClass: {
+    labelClass: [String],
+    labelWrapperClass: {
       type: [String],
       default: "align-center justify-end"
     },
@@ -56,13 +56,13 @@ export default {
       )
       .then(({ result }) => {
         if (result) {
-          this.items = [...this.items, ...result];
+          this.items = [...result];
         }
       });
   },
   data() {
     return {
-      items: [{ text: "Select user...", value: 0 }]
+      items: []
     };
   },
   methods: {

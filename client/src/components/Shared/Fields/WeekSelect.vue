@@ -33,6 +33,10 @@ export default {
     },
     endDate: {
       type: [String]
+    },
+    allowWeekAhead: {
+      type: [Boolean],
+      default: false
     }
   },
   computed: {
@@ -43,6 +47,8 @@ export default {
       )}`;
     },
     disableButton() {
+      if (this.allowWeekAhead) return false;
+
       const weekEnd = format(endOfWeek(new Date(), { weekStartsOn: 1 }), "MM-DD-YYYY");
       const endDate = format(new Date(this.endDate), "MM-DD-YYYY");
       const compared = compareAsc(endDate, weekEnd);
