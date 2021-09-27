@@ -52,11 +52,3 @@ EBAY_AUTH_TOKEN=
 
 Database scripts were run to normalize bad data characters against the titles table.
 Remove ?'s from the image urls so they match the file structure on the server.
-
-### DB CHANGES
-
-```
-ADDING inventory table???
-```
-
-### Changes
