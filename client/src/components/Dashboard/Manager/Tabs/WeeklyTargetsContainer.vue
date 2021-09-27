@@ -80,7 +80,6 @@ export default {
       userTargetItemsLoading: "dashboard/manager/targets/userTargetItemsLoading"
     }),
     getStartDate() {
-      console.log("getStartDate", this.startDate);
       return weekStartDate(this.startDate);
     },
     getEndDate() {
