@@ -4,12 +4,12 @@ const { UPDATE_USER_TARGET } = require("../../../../../util/auditLog/logActionTy
 module.exports = (fastify) => ({
   putUserTargetsHandler: async (req, reply) => {
     const userTarget = req.body;
-    const query = `UPDATE slc_user_targets SET ? WHERE id=${userTarget.id}`;
+    const query = `UPDATE slc_user_targets SET targetValue = ${userTarget.targetValue} WHERE id=${userTarget.id}`;
 
     let successResult,
       errorResult = false;
     try {
-      const [rows, fields] = await fastify.mysql.query(query, userTarget);
+      const [rows, fields] = await fastify.mysql.query(query);
       successResult = rows;
       return { result: rows };
     } catch (error) {
