@@ -63,7 +63,7 @@ export default {
       this.$emit("refresh");
     },
     convertDate(dateVal) {
-      return format(dateVal, config.formatDateTitleString);
+      return format(dateVal, config.formatDatePlain, { weekStartsOn: 1 });
     },
     rowDeleted() {
       this.refreshGrid();

@@ -20,6 +20,7 @@ export default {
   },
   methods: {
     editUserTarget() {
+      console.log(this.item.startDate);
       this.$store.commit(`dashboard/manager/targets/targetForm/${DASHBOARD_MANAGER_TARGETS_FORM_LOAD}`, {
         ...this.item,
         dialogVisible: true,
