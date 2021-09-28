@@ -1,7 +1,32 @@
 const buildSelectQueries = () => {
   const selectQuery = `
       SELECT
-        d.*,
+        d.declinePrice,
+        d.draftType,
+        d.ebaySiteCategoryId,
+        d.ebayStoreCategoryIdOne,
+        d.ebayStoreCategoryIdTwo,
+        d.extraDescription,
+        d.grade,
+        d.id,
+        d.inventoryTitle,
+        d.issueNumbers,
+        d.itemNumber,
+        d.locationCode,
+        d.mainCharacter,
+        d.main_image,
+        d.other_images,
+        d.price,
+        d.publishedDate,
+        d.publishedYear,
+        d.publisher,
+        d.quantity,
+        d.series,
+        d.status,
+        d.statusNotes,
+        d.stockItemId,
+        d.upc,
+        d.createdDate AS createdDate,
         u.displayname as ownerName,
         u.displaycolor as ownerColor
       FROM slc_drafts d
@@ -49,36 +74,11 @@ const buildSelectQueries = () => {
   return { selectQuery, totalQuery };
 };
 
-const buildSelectQueriesParams = (
-  page,
-  pageLimit,
-  status,
-  draftType,
-  titleString,
-  locationString,
-  createdDate,
-  userId
-) => {
+const buildSelectQueriesParams = (page, pageLimit, status, draftType, titleString, locationString, createdDate, userId) => {
   const pageOffset = page * pageLimit;
   //default most recent
-  let selectParams = [
-    titleString,
-    locationString,
-    status,
-    draftType,
-    createdDate,
-    userId,
-    pageLimit,
-    pageOffset,
-  ];
-  let totalParams = [
-    titleString,
-    locationString,
-    status,
-    draftType,
-    createdDate,
-    userId,
-  ];
+  let selectParams = [titleString, locationString, status, draftType, createdDate, userId, pageLimit, pageOffset];
+  let totalParams = [titleString, locationString, status, draftType, createdDate, userId];
 
   return { selectParams, totalParams };
 };
