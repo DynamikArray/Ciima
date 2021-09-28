@@ -26,7 +26,7 @@ const buildSelectQueries = () => {
         d.statusNotes,
         d.stockItemId,
         d.upc,
-        d.createdDate AS createdDate,
+        CONVERT_TZ(d.createdDate,'+00:00','-04:00')as createdDate, 
         u.displayname as ownerName,
         u.displaycolor as ownerColor
       FROM slc_drafts d
