@@ -7,22 +7,12 @@ module.exports = (logger) => ({
     switch (draft.draftType.toUpperCase()) {
       case "LOTS":
         logger.debug("Adding Inventory Prices for Lot Item.");
-        inventoryPrice = itemInventoryPrices(
-          StockItemId,
-          ItemNumber,
-          draft.price,
-          "Start"
-        );
+        inventoryPrice = itemInventoryPrices(StockItemId, ItemNumber, draft.price, "Start");
         break;
       case "GTCS":
         logger.debug("Adding Inventory Prices for Gtc Item.");
         if (draft.declinePrice) {
-          inventoryPrice = itemInventoryPrices(
-            StockItemId,
-            ItemNumber,
-            draft.declinePrice,
-            "DECLINE"
-          );
+          inventoryPrice = itemInventoryPrices(StockItemId, ItemNumber, draft.declinePrice, "DECLINE");
         }
         break;
       default:
@@ -35,8 +25,7 @@ module.exports = (logger) => ({
       const { result, error } = await linnworks.makeApiCall({
         method: "POST",
         url: "Inventory/CreateInventoryItemPrices",
-        headers:
-          "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
+        headers: "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
         data: inventoryPrice,
       });
 

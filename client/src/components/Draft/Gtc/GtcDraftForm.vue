@@ -51,14 +51,21 @@
         </v-col>
         <v-col class="py-0" cols="12" v-if="!isCloned">
           <EbayCategoryDropdown
-            @categorySelected="updateLocalParams"
+            @categorySelected="categorySelected"
             :value="ebaySiteCategoryId"
             :rules="rules.ebaySiteCategoryId"
+            @newChildSelected="ebayChildCategorySelected"
           />
         </v-col>
       </v-row>
 
-      <v-divider class="mt-5 mb-1"></v-divider>
+      <v-row>
+        <v-col class="py-0">
+          <AspectItems :fields="requiredAspects" :loading="requiredAspectsLoading" />
+        </v-col>
+      </v-row>
+
+      <v-divider class="mt-1 mb-1"></v-divider>
 
       <v-row>
         <v-col>
@@ -159,6 +166,7 @@ import EbayStoreCategory from "./formFields/EbayStoreCategory";
 import MainCharacter from "./formFields/MainCharacter";
 import Publisher from "./formFields/Publisher";
 import ExtraDescription from "./formFields/ExtraDescription";
+import AspectItems from "./formFields/AspectItems/AspectItems";
 
 import { fieldNames, fieldRules } from "./formUtil/fieldNamesAndRules";
 
@@ -169,8 +177,14 @@ const { mapFields } = createHelpers({
   mutationType: "gtcs/draft/updateField"
 });
 
-import { CURRENT_GTC_DRAFT_SAVE } from "@/store/action-types";
-import { CURRENT_GTC_DRAFT_SAVING, UPDATE_API_STATUS, RESET_GTC_DRAFT } from "@/store/mutation-types";
+import { CURRENT_GTC_DRAFT_SAVE, CURRENT_GTC_DRAFT_FETCH_CATEGORY_FIELDS } from "@/store/action-types";
+import {
+  CURRENT_GTC_DRAFT_SAVING,
+  UPDATE_API_STATUS,
+  RESET_GTC_DRAFT,
+  CURRENT_GTC_DRAFT_CATEGORY_FIELDS_RESET,
+  CURRENT_GTC_DRAFT_CATEGORY_FIELDS_LOAD_TO_FORM
+} from "@/store/mutation-types";
 
 export default {
   components: {
@@ -187,7 +201,8 @@ export default {
     EbayStoreCategory,
     MainCharacter,
     Publisher,
-    ExtraDescription
+    ExtraDescription,
+    AspectItems
   },
   data: () => ({
     blnValidForm: false,
@@ -197,11 +212,42 @@ export default {
   }),
   computed: {
     ...mapState({
-      defaultProductType: state => state.settings.defaultProductType
+      defaultProductType: state => state.settings.defaultProductType,
+      requiredAspectsLoading: state => state.gtcs.draft.aspects.requiredAspectsLoading
     }),
-    ...mapFields([...fieldNames, "isCloned", "imageToCrop", "savingGtcDraft", "savingGtcDraftMessage"])
+    ...mapFields([
+      ...fieldNames,
+      "isCloned",
+      "imageToCrop",
+      "savingGtcDraft",
+      "savingGtcDraftMessage",
+      "aspects.requiredAspectsLoading",
+      "aspects.requiredAspects"
+    ])
   },
   methods: {
+    async categorySelected(value) {
+      const result = await this.getItemAspectsForCategory(value);
+      this.updateLocalParams(value);
+    },
+
+    async getItemAspectsForCategory(value) {
+      const { result } = await this.$store.dispatch(`gtcs/draft/aspects/${CURRENT_GTC_DRAFT_FETCH_CATEGORY_FIELDS}`, value);
+      if (result && result.requiredAspects) {
+        const itemAspectFormFields = result.requiredAspects.reduce((acc, item) => {
+          acc[item.localizedAspectName] = false;
+          return acc;
+        }, {});
+
+        this.$store.commit(`gtcs/draft/${CURRENT_GTC_DRAFT_CATEGORY_FIELDS_LOAD_TO_FORM}`, itemAspectFormFields);
+      }
+    },
+
+    ebayChildCategorySelected(value) {
+      this.$store.commit(`gtcs/draft/aspects/${CURRENT_GTC_DRAFT_CATEGORY_FIELDS_RESET}`);
+      this.$store.commit(`gtcs/draft/${CURRENT_GTC_DRAFT_CATEGORY_FIELDS_LOAD_TO_FORM}`, {});
+    },
+
     updateLocalParams(params) {
       Object.keys(params).forEach(key => {
         this[key] = params[key];

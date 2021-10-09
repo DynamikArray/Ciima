@@ -52,3 +52,7 @@ EBAY_AUTH_TOKEN=
 
 Database scripts were run to normalize bad data characters against the titles table.
 Remove ?'s from the image urls so they match the file structure on the server.
+
+## Database UPDATES for Ebay Category Fields
+
+ALTER TABLE `slc_drafts` ADD COLUMN `ebaySiteCategoryFields` JSON NULL DEFAULT NULL AFTER `ebaySiteCategoryId`;

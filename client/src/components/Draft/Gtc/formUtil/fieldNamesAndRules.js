@@ -72,6 +72,7 @@ const fieldNames = [
   "declinePrice",
   "quantity",
   "ebaySiteCategoryId",
+  "ebaySiteCategoryFields",
   "ebayStoreCategoryIdOne",
   "ebayStoreCategoryIdTwo",
   "mainCharacter",

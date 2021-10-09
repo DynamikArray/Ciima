@@ -48,6 +48,7 @@ module.exports = (fastify) => ({
       main_image: main_image.src,
       other_images: JSON.stringify(other_images),
       ebaySiteCategoryId: req.body.ebaySiteCategoryId,
+      ebaySiteCategoryFields: JSON.stringify(req.body.ebaySiteCategoryFields),
       ebayStoreCategoryIdOne: req.body.ebayStoreCategoryIdOne,
       ebayStoreCategoryIdTwo: req.body.ebayStoreCategoryIdTwo,
     };

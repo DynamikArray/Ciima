@@ -6,37 +6,27 @@ const { CREATE_ITEM } = require("../../util/auditLog/logActionTypes");
 const { LINNWORKS } = require("../../util/auditLog/logResourceTypes");
 const auditLogger = require("../../util/auditLog/auditLoggerWorker");
 
-const {
-  updateStatus,
-} = require("../../util/linnworks/helpers/updateStatus.js")(logger);
+const { updateStatus } = require("../../util/linnworks/helpers/updateStatus.js")(logger);
 
 const { linnworks } = require("../../util/linnworks/linnworks.js");
 const draftHelper = require("../../util/ciima/draftHelper.js");
-const {
-  createConfiguratorValue,
-} = require("../../util/linnworks/helpers/createConfiguratorValue.js");
+const { createConfiguratorValue } = require("../../util/linnworks/helpers/createConfiguratorValue.js");
 
 const cleanImagePath = require("../../util/linnworks/helpers/cleanImagePath.js");
 
 const addInventoryItem = require("../../util/linnworks/helpers/addInventoryItem.js");
 const addImage = require("../../util/linnworks/helpers/addImage.js");
 const addExtendedProperties = require("../../util/linnworks/helpers/addExtendedProperties.js");
-const {
-  addInventoryPrices,
-} = require("../../util/linnworks/helpers/addInventoryPrices.js")(logger);
+
+const addEbayCategoryFields = require("../../util/linnworks/helpers/addEbayCategoryFields.js");
+
+const { addInventoryPrices } = require("../../util/linnworks/helpers/addInventoryPrices.js")(logger);
 const updateInventoryLocation = require("../../util/linnworks/helpers/updateInventoryLocation.js");
 const addInventoryImages = require("../../util/linnworks/helpers/addInventoryImages.js");
 
-const {
-  updateMainImage,
-  updateOtherImages,
-} = require("../../util/linnworks/helpers/updateImages.js");
+const { updateMainImage, updateOtherImages } = require("../../util/linnworks/helpers/updateImages.js");
 
-const {
-  PENDING,
-  SUBMITTED,
-  ERROR,
-} = require("../../util/ciima/draftStatusCode.js");
+const { PENDING, SUBMITTED, ERROR } = require("../../util/ciima/draftStatusCode.js");
 
 /**
  * [submitDraftHandler description]
@@ -51,10 +41,7 @@ const submitDraftHandler = async (message, callback) => {
 
   try {
     //update draft as processing
-    const statusUpdated = await draftHelper.updateDraftStatus(
-      draft.id,
-      PENDING
-    );
+    const statusUpdated = await draftHelper.updateDraftStatus(draft.id, PENDING);
 
     //
     if (statusUpdated) {
@@ -80,50 +67,41 @@ const submitDraftHandler = async (message, callback) => {
 
         //Choose EBAY_CONFIGURATOR_VALUE && Add extended properties
         const EBAY_CONFIGURATOR = createConfiguratorValue(draft.draftType);
-        const { extPropsResult, extPropsError } = await addExtendedProperties(
-          StockItemId,
-          ItemNumber,
-          {
-            ...draft,
-            EBAY_CONFIGURATOR,
-          }
-        );
+        const { extPropsResult, extPropsError } = await addExtendedProperties(StockItemId, ItemNumber, {
+          ...draft,
+          EBAY_CONFIGURATOR,
+        });
         // extended Properties didnt Save
-        if (!extPropsResult && extPropsError)
-          updateStatus(draft.id, extPropsError, ERROR);
+        if (!extPropsResult && extPropsError) updateStatus(draft.id, extPropsError, ERROR);
 
         //inventoryPrices
-        const { pricesResult, pricesError } = await addInventoryPrices(
-          StockItemId,
-          ItemNumber,
-          draft
-        );
+        const { pricesResult, pricesError } = await addInventoryPrices(StockItemId, ItemNumber, draft);
         // extended Properties didnt Save
-        if (!pricesResult && pricesError)
-          updateStatus(draft.id, pricesError, ERROR);
+
+        if (!pricesResult && pricesError) updateStatus(draft.id, pricesError, ERROR);
 
         //
         //Update Inventory Location
-        const { invResult, invError } = await updateInventoryLocation(
-          StockItemId,
-          draft.locationCode
-        );
+        const { invResult, invError } = await updateInventoryLocation(StockItemId, draft.locationCode);
         // Inventory Location didnt Save
         if (!invResult && invError) updateStatus(draft.id, invError, ERROR);
 
         //See if we have other images to send
-        if (
-          draft.other_images.length > 0 &&
-          draft.draftType.toUpperCase() !== "SINGLES"
-        ) {
-          const { imagesResult, imagesError } = await addInventoryImages(
-            StockItemId,
-            ItemNumber,
-            draft
-          );
+        if (draft.other_images.length > 0 && draft.draftType.toUpperCase() !== "SINGLES") {
+          const { imagesResult, imagesError } = await addInventoryImages(StockItemId, ItemNumber, draft);
           if (imagesResult) await updateOtherImages(draft.id, imagesResult);
           if (imagesError) hasErrors.push(imagesError);
         } //end other_image > 0
+
+        //add ebayCategoryFields
+        if (draft.ebaySiteCategoryFields && Object.keys(draft.ebaySiteCategoryFields).length > 0) {
+          const { ebayCatFieldsResult, ebayCatFieldsError } = await addEbayCategoryFields(
+            StockItemId,
+            ItemNumber,
+            draft.ebaySiteCategoryFields
+          );
+          if (!ebayCatFieldsResult && ebayCatFieldsError) updateStatus(draft.id, ebayCatFieldsError, ERROR);
+        }
 
         //Error check for any errors and log them
         if (hasErrors.length > 0) {

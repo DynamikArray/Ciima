@@ -1,3 +1,5 @@
+export const { ebay } = require("./ebay");
+
 export const dashboard = {
   formatTimestampStartOfDay: "YYYY-MM-DD 00:00:00",
   formatTimestampEndOfDay: "YYYY-MM-DD 23:59:59",
@@ -19,6 +21,7 @@ export const dashboard = {
 };
 
 const appConfig = {
+  ebay,
   dashboard: dashboard
 };
 

@@ -13,10 +13,13 @@ import {
   CURRENT_GTC_DRAFT_UPDATE,
   CURRENT_GTC_DRAFT_SAVING,
   CURRENT_GTC_DRAFT_LOAD,
-  SET_DEFAULT_PRODUCT_TYPE
+  SET_DEFAULT_PRODUCT_TYPE,
+  CURRENT_GTC_DRAFT_CATEGORY_FIELDS_LOAD_TO_FORM,
+  CURRENT_GTC_DRAFT_CATEGORY_FIELDS_SET_FORM_VALUE
 } from "@/store/mutation-types";
 
 import router from "@/router/router.js";
+import aspects from "@/store/gtcs/draft/aspects/aspects.js";
 
 const defaultDraft = {
   inventoryTitle: "",
@@ -27,6 +30,7 @@ const defaultDraft = {
   declinePrice: null,
 
   ebaySiteCategoryId: null,
+  ebaySiteCategoryFields: {},
   ebayStoreCategoryIdOne: null,
   ebayStoreCategoryIdTwo: null,
 
@@ -45,6 +49,9 @@ const defaultDraft = {
 
 const draft = {
   namespaced: true,
+  modules: {
+    aspects
+  },
   state: {
     ...defaultDraft
   },
@@ -83,6 +90,8 @@ const draft = {
 
       state.savingGtcDraft = defaultDraft.savingGtcDraft;
       state.savingGtcDraftMessage = defaultDraft.savingGtcDraftMessage;
+
+      state.ebaySiteCategoryFields = defaultDraft.ebaySiteCategoryFields;
     },
     [UPDATE_GTC_DRAFT_IMAGES](state, images) {
       state.images = [...images];
@@ -111,8 +120,16 @@ const draft = {
       state.ebayStoreCategoryIdOne = item.ebayStoreCategoryIdOne;
       state.ebayStoreCategoryIdTwo = item.ebayStoreCategoryIdTwo;
 
+      state.ebaySiteCategoryFields = item.ebaySiteCategoryFields;
+
       state.savingGtcDraft = defaultDraft.savingGtcDraft;
       state.savingGtcDraftMessage = defaultDraft.savingGtcDraftMessage;
+    },
+    [CURRENT_GTC_DRAFT_CATEGORY_FIELDS_LOAD_TO_FORM](state, ebaySiteCategoryFields) {
+      state.ebaySiteCategoryFields = ebaySiteCategoryFields;
+    },
+    [CURRENT_GTC_DRAFT_CATEGORY_FIELDS_SET_FORM_VALUE](state, { key, value }) {
+      state.ebaySiteCategoryFields[key] = value;
     }
   },
   actions: {

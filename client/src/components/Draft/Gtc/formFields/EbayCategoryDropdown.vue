@@ -2,10 +2,14 @@
   <section>
     <div>
       <span class="heading">Ebay Site Category:</span>
-      <b>{{ categoryLabel.name }} {{ categoryLabel.id }}</b>
+      <b class="ml-2">{{ categoryTitle }}</b>
     </div>
-    <div class="d-flex flex-wrap mt-2">
-      <div style="" class="d-flex flex-wrap justify-start mr-4 align-baseline" v-for="(level, index) in ebaySiteCategories">
+    <div class="d-flex flex-wrap">
+      <div
+        style=""
+        class="d-flex flex-wrap justify-start mr-4 my-3 align-baseline"
+        v-for="(level, index) in ebaySiteCategories"
+      >
         <v-select
           hide-details
           :label="`Category Level L${index + 1}`"
@@ -48,7 +52,14 @@ export default {
   async created() {
     this.fetchCategory({ LevelLimit: 1 });
   },
-  computed: {},
+  computed: {
+    categoryTitle() {
+      if (this.categoryLabel) {
+        return this.categoryLabel.name + " " + this.categoryLabel.id;
+      }
+      return "";
+    }
+  },
   methods: {
     resetLocalValues() {
       this.ebaySiteCategories = [];
@@ -71,14 +82,31 @@ export default {
     updateSelected(value) {
       if (value.LeafCategory) {
         this.saveToParent(value);
+        this.newLeafSelected(value);
       } else {
+        this.newChildSelected(value);
         this.ebaySiteCategories = this.ebaySiteCategories.slice(0, parseInt(value.CategoryLevel));
 
         this.fetchCategory({
           CategoryParent: value.CategoryID,
           LevelLimit: parseInt(value.CategoryLevel) + 1
         });
+
+        this.newChildSelected(value);
       }
+    },
+    newLeafSelected(value) {
+      const catId = value.CategoryID;
+      this.ebaySiteCategories.forEach((categoryLevel, index) => {
+        //We need to drop all of categoryLevels below this one
+        const thing = categoryLevel.find(category => category.CategoryID == catId);
+        if (thing !== undefined) {
+          this.ebaySiteCategories = this.ebaySiteCategories.slice(0, index + 1);
+        }
+      });
+    },
+    newChildSelected(value) {
+      this.$emit("newChildSelected", value);
     },
     saveToParent(value) {
       const ebaySiteCategory = {

@@ -42,6 +42,9 @@ fastify.register(require("fastify-cors"));
 //JWT Auth Handling
 fastify.register(require("./plugins/authViaJWT.js"));
 
+//JWT Auth Handling
+fastify.register(require("./plugins/EbayClient"));
+
 //static build dir
 fastify.register(require("fastify-static"), {
   root: path.join(__dirname, "../client/dist"),
@@ -95,7 +98,8 @@ fastify.register(require("./routes/v1/repackingService"), {
   prefix: "v1/repackingService",
 });
 //
-//
+//Ebay V2 Restful Api Routes
+fastify.register(require("./routes/v1/ebayV2"), { prefix: "v1" });
 //
 //
 //
