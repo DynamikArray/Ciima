@@ -183,7 +183,8 @@ import {
   UPDATE_API_STATUS,
   RESET_GTC_DRAFT,
   CURRENT_GTC_DRAFT_CATEGORY_FIELDS_RESET,
-  CURRENT_GTC_DRAFT_CATEGORY_FIELDS_LOAD_TO_FORM
+  CURRENT_GTC_DRAFT_CATEGORY_FIELDS_LOAD_TO_FORM,
+  CURRENT_GTC_DRAFT_CATEGORY_FIELDS_UPDATE
 } from "@/store/mutation-types";
 
 export default {
@@ -273,6 +274,7 @@ export default {
       this.locationCodeErrorMessages = [];
       this.blnValidForm = false;
       this.$store.commit(`gtcs/draft/${RESET_GTC_DRAFT}`);
+      this.$store.commit(`gtcs/draft/aspects/${CURRENT_GTC_DRAFT_CATEGORY_FIELDS_UPDATE}`, { requiredAspects: [] });
       document.getElementById("GTC-inventoryTitle").focus();
     },
 
