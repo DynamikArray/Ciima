@@ -4,13 +4,9 @@
       <v-card raised>
         <v-card-title class="pb-1 pl-3 pt-2 primary text--white textShadow">
           <div class="d-flex justify-space-between align-center w-100">
-            <div class="d-flex align-center ">
-              <i class="fa fa-cube mr-1"></i>Create New Box
-            </div>
+            <div class="d-flex align-center "><i class="fa fa-cube mr-1"></i>Create New Box</div>
             <div class="d-flex align-center">
-              <v-icon small @click="cancelCreate" class="text--grey darken-2"
-                >fa-times</v-icon
-              >
+              <v-icon small @click="cancelCreate" class="text--grey darken-2">fa-times</v-icon>
             </div>
           </div>
         </v-card-title>
@@ -18,13 +14,7 @@
         <v-divider class="mb-3"></v-divider>
 
         <v-card-text class="pb-1">
-          <v-form
-            ref="boxForm"
-            v-model="valid"
-            lazy-validation
-            class="pa-3"
-            @submit.prevent="createBox"
-          >
+          <v-form ref="boxForm" v-model="valid" lazy-validation class="pa-3" @submit.prevent="createBox">
             <div class="fieldsWrapper">
               <div class="d-flex flex-column">
                 <div class="d-flex flex-row justify-center">
@@ -56,8 +46,7 @@
               <div class="d-flex flex-column">
                 <div class="d-flex flex-row justify-center">
                   <p class="p-1 mb-1 text-center">
-                    Box Name is the full box name e.g. EBAY-SETS-A,
-                    EBAY-SINGLES-1
+                    Box Name is the full box name e.g. EBAY-SETS-A, EBAY-SINGLES-1
                   </p>
                 </div>
                 <div class="d-flex justify-center align-center">
@@ -111,14 +100,10 @@
         <v-card-actions>
           <div class="d-flex justify-space-between w-100">
             <div class="d-flex align-center justify-center mx-3">
-              <v-btn class="red" @click="resetBox">
-                <v-icon class="mr-1" small>fa-undo</v-icon>Reset
-              </v-btn>
+              <v-btn class="red" @click="resetBox"> <v-icon class="mr-1" small>fa-undo</v-icon>Reset </v-btn>
             </div>
             <div class="d-flex align-center justify-center mx-3">
-              <v-btn class="success" @click="createBox">
-                <v-icon class="mr-1" small>fa-save</v-icon>Submit
-              </v-btn>
+              <v-btn class="success" @click="createBox"> <v-icon class="mr-1" small>fa-save</v-icon>Submit </v-btn>
             </div>
           </div>
         </v-card-actions>
@@ -127,14 +112,8 @@
 
     <v-tooltip top color="grey lighten-2 black--text">
       <template v-slot:activator="{ on }">
-        <v-btn
-          v-on="on"
-          style="min-width:20px;"
-          class="px-3 mb-1"
-          color="success"
-          @click.stop="dialog = true"
-          ><v-icon color="white" small class="mr-1">fa-plus-circle</v-icon>Add
-          Box
+        <v-btn v-on="on" style="min-width:20px;" class="px-3 mb-1" color="success" @click.stop="dialog = true"
+          ><v-icon color="white" small class="mr-1">fa-plus-circle</v-icon>Add Box
         </v-btn>
       </template>
       <span><i class="fa fa-info-circle mr-1"></i>Create a new Box </span>
@@ -143,11 +122,7 @@
 </template>
 
 <script>
-import {
-  CREATE_BOX,
-  SEARCH_BOXES,
-  SET_SELECTED_BOX
-} from "@/store/action-types";
+import { CREATE_BOX, SEARCH_BOXES, SET_SELECTED_BOX } from "@/store/action-types";
 import { box_types } from "./box_types.js";
 
 export default {
@@ -176,7 +151,7 @@ export default {
   watch: {
     box_type: function(newVal) {
       const item = this.box_types.filter(item => item.value == newVal).shift();
-      this.box = item.prefix;
+      this.box = item.prefix || "";
     }
   },
   methods: {
@@ -189,14 +164,11 @@ export default {
       const { box, box_type, notes } = this;
       //dispatch an action with our values
       try {
-        const { result } = await this.$store.dispatch(
-          `locations/${CREATE_BOX}`,
-          {
-            box,
-            box_type,
-            notes
-          }
-        );
+        const { result } = await this.$store.dispatch(`locations/${CREATE_BOX}`, {
+          box,
+          box_type,
+          notes
+        });
         //check result
         if (result.affectedRows == 1) {
           //saved ok

@@ -4,13 +4,9 @@
       <v-card raised>
         <v-card-title class="pb-1 pl-3 pt-2 primary text--white textShadow">
           <div class="d-flex justify-space-between align-center w-100">
-            <div class="d-flex align-center ">
-              <i class="fa fa-cube mr-1"></i>Create Labels
-            </div>
+            <div class="d-flex align-center "><i class="fa fa-cube mr-1"></i>Create Labels</div>
             <div class="d-flex align-center">
-              <v-icon small @click="cancelCreate" class="text--grey darken-2"
-                >fa-times</v-icon
-              >
+              <v-icon small @click="cancelCreate" class="text--grey darken-2">fa-times</v-icon>
             </div>
           </div>
         </v-card-title>
@@ -18,9 +14,7 @@
         <v-divider class="mb-3"></v-divider>
 
         <v-card-text class="pb-1">
-          <div
-            class="d-flex justify-space-between align-center warning white--text textShadow mb-2"
-          >
+          <div class="d-flex justify-space-between align-center warning white--text textShadow mb-2">
             <div class="d-flex justify-space-between align-center">
               <h2 class="ma-2 py-3">
                 Selected Box:
@@ -33,23 +27,11 @@
             </div>
           </div>
 
-          <v-select
-            v-model="firstCard"
-            :items="formattedCardsFirstToLast"
-            filled
-            label="Select Starting Card"
-          >
-          </v-select>
+          <v-select v-model="firstCard" :items="formattedCardsFirstToLast" filled label="Select Starting Card"> </v-select>
 
           <h2 class="text-center ma-0 mb-5">Through To</h2>
 
-          <v-select
-            v-model="lastCard"
-            :items="formattedCardsLastToFirst"
-            filled
-            label="Select Ending Card"
-          >
-          </v-select>
+          <v-select v-model="lastCard" :items="formattedCardsLastToFirst" filled label="Select Ending Card"> </v-select>
         </v-card-text>
 
         <v-divider class="mb-3"></v-divider>
@@ -57,14 +39,10 @@
         <v-card-actions>
           <div class="d-flex justify-space-between w-100">
             <div class="d-flex align-center justify-center mx-3">
-              <v-btn class="red" @click="cancelLabels">
-                <v-icon class="mr-1" small>fa-undo</v-icon>Cancel
-              </v-btn>
+              <v-btn class="red" @click="cancelLabels"> <v-icon class="mr-1" small>fa-undo</v-icon>Cancel </v-btn>
             </div>
             <div class="d-flex align-center justify-center mx-3">
-              <v-btn class="success" @click="createLabels">
-                <v-icon class="mr-1" small>fa-save</v-icon>Create
-              </v-btn>
+              <v-btn class="success" @click="createLabels"> <v-icon class="mr-1" small>fa-save</v-icon>Create </v-btn>
             </div>
           </div>
         </v-card-actions>
@@ -131,13 +109,15 @@ export default {
   },
   methods: {
     createLabels() {
-      const { firstCard, lastCard, selectedBox } = this;
+      const { firstCard, lastCard, selectedBox, boxCards } = this;
       const labels = [];
-      for (let x = firstCard; x <= lastCard; x++) {
-        //labels.push(`${selectedBox.box}-${x}`);
-        labels.push({ box: selectedBox.box, card: x });
-      }
 
+      boxCards
+        .filter(boxCard => boxCard.card >= firstCard && boxCard.card <= lastCard)
+        .sort((a, b) => a.card - b.card)
+        .forEach((card, i) => {
+          labels.push({ box: card.box, card: card.card });
+        });
       this.createPDF(labels);
     },
     createPDF(labels) {
@@ -145,21 +125,21 @@ export default {
       function createLabelsContentTabular(labels) {
         const labelCount = labels.length - 1;
         const formattedLabels = labels.map((label, i) => {
-          const boxFontSize = label.box.length < 30 ? 16 : 12;
+          const boxFontSize = label.box.length < 10 ? 16 : 12;
 
           const row = {
             layout: "noBorders",
             table: {
-              widths: [120, 40],
+              widths: [80, 100],
               heights: [90, 90],
               body: [
                 [
                   {
                     text: `${label.box}-`,
-                    alignment: "center",
+                    alignment: "left",
                     fontSize: boxFontSize
                   },
-                  { text: label.card, alignment: "center", fontSize: 26 }
+                  { text: label.card, alignment: "center", fontSize: 22 }
                 ]
               ]
             }
