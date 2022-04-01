@@ -50,7 +50,7 @@ export default {
     categoryLabel: false
   }),
   async created() {
-    this.fetchCategory({ LevelLimit: 1 });
+    this.fetchCategory();
   },
   computed: {
     categoryTitle() {
@@ -64,7 +64,7 @@ export default {
     resetLocalValues() {
       this.ebaySiteCategories = [];
       this.categoryLabel = false;
-      this.fetchCategory({ LevelLimit: 1 });
+      this.fetchCategory();
     },
     addLeafIndicator(categories, index) {
       return categories
@@ -86,12 +86,7 @@ export default {
       } else {
         this.newChildSelected(value);
         this.ebaySiteCategories = this.ebaySiteCategories.slice(0, parseInt(value.CategoryLevel));
-
-        this.fetchCategory({
-          CategoryParent: value.CategoryID,
-          LevelLimit: parseInt(value.CategoryLevel) + 1
-        });
-
+        this.fetchCategory({ category_id: value.CategoryID });
         this.newChildSelected(value);
       }
     },
@@ -119,13 +114,18 @@ export default {
     async fetchCategory(params) {
       this.loading = true;
       try {
-        const { result } = await this.$store.dispatch("api/requestHandler", {
+        const { result, error } = await this.$store.dispatch("api/requestHandler", {
           method: "get",
-          url: "ebaySiteCategories",
+          url: "ebayV2/getEbaySiteCategories",
           params
         });
-        this.ebaySiteCategories.push(result);
+
+        if (result) this.ebaySiteCategories.push(result);
+        if (error) {
+          this.$toastr.e("Error loading Ebay Categories, error is:<br />" + error);
+        }
       } catch (err) {
+        this.$toastr.e(err.message);
         throw err;
       } finally {
         this.loading = false;
