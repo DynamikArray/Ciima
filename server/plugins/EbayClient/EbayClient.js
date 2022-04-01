@@ -46,6 +46,7 @@ class EbayClient {
       config.headers = {
         ...config.headers,
         Authorization: "Bearer " + token,
+        "Accept-Encoding": "application/gzip",
       };
       return config;
     });

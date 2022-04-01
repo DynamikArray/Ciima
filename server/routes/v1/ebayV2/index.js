@@ -1,12 +1,18 @@
-const { getItemAspectsForCategorySchema } = require("../../../schemas/v1/ebayV2");
+const { getItemAspectsForCategorySchema, getEbaySiteCategoriesSchema } = require("../../../schemas/v1/ebayV2");
 
 module.exports = function (fastify, opts, next) {
-  const { getItemAspectsForCategory } = require("../../../handlers/v1/ebayV2")(fastify);
+  const { getItemAspectsForCategory, getEbaySiteCategories } = require("../../../handlers/v1/ebayV2")(fastify);
 
   fastify.get("/ebayV2/getItemAspectsForCategory", {
     //preValidation: fastify.authenticate,
     schema: getItemAspectsForCategorySchema,
     handler: getItemAspectsForCategory,
+  });
+
+  fastify.get("/ebayV2/getEbaySiteCategories", {
+    //preValidation: fastify.authenticate,
+    schema: getEbaySiteCategoriesSchema,
+    handler: getEbaySiteCategories,
   });
 
   next();
