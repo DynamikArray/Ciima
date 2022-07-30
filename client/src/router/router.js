@@ -10,6 +10,7 @@ import priceMatchRoutes from "./priceMatchRoutes";
 import reportRoutes from "./reportRoutes";
 import toolRoutes from "./toolRoutes";
 import utilityRoutes from "./utilityRoutes";
+import whatnotRoutes from "./whatnotRoutes";
 
 let router = new Router({
   mode: "history",
@@ -21,7 +22,8 @@ let router = new Router({
     ...priceMatchRoutes,
     ...reportRoutes,
     ...toolRoutes,
-    ...utilityRoutes
+    ...utilityRoutes,
+    ...whatnotRoutes
   ]
 });
 
