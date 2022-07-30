@@ -1,9 +1,7 @@
 <template>
   <div class="d-flex justify-end">
-    <div
-      class="d-flex justify-end align-center grow"
-      v-if="isLoggedIn && userName"
-    >
+    <div class="d-flex justify-end align-center grow" v-if="isLoggedIn && userName">
+      <!-- UNUSED COMPONENTS
       <div class="d-flex align-center" v-if="!isLots">
         <v-btn
           text
@@ -35,15 +33,10 @@
           </div>
         </v-btn>
       </div>
+      -->
 
       <div class="d-flex align-center">
-        <v-menu
-          :max-width="380"
-          :nudge-bottom="38"
-          v-model="blnMenu"
-          :close-on-content-click="false"
-          offset-x
-        >
+        <v-menu :max-width="380" :nudge-bottom="38" v-model="blnMenu" :close-on-content-click="false" offset-x>
           <template v-slot:activator="{ on }">
             <v-btn small text v-on="on">
               <v-icon claass="mr-1 x-small">fa fa-cog</v-icon>
@@ -63,20 +56,10 @@
                     Applies defaults for Draft form fields.
                   </v-list-item-subtitle>
 
-                  <div
-                    id="defaultProductWrapper"
-                    class="secondary darken-1 my-2"
-                    style="border-radius:6px;"
-                  >
-                    <v-radio-group
-                      row
-                      :value="defaultProductType"
-                      @change="changeDefaultProductType"
-                      class="w-100"
-                    >
-                      <div
-                        class="d-flex flex-column justify-center align-center w-100"
-                      >
+                  <div id="defaultProductWrapper" class="secondary darken-1 my-2" style="border-radius:6px;">
+                    <v-radio-group row :value="defaultProductType" @change="changeDefaultProductType" class="w-100">
+                      <div class="d-flex flex-column justify-center align-center w-100">
+                        <!-- Disabled ETS/SINGLES/ADULT SELECTOR
                         <div
                           class="d-flex my-1 justify-space-around align-center w-100"
                         >
@@ -98,20 +81,11 @@
                         </div>
 
                         <v-divider class="w-100 my-2"></v-divider>
+                      END SETS/SINGLES/ADULT SELECTOR  -->
 
-                        <div
-                          class="d-flex justify-space-around align-center w-100 my-1"
-                        >
-                          <v-radio
-                            label="Lots"
-                            color="primary"
-                            value="lots"
-                          ></v-radio>
-                          <v-radio
-                            label="Gtc"
-                            color="primary"
-                            value="gtc"
-                          ></v-radio>
+                        <div class="d-flex justify-space-around align-center w-100 my-1 mt-2">
+                          <v-radio label="Lots" color="primary" value="lots"></v-radio>
+                          <v-radio label="Gtc" color="primary" value="gtc"></v-radio>
                         </div>
                       </div>
                     </v-radio-group>
@@ -137,9 +111,7 @@
                     v-model="utilityDrawerWidth"
                     hide-details
                   ></v-slider>
-                  <div class="text-center">
-                    {{ 100 - utilityDrawerWidth }}% Wide
-                  </div>
+                  <div class="text-center">{{ 100 - utilityDrawerWidth }}% Wide</div>
                 </v-list-item-content>
               </v-list-item>
               <v-divider></v-divider>
@@ -171,9 +143,7 @@
 
               <v-card-actions>
                 <div class="d-flex justify-end grow">
-                  <v-btn @click="closeSettingsMenu" color="success"
-                    ><v-icon class="mr-1">fa fa-times</v-icon>Close</v-btn
-                  >
+                  <v-btn @click="closeSettingsMenu" color="success"><v-icon class="mr-1">fa fa-times</v-icon>Close</v-btn>
                 </div>
               </v-card-actions>
             </v-list>

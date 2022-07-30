@@ -25,7 +25,7 @@ if (process.env.NODE_ENV !== "production") fastify.use(require("morgan")("short"
 let connectionString = process.env.MYSQL_CONN;
 if (process.env.NODE_ENV === "production") connectionString = process.env.JAWSDB_URL;
 
-//register mystl
+//register mysql
 fastify.register(require("fastify-mysql"), {
   promise: true,
   connectionString: connectionString,
@@ -53,6 +53,11 @@ fastify.register(require("fastify-static"), {
 
 //Swagger Docs
 fastify.register(swagger, documentation);
+
+//File Uploads
+fastify.register(require("fastify-file-upload"), {
+  debug: false,
+});
 
 //Routes
 fastify.register(require("./routes/v1/info"), { prefix: "v1" });
@@ -101,7 +106,9 @@ fastify.register(require("./routes/v1/repackingService"), {
 //Ebay V2 Restful Api Routes
 fastify.register(require("./routes/v1/ebayV2"), { prefix: "v1" });
 //
-//
+//Whatnot routes, file upload, entity management
+fastify.register(require("./routes/v1/whatnot"), { prefix: "v1" });
+
 //
 //catch all route for loading client application
 fastify.get("/*", (request, reply) => {

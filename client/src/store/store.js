@@ -37,6 +37,8 @@ import repackingService from "@/store/repackingService/repackingService";
 
 import dashboard from "@/store/dashboard/dashboard";
 
+import whatnot from "@/store/whatnot/whatnot";
+
 export default new Vuex.Store({
   modules: {
     api,
@@ -62,7 +64,8 @@ export default new Vuex.Store({
     reports,
     repricer,
     dashboard,
-    repackingService
+    repackingService,
+    whatnot
   },
   state: {},
   mutations: {}
