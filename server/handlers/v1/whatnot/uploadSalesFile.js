@@ -24,7 +24,7 @@ function buildQueryValues(rows, salesDate) {
     .map((row) => {
       //make ints
       row.order_id = parseInt(row.order_id);
-      row.sold_price = parseInt(row.sold_price);
+      row.sold_price = Number(row.sold_price.replace("$", ""));
       //strip emojis
       row.buyer = emojiStrip(row.buyer);
       row.product_name = emojiStrip(row.product_name);
@@ -48,6 +48,7 @@ async function handleInsert(fastify, query, queryValues, resolve, reject) {
     fastify.winston.info(`Records Saved to DB -  ${JSON.stringify(result[0])}`);
     resolve({ result: result[0] });
   } catch (e) {
+    fastify.winston.error(`Error saving Records Saved to DB -  ${JSON.stringify(e)}`);
     reject(e);
   }
 }
@@ -58,7 +59,6 @@ module.exports = (fastify) => ({
     const fileDate = req.body.fileDate;
     try {
       const newDate = format(parse(fileDate, dateFilterDateFormat, new Date()), mySqlDateFormat);
-      console.log(newDate);
     } catch (e) {
       throw new Error(`FileDate of: ${fileDate}  - is not in the correct format YYYY-MM-DD`);
     }
